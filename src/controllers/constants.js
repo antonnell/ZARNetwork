@@ -1,0 +1,1 @@
+export const GET_FANTOM_BALANCE = "GET_FANTOM_BALANCE";
