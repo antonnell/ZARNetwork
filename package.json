@@ -11,6 +11,7 @@
     "react": "16.6.3",
     "react-native": "0.57.7",
     "react-native-gesture-handler": "^1.0.10",
+    "react-native-touch-id": "^4.3.0",
     "react-navigation": "^3.0.6",
     "react-persist": "^1.0.2",
     "react-redux": "^6.0.0",
