@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Alert, View, Text, TouchableHighlight } from "react-native";
 import styles from "./styles";
 import TouchID from "react-native-touch-id";
+import PINCode from '@haskkor/react-native-pincode'
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -50,16 +51,11 @@ class HomeScreen extends Component {
   render() {
     console.log('isTouchIdisTouchId', this.state.isTouchId);
     return (
-      // <View style={styles.Container}>
-      //   <Text>Fantom-Pay</Text>
-      // </View>
-
-      <View style={styles.Container}>
-        {/* ... */}
+      !this.state.isTouchId ? <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
-        </TouchableHighlight>
-      </View>
+        </TouchableHighlight> 
+        </View>: <PINCode status={'choose'}/>
     );
   }
 }
