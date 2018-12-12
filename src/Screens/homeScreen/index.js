@@ -1,12 +1,27 @@
 import React, { Component } from "react";
 import { Alert, View, Text, TouchableHighlight } from "react-native";
 import styles from "./styles";
-//var TouchID = require("react-native-touch-id");
 import TouchID from "react-native-touch-id";
 
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      isTouchId:false
+    }
+   TouchID.isSupported()
+   .then((res)=>{
+     console.log('res is', res);
+    if(res === 'TouchID'){
+      this.setState({
+        isTouchId:true  
+      })
+    }
+   })
+   .catch((err) => {
+     console.log('err is', err);
+   });
+ ;
   }
 
   _pressHandler() {
@@ -33,6 +48,7 @@ class HomeScreen extends Component {
       });
   }
   render() {
+    console.log('isTouchIdisTouchId', this.state.isTouchId);
     return (
       // <View style={styles.Container}>
       //   <Text>Fantom-Pay</Text>
