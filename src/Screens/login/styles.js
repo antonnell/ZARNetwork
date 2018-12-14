@@ -1,0 +1,58 @@
+import { StyleSheet } from "react-native";
+import { Dimensions, Platform } from "react-native";
+//Constants
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
+export default StyleSheet.create({
+  Container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "white"
+  },
+  loginBtn: {
+    backgroundColor: "rgb(0, 169, 252)",
+    width: deviceWidth * 0.76,
+    height: deviceHeight * 0.07,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5
+  },
+  loginBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14
+  },
+  signInImageStyle: {
+    resizeMode: "contain",
+    height: deviceHeight * 0.06
+  },
+  signInTextStyle: {
+    color: "rgb(0, 0, 0)",
+    fontWeight: "normal",
+    fontSize: 15
+  },
+  emailTextFieldStyle: {
+    marginTop: deviceHeight * 0.1,
+    width: deviceWidth * 0.8
+  },
+  passwordTextFieldStyle: {
+    marginTop: deviceHeight * 0.01,
+    width: deviceWidth * 0.8
+  },
+  textStyle: {
+    color: "rgb(0, 169, 252)",
+    fontWeight: "600",
+    fontSize: 15
+  },
+  bottomTextStyle: {
+    color: "rgb(0, 0, 0)",
+    fontWeight: "normal",
+    fontSize: 15
+  },
+  bottomTextViewStyle: {
+    position: "absolute",
+    bottom: 0,
+    alignSelf: "center",
+    marginBottom: deviceHeight * 0.03
+  }
+});

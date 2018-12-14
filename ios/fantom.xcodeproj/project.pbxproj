@@ -611,6 +611,7 @@
 				64A50A673C5F46A49EF69523 /* libRNKeychain.a */,
 				CD8D18C179F04FE7A3B30E3D /* libRNVectorIcons.a */,
 				A9B61FABA98947039EE0944D /* libRNFirebase.a */,
+				E74E48581FDA4F769B5BAB39 /* libRNFirebasePhoneAuth.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1302,7 +1303,9 @@
 				);
 				INFOPLIST_FILE = fantom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1338,7 +1341,9 @@
 				);
 				INFOPLIST_FILE = fantom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

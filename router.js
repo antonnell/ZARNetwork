@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Home from "./src/Screens/homeScreen";
 import Phone from './src/Screens/phoneVerify';
+import Login from './src/Screens/login';
 
 const Routing = createStackNavigator(
   {
@@ -11,9 +12,12 @@ const Routing = createStackNavigator(
     Phone: {
       screen: Phone
     },
+    Login: {
+      screen: Login
+    },
   },
   {
-    initialRouteName: "Phone",
+    initialRouteName: "Login",
     headerMode: "none",
     mode: "card",
     navigationOptions: {
