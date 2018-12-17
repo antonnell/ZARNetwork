@@ -8,6 +8,7 @@ import {
   Image
 } from "react-native";
 import styles from "./styles";
+import DesignButton from "../../common/Button";
 import SignIn from "../../images/SignIn.png";
 import FloatLabelTextField from "../../common/FloatLabelTextField";
 
@@ -78,9 +79,7 @@ export default class Login extends Component {
           />
         </View>
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <TouchableOpacity style={styles.loginBtn}>
-            <Text style={styles.loginBtnText}>Log In</Text>
-          </TouchableOpacity>
+          <DesignButton />
         </View>
         <View style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>

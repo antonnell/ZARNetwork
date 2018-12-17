@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "888539243135",
+    "firebase_url": "https://fantompay-b6de5.firebaseio.com",
+    "project_id": "fantompay-b6de5",
+    "storage_bucket": "fantompay-b6de5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888539243135:android:35169b268735df00",
+        "android_client_info": {
+          "package_name": "com.fantom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888539243135-v98qv019tfovpqqbdda2rftg7fspjqhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk64QvmqjpOhAqh6QzDk-48_y6rvZZwtg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,6 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Home from "./src/Screens/homeScreen";
 import Phone from "./src/Screens/phoneVerify";
 import Login from "./src/Screens/login";
-import EncryptDecrypt from "./src/Screens/encryptDecrypt";
 
 const Routing = createStackNavigator(
   {
@@ -16,12 +15,9 @@ const Routing = createStackNavigator(
     Login: {
       screen: Login
     }
-    // EncryptDecrypt: {
-    //   screen: EncryptDecrypt
-    // }
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Home",
     headerMode: "none",
     mode: "card",
     navigationOptions: {
