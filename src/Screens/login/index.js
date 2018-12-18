@@ -79,7 +79,7 @@ export default class Login extends Component {
           />
         </View>
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton />
+          <DesignButton name="Log In" />
         </View>
         <View style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>

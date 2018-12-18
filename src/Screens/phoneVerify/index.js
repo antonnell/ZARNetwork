@@ -1,7 +1,19 @@
 import React, { Component } from "react";
-import { View, Button, Text, TextInput, Image, Alert } from "react-native";
-
+import styles from "./styles";
+import {
+  View,
+  Text,
+  StatusBar,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  Alert,
+  TextInput,
+  Button
+} from "react-native";
+// import { View, Button, Text, TextInput, Image, Alert } from "react-native";
 import firebase from "react-native-firebase";
+import GenerateOTP from "./generateOTP";
 
 const successImageUri = "";
 export default class PhoneAuthTest extends Component {
@@ -16,9 +28,12 @@ export default class PhoneAuthTest extends Component {
       confirmResult: null,
       verificationId: ""
     };
-    // this.registerFirebaseComponent();
+    this.updateForm = this.updateForm.bind(this);
   }
-
+  updateForm(value, type) {
+    console.log("updateForm", value, type);
+    this.setState({ [type]: value });
+  }
   sendVerificationCode() {
     const { phoneNumber } = this.state;
     var config = {
@@ -70,6 +85,13 @@ export default class PhoneAuthTest extends Component {
         }
       );
   }
+  validate(type) {
+    if (type === "number") {
+      this.setState({
+        phoneNumber: "+91"
+      });
+    }
+  }
 
   signIn() {
     const { phoneNumber } = this.state;
@@ -83,7 +105,7 @@ export default class PhoneAuthTest extends Component {
   }
 
   confirmCode = () => {
-    const { codeInput, confirmResult, verificationId } = this.state;
+    const { codeInput, verificationId } = this.state;
     if (verificationId && codeInput.length) {
       var credential = firebase.auth.PhoneAuthProvider.credential(
         verificationId,
@@ -114,17 +136,12 @@ export default class PhoneAuthTest extends Component {
     const { phoneNumber } = this.state;
 
     return (
-      <View style={{ padding: 25 }}>
-        <Text>Enter phone number:</Text>
-        <TextInput
-          autoFocus
-          style={{ height: 40, marginTop: 15, marginBottom: 15 }}
-          onChangeText={value => this.setState({ phoneNumber: value })}
-          placeholder={"Phone number ... "}
-          value={phoneNumber}
-        />
-        <Button title="Sign In" color="green" onPress={() => this.signIn()} />
-      </View>
+      <GenerateOTP
+        phoneNumber={this.state.phoneNumber}
+        updateForm={this.updateForm}
+        signIn={() => this.signIn()}
+        validate={this.validate}
+      />
     );
   }
 
@@ -164,6 +181,8 @@ export default class PhoneAuthTest extends Component {
 
   render() {
     const { user, confirmResult } = this.state;
+
+    console.log(this.state, "render");
     return (
       <View style={{ flex: 1 }}>
         {!user && !confirmResult && this.renderPhoneNumberInput()}

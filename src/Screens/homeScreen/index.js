@@ -81,7 +81,7 @@ class HomeScreen extends Component {
         </View>
 
         <View style={styles.loginButtonView}>
-          <DesignButton />
+          <DesignButton name="Log In" />
           <Text style={styles.termTextStyle}>{"Term & Condition"}</Text>
         </View>
       </View>

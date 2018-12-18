@@ -139,6 +139,8 @@ class FloatLabelTextField extends Component {
       this.props.updateForm(value, type);
     } else if (type === "confirmPassword") {
       this.props.updateForm(value, type);
+    } else if (type === "number") {
+      this.props.updateForm(value, type);
     } else {
       Alert.alert("Error", "Enter Email First");
       this.props.validate(type);
@@ -177,6 +179,14 @@ class FloatLabelTextField extends Component {
           password: value
         });
       }
+    }
+
+    if (type === "number") {
+      this.setState({
+        text: value,
+        phoneNumber: value
+      });
+      this.props.updateForm(value, "phoneNumber");
     }
 
     if (type === "email") {
@@ -289,6 +299,69 @@ class FloatLabelTextField extends Component {
           </View>
         );
       }
+      if (this.props.type === "number") {
+        return (
+          <View>
+            <MaterialCommunityIcons name="cellphone" size={20} />
+          </View>
+        );
+      }
+    }
+  }
+  mobileField() {
+    {
+      return (
+        <View style={styles.container}>
+          <View style={styles.viewContainer}>
+            <View style={[styles.fieldContainer, this.withBorder()]}>
+              <FloatingLabel visible={this.state.text}>
+                <Text style={[styles.fieldLabel, this.labelStyle()]}>
+                  {this.placeholderValue(this.props.placeholder)}
+                </Text>
+              </FloatingLabel>
+
+              <TextFieldHolder withValue={this.state.text}>
+                <View style={{ flexDirection: "row" }}>
+                  <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+                  <TextInput
+                    {...this.props}
+                    ref="input"
+                    autoCorrect={this.props.autoCorrect}
+                    underlineColorAndroid="transparent"
+                    style={[
+                      styles.valueText,
+                      {
+                        backgroundColor: this.props.inputBackgroundColor,
+                        width: this.props.textFieldSize
+                      }
+                    ]}
+                    defaultValue={this.props.defaultValue}
+                    value={this.props.value}
+                    maxLength={this.props.maxLength}
+                    onFocus={() => this.setFocus()}
+                    onBlur={() => this.unsetFocus()}
+                    onChangeText={text =>
+                      this.onChangeTextHandler(text, this.props.type)
+                    }
+                    placeholderTextColor="grey"
+                    keyboardType="default"
+                    //secureTextEntry={!this.state.showPassword}
+                    maxLength={21}
+                    autoCapitalize="none"
+                  />
+                  {/* <TouchableOpacity
+                  style={styles.iconStyle}
+                  onPress={() => this.setShowPassword()}
+                >
+                  <MaterialIcon name={this.state.passwordIcon} size={20} />
+                </TouchableOpacity> */}
+                </View>
+              </TextFieldHolder>
+            </View>
+          </View>
+          <View style={styles.underlineStyling} />
+        </View>
+      );
     }
   }
 
@@ -370,6 +443,9 @@ class FloatLabelTextField extends Component {
         this.props.type == "confirmPassword"
       ) {
         return <View>{this.passwordField()}</View>;
+      }
+      if (this.props.type === "number") {
+        return <View>{this.mobileField()}</View>;
       }
     }
   }
