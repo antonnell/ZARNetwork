@@ -141,6 +141,7 @@ export default class PhoneAuthTest extends Component {
         updateForm={this.updateForm}
         signIn={() => this.signIn()}
         validate={this.validate}
+        navigation={this.props.navigation}
       />
     );
   }

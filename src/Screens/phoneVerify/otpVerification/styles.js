@@ -9,21 +9,23 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white"
   },
-  infoTextStyle: {
-    color: "rgb(0, 0, 0)",
-    fontWeight: "normal",
-    fontSize: 15,
-    textAlign: "justify",
-    width: deviceWidth * 0.8
-  },
-  mobileTextFieldStyle: {
-    marginTop: deviceHeight * 0.1,
-    width: deviceWidth * 0.8
-  },
-  textStyle: {
-    color: "rgb(0, 169, 252)",
-    fontWeight: "600",
-    fontSize: 15,
+  titleText: {
+    color: "rgb(0,177,251)",
+    fontWeight: "bold",
+    fontSize: 18,
     marginLeft: deviceWidth * 0.25
+  },
+  descriptionText: {
+    marginTop: deviceHeight * 0.1,
+    color: "#000",
+    fontSize: 16,
+    width: deviceWidth * 0.7
+  },
+  resendBtnMainView: {
+    marginTop: 20
+  },
+  resenOtpTextStyle: {
+    fontSize: 16,
+    fontWeight: "400"
   }
 });

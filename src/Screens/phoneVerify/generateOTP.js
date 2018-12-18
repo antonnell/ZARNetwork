@@ -1,7 +1,14 @@
 import React, { Component } from "React";
 import styles from "./styles";
-import { View, Text, StatusBar, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  Dimensions,
+  TouchableOpacity
+} from "react-native";
 import DesignButton from "../../common/Button";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FloatLabelTextField from "../../common/FloatLabelTextField";
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
@@ -11,7 +18,22 @@ export default class GenerateOTP extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <View style={{ marginTop: deviceHeight * 0.08 }}>
+        <View
+          style={{
+            width: deviceWidth,
+            alignItems: "center",
+            marginTop: deviceHeight * 0.1,
+            flexDirection: "row"
+          }}
+        >
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <MaterialIcons
+              color="#000"
+              size={24}
+              style={{ marginLeft: 10 }}
+              name="keyboard-arrow-left"
+            />
+          </TouchableOpacity>
           <Text style={styles.textStyle}>ONE TIME PIN</Text>
         </View>
         <View style={{ marginTop: deviceHeight * 0.1 }}>

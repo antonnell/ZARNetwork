@@ -335,6 +335,7 @@ class FloatLabelTextField extends Component {
                         width: this.props.textFieldSize
                       }
                     ]}
+                    keyboardType={"numeric"}
                     defaultValue={this.props.defaultValue}
                     value={this.props.value}
                     maxLength={this.props.maxLength}

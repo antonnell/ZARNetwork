@@ -3,6 +3,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Home from "./src/Screens/homeScreen";
 import Phone from "./src/Screens/phoneVerify";
 import Login from "./src/Screens/login";
+import OtpVerification from "./src/Screens/phoneVerify/otpVerification";
 console.disableYellowBox = true;
 
 const Routing = createStackNavigator(
@@ -15,6 +16,9 @@ const Routing = createStackNavigator(
     },
     Login: {
       screen: Login
+    },
+    OtpVerification: {
+      screen: OtpVerification
     }
   },
   {
