@@ -25,6 +25,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>https://</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.888539243135-m8ev3lim2ljfhmkgiu637atp6qrdu5c9</string>

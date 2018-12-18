@@ -3,6 +3,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Home from "./src/Screens/homeScreen";
 import Phone from "./src/Screens/phoneVerify";
 import Login from "./src/Screens/login";
+console.disableYellowBox = true;
 
 const Routing = createStackNavigator(
   {
@@ -17,7 +18,7 @@ const Routing = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Phone",
     headerMode: "none",
     mode: "card",
     navigationOptions: {

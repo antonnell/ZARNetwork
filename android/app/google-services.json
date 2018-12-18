@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:888539243135:android:35169b268735df00",
+        "mobilesdk_app_id": "1:888539243135:android:01585a250c7d38d7",
         "android_client_info": {
           "package_name": "com.fantom"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "888539243135-lf57h1einjvio3m323e9cssn5ij6s8lf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fantom",
+            "certificate_hash": "2f4597e7775a4d6b4fb701890a1f42d01449a0b4"
+          }
+        },
         {
           "client_id": "888539243135-v98qv019tfovpqqbdda2rftg7fspjqhk.apps.googleusercontent.com",
           "client_type": 3
@@ -29,8 +37,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888539243135-v98qv019tfovpqqbdda2rftg7fspjqhk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "888539243135-m8ev3lim2ljfhmkgiu637atp6qrdu5c9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.innow8.fantom"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2
