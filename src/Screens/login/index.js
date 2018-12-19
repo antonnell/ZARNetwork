@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, Image } from 'react-native';
+import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -52,6 +52,7 @@ class Login extends Component {
    * ******************************************************************************
    */
   handleUserLogin() {
+    console.log('handleUserLogin clicked');
     const { email, password } = this.state;
 
     if (email && email !== '' && password && password !== '') {
@@ -118,12 +119,15 @@ class Login extends Component {
           />
         </View>
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton name="Log In" callMethod={this.handleUserLogin} />
+          <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable />
         </View>
         <View style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>
         </View>
-        <TouchableOpacity style={styles.bottomTextViewStyle} onPress={()=>this.props.navigation.navigate('Register')}>
+        <TouchableOpacity
+          style={styles.bottomTextViewStyle}
+          onPress={() => this.props.navigation.navigate('Register')}
+        >
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
         </TouchableOpacity>
       </View>
