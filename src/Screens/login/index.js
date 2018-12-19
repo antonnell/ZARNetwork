@@ -84,9 +84,9 @@ export default class Login extends Component {
         <View style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>
         </View>
-        <View style={styles.bottomTextViewStyle}>
+        <TouchableOpacity style={styles.bottomTextViewStyle} onPress={()=>this.props.navigation.navigate('Register')}>
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

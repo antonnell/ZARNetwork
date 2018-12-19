@@ -136,11 +136,15 @@ class FloatLabelTextField extends Component {
         }
       }
     } else if (type === "username") {
-      this.props.updateForm(value, type);
+      // this.props.updateForm(value, type);
     } else if (type === "confirmPassword") {
-      this.props.updateForm(value, type);
+      // this.props.updateForm(value, type);
+      this.props.validate(type);
+    } else if (type === "password") {
+      this.props.validate(type);
+      // this.props.updateForm(value, type);
     } else if (type === "number") {
-      this.props.updateForm(value, type);
+      // this.props.updateForm(value, type);
     } else {
       Alert.alert("Error", "Enter Email First");
       this.props.validate(type);
@@ -414,7 +418,11 @@ class FloatLabelTextField extends Component {
                     secureTextEntry={!this.state.showPassword}
                     maxLength={21}
                     autoCapitalize="none"
+                    onEndEditing={() =>
+                      this.onEndEditing(this.state.text, this.props.type)
+                    }
                   />
+
                   {/* <TouchableOpacity
                   style={styles.iconStyle}
                   onPress={() => this.setShowPassword()}

@@ -8,13 +8,42 @@ import {
   TouchableOpacity
 } from "react-native";
 import DesignButton from "../../common/Button";
+import PhoneInput from "react-native-phone-input";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import FloatLabelTextField from "../../common/FloatLabelTextField";
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
+ this.flagValue = '';
+ this.phoneNumber = '';
 export default class GenerateOTP extends Component {
+  constructor(props) {
+    super(props);
+    this.unsubscribe = null;
+    this.state = {
+      phoneValid: false,
+    };
+  }
+  selectedCountry(country) {
+    return (this.flagValue = country);
+  }
+
+  onChangePhoneNumber(number) {
+    this.phoneNumber = number;
+    this.updateInfo();
+  }
+
+  updateInfo() {
+    const { updateForm } = this.props;
+    const valid = this.phone.isValidNumber(),
+      type = this.phone.getNumberType(),
+      value = this.phone.getValue();
+      updateForm(value, 'phoneNumber');
+    this.setState({
+      phoneValid: valid
+    });
+  }
   render() {
+    const { phoneValid } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -43,19 +72,19 @@ export default class GenerateOTP extends Component {
           </Text>
         </View>
         <View style={styles.mobileTextFieldStyle}>
-          <FloatLabelTextField
-            type="number"
-            placeholder="Mobile Number"
-            autoCorrect={false}
-            value={this.props.phoneNumber}
-            updateForm={this.props.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validate={type => this.props.validate(type)}
-          />
+        <PhoneInput
+              ref={ref => {
+                this.phone = ref;
+              }}
+              style={styles.phoneInputStyle}
+              onSelectCountry={country => this.selectedCountry(country)}
+              onChangePhoneNumber={number => {
+                this.onChangePhoneNumber(number);
+              }}
+            />
         </View>
         <View style={{ marginTop: deviceHeight * 0.04 }}>
-          <DesignButton name="Next " callMethod={this.props.signIn} />
+          <DesignButton name="Next " callMethod={this.props.signIn} isClickable={phoneValid}/>
         </View>
       </View>
     );

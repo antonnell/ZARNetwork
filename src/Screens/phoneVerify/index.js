@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import OtpVerification from './otpVerification';
 import GenerateOTP from './generateOTP';
@@ -20,12 +20,23 @@ export default class PhoneAuthTest extends Component {
     super(props);
     this.unsubscribe = null;
     this.state = {
-      user: null,
       codeInput: '',
       phoneNumber: '+91',
-      confirmResult: null,
       verificationId: '',
     };
+    AsyncStorage.getItem('verificationId').then(value => {
+      console.log('verifyId', value);
+      if (value === null) {
+        this.setState({
+          verificationId: '',
+        })
+      } else {
+        this.setState({
+          verificationId: value,
+        })
+      }
+     
+    })
     this.updateForm = this.updateForm.bind(this);
   }
 
@@ -37,32 +48,29 @@ export default class PhoneAuthTest extends Component {
         .auth()
         .signInWithCredential(credential)
         .then(() => {
-          Alert.alert('OTP verify Successfully');
+          //Alert.alert('OTP verify Successfully');
+          this.props.navigation.navigate('CreatePin');
         })
         .catch(() => {
           Alert.alert('OTP verify Failed');
         });
     }
   };
+ 
 
   signIn() {
     const { phoneNumber } = this.state;
     if (phoneNumber.length > 3) {
-      this.setState({ confirmResult: true });
-      this.sendVerificationCode();
+      setTimeout(() => {
+        this.sendVerificationCode();
+      }, 1000);
     } else {
       Alert.alert('Please Enter the phone number.');
     }
   }
-
-  validate(type) {
-    if (type === 'number') {
-      this.setState({
-        phoneNumber: '+91',
-      });
-    }
+  clearAsyncStorage = () => {
+    AsyncStorage.setItem('verificationId', '');
   }
-
   sendVerificationCode() {
     const { phoneNumber } = this.state;
     firebase.initializeApp(config);
@@ -79,6 +87,10 @@ export default class PhoneAuthTest extends Component {
               this.setState({
                 verificationId: phoneAuthSnapshot.verificationId,
               });
+              AsyncStorage.setItem('verificationId', phoneAuthSnapshot.verificationId);
+              setTimeout(() => {
+                this.clearAsyncStorage();
+              }, 1000);
               break;
             case firebase.auth.PhoneAuthState.ERROR: // or 'error'
               console.log('verification error');
@@ -118,22 +130,29 @@ export default class PhoneAuthTest extends Component {
         phoneNumber={phoneNumber}
         updateForm={this.updateForm}
         signIn={() => this.signIn()}
-        validate={this.validate}
         navigation={navigation}
       />
     );
   }
 
   renderVerificationCodeInput() {
-    return <OtpVerification updateForm={this.updateForm} confirmCode={() => this.confirmCode()} />;
+    const { navigation } = this.props;
+    return (
+      <OtpVerification
+        updateForm={this.updateForm}
+        navigation={navigation}
+        confirmCode={() => this.confirmCode()}
+      />
+    );
   }
+  
 
   render() {
-    const { user, confirmResult } = this.state;
+    const { verificationId } = this.state;    
     return (
       <View style={{ flex: 1 }}>
-        {!user && !confirmResult && this.renderPhoneNumberInput()}
-        {!user && confirmResult && this.renderVerificationCodeInput()}
+        {verificationId == ''  && this.renderPhoneNumberInput()}
+        {verificationId != ''  && this.renderVerificationCodeInput()}
       </View>
     );
   }

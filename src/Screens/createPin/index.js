@@ -16,7 +16,7 @@ import GeneratePinCode from "../../common/PinCode";
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
-class HomeScreen extends Component {
+class CreatePin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +70,7 @@ class HomeScreen extends Component {
       <View style={styles.Container}>
         <StatusBar barStyle="light-content" backgroundColor="black" />
         <View style={{ marginTop: deviceHeight * 0.06 }}>
-          <Text style={styles.textStyle}>LOGIN</Text>
+          <Text style={styles.textStyle}>CREATE PIN</Text>
         </View>
 
         <View style={styles.dialerView}>
@@ -89,4 +89,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+export default CreatePin;

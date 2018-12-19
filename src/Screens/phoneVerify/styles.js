@@ -25,5 +25,12 @@ export default StyleSheet.create({
     fontWeight: "600",
     fontSize: 15,
     marginLeft: deviceWidth * 0.25
+  },
+  phoneInputStyle: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 6,
+    borderColor: "#77797a",
+    height: 50
   }
 });

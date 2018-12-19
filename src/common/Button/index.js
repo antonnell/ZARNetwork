@@ -4,8 +4,20 @@ import { Text, TouchableOpacity } from "react-native";
 
 export default class DesignButton extends Component {
   render() {
+
+    const {isClickable}= this.props;
+    let setButtonStyle={
+      ...styles.loginBtn
+    }
+    if(!isClickable){
+      setButtonStyle={
+        ...styles.loginBtn,
+        backgroundColor:'#70c5ef'
+      }
+    }
+
     return (
-      <TouchableOpacity style={styles.loginBtn} onPress={this.props.callMethod}>
+      <TouchableOpacity style={setButtonStyle} onPress={this.props.callMethod} disabled={!this.props.isClickable}>
         <Text style={styles.loginBtnText}>{this.props.name}</Text>
       </TouchableOpacity>
     );
