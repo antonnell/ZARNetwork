@@ -47,7 +47,7 @@ class Login extends Component {
    * ******************************************************************************
    * @method handleUserLogin : To perform action for user login.
    * ******************************************************************************
-   * @method loginUserAction : To call login api to authenticate user.
+   * @method login : To call login api to authenticate user.
    * @param payload : Payload for login .
    * ******************************************************************************
    */

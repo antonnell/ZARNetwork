@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
@@ -8,6 +9,7 @@ import TouchID from 'react-native-touch-id';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
+import { register } from '../../controllers/api/auth';
 
 const deviceHeight = Dimensions.get('window').height;
 // const deviceWidth = Dimensions.get('window').width;
@@ -30,6 +32,8 @@ class CreatePin extends Component {
       .catch(err => {
         console.log('err is', err); /*eslint-disable-line */
       });
+
+    this.handleUserRegister = this.handleUserRegister.bind(this);
   }
 
   _pressHandler() {
@@ -53,9 +57,57 @@ class CreatePin extends Component {
       });
   }
 
+  /**
+   * ******************************************************************************
+   * @method handleUserRegister : To perform action register user.
+   * ******************************************************************************
+   * @method register : To call register api to register user.
+   * @param payload : Payload for register .
+   * ******************************************************************************
+   */
+  handleUserRegister() {
+    // const { email, password, pin, fingerPrint, mobileNumber } = this.props;
+    const email = 'testuser16293@gmail.com';
+    const password = '12345678';
+    const pin = '1234';
+    const fingerPrint = 'pqr';
+    const mobileNumber = '1234567890';
+
+    if (
+      email &&
+      email !== '' &&
+      password &&
+      password !== '' &&
+      pin &&
+      pin !== '' &&
+      fingerPrint &&
+      fingerPrint !== '' &&
+      mobileNumber &&
+      mobileNumber !== ''
+    ) {
+      const payload = {
+        email,
+        password,
+        pin,
+        fingerprint: fingerPrint,
+        mobile_number: mobileNumber,
+      };
+
+      if (register) {
+        register(payload)
+          .then(result => {
+            console.log('result register : ', result);
+          })
+          .catch(error => {
+            console.log('error register : ', error);
+          });
+      }
+    }
+  }
+
   render() {
     const { isTouchId } = this.state;
-    return isTouchId ? (
+    return !isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -76,7 +128,7 @@ class CreatePin extends Component {
         </View>
 
         <View style={styles.loginButtonView}>
-          <DesignButton name="Log In" />
+          <DesignButton name="Log In" callMethod={this.handleUserRegister} isClickable />
           <Text style={styles.termTextStyle}>Term & Condition</Text>
         </View>
       </View>

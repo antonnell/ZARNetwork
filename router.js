@@ -4,7 +4,6 @@ import CreatePin from './src/Screens/createPin';
 import Phone from './src/Screens/phoneVerify';
 import Login from './src/Screens/login';
 import Register from './src/Screens/register';
-import HomeScreenTest from './src/Screens/homeScreenTest';
 
 const Routing = createStackNavigator(
   {
@@ -19,9 +18,6 @@ const Routing = createStackNavigator(
     },
     Register: {
       screen: Register,
-    },
-    HomeScreenTest: {
-      screen: HomeScreenTest,
     },
   },
   {
