@@ -1,66 +1,61 @@
-import React, { Component } from "react";
-import {
-  Alert,
-  View,
-  Text,
-  Dimensions,
-  StatusBar,
-  TouchableHighlight
-} from "react-native";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
-import DesignButton from "../../common/Button";
-import styles from "./styles";
-import TouchID from "react-native-touch-id";
-import GeneratePinCode from "../../common/PinCode";
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
+/* eslint-disable class-methods-use-this */
+import React, { Component } from 'react';
+import { Alert, View, Text, Dimensions, StatusBar, TouchableHighlight } from 'react-native';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import TouchID from 'react-native-touch-id';
+import DesignButton from '../../common/Button';
+import styles from './styles';
+import GeneratePinCode from '../../common/PinCode';
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get('window').height;
+// const deviceWidth = Dimensions.get('window').width;
 
 class CreatePin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isTouchId: false
+      isTouchId: false,
     };
     TouchID.isSupported()
       .then(res => {
-        console.log("res is", res);
-        if (res === "TouchID") {
+        console.log('res is', res); /*eslint-disable-line */
+        if (res === 'TouchID') {
           this.setState({
-            isTouchId: true
+            isTouchId: true,
           });
         }
       })
       .catch(err => {
-        console.log("err is", err);
+        console.log('err is', err); /*eslint-disable-line */
       });
   }
 
   _pressHandler() {
     const optionalConfigObject = {
-      title: "Authentication Required", // Android
-      imageColor: "#e00606", // Android
-      imageErrorColor: "#ff0000", // Android
-      sensorDescription: "Touch sensor", // Android
-      sensorErrorDescription: "Failed", // Android
-      cancelText: "Cancel", // Android
-      fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
+      title: 'Authentication Required', // Android
+      imageColor: '#e00606', // Android
+      imageErrorColor: '#ff0000', // Android
+      sensorDescription: 'Touch sensor', // Android
+      sensorErrorDescription: 'Failed', // Android
+      cancelText: 'Cancel', // Android
+      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
       unifiedErrors: false, // use unified error messages (default false)
-      passcodeFallback: false // iOS
+      passcodeFallback: false, // iOS
     };
-    TouchID.authenticate(
-      "to demo this react-native component",
-      optionalConfigObject
-    )
+    TouchID.authenticate('to demo this react-native component', optionalConfigObject)
       .then(success => {
-        Alert.alert("Authenticated Successfully");
+        Alert.alert('Authenticated Successfully');
       })
       .catch(error => {
-        Alert.alert("Authentication Failed");
+        Alert.alert('Authentication Failed');
       });
   }
+
   render() {
-    return this.state.isTouchId ? (
+    const { isTouchId } = this.state;
+    return isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -82,7 +77,7 @@ class CreatePin extends Component {
 
         <View style={styles.loginButtonView}>
           <DesignButton name="Log In" />
-          <Text style={styles.termTextStyle}>{"Term & Condition"}</Text>
+          <Text style={styles.termTextStyle}>Term & Condition</Text>
         </View>
       </View>
     );

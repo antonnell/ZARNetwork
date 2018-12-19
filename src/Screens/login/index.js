@@ -1,43 +1,82 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StatusBar,
-  Dimensions,
-  TouchableOpacity,
-  Image
-} from "react-native";
-import styles from "./styles";
-import DesignButton from "../../common/Button";
-import SignIn from "../../images/SignIn.png";
-import FloatLabelTextField from "../../common/FloatLabelTextField";
+/* eslint-disable no-console */
+import React, { Component } from 'react';
+import { View, Text, StatusBar, Dimensions, Image } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+import styles from './styles';
+import DesignButton from '../../common/Button';
+import SignIn from '../../images/SignIn.png';
+import FloatLabelTextField from '../../common/FloatLabelTextField';
 
-export default class Login extends Component {
+/**
+ * Component to call login api.
+ */
+import { login } from '../../controllers/api/auth';
+
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: '',
     };
     this.updateForm = this.updateForm.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
   }
+
   updateForm(value, type) {
     this.setState({ [type]: value });
   }
+
   validate(type) {
-    if (type === "email") {
+    if (type === 'email') {
       this.setState({
-        email: ""
+        email: '',
       });
-    } else if (type === "password")
+    } else if (type === 'password')
       this.setState({
-        password: ""
+        password: '',
       });
   }
+
+  /**
+   * ******************************************************************************
+   * @method handleUserLogin : To perform action for user login.
+   * ******************************************************************************
+   * @method loginUserAction : To call login api to authenticate user.
+   * @param payload : Payload for login .
+   * ******************************************************************************
+   */
+  handleUserLogin() {
+    const { email, password } = this.state;
+
+    if (email && email !== '' && password && password !== '') {
+      const payload = {
+        email,
+        password,
+      };
+
+      if (login) {
+        login(payload)
+          .then(result => {
+            console.log('result loginUserAction : ', result);
+          })
+          .catch(error => {
+            console.log('error loginUserAction : ', error);
+          });
+      }
+    }
+  }
+
   render() {
+    const { authDetail, errDetail } = this.props;
+    console.log('authDetail in props : ', authDetail);
+    console.log('errDetail in props : ', errDetail);
+    const { email, password } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -46,7 +85,7 @@ export default class Login extends Component {
         </View>
         <View
           style={{
-            marginTop: deviceHeight * 0.1
+            marginTop: deviceHeight * 0.1,
           }}
         >
           <Image source={SignIn} style={styles.signInImageStyle} />
@@ -59,7 +98,7 @@ export default class Login extends Component {
             type="email"
             placeholder="Email"
             autoCorrect={false}
-            value={this.state.email}
+            value={email}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
@@ -71,7 +110,7 @@ export default class Login extends Component {
             type="password"
             placeholder="Password"
             autoCorrect={false}
-            value={this.state.password}
+            value={password}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
@@ -79,7 +118,7 @@ export default class Login extends Component {
           />
         </View>
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton name="Log In" />
+          <DesignButton name="Log In" callMethod={this.handleUserLogin} />
         </View>
         <View style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>
@@ -91,3 +130,19 @@ export default class Login extends Component {
     );
   }
 }
+Login.defaultProps = {
+  authDetail: {},
+  errDetail: {},
+};
+Login.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  authDetail: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  errDetail: PropTypes.object,
+};
+const mapStateToProps = state => ({
+  authDetail: state.userAuthReducer,
+  errDetail: state.errorHandlerReducer,
+});
+
+export default connect(mapStateToProps)(Login);

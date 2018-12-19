@@ -1,5 +1,5 @@
-import action from "../actionHeader/action";
-import * as actions from "../constants";
+import action from '../base/action';
+import * as actions from '../base/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getFantomBalance = address =>
@@ -8,9 +8,9 @@ export const getFantomBalance = address =>
     payload: {
       request: {
         url: `/account/${address}`,
-        method: "GET",
+        method: 'GET',
         data: {},
-        address
-      }
-    }
+        address,
+      },
+    },
   });

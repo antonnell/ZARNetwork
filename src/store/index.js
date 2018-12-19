@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware } from "redux";
-import reduxThunk from "redux-thunk";
-import axios from "axios";
-import axiosMiddleware from "redux-axios-middleware";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web and AsyncStorage for react-native
-import config from "../controllers/config";
-import rootReducer from "../controllers/index";
-// import rootReducer from './index';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web and AsyncStorage for react-native
+import config from '../controllers/config';
+import rootReducer from '../controllers/redux/index';
 
 /**
  * Create Axios Client to communicate
@@ -14,7 +13,7 @@ import rootReducer from "../controllers/index";
  */
 const axiosClient = axios.create({
   baseURL: config.apiUrl,
-  responseType: "json"
+  responseType: 'json',
 });
 
 // Store instance
@@ -22,19 +21,16 @@ let store = null;
 let persistor = null;
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  blacklist: []
+  blacklist: [],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 /**
  * Create the Redux store
  */
 export const configureStore = () => {
-  store = createStore(
-    persistedReducer,
-    applyMiddleware(reduxThunk, axiosMiddleware(axiosClient))
-  );
+  store = createStore(persistedReducer, applyMiddleware(reduxThunk, axiosMiddleware(axiosClient)));
 
   persistor = persistStore(store);
   return { store, persistor };
@@ -59,5 +55,5 @@ export default {
   dispatch,
   getStore,
   configureStore,
-  persistor
+  persistor,
 };

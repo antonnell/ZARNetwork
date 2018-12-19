@@ -1,4 +1,4 @@
-import * as actions from "../constants";
+import * as actions from '../base/constants';
 
 const defaultState = {};
 
@@ -6,18 +6,18 @@ const getBalance = (state = defaultState, action) => {
   switch (action.type) {
     case `${actions.GET_FANTOM_BALANCE}`: {
       return Object.assign({}, state, {
-        ...state
+        ...state,
       });
     }
     case `${actions.GET_FANTOM_BALANCE}_SUCCESS`: {
       const { config, data } = action.payload;
       const accountInfo = {
-        [config.address]: data.balance
+        [config.address]: data.balance,
       };
 
       return Object.assign({}, state, {
         ...state,
-        ...accountInfo
+        ...accountInfo,
       });
     }
     case `${actions.GET_FANTOM_BALANCE}_FAILURE`: {
