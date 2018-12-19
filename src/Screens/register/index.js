@@ -256,7 +256,6 @@ export default class Register extends Component {
           </View>
           {/* Password Match */}
           {this.renderPasswordContraintsContainer()}
-
           {/* Next button */}
           <View style={{ marginTop: deviceHeight * 0.08 }}>
             <DesignButton
