@@ -1,43 +1,33 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StatusBar,
-  Dimensions,
-  TouchableOpacity
-} from "react-native";
-import styles from "./styles";
-import CustomisedButton from "../../../common/Button";
-import OtpInputs from "react-native-otp-inputs";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+/* eslint-disable */
+import React, { Component } from 'react';
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import OtpInputs from 'react-native-otp-inputs';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import styles from './styles';
+import CustomisedButton from '../../../common/Button';
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
 export default class OtpVerification extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-  nextClick() {
-    console.log("nextClick");
-  }
-  resendOTP() {
-    console.log("resendOTP");
-  }
 
   render() {
+    const { navigation, updateForm, confirmCode } = this.props;
     return (
       <View style={styles.Container}>
         <View
           style={{
             width: deviceWidth,
-            alignItems: "center",
+            alignItems: 'center',
             marginTop: deviceHeight * 0.1,
-            flexDirection: "row"
+            flexDirection: 'row',
           }}
         >
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons
               color="#000"
               size={24}
@@ -52,29 +42,26 @@ export default class OtpVerification extends Component {
         </Text>
         <View
           style={{
-            height: deviceHeight * 0.13
+            height: deviceHeight * 0.13,
           }}
         >
           <OtpInputs
-            handleChange={code => console.log(code)}
+            handleChange={code => updateForm(code, 'codeInput')}
             numberOfInputs={6}
-            keyboardType={"numeric"}
+            keyboardType="numeric"
             inputContainerStyles={{
-              backgroundColor: "#fff",
+              backgroundColor: '#fff',
               margin: 7,
-              height: 40
+              height: 40,
             }}
-            inputStyles={{ color: "#000", width: 30, fontSize: 14 }}
-            focusedBorderColor={"rgb(0,177,251)"}
-            unFocusedBorderColor={"rgb(0,177,251)"}
+            inputStyles={{ color: '#000', width: 30, fontSize: 14 }}
+            focusedBorderColor="rgb(0,177,251)"
+            unFocusedBorderColor="rgb(0,177,251)"
           />
         </View>
-        <View style={{ marginTop: 20, alignItems: "center" }}>
-          <CustomisedButton name="Next" callMethod={() => this.nextClick()} />
-          <TouchableOpacity
-            onPress={() => this.resendOTP()}
-            style={styles.resendBtnMainView}
-          >
+        <View style={{ marginTop: 20, alignItems: 'center' }}>
+          <CustomisedButton name="Next" callMethod={confirmCode} />
+          <TouchableOpacity style={styles.resendBtnMainView}>
             <Text style={styles.resenOtpTextStyle}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
