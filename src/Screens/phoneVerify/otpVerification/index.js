@@ -60,7 +60,7 @@ export default class OtpVerification extends Component {
           />
         </View>
         <View style={{ marginTop: 20, alignItems: 'center' }}>
-          <CustomisedButton name="Next" callMethod={confirmCode} />
+          <CustomisedButton name="Next" callMethod={confirmCode} isClickable/>
           <TouchableOpacity style={styles.resendBtnMainView}>
             <Text style={styles.resenOtpTextStyle}>Resend OTP</Text>
           </TouchableOpacity>

@@ -29,14 +29,13 @@ export default class PhoneAuthTest extends Component {
       if (value === null) {
         this.setState({
           verificationId: '',
-        })
+        });
       } else {
         this.setState({
           verificationId: value,
-        })
+        });
       }
-     
-    })
+    });
     this.updateForm = this.updateForm.bind(this);
   }
 
@@ -56,7 +55,6 @@ export default class PhoneAuthTest extends Component {
         });
     }
   };
- 
 
   signIn() {
     const { phoneNumber } = this.state;
@@ -70,7 +68,7 @@ export default class PhoneAuthTest extends Component {
   }
   clearAsyncStorage = () => {
     AsyncStorage.setItem('verificationId', '');
-  }
+  };
   sendVerificationCode() {
     const { phoneNumber } = this.state;
     firebase.initializeApp(config);
@@ -145,14 +143,13 @@ export default class PhoneAuthTest extends Component {
       />
     );
   }
-  
 
   render() {
-    const { verificationId } = this.state;    
+    const { verificationId } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        {verificationId == ''  && this.renderPhoneNumberInput()}
-        {verificationId != ''  && this.renderVerificationCodeInput()}
+        {verificationId == '' && this.renderPhoneNumberInput()}
+        {verificationId != '' && this.renderVerificationCodeInput()}
       </View>
     );
   }

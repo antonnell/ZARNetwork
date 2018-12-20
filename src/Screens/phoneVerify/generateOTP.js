@@ -63,7 +63,7 @@ export default class GenerateOTP extends Component {
               name="keyboard-arrow-left"
             />
           </TouchableOpacity>
-          <Text style={styles.textStyle}>ONE TIME PIN</Text>
+          <Text style={styles.textStyle}>GENERATE OTP</Text>
         </View>
         <View style={{ marginTop: deviceHeight * 0.1 }}>
           <Text style={styles.infoTextStyle}>
