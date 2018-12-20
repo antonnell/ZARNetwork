@@ -14,12 +14,24 @@ const action = definition => {
     ...definition,
   };
   if (data && data.payload && data.payload.request) {
-    const header = data.payload.request.headers || {};
+    let header = {};
+
+    if (
+      data.payload.request.headers &&
+      data.payload.request.headers.xKey &&
+      data.payload.request.headers.xAccessToken
+    ) {
+      header = {
+        'x-key': data.payload.request.headers.xKey,
+        'x-access-token': data.payload.request.headers.xAccessToken,
+      };
+    }
     const basicHeader = getHeaderData(definition);
     const updatedHeader = {
       ...basicHeader,
       ...header,
     };
+
     data.payload.request.headers = updatedHeader;
   }
   return data;

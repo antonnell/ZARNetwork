@@ -3,7 +3,7 @@ import * as actions from '../base/constants';
 
 /**
  * @method registerUser : Action for register api.
- * @param {*} data : Encrypted data for user registeration.
+ * @param {object} data : Encrypted data for user registeration.
  */
 export const registerUser = data =>
   action({
@@ -19,7 +19,7 @@ export const registerUser = data =>
 
 /**
  * @method loginUser : Action for login api.
- * @param {*} data :  Encrypted data for user login.
+ * @param {object} data :  Encrypted data for user login.
  */
 export const loginUser = data =>
   action({

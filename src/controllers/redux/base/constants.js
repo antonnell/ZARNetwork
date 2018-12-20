@@ -5,6 +5,7 @@
 export const GET_FANTOM_BALANCE = 'GET_FANTOM_BALANCE';
 export const REGISTER = 'REGISTER';
 export const LOGIN = 'LOGIN';
+export const SUPPORTED_ACCOUNT_TYPE = 'SUPPORTED_ACCOUNT_TYPE';
 export const _SUCCESS = '_SUCCESS';
 export const _FAIL = '_FAIL';
 
@@ -19,3 +20,4 @@ export const LOGIN_TYPE = 'login';
  */
 export const registerUrl = '/v0/register';
 export const loginUrl = '/v0/login';
+export const supportedAccountTypeUrl = '/v1/types';

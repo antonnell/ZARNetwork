@@ -6,7 +6,7 @@ import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
 /**
  * ******************************************************************************
  * @method register : Method register api call.
- * @param {object} payload : Payload for user registeration
+ * @param {object} payload : Payload for user registeration.
  * ******************************************************************************
  * @method encrypt :  To encrypt the payload sent for user registration.
  * @param payload : Data to be encrypted.
