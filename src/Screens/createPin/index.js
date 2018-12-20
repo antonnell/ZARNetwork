@@ -44,11 +44,19 @@ class CreatePin extends Component {
         isClicked: true,
       });
     } else {
-      if (
-        this.state.pinCode === this.state.confirmPinCode &&
-        this.state.pinCode.length === this.state.confirmPinCode.length
-      ) {
-        this.props.navigation.navigate('RegistrationSuccess');
+      const { pinCode, confirmPinCode } = this.state;
+      const { navigation } = this.props;
+      console.log(navigation.state.params.emailId);
+      const userEmailId = navigation.state.params.emailId;
+      const userPasssword = navigation.state.params.password;
+      const userPhoneumber = navigation.state.params.phoneNumber;
+      if (pinCode === confirmPinCode && pinCode.length === confirmPinCode.length) {
+        navigation.navigate('RegistrationSuccess', {
+          emailId: userEmailId,
+          password: userPasssword,
+          phoneNumber: userPhoneumber,
+          pinCode,
+        });
       } else {
         Alert.alert('Failed');
       }
