@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, SUPPORTED_ACCOUNT_TYPE, _FAIL } from '../base/constants';
+import { REGISTER, LOGIN, SUPPORTED_ACCOUNT_TYPE, STATUS_TYPE, _FAIL } from '../base/constants';
 
 const defaultState = {
   status: null,
@@ -50,6 +50,13 @@ const errorHandlerReducer = (state = defaultState, action) => {
       };
     }
     case `${SUPPORTED_ACCOUNT_TYPE}${_FAIL}`: {
+      const formattedData = getFormattedTypeData(action);
+      return {
+        ...state,
+        ...formattedData,
+      };
+    }
+    case `${STATUS_TYPE}${_FAIL}`: {
       const formattedData = getFormattedTypeData(action);
       return {
         ...state,
