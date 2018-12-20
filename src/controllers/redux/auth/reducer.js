@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { REGISTER, LOGIN, _SUCCESS } from '../base/constants';
 import { decryptPayload } from '../../utility/decryption';
 
@@ -7,7 +6,7 @@ const sha256 = require('sha256');
 const defaultState = {};
 
 /**
- * @method getFormattedAuthData : To format result of authentication api's (register and login)
+ * @method getFormattedAuthData : To format result of authentication api (register and login).
  */
 
 const getFormattedAuthData = action => {
@@ -15,10 +14,8 @@ const getFormattedAuthData = action => {
     const { data } = action.payload;
 
     if (data.status === 200) {
-      console.log('data in auth : ', data);
       if (data.message) {
         const userAuthData = decryptPayload(data.message);
-        console.log('userAuthData after decryption : ', userAuthData);
         if (userAuthData.status === 'success' && userAuthData.payload) {
           const { payload } = userAuthData;
           if (payload) {
@@ -51,10 +48,8 @@ const getFormattedAuthData = action => {
             }
             if (email) {
               const xKey = sha256(payload.email);
-              console.log(xKey, 'xKey');
               userAuthDetails.xKey = xKey;
             }
-            console.log('final userAuthDetails : ', userAuthDetails);
             return userAuthDetails;
           }
         }
@@ -65,13 +60,14 @@ const getFormattedAuthData = action => {
   return {};
 };
 
-// Reducer for user authentication.
+/**
+ * @method userAuthReducer : Reducer for user authentication.
+ */
 const userAuthReducer = (state = defaultState, action) => {
-  console.log('state of auth reducer : ', state);
   switch (action.type) {
     case `${REGISTER}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(action);
-      console.log('formattedData REGISTER : ', formattedData);
+
       return {
         ...state,
         ...formattedData,
@@ -79,7 +75,6 @@ const userAuthReducer = (state = defaultState, action) => {
     }
     case `${LOGIN}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(action);
-      console.log('formattedData : ', formattedData);
       return {
         ...state,
         ...formattedData,

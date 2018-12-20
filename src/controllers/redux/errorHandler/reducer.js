@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, _FAIL } from '../base/constants';
+import { REGISTER, LOGIN, SUPPORTED_ACCOUNT_TYPE, STATUS_TYPE, _FAIL } from '../base/constants';
 
 const defaultState = {
   status: null,
@@ -7,13 +7,24 @@ const defaultState = {
 };
 
 /**
- * @method getFormattedAuthData : To format result of authentication api's (register and login)
+ * @method getFormattedAuthData : To format result of authentication api (register and login).
  */
 const getFormattedAuthData = action => {
   if (action && action.error && action.error.response) {
     const { data } = action.error.response;
     const { message, status } = data;
+    return { message, status, loading: false };
+  }
+  return {};
+};
 
+/**
+ * @method getFormattedTypeData : To format result of supported account type api.
+ */
+const getFormattedTypeData = action => {
+  if (action && action.error && action.error.response) {
+    const { data } = action.error.response;
+    const { message, status } = data;
     return { message, status, loading: false };
   }
   return {};
@@ -33,6 +44,20 @@ const errorHandlerReducer = (state = defaultState, action) => {
     }
     case `${LOGIN}${_FAIL}`: {
       const formattedData = getFormattedAuthData(action);
+      return {
+        ...state,
+        ...formattedData,
+      };
+    }
+    case `${SUPPORTED_ACCOUNT_TYPE}${_FAIL}`: {
+      const formattedData = getFormattedTypeData(action);
+      return {
+        ...state,
+        ...formattedData,
+      };
+    }
+    case `${STATUS_TYPE}${_FAIL}`: {
+      const formattedData = getFormattedTypeData(action);
       return {
         ...state,
         ...formattedData,
