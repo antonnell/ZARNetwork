@@ -33,7 +33,7 @@ const Routing = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'TabBarView',
+    initialRouteName: 'Login',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {

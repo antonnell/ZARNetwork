@@ -6,6 +6,7 @@ import TouchID from 'react-native-touch-id';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
+import { checkPinLength } from '../../utility/index';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -60,9 +61,6 @@ class CreatePin extends Component {
       } else {
         Alert.alert('Failed');
       }
-      // this.setState({
-      //   isClicked: false
-      // });
     }
   };
 
@@ -88,27 +86,31 @@ class CreatePin extends Component {
   };
 
   render() {
-    console.log('isClicked', this.state.isClicked);
-
+    const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
     let pinCodeObj = {};
-    if (!this.state.isClicked && this.state.confirmPinCode === '') {
+    let colorData = {};
+    if (!isClicked && confirmPinCode === '') {
+      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
+      console.log('colorData pinCode', colorData);
       pinCodeObj = {
         title: 'Enter a 4 digit PIN to login with',
         btnText: 'Next',
         type: 'pinCode',
-        text: this.state.pinCode,
-        isBtnEnabled: this.state.pinCode.length === 4,
+        text: pinCode,
+        isBtnEnabled: pinCode.length === 4,
       };
     } else {
+      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
+      console.log('colorData', colorData);
       pinCodeObj = {
         title: 'Confirm 4 digit PIN Code',
         btnText: 'Done',
         type: 'confirmPinCode',
-        text: this.state.confirmPinCode,
-        isBtnEnabled: this.state.confirmPinCode.length === 4,
+        text: confirmPinCode,
+        isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return this.state.isTouchId ? (
+    return isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -129,6 +131,7 @@ class CreatePin extends Component {
             navigation={this.props.navigation}
             updateForm={this.updateForm}
             pinCodeObj={pinCodeObj}
+            colorData={colorData}
           />
         </View>
 
