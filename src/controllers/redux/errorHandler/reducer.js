@@ -1,4 +1,12 @@
-import { REGISTER, LOGIN, SUPPORTED_ACCOUNT_TYPE, STATUS_TYPE, _FAIL } from '../base/constants';
+import {
+  REGISTER,
+  LOGIN,
+  SUPPORTED_ACCOUNT_TYPE,
+  STATUS_TYPE,
+  CREATE_WALLET,
+  WALLET_DETAIL,
+  _FAIL,
+} from '../base/constants';
 
 const defaultState = {
   status: null,
@@ -22,6 +30,18 @@ const getFormattedAuthData = action => {
  * @method getFormattedTypeData : To format result of supported account type api.
  */
 const getFormattedTypeData = action => {
+  if (action && action.error && action.error.response) {
+    const { data } = action.error.response;
+    const { message, status } = data;
+    return { message, status, loading: false };
+  }
+  return {};
+};
+
+/**
+ * @method getFormattedWalletData : To format result of user wallet accounts api.
+ */
+const getFormattedWalletData = action => {
   if (action && action.error && action.error.response) {
     const { data } = action.error.response;
     const { message, status } = data;
@@ -58,6 +78,20 @@ const errorHandlerReducer = (state = defaultState, action) => {
     }
     case `${STATUS_TYPE}${_FAIL}`: {
       const formattedData = getFormattedTypeData(action);
+      return {
+        ...state,
+        ...formattedData,
+      };
+    }
+    case `${CREATE_WALLET}${_FAIL}`: {
+      const formattedData = getFormattedWalletData(action);
+      return {
+        ...state,
+        ...formattedData,
+      };
+    }
+    case `${WALLET_DETAIL}${_FAIL}`: {
+      const formattedData = getFormattedWalletData(action);
       return {
         ...state,
         ...formattedData,

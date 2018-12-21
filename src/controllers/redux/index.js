@@ -5,6 +5,7 @@ import userAuthReducer from './auth/reducer';
 import errorHandlerReducer from './errorHandler/reducer';
 import supportedAccTypeReducer from './types/reducer';
 import statusTypeReducer from './statusType/reducer';
+import userWalletReducer from './userWallet/reducer';
 
 const rootReducer = combineReducers({
   getBalance,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   errorHandlerReducer,
   supportedAccTypeReducer,
   statusTypeReducer,
+  userWalletReducer,
 });
 
 export default rootReducer;

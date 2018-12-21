@@ -23,7 +23,7 @@ let persistor = null;
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [],
+  whitelist: ['userAuthReducer', 'userWalletReducer', 'supportedAccTypeReducer'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 /**

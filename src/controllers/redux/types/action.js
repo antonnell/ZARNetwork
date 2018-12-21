@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import action from '../base/action';
 import * as actions from '../base/constants';
 
@@ -5,26 +6,23 @@ import * as actions from '../base/constants';
  * @method supportedAccountType : Action to call api to retrieve the account types supported.
  * @param {object} data : Data for fetching account types.
  *
- *  If type UUID is passed in data : Retrieve supported account type for given UUID,
+ *  If type_uuid is passed in data : Retrieve supported account type for given {type_uuid},
  *  otherwise retrieve all supported account types.
  *
- *  data.header  : Contains following :-
- *  -> xKey : sha256(email) of logged in user / registered user.
- *  -> xAccessToken: xAccessToken of logged in user / registered user.
  */
 export const supportedAccountType = data => {
-  const { uuid } = data;
+  const typeUuid = data && data.type_uuid ? data.type_uuid : '';
   let url = actions.supportedAccountTypeUrl;
-  if (uuid && uuid !== '') {
-    url = `${actions.supportedAccountTypeUrl}/${uuid}`;
+  if (typeUuid && typeUuid !== '') {
+    url = `${actions.supportedAccountTypeUrl}/${typeUuid}`;
   }
   return action({
     type: actions.SUPPORTED_ACCOUNT_TYPE,
     payload: {
       request: {
-        headers: data.header,
         url,
         method: 'GET',
+        isAuthorised: true,
       },
     },
   });
