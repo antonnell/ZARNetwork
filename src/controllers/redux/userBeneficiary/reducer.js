@@ -21,7 +21,7 @@ const getFormattedNewBeneficiaryData = (state, action) => {
             const oldBeneficiaries = state.beneficiaries.slice();
             oldBeneficiaries.push(payload);
             const updatedState = Object.assign({}, state, {
-              wallets: oldBeneficiaries,
+              beneficiaries: oldBeneficiaries,
             });
             return updatedState;
           }
@@ -61,17 +61,13 @@ const getFormattedBeneficiaryData = (state, action) => {
  * @method userBeneficiaryReducer : Reducer for maintianing user's beneficiaries for account details.
  */
 const userBeneficiaryReducer = (state = defaultState, action) => {
-  console.log('userBeneficiaryReducer state : ', state);
-
   switch (action.type) {
     case `${CREATE_BENEFICIARY}${_SUCCESS}`: {
       const formattedData = getFormattedNewBeneficiaryData(state, action);
-      console.log('CREATE_BENEFICIARY formattedData : ', formattedData);
       return formattedData;
     }
     case `${BENEFICIARY_DETAIL}${_SUCCESS}`: {
       const formattedData = getFormattedBeneficiaryData(state, action);
-      console.log('BENEFICIARY_DETAIL formattedData : ', formattedData);
       return formattedData;
     }
     default:
