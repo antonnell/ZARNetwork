@@ -24,6 +24,11 @@ export const BENEFICIARY_DETAIL = 'BENEFICIARY_DETAIL';
 export const BENEFICIARY_DETAIL_BY_ACC = 'BENEFICIARY_DETAIL_BY_ACC';
 export const BENEFICIARY_DETAIL_BY_UUID = 'BENEFICIARY_DETAIL_BY_UUID';
 
+// For transactions api.
+export const TRANSACTION_DETAIL = 'TRANSACTION_DETAIL';
+export const TRANSACTION_DETAIL_BY_TXN_ID = 'TRANSACTION_DETAIL_BY_TXN_ID';
+export const TRANSACTION_DETAIL_BY_ACC_ID = 'TRANSACTION_DETAIL_BY_ACC_ID';
+
 // For api's status.
 export const _SUCCESS = '_SUCCESS';
 export const _FAIL = '_FAIL';
@@ -43,6 +48,7 @@ export const registerUrl = '/v0/register';
 export const loginUrl = '/v0/login';
 export const supportedAccountTypeUrl = '/v1/types';
 export const statusTypeUrl = '/v1/statuses';
+
 export const walletUrl = '/v1/accounts';
 export const userTypeWalletUrl = `${walletUrl}/types`;
 export const userAccIdWalletUrl = `${walletUrl}`;
@@ -50,3 +56,6 @@ export const userAccIdWalletUrl = `${walletUrl}`;
 export const beneficiaryUrl = '/v1/beneficiaries';
 export const userAccountBeneficiaryUrl = `${beneficiaryUrl}/accounts`;
 export const uuidBeneficiaryUrl = `${beneficiaryUrl}`;
+
+export const transactionUrl = '/v1/transactions';
+export const accUuidTransactionUrl = '/v1/transactions/accounts';

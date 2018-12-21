@@ -28,6 +28,7 @@ const persistConfig = {
     'userWalletReducer',
     'supportedAccTypeReducer',
     'userBeneficiaryReducer',
+    'userTransactionReducer',
   ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
