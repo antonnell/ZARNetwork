@@ -1,7 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import { Alert, View, Text, Dimensions, StatusBar, TouchableHighlight } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -9,20 +6,21 @@ import TouchID from 'react-native-touch-id';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
-import { register } from '../../controllers/api/auth';
 
 const deviceHeight = Dimensions.get('window').height;
-// const deviceWidth = Dimensions.get('window').width;
 
 class CreatePin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isTouchId: false,
+      pinCode: '',
+      confirmPinCode: '',
+      isClicked: false,
     };
     TouchID.isSupported()
       .then(res => {
-        console.log('res is', res); /*eslint-disable-line */
+        console.log('res is', res);
         if (res === 'TouchID') {
           this.setState({
             isTouchId: true,
@@ -30,13 +28,45 @@ class CreatePin extends Component {
         }
       })
       .catch(err => {
-        console.log('err is', err); /*eslint-disable-line */
+        console.log('err is', err);
       });
-
-    this.handleUserRegister = this.handleUserRegister.bind(this);
   }
 
-  _pressHandler() {
+  updateForm = (value, type) => {
+    this.setState({ [type]: value });
+  };
+
+  nextBtnClicked = (event, pinCodeObj) => {
+    event.preventDefault();
+    console.log('pinCode oBj', pinCodeObj);
+    if (pinCodeObj.btnText === 'Next') {
+      this.setState({
+        isClicked: true,
+      });
+    } else {
+      const { pinCode, confirmPinCode } = this.state;
+      const { navigation } = this.props;
+      console.log(navigation.state.params.emailId);
+      const userEmailId = navigation.state.params.emailId;
+      const userPasssword = navigation.state.params.password;
+      const userPhoneumber = navigation.state.params.phoneNumber;
+      if (pinCode === confirmPinCode && pinCode.length === confirmPinCode.length) {
+        navigation.navigate('RegistrationSuccess', {
+          emailId: userEmailId,
+          password: userPasssword,
+          phoneNumber: userPhoneumber,
+          pinCode,
+        });
+      } else {
+        Alert.alert('Failed');
+      }
+      // this.setState({
+      //   isClicked: false
+      // });
+    }
+  };
+
+  _pressHandler = () => {
     const optionalConfigObject = {
       title: 'Authentication Required', // Android
       imageColor: '#e00606', // Android
@@ -55,59 +85,30 @@ class CreatePin extends Component {
       .catch(error => {
         Alert.alert('Authentication Failed');
       });
-  }
-
-  /**
-   * ******************************************************************************
-   * @method handleUserRegister : To perform action register user.
-   * ******************************************************************************
-   * @method register : To call register api to register user.
-   * @param payload : Payload for register .
-   * ******************************************************************************
-   */
-  handleUserRegister() {
-    // const { email, password, pin, fingerPrint, mobileNumber } = this.props;
-    const email = 'testuser16293@gmail.com';
-    const password = '12345678';
-    const pin = '1234';
-    const fingerPrint = 'pqr';
-    const mobileNumber = '1234567890';
-
-    if (
-      email &&
-      email !== '' &&
-      password &&
-      password !== '' &&
-      pin &&
-      pin !== '' &&
-      fingerPrint &&
-      fingerPrint !== '' &&
-      mobileNumber &&
-      mobileNumber !== ''
-    ) {
-      const payload = {
-        email,
-        password,
-        pin,
-        fingerprint: fingerPrint,
-        mobile_number: mobileNumber,
-      };
-
-      if (register) {
-        register(payload)
-          .then(result => {
-            console.log('result register : ', result);
-          })
-          .catch(error => {
-            console.log('error register : ', error);
-          });
-      }
-    }
-  }
+  };
 
   render() {
-    const { isTouchId } = this.state;
-    return !isTouchId ? (
+    console.log('isClicked', this.state.isClicked);
+
+    let pinCodeObj = {};
+    if (!this.state.isClicked && this.state.confirmPinCode === '') {
+      pinCodeObj = {
+        title: 'Enter a 4 digit PIN to login with',
+        btnText: 'Next',
+        type: 'pinCode',
+        text: this.state.pinCode,
+        isBtnEnabled: this.state.pinCode.length === 4,
+      };
+    } else {
+      pinCodeObj = {
+        title: 'Confirm 4 digit PIN Code',
+        btnText: 'Done',
+        type: 'confirmPinCode',
+        text: this.state.confirmPinCode,
+        isBtnEnabled: this.state.confirmPinCode.length === 4,
+      };
+    }
+    return this.state.isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -121,15 +122,22 @@ class CreatePin extends Component {
         </View>
 
         <View style={styles.dialerView}>
-          <View style={{ marginTop: deviceHeight * 0.06 }}>
+          <View style={{ marginTop: deviceHeight * 0.05 }}>
             <EvilIcons name="lock" size={48} />
           </View>
-          <GeneratePinCode />
+          <GeneratePinCode
+            navigation={this.props.navigation}
+            updateForm={this.updateForm}
+            pinCodeObj={pinCodeObj}
+          />
         </View>
 
         <View style={styles.loginButtonView}>
-          <DesignButton name="Log In" callMethod={this.handleUserRegister} isClickable />
-          <Text style={styles.termTextStyle}>Term & Condition</Text>
+          <DesignButton
+            name={pinCodeObj.btnText}
+            isClickable={pinCodeObj.isBtnEnabled}
+            callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
+          />
         </View>
       </View>
     );

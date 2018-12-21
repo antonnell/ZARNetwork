@@ -4,6 +4,7 @@ import CreatePin from './src/Screens/createPin';
 import Phone from './src/Screens/phoneVerify';
 import Login from './src/Screens/login';
 import Register from './src/Screens/register';
+import RegistrationSuccess from './src/Screens/registrationSuccess';
 
 const Routing = createStackNavigator(
   {
@@ -18,6 +19,9 @@ const Routing = createStackNavigator(
     },
     Register: {
       screen: Register,
+    },
+    RegistrationSuccess: {
+      screen: RegistrationSuccess,
     },
   },
   {

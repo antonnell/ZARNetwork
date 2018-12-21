@@ -40,6 +40,11 @@ export default class PhoneAuthTest extends Component {
   }
 
   confirmCode = () => {
+    const { navigation } = this.props;
+    const { phoneNumber } = this.state.phoneNumber;
+    console.log('Navigation EMail', navigation.state.params.emailId);
+    const userEmailId = navigation.state.params.emailId;
+    const userPasssword = navigation.state.params.password;
     const { codeInput, verificationId } = this.state;
     if (verificationId && codeInput.length) {
       const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, codeInput);
@@ -47,8 +52,11 @@ export default class PhoneAuthTest extends Component {
         .auth()
         .signInWithCredential(credential)
         .then(() => {
-          //Alert.alert('OTP verify Successfully');
-          this.props.navigation.navigate('CreatePin');
+          navigation.navigate('CreatePin', {
+            emailId: userEmailId,
+            password: userPasssword,
+            phoneNumber,
+          });
         })
         .catch(() => {
           Alert.alert('OTP verify Failed');
@@ -145,6 +153,8 @@ export default class PhoneAuthTest extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
+    console.log('Navigation EMail', navigation.state.params.emailId);
     const { verificationId } = this.state;
     return (
       <View style={{ flex: 1 }}>

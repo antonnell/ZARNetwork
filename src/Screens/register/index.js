@@ -81,27 +81,28 @@ export default class Register extends Component {
   }
 
   validate(type) {
+    const { email, password, confirmPassword } = this.state;
     if (type === 'email') {
       this.setState({
         email: '',
       });
     } else if (type === 'password') {
-      if (this.state.email === '') {
+      if (email === '') {
         Alert.alert('Error', 'Enter Email first');
         this.setState({
           password: '',
         });
       }
     } else if (type === 'confirmPassword') {
-      if (this.state.email === '') {
+      if (email === '') {
         Alert.alert('Error', 'Enter Email first');
         this.setState({
           confirmPassword: '',
         });
-      } else if (this.state.password === '') {
+      } else if (password === '') {
         Alert.alert('Error', 'Enter Password first');
         this.setState({ confirmPassword: '' });
-      } else if (this.state.password !== this.state.confirmPassword) {
+      } else if (password !== confirmPassword) {
         Alert.alert('Error', 'Password does not match..');
         this.setState({
           confirmPassword: '',
@@ -110,35 +111,10 @@ export default class Register extends Component {
     }
   }
 
-  renderConstraintText(textVal) {
-    let iconName = 'close';
-
-    let iconColor = 'rgb(245,0,0)';
-
-    let textColor = 'rgba(3,3,3,0.5)';
-    if (textVal === '8+ characters' && this.state.eightPlusCharacter) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Capital letter' && this.state.moreThanOneCapital) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Lower case letter' && this.state.moreThanOneLower) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Number' && this.state.moreThanOneNumber) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    }
-    return (
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <MaterialIcons name={iconName} color={iconColor} size={18} />
-        <Text style={[styles.constraintsTextStyle, { color: textColor }]}>{textVal}</Text>
-      </View>
-    );
+  nextBtnPressed() {
+    const { navigation } = this.props;
+    const { email, password } = this.state;
+    navigation.navigate('Phone', { emailId: email, password });
   }
 
   renderPasswordContraintsContainer() {
@@ -159,20 +135,63 @@ export default class Register extends Component {
     );
   }
 
-  nextBtnPressed() {
-    this.props.navigation.navigate('Phone');
+  renderConstraintText(textVal) {
+    const {
+      eightPlusCharacter,
+      moreThanOneCapital,
+      moreThanOneLower,
+      moreThanOneNumber,
+    } = this.state;
+    let iconName = 'close';
+
+    let iconColor = 'rgb(245,0,0)';
+
+    let textColor = 'rgba(3,3,3,0.5)';
+    if (textVal === '8+ characters' && eightPlusCharacter) {
+      iconName = 'check';
+      iconColor = 'rgb(84,154,236)';
+      textColor = 'rgba(3,3,3,1)';
+    } else if (textVal === '1+ Capital letter' && moreThanOneCapital) {
+      iconName = 'check';
+      iconColor = 'rgb(84,154,236)';
+      textColor = 'rgba(3,3,3,1)';
+    } else if (textVal === '1+ Lower case letter' && moreThanOneLower) {
+      iconName = 'check';
+      iconColor = 'rgb(84,154,236)';
+      textColor = 'rgba(3,3,3,1)';
+    } else if (textVal === '1+ Number' && moreThanOneNumber) {
+      iconName = 'check';
+      iconColor = 'rgb(84,154,236)';
+      textColor = 'rgba(3,3,3,1)';
+    }
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+        <MaterialIcons name={iconName} color={iconColor} size={18} />
+        <Text style={[styles.constraintsTextStyle, { color: textColor }]}>{textVal}</Text>
+      </View>
+    );
   }
 
   render() {
     let isNextBtnClickable = false;
+    const { navigation } = this.props;
+    const {
+      email,
+      password,
+      confirmPassword,
+      eightPlusCharacter,
+      moreThanOneCapital,
+      moreThanOneLower,
+      moreThanOneNumber,
+    } = this.state;
     if (
-      this.state.email !== '' &&
-      this.state.password !== '' &&
-      this.state.confirmPassword !== '' &&
-      this.state.eightPlusCharacter &&
-      this.state.moreThanOneCapital &&
-      this.state.moreThanOneLower &&
-      this.state.moreThanOneNumber
+      email !== '' &&
+      password !== '' &&
+      confirmPassword !== '' &&
+      eightPlusCharacter &&
+      moreThanOneCapital &&
+      moreThanOneLower &&
+      moreThanOneNumber
     ) {
       isNextBtnClickable = true;
     }
@@ -185,7 +204,7 @@ export default class Register extends Component {
           <View style={styles.headerTextStyle}>
             <Text style={styles.textStyle}>REGISTER</Text>
           </View>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons name="chevron-left" size={20} />
           </TouchableOpacity>
         </View>
@@ -212,7 +231,7 @@ export default class Register extends Component {
               type="email"
               placeholder="Email"
               autoCorrect={false}
-              value={this.state.email}
+              value={email}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
@@ -225,7 +244,7 @@ export default class Register extends Component {
               type="password"
               placeholder="Password"
               autoCorrect={false}
-              value={this.state.password}
+              value={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
@@ -238,7 +257,7 @@ export default class Register extends Component {
               type="confirmPassword"
               placeholder="Confirm Password"
               autoCorrect={false}
-              value={this.state.confirmPassword}
+              value={confirmPassword}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
@@ -258,7 +277,7 @@ export default class Register extends Component {
           {/* Login text */}
           <View style={styles.loginButtonContainer}>
             <Text style={[styles.textStyle, { color: 'rgb(3,3,3)' }]}>Already registered?</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.textStyle}> Log In</Text>
             </TouchableOpacity>
           </View>
