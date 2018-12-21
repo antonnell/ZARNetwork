@@ -33,7 +33,7 @@ const getFormattedNewWalletData = (state, action) => {
 };
 
 /**
- * @method getFormattedWalletData : To format result of get wallet account detail account api.
+ * @method getFormattedWalletData : To format result of get wallet account api.
  */
 
 const getFormattedWalletData = (state, action) => {
