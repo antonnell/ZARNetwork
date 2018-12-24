@@ -41,7 +41,7 @@ export default class PhoneAuthTest extends Component {
 
   confirmCode = () => {
     const { navigation } = this.props;
-    const { phoneNumber } = this.state.phoneNumber;
+    const { phoneNumber } = this.state;
     console.log('Navigation EMail', navigation.state.params.emailId);
     const userEmailId = navigation.state.params.emailId;
     const userPasssword = navigation.state.params.password;
