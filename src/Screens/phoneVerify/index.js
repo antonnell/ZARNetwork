@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { View, Alert, AsyncStorage } from 'react-native';
+import { View, Alert } from 'react-native';
 import firebase from 'react-native-firebase';
 import OtpVerification from './otpVerification';
 import GenerateOTP from './generateOTP';
@@ -18,24 +18,12 @@ const config = {
 export default class PhoneAuthTest extends Component {
   constructor(props) {
     super(props);
-    this.unsubscribe = null;
     this.state = {
       codeInput: '',
       phoneNumber: '+91',
       verificationId: '',
+      isResendDisable: true,
     };
-    AsyncStorage.getItem('verificationId').then(value => {
-      console.log('verifyId', value);
-      if (value === null) {
-        this.setState({
-          verificationId: '',
-        });
-      } else {
-        this.setState({
-          verificationId: value,
-        });
-      }
-    });
     this.updateForm = this.updateForm.bind(this);
   }
 
@@ -74,9 +62,6 @@ export default class PhoneAuthTest extends Component {
       Alert.alert('Please Enter the phone number.');
     }
   }
-  clearAsyncStorage = () => {
-    AsyncStorage.setItem('verificationId', '');
-  };
   sendVerificationCode() {
     const { phoneNumber } = this.state;
     firebase.initializeApp(config);
@@ -93,9 +78,10 @@ export default class PhoneAuthTest extends Component {
               this.setState({
                 verificationId: phoneAuthSnapshot.verificationId,
               });
-              AsyncStorage.setItem('verificationId', phoneAuthSnapshot.verificationId);
               setTimeout(() => {
-                this.clearAsyncStorage();
+                this.setState({
+                  isResendDisable: false,
+                });
               }, 1000);
               break;
             case firebase.auth.PhoneAuthState.ERROR: // or 'error'
@@ -143,10 +129,13 @@ export default class PhoneAuthTest extends Component {
 
   renderVerificationCodeInput() {
     const { navigation } = this.props;
+    const { phoneNumber } = this.state;
     return (
       <OtpVerification
+        phoneNumber={phoneNumber}
         updateForm={this.updateForm}
         navigation={navigation}
+        isResendDisable={this.state.isResendDisable}
         confirmCode={() => this.confirmCode()}
       />
     );

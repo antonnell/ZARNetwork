@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Alert, View, Text, Dimensions, StatusBar, TouchableHighlight } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
+import PropTypes from 'prop-types';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
 import { register } from '../../controllers/api/auth';
+import { checkPinLength } from '../../utility/index';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -112,9 +114,6 @@ class CreatePin extends Component {
       } else {
         Alert.alert('Failed');
       }
-      // this.setState({
-      //   isClicked: false
-      // });
     }
   };
 
@@ -131,36 +130,41 @@ class CreatePin extends Component {
       passcodeFallback: false, // iOS
     };
     TouchID.authenticate('to demo this react-native component', optionalConfigObject)
-      .then(success => {
+      .then(() => {
         Alert.alert('Authenticated Successfully');
       })
-      .catch(error => {
+      .catch(() => {
         Alert.alert('Authentication Failed');
       });
   };
 
   render() {
-    console.log('isClicked', this.state.isClicked);
-
+    const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
+    const { navigation } = this.props;
     let pinCodeObj = {};
-    if (!this.state.isClicked && this.state.confirmPinCode === '') {
+    let colorData = {};
+    if (!isClicked && confirmPinCode === '') {
+      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
+      console.log('colorData pinCode', colorData);
       pinCodeObj = {
         title: 'Enter a 4 digit PIN to login with',
         btnText: 'Next',
         type: 'pinCode',
-        text: this.state.pinCode,
-        isBtnEnabled: this.state.pinCode.length === 4,
+        text: pinCode,
+        isBtnEnabled: pinCode.length === 4,
       };
     } else {
+      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
+      console.log('colorData', colorData);
       pinCodeObj = {
         title: 'Confirm 4 digit PIN Code',
         btnText: 'Done',
         type: 'confirmPinCode',
-        text: this.state.confirmPinCode,
-        isBtnEnabled: this.state.confirmPinCode.length === 4,
+        text: confirmPinCode,
+        isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return this.state.isTouchId ? (
+    return isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -178,9 +182,10 @@ class CreatePin extends Component {
             <EvilIcons name="lock" size={48} />
           </View>
           <GeneratePinCode
-            navigation={this.props.navigation}
+            navigation={navigation}
             updateForm={this.updateForm}
             pinCodeObj={pinCodeObj}
+            colorData={colorData}
           />
         </View>
 
@@ -195,5 +200,10 @@ class CreatePin extends Component {
     );
   }
 }
+
+/*eslint-disable*/
+CreatePin.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default CreatePin;

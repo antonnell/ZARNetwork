@@ -4,12 +4,17 @@ import CreatePin from './src/Screens/createPin';
 import Phone from './src/Screens/phoneVerify';
 import Login from './src/Screens/login';
 import Register from './src/Screens/register';
+import Home from './src/Screens/homePage';
 import RegistrationSuccess from './src/Screens/registrationSuccess';
+import TabBarView from './src/Screens/tabBar';
 
 const Routing = createStackNavigator(
   {
     CreatePin: {
       screen: CreatePin,
+    },
+    Home: {
+      screen: Home,
     },
     Phone: {
       screen: Phone,
@@ -22,6 +27,9 @@ const Routing = createStackNavigator(
     },
     RegistrationSuccess: {
       screen: RegistrationSuccess,
+    },
+    TabBarView: {
+      screen: TabBarView,
     },
   },
   {

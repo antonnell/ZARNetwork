@@ -1,59 +1,11 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { Text, Dimensions, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, Dimensions, TouchableOpacity, View } from 'react-native';
+import PropTypes from 'prop-types';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import OcticonsIcons from 'react-native-vector-icons/Octicons';
 
 const deviceWidth = Dimensions.get('window').width;
-
-// export default class GeneratePinCode extends Component {
-//   render() {
-//     return (
-//       <PINCode
-//         status={"choose"}
-//         bottomLeftComponent={<Text>Forgot PIN?</Text>}
-//         titleChoose={" "}
-//         subtitleChoose={"Enter your 4 digit Pin "}
-//         colorPassword="rgb(0, 169, 252)"
-//         styleLockScreenColorIcon="email-outline"
-//         stylePinCodeColorTitle="rgb(1,1,1)"
-//         stylePinCodeColorSubtitle="black"
-//         stylePinCodeColorTitleError="red"
-//         buttonDeleteText="Remove"
-//         textPasswordVisibleFamily="red"
-//         stylePinCodeButtonNumber="#fff"
-//         colorPasswordError="red"
-//         textPasswordVisibleSize={1}
-//         styleLockScreenSizeIcon={1}
-//         stylePinCodeTextButtonCircle={(style = { fontSize: 16, color: "#fff" })}
-//         stylePinCodeRowButtons={
-//           (style = {
-//             height: deviceHeight * 0.1
-
-//             //backgroundColor: "red"
-//           })
-//         }
-//         stylePinCodeButtonCircle={
-//           (style = {
-//             width: 50,
-//             height: 50,
-//             justifyContent: "center",
-//             alignItems: "center",
-//             borderRadius: 25,
-//             backgroundColor: "rgb(0,169,252)"
-//           })
-//         }
-//         titleConfirmFailed="4 digit PIN don't match"
-//         stylePinCodeHiddenPasswordSizeFull={10}
-//         stylePinCodeHiddenPasswordSizeEmpty={10}
-//         styleLockScreenColorIcon="blue"
-//         titleConfirm="Confirm your 4 digit PIN"
-//         stylePinCodeDeleteButtonColorHideUnderlay="rgb(0,0,0)"
-//         stylePinCodeDeleteButtonColorShowUnderlay="black"
-//         numbersButtonOverlayColor="rgb(0, 169, 252)"
-//       />
-//     );
-//   }
-// }
 
 export default class GeneratePinCode extends Component {
   constructor(props) {
@@ -106,29 +58,32 @@ export default class GeneratePinCode extends Component {
         </TouchableOpacity>
       ));
     }
+    return null;
   };
 
   render() {
     console.log(this.state, '123');
-    const { pinCodeObj } = this.props;
+    const { pinCodeObj, colorData } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <Text style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }}>
           {pinCodeObj.title}
         </Text>
-        <TextInput
+        <View
           style={{
+            width: 100,
+            flexDirection: 'row',
             height: 30,
-            borderWidth: 1,
-            width: 300,
-            textAlign: 'center',
-            letterSpacing: 10,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginLeft: deviceWidth * 0.25,
           }}
-          maxLength={4}
-          // secureTextEntry={true}
-          placeholder={pinCodeObj.text}
-          value={pinCodeObj.text}
-        />
+        >
+          <OcticonsIcons name="primitive-dot" size={20} color={colorData.firstDot} />
+          <OcticonsIcons name="primitive-dot" size={20} color={colorData.secondDot} />
+          <OcticonsIcons name="primitive-dot" size={20} color={colorData.thirdDot} />
+          <OcticonsIcons name="primitive-dot" size={20} color={colorData.fourthDot} />
+        </View>
         <View
           style={{
             width: deviceWidth * 0.8,
@@ -169,3 +124,10 @@ export default class GeneratePinCode extends Component {
     );
   }
 }
+
+/*eslint-disable */
+GeneratePinCode.propTypes = {
+  colorData: PropTypes.object,
+  pinCodeObj: PropTypes.object,
+  updateForm: PropTypes.func,
+};
