@@ -3,6 +3,10 @@ package com.fantom;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.tradle.react.UdpSocketsModule;
+import com.peel.react.TcpSocketsModule;
+import com.bitgo.randombytes.RandomBytesPackage;
+import com.peel.react.rnos.RNOSModule;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,6 +33,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new UdpSocketsModule(),
+            new TcpSocketsModule(),
+            new RandomBytesPackage(),
+            new RNOSModule(),
             new RNFirebasePackage(),
             new VectorIconsPackage(),
               new RNFirebaseAuthPackage(),
