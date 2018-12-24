@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from './cards';
+import ProfileInfo from '../../common/profileInfo';
+import DetailCard from '../../common/detailCard';
 import styles from './styles';
 import Wallet from './wallet';
 
@@ -34,29 +35,15 @@ export default class HomePage extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <View style={{ alignItems: 'center' }}>
-            <View
-              style={{
-                backgroundColor: '#030303',
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: deviceHeight * 0.05,
-              }}
-            >
-              <Text
-                style={{ textAlign: 'center', position: 'absolute', color: 'white', fontSize: 20 }}
-              >
-                JS
-              </Text>
-            </View>
-            <View style={{ marginTop: deviceHeight * 0.01 }}>
-              <Text style={{ fontSize: 17, alignSelf: 'center' }}>Jane Smith</Text>
-              <Text style={{ fontSize: 17 }}>janes@gmail.com</Text>
-            </View>
-          </View>
+          <ProfileInfo
+            circularAvatarTextStyle={styles.circularAvatarTextStyle}
+            profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
+            profileInfoTitleStyle={styles.profileInfoTitleStyle}
+            profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
+            subTitleText="jane@gmail.com"
+            titleText="Jane Smith"
+            circularAvatarText="JS"
+          />
           <View
             style={{
               marginTop: deviceHeight * 0.03,
@@ -92,8 +79,32 @@ export default class HomePage extends Component {
                 horizontal
                 showsHorizontalScrollIndicator={false}
               >
-                <Card />
-                <Card />
+                <DetailCard
+                  topTitleText="Micheal Smith"
+                  bottomTitleText="ETH 12.08082"
+                  topSubTitleText="2134 5678 9656 4756"
+                  bottomSubTitleText="Current Balance"
+                  detailCardMainViewStyle={styles.detailCardMainViewStyle}
+                  detailCardTopViewStyle={styles.detailCardTopViewStyle}
+                  detailCardTopTitleStyle={styles.detailCardTopTitleStyle}
+                  detailCardBottomViewStyle={styles.detailCardBottomViewStyle}
+                  detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
+                  detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
+                  detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
+                />
+                <DetailCard
+                  topTitleText="Micheal Smith"
+                  bottomTitleText="ETH 12.08082"
+                  topSubTitleText="2134 5678 9656 4756"
+                  bottomSubTitleText="Current Balance"
+                  detailCardMainViewStyle={styles.detailCardMainViewStyle}
+                  detailCardTopViewStyle={styles.detailCardTopViewStyle}
+                  detailCardTopTitleStyle={styles.detailCardTopTitleStyle}
+                  detailCardBottomViewStyle={styles.detailCardBottomViewStyle}
+                  detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
+                  detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
+                  detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
+                />
               </ScrollView>
             </View>
           </View>

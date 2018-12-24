@@ -30,7 +30,7 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   profileInfoMainViewStyle: {
-    backgroundColor: '#030303',
+    backgroundColor: 'rgb(0, 177, 251)',
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -51,36 +51,24 @@ export default StyleSheet.create({
   profileInfoSubTitleStyle: {
     fontSize: 15,
   },
-  detailCardMainViewStyle: {
-    backgroundColor: 'rgb(0,177,251)',
-    height: deviceHeight * 0.3,
-    width: deviceWidth * 0.7,
+  titleCardMainViewStyle: {
+    marginTop: deviceHeight * 0.1,
+    width: deviceWidth * 0.8,
+    // height: deviceHeight * 0.1,
+    padding: 15,
+    backgroundColor: 'rgb(0, 177, 251)',
+    alignSelf: 'center',
     borderRadius: 5,
-    marginLeft: 20,
+    flexDirection: 'row',
   },
-  detailCardTopViewStyle: {
-    backgroundColor: 'rgb(40,190,253)',
-    height: deviceHeight * 0.1,
-    padding: 20,
+  titleCardImageStyle: {
+    resizeMode: 'contain',
+    height: deviceHeight * 0.04,
+    width: deviceWidth * 0.1,
   },
-  detailCardTopTitleStyle: {
+  titleCardTextStyle: {
     color: 'white',
-    fontSize: 15,
-  },
-  detailCardSubTitleTextStyle: {
-    color: 'white',
-  },
-  detailCardBottomViewStyle: {
-    position: 'absolute',
-    right: 10,
-    bottom: 30,
-  },
-  detailCardBottomTitleTextStyle: {
-    color: 'white',
-    fontSize: 28,
-  },
-  detailCardBottomSubTitleTextStyle: {
-    color: 'white',
-    textAlign: 'right',
+    fontSize: 20,
+    marginLeft: 14,
   },
 });

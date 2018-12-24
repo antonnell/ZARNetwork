@@ -7,6 +7,8 @@ import Register from './src/Screens/register';
 import Home from './src/Screens/homePage';
 import RegistrationSuccess from './src/Screens/registrationSuccess';
 import TabBarView from './src/Screens/tabBar';
+import BeneficiaryDetails from './src/Screens/pay/beneficiaryDetails';
+import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
 
 const Routing = createStackNavigator(
   {
@@ -31,9 +33,15 @@ const Routing = createStackNavigator(
     TabBarView: {
       screen: TabBarView,
     },
+    BeneficiaryDetails: {
+      screen: BeneficiaryDetails,
+    },
+    PayBeneficiary: {
+      screen: PayBeneficiary,
+    },
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Home',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {

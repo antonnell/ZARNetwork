@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Animated } from 'react-native';
+import { View, TouchableOpacity, Animated, Image, Dimensions } from 'react-native';
 import { StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { TabView, SceneMap } from 'react-native-tab-view';
+import Home from '../../images/Home.png';
+import More from '../../images/More.png';
+import Exchange from '../../images/Exchange.png';
+import PayIcon from '../../images/Pay.png';
+import Receive from '../../images/Receive.png';
 import HomePage from '../homePage';
+import Pay from '../pay/index';
+
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
 const FirstRoute = () => <View style={{ flex: 1, backgroundColor: 'blue' }} />;
 const SecondRoute = () => <View style={{ flex: 1, backgroundColor: 'green' }} />;
@@ -37,11 +45,11 @@ export default class TabBarView extends Component {
     this.state = {
       index: 0,
       routes: [
-        { key: 'home', title: 'Home', icon: 'home' },
-        { key: 'exchange', title: 'Exchange', icon: 'home' },
-        { key: 'pay', title: 'Pay', icon: 'home' },
-        { key: 'receive', title: 'Receive', icon: 'home' },
-        { key: 'more', title: 'More', icon: 'dots-horizontal' },
+        { key: 'home', title: 'Home', icon: Home },
+        { key: 'exchange', title: 'Exchange', icon: Exchange },
+        { key: 'pay', title: 'Pay', icon: PayIcon },
+        { key: 'receive', title: 'Receive', icon: Receive },
+        { key: 'more', title: 'More', icon: More },
       ],
     };
   }
@@ -61,7 +69,11 @@ export default class TabBarView extends Component {
           return (
             <TouchableOpacity style={styles.tabItem} onPress={() => this.setState({ index: i })}>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <MaterialCommunityIcons name={route.icon} size={30} />
+                {/* <MaterialCommunityIcons name={route.icon} size={30} /> */}
+                <Image
+                  source={route.icon}
+                  style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+                />
                 <Animated.Text style={{ color }}>{route.title}</Animated.Text>
               </View>
             </TouchableOpacity>
@@ -74,7 +86,7 @@ export default class TabBarView extends Component {
   renderScene = SceneMap({
     home: HomePage,
     exchange: SecondRoute,
-    pay: FirstRoute,
+    pay: Pay,
     receive: SecondRoute,
     more: SecondRoute,
   });
