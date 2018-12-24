@@ -19,11 +19,17 @@ function getHeaderData(definition) {
     const store = getStore();
     const state = store.getState();
     xAccessToken =
-      state.userAuthReducer && state.userAuthReducer.xAccessToken
-        ? state.userAuthReducer.xAccessToken
+      state.userAuthReducer &&
+      state.userAuthReducer.userDetail &&
+      state.userAuthReducer.userDetail.xAccessToken
+        ? state.userAuthReducer.userDetail.xAccessToken
         : 'xaccesstoken';
     xKey =
-      state.userAuthReducer && state.userAuthReducer.xKey ? state.userAuthReducer.xKey : 'xkey';
+      state.userAuthReducer &&
+      state.userAuthReducer.userDetail &&
+      state.userAuthReducer.userDetail.xKey
+        ? state.userAuthReducer.userDetail.xKey
+        : 'xkey';
   }
 
   const header = {

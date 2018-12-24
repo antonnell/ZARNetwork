@@ -61,17 +61,13 @@ const getFormattedWalletData = (state, action) => {
  * @method userWalletReducer : Reducer for maintianing user wallet details.
  */
 const userWalletReducer = (state = defaultState, action) => {
-  console.log('userWalletReducer state : ', state);
-
   switch (action.type) {
     case `${CREATE_WALLET}${_SUCCESS}`: {
       const formattedData = getFormattedNewWalletData(state, action);
-      console.log('CREATE_WALLET formattedData : ', formattedData);
       return formattedData;
     }
     case `${WALLET_DETAIL}${_SUCCESS}`: {
       const formattedData = getFormattedWalletData(state, action);
-      console.log('WALLET_DETAIL formattedData : ', formattedData);
       return formattedData;
     }
     default:

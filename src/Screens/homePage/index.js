@@ -1,20 +1,59 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from './cards';
 import styles from './styles';
 import Wallet from './wallet';
 
+import { getAccountType } from '../../controllers/api/accountType';
+import { getWalletDetail } from '../../controllers/api/userWallet';
+
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  componentDidMount() {
+    if (getAccountType) {
+      getAccountType();
+    }
+    if (getWalletDetail) {
+      getWalletDetail();
+    }
+  }
+
+  renderAccountCards() {
+    const { userWalletDetail, accountTypeList } = this.props;
+    const userWalletLength = userWalletDetail.length;
+    const walletList = [];
+
+    if (userWalletDetail && userWalletLength > 0) {
+      for (let index = 0; index < userWalletLength; index += 1) {
+        let walletType = '-';
+        if (accountTypeList && accountTypeList.length > 0) {
+          const accTypeLen = accountTypeList.length;
+          for (let i = 0; i < accTypeLen; i += 1) {
+            if (accountTypeList[i].uuid === userWalletDetail[index].type_uuid) {
+              walletType = accountTypeList[i].symbol ? accountTypeList[i].symbol : '-';
+            }
+          }
+        }
+
+        walletList.push(<Card account={userWalletDetail[index]} walletType={walletType} />);
+      }
+    }
+    return walletList;
+  }
+
   render() {
+    const { userDetail } = this.props;
+    const userIcon = userDetail.email ? userDetail.email.charAt(0).toUpperCase() : '--';
     // const { navigation } = this.props;
     return (
       <View style={styles.Container}>
@@ -49,12 +88,12 @@ export default class HomePage extends Component {
               <Text
                 style={{ textAlign: 'center', position: 'absolute', color: 'white', fontSize: 20 }}
               >
-                JS
+                {userIcon}
               </Text>
             </View>
             <View style={{ marginTop: deviceHeight * 0.01 }}>
-              <Text style={{ fontSize: 17, alignSelf: 'center' }}>Jane Smith</Text>
-              <Text style={{ fontSize: 17 }}>janes@gmail.com</Text>
+              {/* <Text style={{ fontSize: 17, alignSelf: 'center' }}>Jane Smith</Text> */}
+              <Text style={{ fontSize: 17 }}>{userDetail.email}</Text>
             </View>
           </View>
           <View
@@ -92,8 +131,7 @@ export default class HomePage extends Component {
                 horizontal
                 showsHorizontalScrollIndicator={false}
               >
-                <Card />
-                <Card />
+                {this.renderAccountCards()}
               </ScrollView>
             </View>
           </View>
@@ -102,3 +140,17 @@ export default class HomePage extends Component {
     );
   }
 }
+/*eslint-disable*/
+HomePage.propTypes = {
+  userDetail: PropTypes.object,
+  userWalletDetail: PropTypes.array,
+  accountTypeList: PropTypes.array,
+};
+
+const mapStateToProps = state => ({
+  userDetail: state.userAuthReducer.userDetail,
+  accountTypeList: state.supportedAccTypeReducer.types,
+  userWalletDetail: state.userWalletReducer.wallets,
+});
+
+export default connect(mapStateToProps)(HomePage);

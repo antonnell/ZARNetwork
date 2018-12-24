@@ -3,13 +3,15 @@ import { decryptPayload } from '../../utility/decryption';
 
 const sha256 = require('sha256');
 
-const defaultState = {};
+const defaultState = {
+  userDetail: [],
+};
 
 /**
  * @method getFormattedAuthData : To format result of authentication api (register and login).
  */
 
-const getFormattedAuthData = action => {
+const getFormattedAuthData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
 
@@ -50,14 +52,15 @@ const getFormattedAuthData = action => {
               const xKey = sha256(payload.email);
               userAuthDetails.xKey = xKey;
             }
-            return userAuthDetails;
+            return Object.assign({}, state, {
+              userDetail: userAuthDetails,
+            });
           }
         }
       }
-      return {};
     }
   }
-  return {};
+  return state;
 };
 
 /**
@@ -66,19 +69,13 @@ const getFormattedAuthData = action => {
 const userAuthReducer = (state = defaultState, action) => {
   switch (action.type) {
     case `${REGISTER}${_SUCCESS}`: {
-      const formattedData = getFormattedAuthData(action);
+      const formattedData = getFormattedAuthData(state, action);
 
-      return {
-        ...state,
-        ...formattedData,
-      };
+      return formattedData;
     }
     case `${LOGIN}${_SUCCESS}`: {
-      const formattedData = getFormattedAuthData(action);
-      return {
-        ...state,
-        ...formattedData,
-      };
+      const formattedData = getFormattedAuthData(state, action);
+      return formattedData;
     }
     default:
       return state;

@@ -10,6 +10,7 @@ import * as actions from '../base/constants';
  *  otherwise retrieve all supported account types.
  *
  */
+// eslint-disable-next-line import/prefer-default-export
 export const supportedAccountType = data => {
   const typeUuid = data && data.type_uuid ? data.type_uuid : '';
   let url = actions.supportedAccountTypeUrl;

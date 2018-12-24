@@ -1,12 +1,14 @@
 import { SUPPORTED_ACCOUNT_TYPE, _SUCCESS } from '../base/constants';
 import { decryptPayload } from '../../utility/decryption';
 
-const defaultState = [];
+const defaultState = {
+  types: [],
+};
 
 /**
  * @method getFormattedTypeData : To format result of supported account type api.
  */
-const getFormattedTypeData = action => {
+const getFormattedTypeData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
 
@@ -21,13 +23,14 @@ const getFormattedTypeData = action => {
           } else {
             supportedAccTypeDetail = payload;
           }
-          return supportedAccTypeDetail;
+          return Object.assign({}, state, {
+            types: supportedAccTypeDetail,
+          });
         }
       }
-      return [];
     }
   }
-  return [];
+  return state;
 };
 
 /**
@@ -36,11 +39,8 @@ const getFormattedTypeData = action => {
 const supportedAccTypeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case `${SUPPORTED_ACCOUNT_TYPE}${_SUCCESS}`: {
-      const formattedData = getFormattedTypeData(action);
-      return {
-        ...state,
-        ...formattedData,
-      };
+      const formattedData = getFormattedTypeData(state, action);
+      return formattedData;
     }
     default:
       return state;

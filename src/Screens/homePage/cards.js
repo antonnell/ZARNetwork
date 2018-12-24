@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -7,6 +8,8 @@ const deviceWidth = Dimensions.get('window').width;
 // eslint-disable-next-line react/prefer-stateless-function
 export default class Card extends Component {
   render() {
+    const { walletType, account } = this.props;
+    const { balance, description, number } = account;
     return (
       <View
         style={{
@@ -20,8 +23,8 @@ export default class Card extends Component {
         <View
           style={{ backgroundColor: 'rgb(40,190,253)', height: deviceHeight * 0.1, padding: 20 }}
         >
-          <Text style={{ color: 'white', fontSize: 15 }}>Micheal Smith</Text>
-          <Text style={{ color: 'white' }}>2134 5678 9656 4756</Text>
+          <Text style={{ color: 'white', fontSize: 15 }}>{description}</Text>
+          <Text style={{ color: 'white' }}>{number}</Text>
         </View>
         <View
           style={{
@@ -30,10 +33,23 @@ export default class Card extends Component {
             bottom: 30,
           }}
         >
-          <Text style={{ color: 'white', fontSize: 28 }}>ETH 12.08082</Text>
+          <Text style={{ color: 'white', fontSize: 28 }}>
+            {walletType} {balance}
+          </Text>
           <Text style={{ color: 'white', textAlign: 'right' }}>Current Balance</Text>
         </View>
       </View>
     );
   }
 }
+
+Card.defaultProps = {
+  walletType: '-',
+  account: {},
+};
+
+Card.propTypes = {
+  walletType: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  account: PropTypes.object,
+};

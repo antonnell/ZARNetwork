@@ -54,6 +54,7 @@ class Login extends Component {
   handleUserLogin() {
     console.log('handleUserLogin clicked');
     const { email, password } = this.state;
+    const { navigation } = this.props;
 
     if (email && email !== '' && password && password !== '') {
       const payload = {
@@ -65,6 +66,10 @@ class Login extends Component {
         login(payload)
           .then(result => {
             console.log('result loginUserAction : ', result);
+            if (result && result.payload && result.payload.status === 200) {
+              console.log('go to home : ');
+              navigation.navigate('Home');
+            }
           })
           .catch(error => {
             console.log('error loginUserAction : ', error);
@@ -74,10 +79,11 @@ class Login extends Component {
   }
 
   render() {
-    const { authDetail, errDetail } = this.props;
+    const { authDetail, errDetail, navigation } = this.props;
     console.log('authDetail in props : ', authDetail);
     console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
+
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -126,7 +132,7 @@ class Login extends Component {
         </View>
         <TouchableOpacity
           style={styles.bottomTextViewStyle}
-          onPress={() => this.props.navigation.navigate('Register')}
+          onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
         </TouchableOpacity>
@@ -138,14 +144,14 @@ Login.defaultProps = {
   authDetail: {},
   errDetail: {},
 };
+/*eslint-disable*/
 Login.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   authDetail: PropTypes.object,
-  // eslint-disable-next-line react/forbid-prop-types
   errDetail: PropTypes.object,
+  navigation: PropTypes.object,
 };
 const mapStateToProps = state => ({
-  authDetail: state.userAuthReducer,
+  authDetail: state.userAuthReducer.userDetail,
   errDetail: state.errorHandlerReducer,
 });
 

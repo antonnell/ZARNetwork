@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { dispatch } from '../../store';
 import { supportedAccountType } from '../redux/types/action';
 

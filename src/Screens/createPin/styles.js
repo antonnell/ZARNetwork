@@ -41,7 +41,7 @@ export default StyleSheet.create({
   dialerView: {
     marginTop: 10,
     position: 'absolute',
-    marginTop: deviceHeight * 0.1,
+    // marginTop: deviceHeight * 0.1,
     height: deviceHeight * 0.6,
     alignItems: 'center',
   },
