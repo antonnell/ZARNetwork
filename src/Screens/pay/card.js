@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
@@ -11,10 +12,7 @@ export default class Card extends Component {
     const { text, icon } = this.props;
     return (
       <View style={{ flexDirection: 'row', margin: deviceWidth * 0.05 }}>
-        <Image
-          source={icon}
-          style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
-        />
+        <Image source={icon} style={{ resizeMode: 'contain', height: deviceHeight * 0.03 }} />
         <Text style={styles.cardTextStyle}>{text}</Text>
         <TouchableOpacity>
           <MaterialIcons
@@ -28,3 +26,8 @@ export default class Card extends Component {
     );
   }
 }
+/*eslint-disable*/
+Card.propTypes = {
+  text: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};

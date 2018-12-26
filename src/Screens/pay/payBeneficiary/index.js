@@ -1,14 +1,19 @@
+// Library
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// Style
 import styles from './styles';
+// components
 import ToggleCard from '../../../common/ToggleCard';
+import Button from '../../../common/Button';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import TitleCard from '../../../common/titleCard';
-import AccountType from '../../../images/AccountType.png';
-
 import ProfileInfo from '../../../common/profileInfo';
 
+import AccountType from '../../../images/AccountType.png';
+// constants
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
@@ -18,12 +23,18 @@ export default class PayBeneficiary extends Component {
     this.state = {
       accountNumber: '',
       reference: '',
+      normalPaymentToggle: false,
+      futurePaymentToggle: false,
+      payBtnClicked: false,
     };
     this.updateForm = this.updateForm.bind(this);
   }
 
-  updateForm(value, type) {
-    this.setState({ [type]: value });
+  onPayBtnClick() {
+    const { payBtnClicked } = this.state;
+    this.setState({
+      payBtnClicked: !payBtnClicked,
+    });
   }
 
   validate(type) {
@@ -39,10 +50,28 @@ export default class PayBeneficiary extends Component {
     }
   }
 
+  updateToggleValue(type) {
+    const { normalPaymentToggle, futurePaymentToggle } = this.state;
+    if (type === 'normalPayment') {
+      this.setState({ normalPaymentToggle: !normalPaymentToggle });
+    } else if (type === 'futurePayment') {
+      this.setState({ futurePaymentToggle: !futurePaymentToggle });
+    }
+  }
+
+  updateForm(value, type) {
+    this.setState({ [type]: value });
+  }
+
   render() {
-    // eslint-disable-next-line react/prop-types
     const { navigation } = this.props;
-    const { accountNumber, reference } = this.state;
+    const {
+      accountNumber,
+      reference,
+      normalPaymentToggle,
+      futurePaymentToggle,
+      payBtnClicked,
+    } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -121,20 +150,43 @@ export default class PayBeneficiary extends Component {
             titleMaterialIconStyle={styles.notificationMaterialIconStyle}
             text="Payment Notification: none"
           />
-          <View
-            style={{
-              marginTop: deviceHeight * 0.05,
-              backgroundColor: 'rgba(127,127,127,0.15)',
-              alignSelf: 'center',
-              width: deviceWidth * 0.8,
-            }}
-          >
-            <ToggleCard textVal="Normal Payment" textStyle={{ fontSize: 14 }} />
-            <View style={{ height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
-            <ToggleCard textVal="Normal Payment" textStyle={{ fontSize: 14 }} />
+          {/* Toggle container */}
+          <View style={styles.toggleContainerStyle}>
+            <ToggleCard
+              textVal="Normal Payment"
+              textStyle={styles.toggleTextStyle}
+              toggleState={normalPaymentToggle}
+              updateToggleClick={() => {
+                this.updateToggleValue('normalPayment');
+              }}
+            />
+            <View style={styles.separatorStyle} />
+            <ToggleCard
+              textVal="Future Payment"
+              textStyle={styles.toggleTextStyle}
+              toggleState={futurePaymentToggle}
+              updateToggleClick={() => {
+                this.updateToggleValue('futurePayment');
+              }}
+            />
           </View>
+          <View style={{ marginTop: deviceHeight * 0.075 }}>
+            <Button
+              name="Pay"
+              isClickable={!payBtnClicked}
+              callMethod={() => {
+                this.onPayBtnClick();
+              }}
+            />
+          </View>
+
+          <View style={{ height: deviceHeight * 0.1 }} />
         </ScrollView>
       </View>
     );
   }
 }
+/*eslint-disable*/
+PayBeneficiary.propTypes = {
+  navigation: PropTypes.object,
+};

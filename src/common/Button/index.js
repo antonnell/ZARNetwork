@@ -1,10 +1,12 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 export default class DesignButton extends Component {
   render() {
-    const { isClickable } = this.props;
+    const { isClickable, callMethod, name } = this.props;
     let setButtonStyle = {
       ...styles.loginBtn,
     };
@@ -16,12 +18,8 @@ export default class DesignButton extends Component {
     }
 
     return (
-      <TouchableOpacity
-        style={setButtonStyle}
-        onPress={this.props.callMethod}
-        disabled={!this.props.isClickable}
-      >
-        <Text style={styles.loginBtnText}>{this.props.name}</Text>
+      <TouchableOpacity style={setButtonStyle} onPress={callMethod} disabled={!isClickable}>
+        <Text style={styles.loginBtnText}>{name}</Text>
       </TouchableOpacity>
     );
   }
