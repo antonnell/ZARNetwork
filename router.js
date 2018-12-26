@@ -10,6 +10,8 @@ import TabBarView from './src/Screens/tabBar';
 import BeneficiaryDetails from './src/Screens/pay/beneficiaryDetails';
 import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
 import CreateWallet from './src/Screens/createWallet';
+import PaymentNotification from './src/Screens/paymentNotification';
+import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 
 const Routing = createStackNavigator(
   {
@@ -42,6 +44,12 @@ const Routing = createStackNavigator(
     },
     CreateWallet: {
       screen: CreateWallet,
+    },
+    ConfirmPayment: {
+      screen: ConfirmPayment,
+    },
+    PaymentNotification: {
+      screen: PaymentNotification,
     },
   },
   {

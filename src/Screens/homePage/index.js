@@ -42,6 +42,7 @@ class HomePage extends Component {
 
     if (userWalletDetail && userWalletLength > 0) {
       for (let index = 0; index < userWalletLength; index += 1) {
+        // eslint-disable-next-line no-unused-vars
         let walletType = '-';
         if (accountTypeList && accountTypeList.length > 0) {
           const accTypeLen = accountTypeList.length;

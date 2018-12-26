@@ -19,6 +19,7 @@ export default StyleSheet.create({
   loginBtnText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
+    fontFamily: 'Roboto-Medium',
   },
 });

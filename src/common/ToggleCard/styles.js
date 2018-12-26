@@ -1,21 +1,19 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   mainContainer: {
-    width: deviceWidth,
+    paddingHorizontal: deviceHeight * 0.04,
+    paddingVertical: deviceHeight * 0.02,
     backgroundColor: 'transparent',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: deviceHeight * 0.08,
   },
-  titleText: {
-    width: deviceWidth * 0.8,
+  textStyle: {
     textAlign: 'center',
     fontSize: 18,
-    color: 'rgb(0,177,251)',
+    color: 'rgb(3,3,3)',
     fontWeight: '600',
-    fontFamily: 'Roboto-Medium',
   },
 });

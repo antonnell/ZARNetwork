@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -33,14 +33,17 @@ class Login extends Component {
   }
 
   validate(type) {
+    const { email } = this.state;
     if (type === 'email') {
       this.setState({
         email: '',
       });
-    } else if (type === 'password')
+    } else if (type === 'password' && email === '') {
+      Alert.alert('Error', 'Enter Email first');
       this.setState({
         password: '',
       });
+    }
   }
 
   /**

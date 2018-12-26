@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, TouchableOpacity, Image } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, StatusBar, Dimensions } from 'react-native';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import DesignButton from '../../../common/Button';
 import TitleCard from '../../../common/titleCard';
+import TitleHeader from '../../../common/TitleHeader';
 import AccountType from '../../../images/AccountType.png';
 import styles from './styles';
 
@@ -45,20 +45,12 @@ export default class BeneficiaryDetails extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
     const { email, accountNumber, reference } = this.state;
     const isShowRightText = true;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <View style={styles.headerStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>BENEFICIARY DETIALS</Text>
-          </View>
-        </View>
+        <TitleHeader iconName="keyboard-arrow-left" title="BENEFICIARY DETIALS" />
         <TitleCard
           icon={AccountType}
           titleCardMainViewStyle={styles.titleCardMainViewStyle}
