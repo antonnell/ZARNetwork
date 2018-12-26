@@ -54,3 +54,22 @@ const AppContainer = createAppContainer(Routing);
 const Router = () => <AppContainer />;
 
 export default Router;
+
+// <ToggleButton
+// defaultValue={toggleState}
+// onChangeValue={() => this.updateToggleClick()}
+// />
+// updateToggleClick() {
+//   const { toggleState } = this.state,
+//       { SendNotificationStatus } = this.props,
+//       data = {
+//           deviceId: DeviceInfo.getUniqueID(),
+//           notificationStatus: toggleState,
+//       };
+//   this.setState({
+//       toggleState: !toggleState,
+//   });
+//   SendNotificationStatus(data).then(res => {
+//       console.log(res, 'resData');
+//   });
+// }

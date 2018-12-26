@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
+import ToggleCard from '../../../common/ToggleCard';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import TitleCard from '../../../common/titleCard';
 import AccountType from '../../../images/AccountType.png';
@@ -39,6 +40,7 @@ export default class PayBeneficiary extends Component {
   }
 
   render() {
+    // eslint-disable-next-line react/prop-types
     const { navigation } = this.props;
     const { accountNumber, reference } = this.state;
     return (
@@ -119,6 +121,18 @@ export default class PayBeneficiary extends Component {
             titleMaterialIconStyle={styles.notificationMaterialIconStyle}
             text="Payment Notification: none"
           />
+          <View
+            style={{
+              marginTop: deviceHeight * 0.05,
+              backgroundColor: 'rgba(127,127,127,0.15)',
+              alignSelf: 'center',
+              width: deviceWidth * 0.8,
+            }}
+          >
+            <ToggleCard textVal="Normal Payment" textStyle={{ fontSize: 14 }} />
+            <View style={{ height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
+            <ToggleCard textVal="Normal Payment" textStyle={{ fontSize: 14 }} />
+          </View>
         </ScrollView>
       </View>
     );
