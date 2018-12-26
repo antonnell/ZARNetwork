@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import ProfileInfo from '../../common/profileInfo';
 import DetailCard from '../../common/detailCard';
@@ -11,6 +10,11 @@ import Wallet from './wallet';
 
 import { getAccountType } from '../../controllers/api/accountType';
 import { getWalletDetail } from '../../controllers/api/userWallet';
+import { getFirstCharOfString } from '../../utility/index';
+
+import addAccountIcon from '../../images/addAccountIcon.png';
+import paySomeoneIcon from '../../images/paySomeoneIcon.png';
+import receiveIcon from '../../images/receiveIcon.png';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -19,6 +23,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.renderCreateAccount = this.renderCreateAccount.bind(this);
   }
 
   componentDidMount() {
@@ -46,12 +51,12 @@ class HomePage extends Component {
             }
           }
         }
+
         walletList.push(
           <DetailCard
-            // account={userWalletDetail[index]} walletType={walletType}
-            topTitleText="Micheal Smith"
-            bottomTitleText="ETH 12.08082"
-            topSubTitleText="2134 5678 9656 4756"
+            key={`${index}_card`}
+            account={userWalletDetail[index]}
+            walletType={walletType}
             bottomSubTitleText="Current Balance"
             detailCardMainViewStyle={styles.detailCardMainViewStyle}
             detailCardTopViewStyle={styles.detailCardTopViewStyle}
@@ -67,11 +72,22 @@ class HomePage extends Component {
     return walletList;
   }
 
+  /**
+   * @method renderCreateAccount : To render create account screen.
+   */
+  renderCreateAccount() {
+    const { navigation } = this.props;
+    if (navigation && navigation.navigate) {
+      navigation.navigate('CreateWallet');
+    }
+  }
+
   render() {
     const { userDetail } = this.props;
-    const { navigation } = this.props;
-    const userIcon = userDetail.email ? userDetail.email.charAt(0).toUpperCase() : '--';
-    // const { navigation } = this.props;
+    let userIcon = '--';
+    if (userDetail.email) {
+      userIcon = getFirstCharOfString(userDetail.email);
+    }
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -108,9 +124,13 @@ class HomePage extends Component {
               height: deviceHeight * 0.1,
             }}
           >
-            <Wallet text="Pay Someone" />
-            <Wallet text="Receive" />
-            <Wallet text="Add Account" />
+            <Wallet text="Pay Someone" icon={paySomeoneIcon} />
+            <Wallet text="Receive" icon={receiveIcon} />
+            <Wallet
+              text="Add Account"
+              handleWallet={this.renderCreateAccount}
+              icon={addAccountIcon}
+            />
           </View>
           <View
             style={{
@@ -148,6 +168,7 @@ HomePage.propTypes = {
   userDetail: PropTypes.object,
   userWalletDetail: PropTypes.array,
   accountTypeList: PropTypes.array,
+  navigation: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

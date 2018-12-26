@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 
 const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class ProfileInfo extends Component {
@@ -11,8 +11,8 @@ export default class ProfileInfo extends Component {
       profileInfoMainViewStyle,
       circularAvatarTextStyle,
       profileInfoSubTitleStyle,
-      profileInfoTitleStyle,
-      titleText,
+      // profileInfoTitleStyle,
+      // titleText,
       subTitleText,
       circularAvatarText,
     } = this.props;
@@ -22,7 +22,7 @@ export default class ProfileInfo extends Component {
           <Text style={circularAvatarTextStyle}>{circularAvatarText}</Text>
         </View>
         <View style={{ marginTop: deviceHeight * 0.01 }}>
-          <Text style={profileInfoTitleStyle}>{titleText}</Text>
+          {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
           <Text style={profileInfoSubTitleStyle}>{subTitleText}</Text>
         </View>
       </View>

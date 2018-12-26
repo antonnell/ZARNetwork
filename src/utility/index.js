@@ -65,3 +65,11 @@ export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   }
   return colorData;
 }
+
+export function getFirstCharOfString(str) {
+  let char = '--';
+  if (str.length > 0) {
+    char = str.charAt(0).toUpperCase();
+  }
+  return char;
+}

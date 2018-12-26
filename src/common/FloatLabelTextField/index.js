@@ -1,4 +1,4 @@
-/* eslint-disable react/no-multi-comp */
+/* eslint-disable */
 // libraries
 import React, { Component } from 'react';
 import {
@@ -187,6 +187,13 @@ class FloatLabelTextField extends Component {
       });
       updateForm(value, type);
     }
+    if (type === 'accountName') {
+      this.setState({
+        text: value,
+        error: '',
+      });
+      updateForm(value, type);
+    }
   }
 
   setFocus() {
@@ -216,7 +223,7 @@ class FloatLabelTextField extends Component {
   }
 
   validate(value, type) {
-    const { email } = this.state;
+    const { email, text } = this.state;
     const { validate } = this.props;
     if (type === 'email') {
       const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -241,6 +248,11 @@ class FloatLabelTextField extends Component {
       validate(type);
     } else if (type === 'account') {
       validate(type);
+    } else if (type === 'accountName') {
+      if (text === '') {
+        Alert.alert('Error', 'Account name cannot be empty');
+        validate(type);
+      }
     } else {
       Alert.alert('Error', 'Enter Email First');
       validate(type);
@@ -331,16 +343,70 @@ class FloatLabelTextField extends Component {
     );
   }
 
+  accountNameField() {
+    const { text } = this.state;
+    const {
+      placeholder,
+      autoCorrect,
+      inputBackgroundColor,
+      textFieldSize,
+      defaultValue,
+      value,
+      maxLength,
+      type,
+    } = this.props;
+    return (
+      <View style={styles.container}>
+        <View style={styles.viewContainer}>
+          <View style={[styles.fieldContainer, this.withBorder()]}>
+            <FloatingLabel visible={text}>
+              <Text style={[styles.fieldLabel, this.labelStyle()]}>
+                {this.placeholderValue(placeholder)}
+              </Text>
+            </FloatingLabel>
+            <TextFieldHolder withValue={text}>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+
+                <TextInput
+                  {...this.props}
+                  ref="input"
+                  autoCorrect={autoCorrect}
+                  autoCapitalize="none"
+                  underlineColorAndroid="transparent"
+                  style={[
+                    styles.valueText,
+                    {
+                      backgroundColor: inputBackgroundColor,
+                      width: textFieldSize,
+                    },
+                  ]}
+                  defaultValue={defaultValue}
+                  value={value}
+                  maxLength={maxLength}
+                  onFocus={() => this.setFocus()}
+                  onBlur={() => this.unsetFocus()}
+                  onChangeText={text1 => this.onChangeTextHandler(text1, type)}
+                  placeholderTextColor="grey"
+                  keyboardType="default"
+                  onEndEditing={() => this.onEndEditing(text, type)}
+                />
+              </View>
+            </TextFieldHolder>
+          </View>
+        </View>
+        <View style={styles.underlineStyling} />
+      </View>
+    );
+  }
+
   iconDisplay() {
     const { type } = this.props;
     if (type && type !== '' && type !== undefined) {
       if (type === 'email') {
         return (
           <View>
-            <Image
-              source={Email}
-              style={{ resizeMode: 'contain', height: deviceHeight * 0.02, color: 'black' }}
-            />
+            <Image source={Email} style={{ resizeMode: 'contain', height: deviceHeight * 0.02 }} />
           </View>
         );
       }
@@ -470,7 +536,7 @@ class FloatLabelTextField extends Component {
                 <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
                   <Image
                     source={Password}
-                    style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+                    style={{ resizeMode: 'contain', height: deviceHeight * 0.03 }}
                   />
                 </TouchableOpacity>
                 <TextInput
@@ -651,6 +717,9 @@ class FloatLabelTextField extends Component {
       }
       if (type === 'reference') {
         return <View>{this.refernceField()}</View>;
+      }
+      if (type === 'accountName') {
+        return <View>{this.accountNameField()}</View>;
       }
     }
   }

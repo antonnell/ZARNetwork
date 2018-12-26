@@ -82,4 +82,19 @@ export default StyleSheet.create({
     color: 'white',
     textAlign: 'right',
   },
+  walletOptionContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  walletOptionIconViewStyle: {
+    backgroundColor: 'rgb(0, 169, 252)',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  walletOptionTextStyle: { fontSize: 12, marginTop: deviceHeight * 0.01 },
+  walletIconImgStyle: { width: 20, height: 20 },
+  walletIconTextStyle: { color: 'white', fontWeight: 'bold' },
 });
