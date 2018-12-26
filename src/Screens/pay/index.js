@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
+import { View, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import Card from './card';
 import RecentCard from './recentCard';
+import TitleText from '../../common/TitleText';
 import AllBeneficiary from '../../images/AllBeneficiary.png';
 import PayNewBeneficiary from '../../images/PayNewBeneficiary.png';
 
@@ -46,6 +47,7 @@ export default class Pay extends Component {
         subTitle: 'ABSA BANK | 13425386475',
       },
     ];
+    // eslint-disable-next-line react/prop-types
     const { navigation } = this.props;
     return (
       <View style={styles.Container}>
@@ -75,18 +77,14 @@ export default class Pay extends Component {
           <View style={styles.seperaterStyle} />
           <Card navigation={navigation} text="View all Beneficiary" icon={AllBeneficiary} />
         </View>
+        <TitleText
+          titleText="Recent"
+          mainStyle={styles.mainStyle}
+          textStyle={styles.recentTextStyle}
+        />
         <View
           style={{
-            marginTop: deviceHeight * 0.05,
-            alignSelf: 'center',
-            width: deviceWidth * 0.9,
-          }}
-        >
-          <Text style={{ fontSize: 20, textAlign: 'left' }}>Recent</Text>
-        </View>
-        <View
-          style={{
-            marginTop: deviceHeight * 0.05,
+            marginTop: deviceHeight * 0.02,
           }}
         >
           <ScrollView
@@ -96,7 +94,7 @@ export default class Pay extends Component {
             }}
             showsVerticalScrollIndicator={false}
           >
-            {arr.map((data, index) => (
+            {arr.map(data => (
               <RecentCard header={data.header} title={data.title} subtitle={data.subTitle} />
             ))}
           </ScrollView>

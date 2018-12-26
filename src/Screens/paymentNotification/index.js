@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, StatusBar, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -9,7 +9,6 @@ import TitleHeader from '../../common/TitleHeader';
 import TitleText from '../../common/TitleText';
 
 const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 class PaymentNotification extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class PaymentNotification extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
   // authDetail: state.userAuthReducer,
   // errDetail: state.errorHandlerReducer,
 });

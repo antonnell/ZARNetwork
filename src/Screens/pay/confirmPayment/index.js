@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, StatusBar, Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
 import DetailCard from '../../../common/detailCard';
 import AccountType from '../../../images/AccountType.png';
 import ProfileInfo from '../../../common/profileInfo';
 import DesignButton from '../../../common/Button';
+import TitleHeader from '../../../common/TitleHeader';
 import Card from './card';
 
 const deviceHeight = Dimensions.get('window').height;
@@ -26,14 +26,7 @@ export default class ConfirmPayment extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         {/* header */}
-        <View style={styles.headerStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>CONFIRM PAYMENT</Text>
-          </View>
-        </View>
+        <TitleHeader iconName="keyboard-arrow-left" title="CONFIRM PAYMENT" />
 
         <ScrollView
           style={{

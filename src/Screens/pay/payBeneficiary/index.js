@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 import styles from './styles';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
+import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import AccountType from '../../../images/AccountType.png';
 import ProfileInfo from '../../../common/profileInfo';
@@ -39,21 +39,12 @@ export default class PayBeneficiary extends Component {
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { navigation } = this.props;
     const { accountNumber, reference } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
+        <TitleHeader iconName="keyboard-arrow-left" title="PAY BENEFICIARY" />
         {/* header */}
-        <View style={styles.headerStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>PAY BENEFICIARY</Text>
-          </View>
-        </View>
-
         <ScrollView
           style={{
             height: deviceHeight,

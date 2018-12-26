@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -37,5 +36,15 @@ export default StyleSheet.create({
   rightTextValueStyle: {
     color: 'rgb(0, 177, 251)',
     fontSize: 15,
+  },
+  mainStyle: {
+    width: deviceWidth,
+    marginTop: deviceHeight * 0.05,
+  },
+  recentTextStyle: {
+    marginLeft: deviceWidth * 0.1,
+    fontSize: 16,
+    color: 'rgb(3,3,3)',
+    fontWeight: '600',
   },
 });
