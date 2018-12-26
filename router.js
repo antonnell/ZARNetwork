@@ -9,6 +9,7 @@ import RegistrationSuccess from './src/Screens/registrationSuccess';
 import TabBarView from './src/Screens/tabBar';
 import BeneficiaryDetails from './src/Screens/pay/beneficiaryDetails';
 import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
+import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 
 const Routing = createStackNavigator(
   {
@@ -39,9 +40,12 @@ const Routing = createStackNavigator(
     PayBeneficiary: {
       screen: PayBeneficiary,
     },
+    ConfirmPayment: {
+      screen: ConfirmPayment,
+    },
   },
   {
-    initialRouteName: 'PayBeneficiary',
+    initialRouteName: 'ConfirmPayment',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
