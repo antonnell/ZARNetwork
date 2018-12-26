@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import styles from './styles';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { View, Text } from 'react-native';
 
 export default class TitleText extends React.PureComponent {
   render() {
@@ -14,3 +13,14 @@ export default class TitleText extends React.PureComponent {
     );
   }
 }
+TitleText.defaultProps = {
+  textStyle: {},
+  titleText: 'Recent',
+  mainStyle: {},
+};
+/*eslint-disable*/
+TitleText.propTypes = {
+  textStyle: PropTypes.object,
+  titleText: PropTypes.string,
+  mainStyle: PropTypes.object,
+};

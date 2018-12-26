@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
@@ -35,3 +36,15 @@ export default class TitleHeader extends Component {
     );
   }
 }
+TitleHeader.defaultProps = {
+  title: 'Pay',
+  iconName: 'person-outline',
+  titleStyle: {},
+};
+/*eslint-disable*/
+TitleHeader.propTypes = {
+  title: PropTypes.string,
+  iconName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onBtnPress: PropTypes.func,
+  titleStyle: PropTypes.object,
+};

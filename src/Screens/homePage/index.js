@@ -37,6 +37,7 @@ class HomePage extends Component {
 
     if (userWalletDetail && userWalletLength > 0) {
       for (let index = 0; index < userWalletLength; index += 1) {
+        // eslint-disable-next-line no-unused-vars
         let walletType = '-';
         if (accountTypeList && accountTypeList.length > 0) {
           const accTypeLen = accountTypeList.length;
@@ -69,9 +70,7 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
-    const { navigation } = this.props;
     const userIcon = userDetail.email ? userDetail.email.charAt(0).toUpperCase() : '--';
-    // const { navigation } = this.props;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />

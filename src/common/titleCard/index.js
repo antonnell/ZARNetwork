@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -29,3 +30,20 @@ export default class TitleCard extends Component {
     );
   }
 }
+TitleCard.defaultProps = {
+  icon: 'person-outline',
+  text: 'ETH Wallet',
+  titleCardMainViewStyle: {},
+  titleCardImageStyle: {},
+  titleCardTextStyle: {},
+  titleMaterialIconStyle: {},
+};
+/*eslint-disable*/
+TitleCard.propTypes = {
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  text: PropTypes.string,
+  titleCardMainViewStyle: PropTypes.object,
+  titleCardImageStyle: PropTypes.object,
+  titleCardTextStyle: PropTypes.object,
+  titleMaterialIconStyle: PropTypes.object,
+};

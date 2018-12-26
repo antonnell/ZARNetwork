@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
+import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class DetailCard extends Component {
@@ -97,3 +97,39 @@ export default class DetailCard extends Component {
     );
   }
 }
+DetailCard.defaultProps = {
+  isSubTitle: false,
+  isIcon: false,
+  icon: 'person-outline',
+  topTitleText: 'User Name',
+  topSubTitleText: 'amount',
+  imageStyle: {},
+  detailCardSubTitleTextStyle: {},
+  detailCardTopTitleStyle: {},
+  bottomTitleText: 'ETH value',
+  detailCardMainViewStyle: {},
+  detailCardTopViewStyle: {},
+  bottomSubTitleText: 'Current Balance',
+  detailCardBottomViewStyle: {},
+  detailCardBottomTitleTextStyle: {},
+  detailCardBottomSubTitleTextStyle: {},
+};
+/*eslint-disable*/
+DetailCard.propTypes = {
+  isSubTitle: PropTypes.bool,
+  isIcon: PropTypes.bool,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  callMethod: PropTypes.func,
+  topTitleText: PropTypes.string,
+  imageStyle: PropTypes.object,
+  topSubTitleText: PropTypes.string,
+  detailCardSubTitleTextStyle: PropTypes.object,
+  detailCardTopTitleStyle: PropTypes.object,
+  bottomTitleText: PropTypes.string,
+  detailCardMainViewStyle: PropTypes.object,
+  detailCardTopViewStyle: PropTypes.object,
+  bottomSubTitleText: PropTypes.string,
+  detailCardBottomViewStyle: PropTypes.object,
+  detailCardBottomTitleTextStyle: PropTypes.object,
+  detailCardBottomSubTitleTextStyle: PropTypes.object,
+};

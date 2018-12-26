@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
@@ -25,3 +25,15 @@ export default class DesignButton extends React.PureComponent {
     );
   }
 }
+DesignButton.defaultProps = {
+  isClickable: false,
+  name: 'DONE',
+  btnMainStyle: {},
+};
+/*eslint-disable*/
+DesignButton.propTypes = {
+  isClickable: PropTypes.bool,
+  callMethod: PropTypes.func,
+  name: PropTypes.string,
+  btnMainStyle: PropTypes.object,
+};
