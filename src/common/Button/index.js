@@ -1,19 +1,20 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
-export default class DesignButton extends Component {
+export default class DesignButton extends React.PureComponent {
   render() {
-    const { isClickable, callMethod, name } = this.props;
+    const { isClickable, callMethod, name, btnMainStyle } = this.props;
     let setButtonStyle = {
       ...styles.loginBtn,
+      btnMainStyle,
     };
     if (!isClickable) {
       setButtonStyle = {
         ...styles.loginBtn,
         backgroundColor: '#70c5ef',
+        btnMainStyle,
       };
     }
 

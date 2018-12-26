@@ -10,6 +10,7 @@ import TabBarView from './src/Screens/tabBar';
 import BeneficiaryDetails from './src/Screens/pay/beneficiaryDetails';
 import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
 import PaymentNotification from './src/Screens/paymentNotification';
+import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 
 const Routing = createStackNavigator(
   {
@@ -40,12 +41,15 @@ const Routing = createStackNavigator(
     PayBeneficiary: {
       screen: PayBeneficiary,
     },
+    ConfirmPayment: {
+      screen: ConfirmPayment,
+    },
     PaymentNotification: {
       screen: PaymentNotification,
     },
   },
   {
-    initialRouteName: 'PayBeneficiary',
+    initialRouteName: 'Login',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
@@ -58,22 +62,3 @@ const AppContainer = createAppContainer(Routing);
 const Router = () => <AppContainer />;
 
 export default Router;
-
-// <ToggleButton
-// defaultValue={toggleState}
-// onChangeValue={() => this.updateToggleClick()}
-// />
-// updateToggleClick() {
-//   const { toggleState } = this.state,
-//       { SendNotificationStatus } = this.props,
-//       data = {
-//           deviceId: DeviceInfo.getUniqueID(),
-//           notificationStatus: toggleState,
-//       };
-//   this.setState({
-//       toggleState: !toggleState,
-//   });
-//   SendNotificationStatus(data).then(res => {
-//       console.log(res, 'resData');
-//   });
-// }

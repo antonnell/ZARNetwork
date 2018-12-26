@@ -1,14 +1,13 @@
 // Library
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, Text, StatusBar, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 // Style
 import styles from './styles';
 // components
 import ToggleCard from '../../../common/ToggleCard';
 import Button from '../../../common/Button';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
+import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
 
@@ -64,7 +63,6 @@ export default class PayBeneficiary extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
     const {
       accountNumber,
       reference,
@@ -75,16 +73,8 @@ export default class PayBeneficiary extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
+        <TitleHeader iconName="keyboard-arrow-left" title="PAY BENEFICIARY" />
         {/* header */}
-        <View style={styles.headerStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>PAY BENEFICIARY</Text>
-          </View>
-        </View>
-
         <ScrollView
           style={{
             height: deviceHeight,
@@ -186,7 +176,3 @@ export default class PayBeneficiary extends Component {
     );
   }
 }
-/*eslint-disable*/
-PayBeneficiary.propTypes = {
-  navigation: PropTypes.object,
-};
