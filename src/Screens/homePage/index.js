@@ -3,7 +3,9 @@ import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from './cards';
+
+import ProfileInfo from '../../common/profileInfo';
+import DetailCard from '../../common/detailCard';
 import styles from './styles';
 import Wallet from './wallet';
 
@@ -44,8 +46,22 @@ class HomePage extends Component {
             }
           }
         }
-
-        walletList.push(<Card account={userWalletDetail[index]} walletType={walletType} />);
+        walletList.push(
+          <DetailCard
+            // account={userWalletDetail[index]} walletType={walletType}
+            topTitleText="Micheal Smith"
+            bottomTitleText="ETH 12.08082"
+            topSubTitleText="2134 5678 9656 4756"
+            bottomSubTitleText="Current Balance"
+            detailCardMainViewStyle={styles.detailCardMainViewStyle}
+            detailCardTopViewStyle={styles.detailCardTopViewStyle}
+            detailCardTopTitleStyle={styles.detailCardTopTitleStyle}
+            detailCardBottomViewStyle={styles.detailCardBottomViewStyle}
+            detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
+            detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
+            detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
+          />
+        );
       }
     }
     return walletList;
@@ -53,6 +69,7 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+    const { navigation } = this.props;
     const userIcon = userDetail.email ? userDetail.email.charAt(0).toUpperCase() : '--';
     // const { navigation } = this.props;
     return (
@@ -73,29 +90,15 @@ class HomePage extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <View style={{ alignItems: 'center' }}>
-            <View
-              style={{
-                backgroundColor: '#030303',
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: deviceHeight * 0.05,
-              }}
-            >
-              <Text
-                style={{ textAlign: 'center', position: 'absolute', color: 'white', fontSize: 20 }}
-              >
-                {userIcon}
-              </Text>
-            </View>
-            <View style={{ marginTop: deviceHeight * 0.01 }}>
-              {/* <Text style={{ fontSize: 17, alignSelf: 'center' }}>Jane Smith</Text> */}
-              <Text style={{ fontSize: 17 }}>{userDetail.email}</Text>
-            </View>
-          </View>
+          <ProfileInfo
+            circularAvatarTextStyle={styles.circularAvatarTextStyle}
+            profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
+            profileInfoTitleStyle={styles.profileInfoTitleStyle}
+            profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
+            subTitleText={userDetail.email}
+            titleText="Jane Smith"
+            circularAvatarText={userIcon}
+          />
           <View
             style={{
               marginTop: deviceHeight * 0.03,
