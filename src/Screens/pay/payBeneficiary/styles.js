@@ -52,10 +52,10 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   titleCardMainViewStyle: {
-    marginTop: deviceHeight * 0.1,
+    marginTop: deviceHeight * 0.05,
     width: deviceWidth * 0.8,
     // height: deviceHeight * 0.1,
-    padding: 15,
+    padding: 12,
     backgroundColor: 'rgb(0, 177, 251)',
     alignSelf: 'center',
     borderRadius: 5,
@@ -63,12 +63,28 @@ export default StyleSheet.create({
   },
   titleCardImageStyle: {
     resizeMode: 'contain',
-    height: deviceHeight * 0.04,
+    height: deviceHeight * 0.03,
     width: deviceWidth * 0.1,
   },
   titleCardTextStyle: {
     color: 'white',
-    fontSize: 20,
-    marginLeft: 14,
+    fontSize: 15,
+    marginLeft: 12,
+  },
+  titleMaterialIconStyle: {
+    marginLeft: deviceHeight * 0.18,
+  },
+  notificationImageStyle: {
+    resizeMode: 'contain',
+    height: deviceHeight * 0.03,
+    width: deviceWidth * 0.1,
+  },
+  notificationTextStyle: {
+    color: 'white',
+    fontSize: 15,
+    marginLeft: 8,
+  },
+  notificationMaterialIconStyle: {
+    marginLeft: deviceHeight * 0.04,
   },
 });

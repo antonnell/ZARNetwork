@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
 // eslint-disable-next-line react/prefer-stateless-function
 export default class TitleCard extends Component {
   render() {
@@ -21,6 +11,7 @@ export default class TitleCard extends Component {
       titleCardMainViewStyle,
       titleCardImageStyle,
       titleCardTextStyle,
+      titleMaterialIconStyle,
     } = this.props;
     return (
       <View style={titleCardMainViewStyle}>
@@ -30,7 +21,7 @@ export default class TitleCard extends Component {
           <MaterialIcons
             color="#fff"
             size={24}
-            style={{ marginLeft: deviceHeight * 0.1 }}
+            style={titleMaterialIconStyle}
             name="keyboard-arrow-right"
           />
         </TouchableOpacity>

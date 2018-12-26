@@ -41,7 +41,7 @@ const Routing = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'PayBeneficiary',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
