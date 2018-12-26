@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -86,5 +85,27 @@ export default StyleSheet.create({
   },
   notificationMaterialIconStyle: {
     marginLeft: deviceHeight * 0.04,
+  },
+  toggleContainerStyle: {
+    marginTop: deviceHeight * 0.05,
+    backgroundColor: 'rgb(244,244,244)',
+    alignSelf: 'center',
+    width: deviceWidth * 0.8,
+    borderRadius: 5,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 4,
+    shadowColor: 'rgba(0,0,0,0.2)',
+    elevation: 4,
+  },
+  toggleTextStyle: {
+    fontSize: 14,
+    color: 'rgba(3,3,3,0.9)',
+  },
+  separatorStyle: {
+    height: 1,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    width: deviceWidth * 0.75,
+    alignSelf: 'center',
   },
 });
