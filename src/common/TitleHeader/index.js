@@ -47,7 +47,7 @@ export default class TitleHeader extends Component {
     if (titleStyle && titleStyle.length > 0) {
       titleStyling = {
         ...styles.titleText,
-        titleStyle,
+        ...titleStyle,
       };
     }
 
