@@ -9,8 +9,10 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
+import TitleHeader from '../../common/TitleHeader';
 import DesignButton from '../../common/Button';
 import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
@@ -166,7 +168,7 @@ export default class Register extends Component {
     }
     return (
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <MaterialIcons name={iconName} color={iconColor} size={18} />
+        <MaterialIcons name={iconName} color={iconColor} size={deviceWidth < 375 ? 14 : 18} />
         <Text style={[styles.constraintsTextStyle, { color: textColor }]}>{textVal}</Text>
       </View>
     );
@@ -200,14 +202,13 @@ export default class Register extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         {/* header */}
-        <View style={styles.headerStyle}>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>REGISTER</Text>
-          </View>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-        </View>
+
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="REGISTER"
+          onBtnPress={() => navigation.goBack()}
+        />
+
         <ScrollView
           style={{
             height: deviceHeight,
@@ -288,3 +289,7 @@ export default class Register extends Component {
     );
   }
 }
+/*eslint-disable*/
+Register.propTypes = {
+  navigation: PropTypes.object,
+};

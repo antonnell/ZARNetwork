@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -53,10 +52,14 @@ export default StyleSheet.create({
   //   fontSize: 15,
   //   marginLeft: deviceWidth * 0.25,
   // },
-  rightTextStyle: { position: 'absolute', right: 12, alignSelf: 'center' },
+  rightTextStyle: {
+    position: 'absolute',
+    right: 12,
+    alignSelf: 'center',
+  },
   rightTextValueStyle: {
     color: 'rgb(0, 177, 251)',
-    fontSize: 15,
+    fontSize: deviceWidth < 375 ? 12 : 14,
   },
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,

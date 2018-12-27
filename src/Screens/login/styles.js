@@ -22,7 +22,6 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   signInImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.06,
   },
   signInTextStyle: {
@@ -41,12 +40,12 @@ export default StyleSheet.create({
   textStyle: {
     color: 'rgb(0, 169, 252)',
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: deviceWidth < 375 ? 14 : 16,
   },
   bottomTextStyle: {
     color: 'rgb(0, 0, 0)',
     fontWeight: 'normal',
-    fontSize: 15,
+    fontSize: deviceWidth < 375 ? 14 : 16,
   },
   bottomTextViewStyle: {
     position: 'absolute',

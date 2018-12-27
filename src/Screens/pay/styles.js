@@ -19,7 +19,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
   },
-  cardTextStyle: { fontSize: 20, color: 'white', marginLeft: deviceHeight * 0.01 },
+  cardTextStyle: {
+    fontSize: 20,
+    color: 'white',
+    marginLeft: deviceHeight * 0.01,
+  },
   seperaterStyle: {
     backgroundColor: 'white',
     width: deviceWidth * 0.8,

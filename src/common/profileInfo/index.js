@@ -22,7 +22,7 @@ export default class ProfileInfo extends Component {
         <View style={profileInfoMainViewStyle}>
           <Text style={circularAvatarTextStyle}>{circularAvatarText}</Text>
         </View>
-        <View style={{ marginTop: deviceHeight * 0.01 }}>
+        <View style={{ marginTop: deviceHeight * 0.015 }}>
           {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
           <Text style={profileInfoSubTitleStyle}>{subTitleText}</Text>
         </View>

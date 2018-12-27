@@ -10,6 +10,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: deviceHeight * 0.08,
   },
+  noIconContainer: { width: deviceWidth },
   titleText: {
     width: deviceWidth * 0.8,
     textAlign: 'center',

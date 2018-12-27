@@ -10,27 +10,43 @@ export default class TitleHeader extends Component {
     this.state = {};
   }
 
-  render() {
-    const { title, iconName, onBtnPress, titleStyle } = this.props;
+  renderIcon() {
+    const { iconName, onBtnPress } = this.props;
 
+    if (iconName !== '') {
+      return (
+        <TouchableOpacity onPress={onBtnPress}>
+          <MaterialIcons name={iconName} size={28} style={{ fontWeight: 'bold', marginLeft: 10 }} />
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
+
+  render() {
+    const { title, titleStyle, iconName } = this.props;
     let titleStyling = styles.titleText;
-    if (titleStyle) {
+    if (iconName === '' && titleStyle && titleStyle.length > 0) {
+      titleStyling = {
+        ...styles.titleText,
+        titleStyle,
+        ...styles.noIconContainer,
+      };
+    }
+    if (iconName === '' && titleStyle && !titleStyle.length > 0) {
+      titleStyling = {
+        ...styles.titleText,
+        ...styles.noIconContainer,
+      };
+    } else if (titleStyle && titleStyle.length > 0) {
       titleStyling = {
         ...styles.titleText,
         titleStyle,
       };
     }
-
     return (
       <View style={styles.mainContainer}>
-        <TouchableOpacity onPress={onBtnPress}>
-          <MaterialIcons
-            // name="keyboard-arrow-left"
-            name={iconName}
-            size={28}
-            style={{ fontWeight: 'bold', marginLeft: 10 }}
-          />
-        </TouchableOpacity>
+        {this.renderIcon()}
         <Text style={titleStyling}>{title}</Text>
       </View>
     );
@@ -38,7 +54,7 @@ export default class TitleHeader extends Component {
 }
 TitleHeader.defaultProps = {
   title: 'Pay',
-  iconName: 'person-outline',
+  iconName: '',
   titleStyle: {},
 };
 /*eslint-disable*/

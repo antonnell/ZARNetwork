@@ -2,7 +2,7 @@
 import { Dimensions, Platform } from 'react-native';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
-const isAndroid = Platform.OS === 'android';
+// const isAndroid = Platform.OS === 'android';
 const isIOS = Platform.OS === 'ios';
 
 export default {
@@ -39,10 +39,9 @@ export default {
   },
   valueText: {
     height: isIOS ? 35 : 40,
-    fontSize: 16,
+    fontSize: deviceWidth < 375 ? 12 : 14,
     color: '#111111',
     backgroundColor: '#fff',
-
     // borderWidth: 0.5,
     // borderColor:'#111',
     // borderColor:'red',

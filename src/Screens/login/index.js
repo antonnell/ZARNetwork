@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
+import TitleHeader from '../../common/TitleHeader';
 import SignIn from '../../images/SignIn.png';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
 
@@ -55,7 +56,6 @@ class Login extends Component {
    * ******************************************************************************
    */
   handleUserLogin() {
-    console.log('handleUserLogin clicked');
     const { email, password } = this.state;
     const { navigation } = this.props;
 
@@ -70,8 +70,7 @@ class Login extends Component {
           .then(result => {
             console.log('result loginUserAction : ', result);
             if (result && result.payload && result.payload.status === 200) {
-              console.log('go to home : ');
-              navigation.navigate('Home');
+              navigation.navigate('TabBarView');
             }
           })
           .catch(error => {
@@ -90,15 +89,13 @@ class Login extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <Text style={styles.textStyle}>LOGIN</Text>
-        </View>
+        <TitleHeader title="LOGIN" />
         <View
           style={{
             marginTop: deviceHeight * 0.1,
           }}
         >
-          <Image source={SignIn} style={styles.signInImageStyle} />
+          <Image source={SignIn} style={styles.signInImageStyle} resizeMode="contain" />
         </View>
         <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
@@ -130,9 +127,9 @@ class Login extends Component {
         <View style={{ marginTop: deviceHeight * 0.08 }}>
           <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable />
         </View>
-        <View style={{ marginTop: deviceHeight * 0.03 }}>
+        <TouchableOpacity style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.bottomTextViewStyle}
           onPress={() => navigation.navigate('Register')}
