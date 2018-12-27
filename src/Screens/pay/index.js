@@ -89,7 +89,7 @@ export default class Pay extends Component {
         >
           <ScrollView
             style={{
-              height: deviceHeight,
+              height: deviceHeight * 0.43,
               width: deviceWidth,
             }}
             showsVerticalScrollIndicator={false}
@@ -97,6 +97,7 @@ export default class Pay extends Component {
             {arr.map(data => (
               <RecentCard header={data.header} title={data.title} subtitle={data.subTitle} />
             ))}
+            <View style={{ height: deviceHeight * 0.1 }} />
           </ScrollView>
         </View>
       </View>

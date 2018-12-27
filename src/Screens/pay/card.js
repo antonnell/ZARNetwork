@@ -11,16 +11,31 @@ export default class Card extends Component {
   render() {
     const { text, icon } = this.props;
     return (
-      <View style={{ flexDirection: 'row', margin: deviceWidth * 0.05 }}>
-        <Image source={icon} style={{ resizeMode: 'contain', height: deviceHeight * 0.03 }} />
-        <Text style={styles.cardTextStyle}>{text}</Text>
-        <TouchableOpacity>
-          <MaterialIcons
-            color="#fff"
-            size={24}
-            style={{ marginLeft: deviceHeight * 0.08 }}
-            name="keyboard-arrow-right"
+      <View
+        style={{
+          flexDirection: 'row',
+          margin: deviceWidth * 0.05,
+          alignItems: 'center',
+          width: deviceWidth * 0.78,
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Image
+            source={icon}
+            style={{
+              height: deviceHeight * 0.03,
+              width: deviceHeight * 0.03,
+            }}
+            resizeMode="contain"
           />
+        </View>
+
+        <View style={{ flex: 10 }}>
+          <Text style={styles.cardTextStyle}>{text}</Text>
+        </View>
+
+        <TouchableOpacity style={{ flex: 1 }}>
+          <MaterialIcons color="#fff" size={24} name="keyboard-arrow-right" />
         </TouchableOpacity>
       </View>
     );

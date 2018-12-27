@@ -8,15 +8,15 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  headerStyle: {
-    width: deviceWidth - 32,
-    marginTop: deviceHeight * 0.08,
-    flexDirection: 'row',
-    height: 20,
-  },
-  headerTextStyle: {
-    alignItems: 'center',
-  },
+  // headerStyle: {
+  //   width: deviceWidth - 32,
+  //   marginTop: deviceHeight * 0.08,
+  //   flexDirection: 'row',
+  //   height: 20,
+  // },
+  // headerTextStyle: {
+  //   alignItems: 'center',
+  // },
   textFieldStyle: {
     marginTop: deviceHeight * 0.01,
     width: deviceWidth * 0.8,
@@ -56,11 +56,18 @@ export default StyleSheet.create({
     width: deviceWidth * 0.7,
     borderRadius: 5,
     marginLeft: 20,
+    shadowOpacity: 1,
+    shadowOffset: { width: 0, height: 3.7 },
+    shadowRadius: 5.3,
+    shadowColor: 'rgba(127, 127, 127, 0.15)',
+    elevation: 4,
   },
   detailCardTopViewStyle: {
     backgroundColor: 'rgb(40,190,253)',
     height: deviceHeight * 0.1,
     padding: 20,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
   detailCardTopTitleStyle: {
     color: 'white',
@@ -94,7 +101,16 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  walletOptionTextStyle: { fontSize: 12, marginTop: deviceHeight * 0.01 },
-  walletIconImgStyle: { width: 20, height: 20 },
-  walletIconTextStyle: { color: 'white', fontWeight: 'bold' },
+  walletOptionTextStyle: {
+    fontSize: deviceWidth < 375 ? 12 : 14,
+    marginTop: deviceHeight * 0.01,
+  },
+  walletIconImgStyle: {
+    width: 20,
+    height: 20,
+  },
+  walletIconTextStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });

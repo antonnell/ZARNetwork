@@ -406,7 +406,13 @@ class FloatLabelTextField extends Component {
       if (type === 'email') {
         return (
           <View>
-            <Image source={Email} style={{ resizeMode: 'contain', height: deviceHeight * 0.02 }} />
+            <Image
+              source={Email}
+              style={{
+                height: deviceHeight * 0.02,
+              }}
+              resizeMode="contain"
+            />
           </View>
         );
       }
@@ -417,13 +423,23 @@ class FloatLabelTextField extends Component {
           </View>
         );
       }
-      if (type === 'number') {
+      if (type === 'password' || type === 'confirmPassword') {
         return (
           <View>
             <Image
-              source={Mobile}
-              style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+              source={Password}
+              style={{
+                height: deviceHeight * 0.025,
+              }}
+              resizeMode="contain"
             />
+          </View>
+        );
+      }
+      if (type === 'number') {
+        return (
+          <View>
+            <Image source={Mobile} resizeMode="contain" style={{ height: deviceHeight * 0.03 }} />
           </View>
         );
       }
@@ -432,7 +448,8 @@ class FloatLabelTextField extends Component {
           <View>
             <Image
               source={AccountNumber}
-              style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+              resizeMode="contain"
+              style={{ height: deviceHeight * 0.03 }}
             />
           </View>
         );
@@ -441,8 +458,9 @@ class FloatLabelTextField extends Component {
         return (
           <View>
             <Image
+              resizeMode="contain"
               source={Reference}
-              style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+              style={{ height: deviceHeight * 0.03 }}
             />
           </View>
         );
@@ -533,12 +551,7 @@ class FloatLabelTextField extends Component {
 
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
-                  <Image
-                    source={Password}
-                    style={{ resizeMode: 'contain', height: deviceHeight * 0.03 }}
-                  />
-                </TouchableOpacity>
+                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -564,6 +577,15 @@ class FloatLabelTextField extends Component {
                   autoCapitalize="none"
                   onEndEditing={() => this.onEndEditing(text, type)}
                 />
+                {/* <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
+                  <Image
+                    source={Password}
+                    resizeMode="contain"
+                    style={{
+                      height: deviceHeight * 0.03,
+                    }}
+                  />
+                </TouchableOpacity> */}
               </View>
             </TextFieldHolder>
           </View>

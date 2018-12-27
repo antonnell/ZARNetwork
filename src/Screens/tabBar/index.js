@@ -1,13 +1,20 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Animated, Image, Dimensions, StyleSheet } from 'react-native';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TabView, SceneMap } from 'react-native-tab-view';
+// Black colored Images
 import Home from '../../images/Home.png';
 import More from '../../images/More.png';
 import Exchange from '../../images/Exchange.png';
 import PayIcon from '../../images/Pay.png';
 import Receive from '../../images/Receive.png';
+// White colored images
+import HomeWhiteImg from '../../images/HomeWhite.png';
+import MoreWhiteImg from '../../images/MoreWhite.png';
+import ExchangeWhiteImg from '../../images/ExchangeWhite.png';
+import PayWhiteIcon from '../../images/PayWhite.png';
+import ReceiveWhiteImg from '../../images/ReceiveWhite.png';
+// Components
 import HomePage from '../homePage';
 import Pay from '../pay/index';
 
@@ -29,7 +36,15 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    paddingTop: 10,
+    height: deviceHeight * 0.09,
+    shadowColor: 'rgba(127,127,127, 0.1)',
+    shadowOffset: {
+      width: 0,
+      height: -2.3,
+    },
+    shadowRadius: 4.2,
+    shadowOpacity: 0.7,
+    backgroundColor: '#fff',
   },
   tabItem: {
     flex: 1,
@@ -47,11 +62,11 @@ export default class TabBarView extends Component {
       index: 0,
       // eslint-disable-next-line react/no-unused-state
       routes: [
-        { key: 'home', title: 'Home', icon: Home },
-        { key: 'exchange', title: 'Exchange', icon: Exchange },
-        { key: 'pay', title: 'Pay', icon: PayIcon },
-        { key: 'receive', title: 'Receive', icon: Receive },
-        { key: 'more', title: 'More', icon: More },
+        { key: 'home', title: 'Home', icon: Home, whiteIcon: HomeWhiteImg },
+        { key: 'exchange', title: 'Exchange', icon: Exchange, whiteIcon: ExchangeWhiteImg },
+        { key: 'pay', title: 'Pay', icon: PayIcon, whiteIcon: PayWhiteIcon },
+        { key: 'receive', title: 'Receive', icon: Receive, whiteIcon: ReceiveWhiteImg },
+        { key: 'more', title: 'More', icon: More, whiteIcon: MoreWhiteImg },
       ],
     };
   }
@@ -66,14 +81,20 @@ export default class TabBarView extends Component {
         {props.navigationState.routes.map((route, i) => {
           const color = props.position.interpolate({
             inputRange,
-            outputRange: inputRange.map(inputIndex => (inputIndex === i ? '#D6356C' : '#222')),
+            outputRange: inputRange.map(inputIndex => (inputIndex === i ? '#FFF' : '#111')),
           });
+
+          const viewColor = props.navigationState.index === i ? '#00b1ff' : '#fff';
+          const iconName = props.navigationState.index === i ? route.whiteIcon : route.icon;
+
           return (
-            <TouchableOpacity style={styles.tabItem} onPress={() => this.setState({ index: i })}>
+            <TouchableOpacity
+              style={[styles.tabItem, { backgroundColor: viewColor }]}
+              onPress={() => this.setState({ index: i })}
+            >
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                {/* <MaterialCommunityIcons name={route.icon} size={30} /> */}
                 <Image
-                  source={route.icon}
+                  source={iconName}
                   style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
                 />
                 <Animated.Text style={{ color }}>{route.title}</Animated.Text>

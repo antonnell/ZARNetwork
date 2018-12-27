@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { getFirstCharOfString } from '../../utility/index';
 import Styles from './styles';
-import styles from '../../common/Button/styles';
+// import styles from '../../common/Button/styles';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class Wallet extends Component {
@@ -36,7 +36,7 @@ export default class Wallet extends Component {
     return (
       <TouchableOpacity style={Styles.walletOptionContainerStyle} onPress={this.handleWallet}>
         <View style={Styles.walletOptionIconViewStyle}>{this.renderIcon()}</View>
-        <Text style={styles.walletOptionTextStyle}>{text}</Text>
+        <Text style={Styles.walletOptionTextStyle}>{text}</Text>
       </TouchableOpacity>
     );
   }
