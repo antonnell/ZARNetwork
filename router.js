@@ -57,7 +57,7 @@ const Routing = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'StartScreen',
+    initialRouteName: 'Login',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
