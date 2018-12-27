@@ -64,20 +64,29 @@ export default StyleSheet.create({
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
-    // height: deviceHeight * 0.1,
     padding: 15,
     backgroundColor: 'rgb(0, 177, 251)',
     alignSelf: 'center',
     borderRadius: 5,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   titleCardImageStyle: {
+    flex: 1,
     height: deviceHeight * 0.04,
     width: deviceWidth * 0.1,
   },
   titleCardTextStyle: {
+    flex: 5,
     color: 'white',
     fontSize: 20,
     marginLeft: 14,
+  },
+  listStyling: {
+    top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
+    left: -(deviceWidth * 0.16),
+    width: deviceWidth * 0.78,
+    height: deviceHeight * 0.3,
   },
 });

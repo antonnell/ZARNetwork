@@ -59,6 +59,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 5,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   titleCardImageStyle: {
     height: deviceHeight * 0.03,

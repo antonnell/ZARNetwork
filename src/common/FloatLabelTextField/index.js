@@ -650,9 +650,9 @@ class FloatLabelTextField extends Component {
                   autoCapitalize="none"
                 />
                 {isShowRightText && (
-                  <View style={rightTextStyle}>
+                  <TouchableOpacity style={rightTextStyle}>
                     <Text style={rightTextValueStyle}>{rightTextValue}</Text>
-                  </View>
+                  </TouchableOpacity>
                 )}
               </View>
             </TextFieldHolder>

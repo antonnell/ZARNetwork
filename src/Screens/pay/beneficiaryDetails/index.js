@@ -164,6 +164,11 @@ class BeneficiaryDetails extends Component {
             titleCardMainViewStyle={styles.titleCardMainViewStyle}
             titleCardImageStyle={styles.titleCardImageStyle}
             titleCardTextStyle={styles.titleCardTextStyle}
+            titleMaterialIconStyle={
+              {
+                // marginLeft: deviceWidth < 380 ? deviceWidth * 0.2 : deviceWidth * 0.3,
+              }
+            }
             // text="Account Type"
             text={selectedWallet}
             onPress={this.toggleWalletList}
@@ -174,6 +179,7 @@ class BeneficiaryDetails extends Component {
               data={userWalletDetail}
               handleList={item => this.handleWalletList(item)}
               type={WALLET_LIST}
+              listStyle={styles.listStyling}
             />
           )}
         </View>

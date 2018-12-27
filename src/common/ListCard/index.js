@@ -29,10 +29,20 @@ class ListCard extends Component {
   }
 
   renderListCard() {
-    const { data, selectedType, type } = this.props;
+    const { data, selectedType, type, listStyle } = this.props;
     const backgroundColor = 'rgb(0, 169, 255)';
+
+    let listStyling = styles.listContainerStyle;
+
+    if (listStyle) {
+      listStyling = {
+        ...styles.listContainerStyle,
+        ...listStyle,
+      };
+    }
+
     return (
-      <View style={styles.listContainerStyle}>
+      <View style={listStyling}>
         <View style={styles.listStyle}>
           <FlatList
             data={data}
@@ -82,6 +92,7 @@ ListCard.propTypes = {
   index: PropTypes.number,
   handleList: PropTypes.func,
   type: PropTypes.string,
+  listStyle: PropTypes.object,
 };
 
 export default ListCard;
