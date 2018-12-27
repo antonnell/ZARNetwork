@@ -24,6 +24,7 @@ class HomePage extends Component {
     super(props);
     this.state = {};
     this.renderCreateAccount = this.renderCreateAccount.bind(this);
+    this.renderPaySomeone = this.renderPaySomeone.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,17 @@ class HomePage extends Component {
       }
     }
     return walletList;
+  }
+
+  /**
+   * @method renderPaySomeone : To render pay screen.
+   */
+  renderPaySomeone() {
+    console.log('renderPaySomeone');
+    const { navigation } = this.props;
+    if (navigation && navigation.navigate) {
+      navigation.navigate('BeneficiaryDetails');
+    }
   }
 
   /**
@@ -125,7 +137,7 @@ class HomePage extends Component {
               height: deviceHeight * 0.1,
             }}
           >
-            <Wallet text="Pay Someone" icon={paySomeoneIcon} />
+            <Wallet text="Pay Someone" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
             <Wallet text="Receive" icon={receiveIcon} />
             <Wallet
               text="Add Account"
