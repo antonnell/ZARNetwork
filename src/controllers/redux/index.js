@@ -8,6 +8,7 @@ import statusTypeReducer from './statusType/reducer';
 import userWalletReducer from './userWallet/reducer';
 import userBeneficiaryReducer from './userBeneficiary/reducer';
 import userTransactionReducer from './userTransaction/reducer';
+import payRequestReducer from './paymentRequest/reducer';
 
 const rootReducer = combineReducers({
   getBalance,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   userWalletReducer,
   userBeneficiaryReducer,
   userTransactionReducer,
+  payRequestReducer,
 });
 
 export default rootReducer;

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { dispatch } from '../../store';
 import { statusType } from '../redux/statusType/action';
 
