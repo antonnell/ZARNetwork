@@ -12,6 +12,7 @@ import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
 import CreateWallet from './src/Screens/createWallet';
 import PaymentNotification from './src/Screens/paymentNotification';
 import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
+import StartScreen from './src/Screens/startScreen';
 
 const Routing = createStackNavigator(
   {
@@ -51,9 +52,12 @@ const Routing = createStackNavigator(
     PaymentNotification: {
       screen: PaymentNotification,
     },
+    StartScreen: {
+      screen: StartScreen,
+    },
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'StartScreen',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
