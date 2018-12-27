@@ -96,6 +96,7 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+    console.log('this.props home page : ', this.props);
     let userIcon = '--';
     if (userDetail.email) {
       userIcon = getFirstCharOfString(userDetail.email);

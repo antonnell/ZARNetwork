@@ -29,6 +29,14 @@ export const TRANSACTION_DETAIL = 'TRANSACTION_DETAIL';
 export const TRANSACTION_DETAIL_BY_TXN_ID = 'TRANSACTION_DETAIL_BY_TXN_ID';
 export const TRANSACTION_DETAIL_BY_ACC_ID = 'TRANSACTION_DETAIL_BY_ACC_ID';
 
+// For requests api.
+export const CREATE_PAY_REQUEST = 'CREATE_PAY_REQUEST';
+export const PAY_REQUEST_DETAIL = 'PAY_REQUEST_DETAIL';
+export const PAY_REQUEST_BY_ID = 'PAY_REQUEST_BY_ID';
+export const PAY_REQUEST_BY_ACC_ID = 'PAY_REQUEST_BY_ACC_ID';
+export const UPDATE_PAY_REQUEST = 'UPDATE_PAY_REQUEST';
+export const DELETE_PAY_REQUEST = 'DELETE_PAY_REQUEST';
+
 // For api's status.
 export const _SUCCESS = '_SUCCESS';
 export const _FAIL = '_FAIL';
@@ -40,6 +48,7 @@ export const REGISTER_TYPE = 'register';
 export const LOGIN_TYPE = 'login';
 export const WALLET_TYPE = 'accounts';
 export const BENEFICIARY_TYPE = 'beneficiaries';
+export const REQUEST_TYPE = 'requests';
 
 /**
  * List of api urls.
@@ -58,4 +67,8 @@ export const userAccountBeneficiaryUrl = `${beneficiaryUrl}/accounts`;
 export const uuidBeneficiaryUrl = `${beneficiaryUrl}`;
 
 export const transactionUrl = '/v1/transactions';
-export const accUuidTransactionUrl = '/v1/transactions/accounts';
+export const accUuidTransactionUrl = `${transactionUrl}/accounts`;
+
+export const payRequestsUrl = '/v1/requests';
+export const accountPayRequestsUrl = `${payRequestsUrl}/accounts`;
+export const uuidPayRequestsUrl = `${payRequestsUrl}`;
