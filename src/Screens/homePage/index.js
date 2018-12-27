@@ -78,7 +78,6 @@ class HomePage extends Component {
    * @method renderPaySomeone : To render pay screen.
    */
   renderPaySomeone() {
-    console.log('renderPaySomeone');
     const { navigation } = this.props;
     if (navigation && navigation.navigate) {
       navigation.navigate('BeneficiaryDetails');

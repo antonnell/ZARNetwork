@@ -13,12 +13,13 @@ export default class TitleCard extends Component {
       titleCardImageStyle,
       titleCardTextStyle,
       titleMaterialIconStyle,
+      onPress,
     } = this.props;
     return (
       <View style={titleCardMainViewStyle}>
         <Image source={icon} style={titleCardImageStyle} />
         <Text style={titleCardTextStyle}>{text}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
           <MaterialIcons
             color="#fff"
             size={24}
@@ -37,6 +38,7 @@ TitleCard.defaultProps = {
   titleCardImageStyle: {},
   titleCardTextStyle: {},
   titleMaterialIconStyle: {},
+  onPress: () => {},
 };
 /*eslint-disable*/
 TitleCard.propTypes = {
@@ -46,4 +48,5 @@ TitleCard.propTypes = {
   titleCardImageStyle: PropTypes.object,
   titleCardTextStyle: PropTypes.object,
   titleMaterialIconStyle: PropTypes.object,
+  onPress: PropTypes.func,
 };
