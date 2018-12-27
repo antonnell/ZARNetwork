@@ -1,4 +1,10 @@
-import { CREATE_PAY_REQUEST, PAY_REQUEST_DETAIL, _SUCCESS } from '../base/constants';
+import {
+  CREATE_PAY_REQUEST,
+  PAY_REQUEST_DETAIL,
+  CREATE_MERCHANT_PAY_REQUEST,
+  GET_MERCHANT_PAY_REQUEST,
+  _SUCCESS,
+} from '../base/constants';
 import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
@@ -67,6 +73,14 @@ const payRequestReducer = (state = defaultState, action) => {
       return formattedData;
     }
     case `${PAY_REQUEST_DETAIL}${_SUCCESS}`: {
+      const formattedData = getFormattedReqData(state, action);
+      return formattedData;
+    }
+    case `${CREATE_MERCHANT_PAY_REQUEST}${_SUCCESS}`: {
+      const formattedData = getFormattedNewReqData(state, action);
+      return formattedData;
+    }
+    case `${GET_MERCHANT_PAY_REQUEST}${_SUCCESS}`: {
       const formattedData = getFormattedReqData(state, action);
       return formattedData;
     }

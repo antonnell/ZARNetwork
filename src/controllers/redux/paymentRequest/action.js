@@ -1,9 +1,13 @@
 import action from '../base/action';
 import * as actions from '../base/constants';
 
+/* ******************************************************************************************* */
+/*                                      Payment requests                                       */
+/* ******************************************************************************************* */
+
 /**
  * ******************************************************************************
- * @method createWallet : Action for create new request api.
+ * @method createRequest : Action for create new request api.
  * @param {object} data : Data for creating new request.
  * ******************************************************************************
  */
@@ -95,6 +99,53 @@ export const deleteRequest = data => {
       request: {
         url: `${actions.payRequestsUrl}/${requestUuid}`,
         method: 'DELETE',
+        isAuthorised: true,
+      },
+    },
+  });
+};
+
+/* ******************************************************************************************* */
+/*                                  Merchant payment requests                                  */
+/* ******************************************************************************************* */
+
+/**
+ * ******************************************************************************
+ * @method createMerchantRequest : Action for create new request api.
+ * @param {object} data : Data for creating new request.
+ * ******************************************************************************
+ */
+export const createMerchantRequest = data =>
+  action({
+    type: actions.CREATE_MERCHANT_PAY_REQUEST,
+    payload: {
+      request: {
+        url: actions.merchantPayRequestsUrl,
+        method: 'POST',
+        data,
+        isAuthorised: true,
+      },
+    },
+  });
+
+/**
+ * ******************************************************************************
+ * @method getMerchantRequests : Action for get request api.
+ * @param {object} data :  Payload for getting request details.
+ * ******************************************************************************
+ *   data contains following :-
+ *  -> request_uuid {string} : Uuid of request.
+ *  ******************************************************************************
+ */
+export const getMerchantRequests = data => {
+  const requestUuid = data && data.request_uuid ? data.request_uuid : '';
+
+  return action({
+    type: actions.GET_MERCHANT_PAY_REQUEST,
+    payload: {
+      request: {
+        url: `${actions.merchantPayRequestsUrl}/${requestUuid}`,
+        method: 'GET',
         isAuthorised: true,
       },
     },

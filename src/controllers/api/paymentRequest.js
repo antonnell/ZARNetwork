@@ -4,9 +4,15 @@ import {
   getRequests,
   updateRequest,
   deleteRequest,
+  createMerchantRequest,
+  getMerchantRequests,
 } from '../redux/paymentRequest/action';
 import { encrypt } from '../utility/encryption';
 import { REQUEST_TYPE } from '../redux/base/constants';
+
+/* ******************************************************************************************* */
+/*                                      Payment requests                                       */
+/* ******************************************************************************************* */
 
 /**
  * ******************************************************************************
@@ -84,6 +90,60 @@ export const updatePayRequestDetail = payload =>
 export const deletePayRequestDetail = payload =>
   new Promise((resolve, reject) => {
     dispatch(deleteRequest(payload))
+      .then(result => resolve(result))
+      .catch(err => reject(err));
+  });
+
+/* ******************************************************************************************* */
+/*                                  Merchant payment requests                                  */
+/* ******************************************************************************************* */
+
+/**
+ * ******************************************************************************
+ * @method createMerchantPayRequest : Method for api call, to create a new requests for account.
+ * @param {object} payload : Payload for creating requests for account.
+ * 
+ *  payload contains following :-
+ *  -> mobile_number {string} : Mobile number of user.
+ *  -> value {number} : amount.
+ *  -> value_type {string} : Acoount type for value i.e 'FTM', 'ETH', etc.
+ *  -> type {string} : Acoount type for value i.e 'FTM', 'ETH', etc.
+ *  -> merchant_uuid {string} : Uuid of merchant.
+ *  -> reference {string} : 
+ * ******************************************************************************
+ * @method encrypt : To encrypt the payload sent to create requests for account.
+ * @param payload : Data to be encrypted.
+ * @param REQUEST_TYPE : Data type to be encrypted i.e for requests.
+ * ******************************************************************************
+
+ */
+export const createMerchantPayRequest = payload =>
+  new Promise((resolve, reject) => {
+    encrypt(payload, REQUEST_TYPE)
+      .then(data => {
+        if (data.data) {
+          dispatch(createMerchantRequest(data.data))
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        } else {
+          reject(new Error(data.error));
+        }
+      })
+      .catch(err => reject(err));
+  });
+
+/**
+ * *******************************************************************************************
+ * @method getPayRequestDetail : Method for api call, to get all requests for account of user.
+ * @param {object} payload : Payload for updating requests for account.
+ *
+ *   payload contains following :-
+ *  -> request_uuid {string} : Uuid of request.
+ * *******************************************************************************************
+ */
+export const getMerchantPayRequest = payload =>
+  new Promise((resolve, reject) => {
+    dispatch(getMerchantRequests(payload))
       .then(result => resolve(result))
       .catch(err => reject(err));
   });

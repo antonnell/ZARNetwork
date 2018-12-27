@@ -36,6 +36,8 @@ export const PAY_REQUEST_BY_ID = 'PAY_REQUEST_BY_ID';
 export const PAY_REQUEST_BY_ACC_ID = 'PAY_REQUEST_BY_ACC_ID';
 export const UPDATE_PAY_REQUEST = 'UPDATE_PAY_REQUEST';
 export const DELETE_PAY_REQUEST = 'DELETE_PAY_REQUEST';
+export const CREATE_MERCHANT_PAY_REQUEST = 'CREATE_MERCHANT_PAY_REQUEST';
+export const GET_MERCHANT_PAY_REQUEST = 'GET_MERCHANT_PAY_REQUEST';
 
 // For api's status.
 export const _SUCCESS = '_SUCCESS';
@@ -72,3 +74,4 @@ export const accUuidTransactionUrl = `${transactionUrl}/accounts`;
 export const payRequestsUrl = '/v1/requests';
 export const accountPayRequestsUrl = `${payRequestsUrl}/accounts`;
 export const uuidPayRequestsUrl = `${payRequestsUrl}`;
+export const merchantPayRequestsUrl = '/v0/requests';
