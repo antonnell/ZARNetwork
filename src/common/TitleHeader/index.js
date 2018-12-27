@@ -10,13 +10,30 @@ export default class TitleHeader extends Component {
     this.state = {};
   }
 
-  renderIcon() {
+  renderLeftIcon() {
     const { iconName, onBtnPress } = this.props;
 
     if (iconName !== '') {
       return (
         <TouchableOpacity onPress={onBtnPress}>
-          <MaterialIcons name={iconName} size={28} style={{ fontWeight: 'bold', marginLeft: 10 }} />
+          <MaterialIcons name={iconName} size={24} style={{ fontWeight: 'bold' }} />
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
+
+  renderRightIcon() {
+    const { rightIconName, onRightBtnPress } = this.props;
+
+    if (rightIconName !== '') {
+      return (
+        <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
+          <MaterialIcons
+            name={rightIconName}
+            size={22}
+            style={{ fontWeight: 'bold', marginRight: 5 }}
+          />
         </TouchableOpacity>
       );
     }
@@ -24,43 +41,39 @@ export default class TitleHeader extends Component {
   }
 
   render() {
-    const { title, titleStyle, iconName } = this.props;
+    const { title, titleStyle } = this.props;
     let titleStyling = styles.titleText;
-    if (iconName === '' && titleStyle && titleStyle.length > 0) {
-      titleStyling = {
-        ...styles.titleText,
-        titleStyle,
-        ...styles.noIconContainer,
-      };
-    }
-    if (iconName === '' && titleStyle && !titleStyle.length > 0) {
-      titleStyling = {
-        ...styles.titleText,
-        ...styles.noIconContainer,
-      };
-    } else if (titleStyle && titleStyle.length > 0) {
+
+    if (titleStyle && titleStyle.length > 0) {
       titleStyling = {
         ...styles.titleText,
         titleStyle,
       };
     }
+
     return (
       <View style={styles.mainContainer}>
-        {this.renderIcon()}
-        <Text style={titleStyling}>{title}</Text>
+        <View style={{ flex: 1 }}>{this.renderLeftIcon()}</View>
+        <View style={{ flex: 6 }}>
+          <Text style={titleStyling}>{title}</Text>
+        </View>
+        <View style={{ flex: 1 }}>{this.renderRightIcon()}</View>
       </View>
     );
   }
 }
 TitleHeader.defaultProps = {
-  title: 'Pay',
+  title: '',
   iconName: '',
+  rightIconName: '',
   titleStyle: {},
 };
 /*eslint-disable*/
 TitleHeader.propTypes = {
   title: PropTypes.string,
   iconName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  rightIconName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onBtnPress: PropTypes.func,
+  onRightBtnPress: PropTypes.func,
   titleStyle: PropTypes.object,
 };

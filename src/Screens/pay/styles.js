@@ -9,7 +9,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   searchStyle: {
-    marginLeft: deviceWidth * 0.8,
+    padding: 5,
   },
   cardStyle: {
     backgroundColor: 'rgb(0, 169, 252)',

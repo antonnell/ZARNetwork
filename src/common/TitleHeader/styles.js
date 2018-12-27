@@ -4,17 +4,18 @@ const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   mainContainer: {
-    width: deviceWidth,
+    width: deviceWidth * 0.9,
     backgroundColor: 'transparent',
     flexDirection: 'row',
+    alignSelf: 'center',
     alignItems: 'center',
     marginTop: deviceHeight * 0.08,
   },
-  noIconContainer: { width: deviceWidth },
+
   titleText: {
-    width: deviceWidth * 0.8,
+    // width: deviceWidth * 0.8,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: deviceHeight < 675 ? 16 : 18,
     color: 'rgb(0,177,251)',
     fontWeight: '600',
     fontFamily: 'Roboto-Medium',
