@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Animated, Image, Dimensions, StyleSheet } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView } from 'react-native-tab-view';
 // Black colored Images
 import Home from '../../images/Home.png';
 import More from '../../images/More.png';
@@ -107,13 +107,22 @@ export default class TabBarView extends Component {
     );
   };
 
-  renderScene = SceneMap({
-    home: HomePage,
-    exchange: SecondRoute,
-    pay: Pay,
-    receive: SecondRoute,
-    more: SecondRoute,
-  });
+  renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'home':
+        return <HomePage {...this.props} />;
+      case 'exchange':
+        return <SecondRoute {...this.props} />;
+      case 'pay':
+        return <Pay {...this.props} />;
+      case 'receive':
+        return <SecondRoute {...this.props} />;
+      case 'more':
+        return <SecondRoute {...this.props} />;
+      default:
+        return null;
+    }
+  };
 
   render() {
     return (
