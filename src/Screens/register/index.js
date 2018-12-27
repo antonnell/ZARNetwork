@@ -289,7 +289,9 @@ export default class Register extends Component {
     );
   }
 }
-/*eslint-disable*/
+Register.defaultProps = {
+  navigation: {},
+};
 Register.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.objectOf(PropTypes.any),
 };

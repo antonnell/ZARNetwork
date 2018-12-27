@@ -1,11 +1,11 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/no-unused-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, Dimensions } from 'react-native';
 
 const deviceHeight = Dimensions.get('window').height;
 
-// eslint-disable-next-line react/prefer-stateless-function
 export default class ProfileInfo extends Component {
   render() {
     const {
@@ -39,12 +39,12 @@ ProfileInfo.defaultProps = {
   subTitleText: 'jane@gmail.com',
   circularAvatarText: 'JS',
 };
-/*eslint-disable*/
+
 ProfileInfo.propTypes = {
-  profileInfoMainViewStyle: PropTypes.object,
-  circularAvatarTextStyle: PropTypes.object,
-  profileInfoSubTitleStyle: PropTypes.object,
-  profileInfoTitleStyle: PropTypes.object,
+  profileInfoMainViewStyle: PropTypes.objectOf(PropTypes.any),
+  circularAvatarTextStyle: PropTypes.objectOf(PropTypes.any),
+  profileInfoSubTitleStyle: PropTypes.objectOf(PropTypes.any),
+  profileInfoTitleStyle: PropTypes.objectOf(PropTypes.any),
   titleText: PropTypes.string,
   subTitleText: PropTypes.string,
   circularAvatarText: PropTypes.string,

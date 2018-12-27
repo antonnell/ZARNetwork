@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -80,11 +80,17 @@ export default class DetailCard extends Component {
       detailCardBottomViewStyle,
       detailCardBottomTitleTextStyle,
       detailCardBottomSubTitleTextStyle,
+      callMethod,
+      activeOpacity,
     } = this.props;
 
     const { balance, description, number } = account;
     return (
-      <View style={detailCardMainViewStyle}>
+      <TouchableOpacity
+        style={detailCardMainViewStyle}
+        activeOpacity={activeOpacity}
+        onPress={callMethod}
+      >
         {this.renderTopDesign(
           isIcon,
           imageStyle,
@@ -108,7 +114,7 @@ export default class DetailCard extends Component {
           balance,
           walletType
         )}
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -128,25 +134,30 @@ DetailCard.defaultProps = {
   detailCardBottomViewStyle: {},
   detailCardBottomTitleTextStyle: {},
   detailCardBottomSubTitleTextStyle: {},
+  walletType: 'ETH',
+  account: {},
+  callMethod: () => {},
+  activeOpacity: 1,
 };
-/*eslint-disable*/
+
 DetailCard.propTypes = {
   walletType: PropTypes.string,
-  account: PropTypes.object,
+  account: PropTypes.objectOf(PropTypes.any),
   isSubTitle: PropTypes.bool,
   isIcon: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   callMethod: PropTypes.func,
   topTitleText: PropTypes.string,
-  imageStyle: PropTypes.object,
+  imageStyle: PropTypes.objectOf(PropTypes.any),
   topSubTitleText: PropTypes.string,
-  detailCardSubTitleTextStyle: PropTypes.object,
-  detailCardTopTitleStyle: PropTypes.object,
+  detailCardSubTitleTextStyle: PropTypes.objectOf(PropTypes.any),
+  detailCardTopTitleStyle: PropTypes.objectOf(PropTypes.any),
   bottomTitleText: PropTypes.string,
-  detailCardMainViewStyle: PropTypes.object,
-  detailCardTopViewStyle: PropTypes.object,
+  detailCardMainViewStyle: PropTypes.objectOf(PropTypes.any),
+  detailCardTopViewStyle: PropTypes.objectOf(PropTypes.any),
   bottomSubTitleText: PropTypes.string,
-  detailCardBottomViewStyle: PropTypes.object,
-  detailCardBottomTitleTextStyle: PropTypes.object,
-  detailCardBottomSubTitleTextStyle: PropTypes.object,
+  detailCardBottomViewStyle: PropTypes.objectOf(PropTypes.any),
+  detailCardBottomTitleTextStyle: PropTypes.objectOf(PropTypes.any),
+  detailCardBottomSubTitleTextStyle: PropTypes.objectOf(PropTypes.any),
+  activeOpacity: PropTypes.number,
 };

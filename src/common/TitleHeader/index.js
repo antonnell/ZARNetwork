@@ -11,9 +11,9 @@ export default class TitleHeader extends Component {
   }
 
   renderLeftIcon() {
-    const { iconName, onBtnPress } = this.props;
+    const { iconName, onBtnPress, isBackArrow } = this.props;
 
-    if (iconName !== '') {
+    if (iconName !== '' && isBackArrow) {
       return (
         <TouchableOpacity onPress={onBtnPress}>
           <MaterialIcons name={iconName} size={24} style={{ fontWeight: 'bold' }} />
@@ -67,13 +67,16 @@ TitleHeader.defaultProps = {
   iconName: '',
   rightIconName: '',
   titleStyle: {},
+  isBackArrow: false,
+  onBtnPress: () => {},
+  onRightBtnPress: () => {},
 };
-/*eslint-disable*/
 TitleHeader.propTypes = {
   title: PropTypes.string,
   iconName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   rightIconName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onBtnPress: PropTypes.func,
   onRightBtnPress: PropTypes.func,
-  titleStyle: PropTypes.object,
+  titleStyle: PropTypes.objectOf(PropTypes.any),
+  isBackArrow: PropTypes.bool,
 };

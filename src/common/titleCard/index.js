@@ -40,13 +40,13 @@ TitleCard.defaultProps = {
   titleMaterialIconStyle: {},
   onPress: () => {},
 };
-/*eslint-disable*/
+
 TitleCard.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   text: PropTypes.string,
-  titleCardMainViewStyle: PropTypes.object,
-  titleCardImageStyle: PropTypes.object,
-  titleCardTextStyle: PropTypes.object,
-  titleMaterialIconStyle: PropTypes.object,
+  titleCardMainViewStyle: PropTypes.objectOf(PropTypes.any),
+  titleCardImageStyle: PropTypes.objectOf(PropTypes.any),
+  titleCardTextStyle: PropTypes.objectOf(PropTypes.any),
+  titleMaterialIconStyle: PropTypes.objectOf(PropTypes.any),
   onPress: PropTypes.func,
 };

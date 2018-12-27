@@ -50,6 +50,5 @@ Card.defaultProps = {
 
 Card.propTypes = {
   walletType: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  account: PropTypes.object,
+  account: PropTypes.objectOf(PropTypes.any),
 };

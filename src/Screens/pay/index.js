@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import Card from './card';
 import RecentCard from './recentCard';
@@ -12,8 +13,23 @@ import TitleHeader from '../../common/TitleHeader';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
-// eslint-disable-next-line react/prefer-stateless-function
 export default class Pay extends Component {
+  constructor(props) {
+    super(props);
+    this.handleNewBeneficiary = this.handleNewBeneficiary.bind(this);
+  }
+
+  /**
+   * @method handleNewBeneficiary :To render pay screen.
+   */
+  handleNewBeneficiary() {
+    const isBackArrow = true;
+    const { navigation } = this.props;
+    if (navigation && navigation.navigate) {
+      navigation.navigate('BeneficiaryDetails', { isBackArrow });
+    }
+  }
+
   render() {
     const arr = [
       {
@@ -61,7 +77,12 @@ export default class Pay extends Component {
           }}
         />
         <View style={styles.cardStyle}>
-          <Card navigation={navigation} text="Pay New Beneficiary" icon={PayNewBeneficiary} />
+          <Card
+            navigation={navigation}
+            text="Pay New Beneficiary"
+            icon={PayNewBeneficiary}
+            onPress={this.handleNewBeneficiary}
+          />
           <View style={styles.seperaterStyle} />
           <Card navigation={navigation} text="View all Beneficiary" icon={AllBeneficiary} />
         </View>
@@ -92,3 +113,10 @@ export default class Pay extends Component {
     );
   }
 }
+Pay.defaultProps = {
+  navigation: {},
+};
+
+Pay.propTypes = {
+  navigation: PropTypes.shape({}),
+};

@@ -143,12 +143,13 @@ class Login extends Component {
 Login.defaultProps = {
   authDetail: {},
   errDetail: {},
+  navigation: {},
 };
-/*eslint-disable*/
+
 Login.propTypes = {
-  authDetail: PropTypes.object,
-  errDetail: PropTypes.object,
-  navigation: PropTypes.object,
+  authDetail: PropTypes.objectOf(PropTypes.any),
+  errDetail: PropTypes.objectOf(PropTypes.any),
+  navigation: PropTypes.objectOf(PropTypes.any),
 };
 const mapStateToProps = state => ({
   authDetail: state.userAuthReducer.userDetail,

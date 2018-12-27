@@ -79,10 +79,10 @@ class HomePage extends Component {
    * @method renderPaySomeone : To render pay screen.
    */
   renderPaySomeone() {
-    // console.log('renderPaySomeone');
+    const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation && navigation.navigate) {
-      navigation.navigate('BeneficiaryDetails');
+      navigation.navigate('BeneficiaryDetails', { isBackArrow });
     }
   }
 
@@ -90,15 +90,15 @@ class HomePage extends Component {
    * @method renderCreateAccount : To render create account screen.
    */
   renderCreateAccount() {
+    const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation && navigation.navigate) {
-      navigation.navigate('CreateWallet');
+      navigation.navigate('CreateWallet', { isBackArrow });
     }
   }
 
   render() {
     const { userDetail } = this.props;
-    console.log('this.props home page : ', this.props);
     let userIcon = '--';
     if (userDetail.email) {
       userIcon = getFirstCharOfString(userDetail.email);
@@ -148,7 +148,7 @@ class HomePage extends Component {
             }}
           >
             <View style={{ width: deviceWidth * 0.85, alignSelf: 'center' }}>
-              <Text style={{ fontSize: 15 }}>Accounts</Text>
+              <Text style={{ fontSize: 16 }}>Accounts</Text>
             </View>
             <View
               style={{
@@ -165,6 +165,7 @@ class HomePage extends Component {
                 showsHorizontalScrollIndicator={false}
               >
                 {this.renderAccountCards()}
+                <View style={{ width: deviceWidth * 0.02 }} />
               </ScrollView>
             </View>
           </View>
@@ -174,12 +175,17 @@ class HomePage extends Component {
     );
   }
 }
-/*eslint-disable*/
+HomePage.defaultProps = {
+  userDetail: {},
+  userWalletDetail: [],
+  accountTypeList: [],
+  navigation: {},
+};
 HomePage.propTypes = {
-  userDetail: PropTypes.object,
-  userWalletDetail: PropTypes.array,
-  accountTypeList: PropTypes.array,
-  navigation: PropTypes.object,
+  userDetail: PropTypes.objectOf(PropTypes.any),
+  userWalletDetail: PropTypes.arrayOf(PropTypes.any),
+  accountTypeList: PropTypes.arrayOf(PropTypes.any),
+  navigation: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({

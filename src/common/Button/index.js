@@ -29,11 +29,11 @@ DesignButton.defaultProps = {
   isClickable: false,
   name: 'DONE',
   btnMainStyle: {},
+  callMethod: () => {},
 };
-/*eslint-disable*/
 DesignButton.propTypes = {
   isClickable: PropTypes.bool,
   callMethod: PropTypes.func,
   name: PropTypes.string,
-  btnMainStyle: PropTypes.object,
+  btnMainStyle: PropTypes.objectOf(PropTypes.any),
 };

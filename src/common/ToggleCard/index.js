@@ -24,11 +24,17 @@ export default class ToggleCard extends PureComponent {
     );
   }
 }
-/*eslint-disable*/
+ToggleCard.defaultProps = {
+  textVal: '',
+  textStyle: {},
+  containerStyle: {},
+  toggleState: false,
+  updateToggleClick: () => {},
+};
 ToggleCard.propTypes = {
   textVal: PropTypes.string,
-  textStyle: PropTypes.object,
-  containerStyle: PropTypes.object,
+  textStyle: PropTypes.objectOf(PropTypes.any),
+  containerStyle: PropTypes.objectOf(PropTypes.any),
   toggleState: PropTypes.bool,
   updateToggleClick: PropTypes.func,
 };

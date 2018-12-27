@@ -18,9 +18,8 @@ TitleText.defaultProps = {
   titleText: 'Recent',
   mainStyle: {},
 };
-/*eslint-disable*/
 TitleText.propTypes = {
-  textStyle: PropTypes.object,
+  textStyle: PropTypes.objectOf(PropTypes.any),
   titleText: PropTypes.string,
-  mainStyle: PropTypes.object,
+  mainStyle: PropTypes.objectOf(PropTypes.any),
 };

@@ -18,6 +18,11 @@ const deviceWidth = Dimensions.get('window').width;
 class BeneficiaryDetails extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    let isBackArrowPresent = false;
+    if (navigation && navigation.state && navigation.state.params) {
+      isBackArrowPresent = navigation.state.params.isBackArrow;
+    }
 
     let selectedWallet = '';
     let accId = '';
@@ -34,6 +39,7 @@ class BeneficiaryDetails extends Component {
       selectedWallet,
       openWalletList: false,
       accId,
+      isBackArrowPresent,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
@@ -139,7 +145,15 @@ class BeneficiaryDetails extends Component {
   }
 
   render() {
-    const { email, accountNumber, reference, selectedWallet, openWalletList, accId } = this.state;
+    const {
+      email,
+      accountNumber,
+      reference,
+      selectedWallet,
+      openWalletList,
+      accId,
+      isBackArrowPresent,
+    } = this.state;
     let isClickable = false;
     if (email !== '' && accountNumber !== '' && reference !== '' && accId !== '') {
       isClickable = true;
@@ -155,8 +169,9 @@ class BeneficiaryDetails extends Component {
         <StatusBar backgroundColor="black" />
         <TitleHeader
           iconName="keyboard-arrow-left"
-          title="BENEFICIARY DETIALS"
+          title="BENEFICIARY DETAILS"
           onBtnPress={this.handleGoBack}
+          isBackArrow={isBackArrowPresent}
         />
         <View style={{ zIndex: 99 }}>
           <TitleCard
@@ -232,11 +247,13 @@ class BeneficiaryDetails extends Component {
     );
   }
 }
-
-/*eslint-disable*/
+BeneficiaryDetails.defaultProps = {
+  userWalletDetail: [],
+  navigation: {},
+};
 BeneficiaryDetails.propTypes = {
-  userWalletDetail: PropTypes.array,
-  navigation: PropTypes.object,
+  userWalletDetail: PropTypes.arrayOf(PropTypes.any),
+  navigation: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({

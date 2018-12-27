@@ -9,7 +9,7 @@ const deviceWidth = Dimensions.get('window').width;
 // eslint-disable-next-line react/prefer-stateless-function
 export default class Card extends Component {
   render() {
-    const { text, icon } = this.props;
+    const { text, icon, onPress } = this.props;
     return (
       <View
         style={{
@@ -34,7 +34,7 @@ export default class Card extends Component {
           <Text style={styles.cardTextStyle}>{text}</Text>
         </View>
 
-        <TouchableOpacity style={{ flex: 1 }}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>
           <MaterialIcons color="#fff" size={24} name="keyboard-arrow-right" />
         </TouchableOpacity>
       </View>
@@ -45,4 +45,5 @@ export default class Card extends Component {
 Card.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onPress: PropTypes.func,
 };

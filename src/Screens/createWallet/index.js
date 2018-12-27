@@ -20,6 +20,11 @@ const deviceWidth = Dimensions.get('window').width;
 class CreateWallet extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    let isBackArrowPresent = false;
+    if (navigation && navigation.state && navigation.state.params) {
+      isBackArrowPresent = navigation.state.params.isBackArrow;
+    }
     let selectedType = '';
     let typeUuid = '';
     const { accountTypeList } = this.props;
@@ -31,6 +36,7 @@ class CreateWallet extends Component {
       selectedType,
       accountName: '',
       typeUuid,
+      isBackArrowPresent,
     };
     this.toggleAccountTypeList = this.toggleAccountTypeList.bind(this);
     this.handleAccountTypeList = this.handleAccountTypeList.bind(this);
@@ -115,7 +121,7 @@ class CreateWallet extends Component {
 
   render() {
     const { accountTypeList } = this.props;
-    const { openAccountList, selectedType, accountName, typeUuid } = this.state;
+    const { openAccountList, selectedType, accountName, typeUuid, isBackArrowPresent } = this.state;
     let isClickable = false;
     if (accountName !== '' && typeUuid !== '') {
       isClickable = true;
@@ -131,6 +137,7 @@ class CreateWallet extends Component {
           iconName="keyboard-arrow-left"
           title="CREATE WALLET"
           onBtnPress={this.handleGoBack}
+          isBackArrow={isBackArrowPresent}
         />
         <View style={styles.createWalletImageViewStyle}>
           <Image source={walletImg} style={styles.createWalletImageStyle} resizeMode="contain" />
@@ -187,11 +194,13 @@ class CreateWallet extends Component {
     );
   }
 }
-
-/*eslint-disable */
+CreateWallet.defaultProps = {
+  navigation: {},
+  accountTypeList: [],
+};
 CreateWallet.propTypes = {
-  navigation: PropTypes.object,
-  accountTypeList: PropTypes.array,
+  navigation: PropTypes.objectOf(PropTypes.any),
+  accountTypeList: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({

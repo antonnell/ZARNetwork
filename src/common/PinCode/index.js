@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Text, Dimensions, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
@@ -124,10 +124,13 @@ export default class GeneratePinCode extends Component {
     );
   }
 }
-
-/*eslint-disable */
+GeneratePinCode.defaultProps = {
+  colorData: {},
+  pinCodeObj: {},
+  updateForm: () => {},
+};
 GeneratePinCode.propTypes = {
-  colorData: PropTypes.object,
-  pinCodeObj: PropTypes.object,
+  colorData: PropTypes.objectOf(PropTypes.any),
+  pinCodeObj: PropTypes.objectOf(PropTypes.any),
   updateForm: PropTypes.func,
 };

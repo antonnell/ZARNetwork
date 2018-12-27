@@ -200,10 +200,11 @@ class CreatePin extends Component {
     );
   }
 }
-
-/*eslint-disable*/
+CreatePin.defaultProps = {
+  navigation: {},
+};
 CreatePin.propTypes = {
-  navigation: PropTypes.object,
+  navigation: PropTypes.objectOf(PropTypes.any),
 };
 
 export default CreatePin;
