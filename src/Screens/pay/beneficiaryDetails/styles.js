@@ -72,7 +72,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   titleCardImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.04,
     width: deviceWidth * 0.1,
   },

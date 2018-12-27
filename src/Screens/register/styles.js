@@ -28,7 +28,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   FantomPayLogoImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.15,
   },
   textFieldStyle: {

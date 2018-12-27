@@ -92,7 +92,6 @@ export default StyleSheet.create({
     textAlign: 'right',
   },
   imageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.03,
     width: deviceWidth * 0.1,
   },

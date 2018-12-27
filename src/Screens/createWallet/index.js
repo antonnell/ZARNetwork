@@ -133,7 +133,7 @@ class CreateWallet extends Component {
           onBtnPress={this.handleGoBack}
         />
         <View style={styles.createWalletImageViewStyle}>
-          <Image source={walletImg} style={styles.createWalletImageStyle} />
+          <Image source={walletImg} style={styles.createWalletImageStyle} resizeMode="contain" />
         </View>
         <View style={styles.createWalletTextViewStyle}>
           <Text style={styles.createWalletTextStyle}>Create Wallet</Text>

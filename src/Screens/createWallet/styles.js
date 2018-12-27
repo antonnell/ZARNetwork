@@ -12,7 +12,6 @@ export default StyleSheet.create({
     marginTop: deviceHeight * 0.1,
   },
   createWalletImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.06,
   },
   createWalletTextViewStyle: {

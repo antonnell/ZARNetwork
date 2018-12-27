@@ -19,7 +19,7 @@ export default class DetailCard extends Component {
     if (isIcon) {
       return (
         <View style={detailCardTopViewStyle}>
-          <Image source={icon} style={imageStyle} />
+          <Image source={icon} style={imageStyle} resizeMode="contain" />
           <Text style={detailCardTopTitleStyle}>{description}</Text>
         </View>
       );

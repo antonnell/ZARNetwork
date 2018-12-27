@@ -17,7 +17,7 @@ export default class TitleCard extends Component {
     } = this.props;
     return (
       <View style={titleCardMainViewStyle}>
-        <Image source={icon} style={titleCardImageStyle} />
+        <Image source={icon} style={titleCardImageStyle} resizeMode="contain" />
         <Text style={titleCardTextStyle}>{text}</Text>
         <TouchableOpacity onPress={onPress}>
           <MaterialIcons

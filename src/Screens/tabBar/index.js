@@ -95,7 +95,8 @@ export default class TabBarView extends Component {
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Image
                   source={iconName}
-                  style={{ resizeMode: 'contain', height: deviceHeight * 0.03, color: 'black' }}
+                  resizeMode="contain"
+                  style={{ height: deviceHeight * 0.03 }}
                 />
                 <Animated.Text style={{ color }}>{route.title}</Animated.Text>
               </View>

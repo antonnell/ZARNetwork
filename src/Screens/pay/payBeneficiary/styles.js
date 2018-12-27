@@ -61,7 +61,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   titleCardImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.03,
     width: deviceWidth * 0.1,
   },
@@ -74,7 +73,6 @@ export default StyleSheet.create({
     marginLeft: deviceHeight * 0.18,
   },
   notificationImageStyle: {
-    resizeMode: 'contain',
     height: deviceHeight * 0.03,
     width: deviceWidth * 0.1,
   },
