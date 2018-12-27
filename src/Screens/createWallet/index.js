@@ -5,11 +5,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import walletImg from '../../images/wallet.png';
-import AccountTypeList from './accountList';
+import ListCard from '../../common/ListCard';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
 import DesignButton from '../../common/Button';
 import TitleText from '../../common/TitleText';
 import { setNewWallet } from '../../controllers/api/userWallet';
+import { ACCOUNT_TYPE_LIST } from '../../common/constants';
+import TitleHeader from '../../common/TitleHeader';
 
 const deviceWidth = Dimensions.get('window').width;
 /**
@@ -34,6 +36,7 @@ class CreateWallet extends Component {
     this.handleAccountTypeList = this.handleAccountTypeList.bind(this);
     this.updateForm = this.updateForm.bind(this);
     this.handleCreateAccount = this.handleCreateAccount.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   toggleAccountTypeList() {
@@ -103,8 +106,15 @@ class CreateWallet extends Component {
     this.setState({ openAccountList: false });
   }
 
+  handleGoBack() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.goBack();
+    }
+  }
+
   render() {
-    const { navigation, accountTypeList } = this.props;
+    const { accountTypeList } = this.props;
     const { openAccountList, selectedType, accountName, typeUuid } = this.state;
     let isClickable = false;
     if (accountName !== '' && typeUuid !== '') {
@@ -117,14 +127,11 @@ class CreateWallet extends Component {
         activeOpacity={1}
       >
         <StatusBar backgroundColor="black" />
-        <View style={styles.headerStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={20} />
-          </TouchableOpacity>
-          <View style={styles.headerTextStyle}>
-            <Text style={styles.textStyle}>CREATE WALLET</Text>
-          </View>
-        </View>
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="CREATE WALLET"
+          onBtnPress={this.handleGoBack}
+        />
         <View style={styles.createWalletImageViewStyle}>
           <Image source={walletImg} style={styles.createWalletImageStyle} />
         </View>
@@ -148,10 +155,11 @@ class CreateWallet extends Component {
               <MaterialIcons name="arrow-drop-down" size={24} style={styles.dropdownIconStyle} />
             </TouchableOpacity>
             {openAccountList && (
-              <AccountTypeList
-                selectedType={selectedType}
+              <ListCard
+                selectedType={typeUuid}
                 data={accountTypeList}
-                handleAccountTypeList={item => this.handleAccountTypeList(item)}
+                handleList={item => this.handleAccountTypeList(item)}
+                type={ACCOUNT_TYPE_LIST}
               />
             )}
           </View>

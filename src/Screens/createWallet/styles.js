@@ -8,26 +8,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  headerStyle: {
-    width: deviceWidth - 32,
-    marginTop: deviceHeight * 0.08,
-    flexDirection: 'row',
-    height: 20,
-  },
-  headerTextStyle: {
-    alignItems: 'center',
-  },
-  textFieldStyle: {
-    marginTop: deviceHeight * 0.01,
-    width: deviceWidth * 0.8,
-  },
-  textStyle: {
-    width: deviceWidth - 32,
-    textAlign: 'center',
-    color: 'rgb(0, 169, 252)',
-    fontWeight: '600',
-    fontSize: 15,
-  },
   createWalletImageViewStyle: {
     marginTop: deviceHeight * 0.1,
   },
@@ -71,31 +51,6 @@ export default StyleSheet.create({
   accSymbolTextStyle: { fontSize: 16, color: '#fff' },
   dropdownIconStyle: { color: '#fff' },
   accDropdownViewStyle: { flex: 1, alignItems: 'flex-end', paddingRight: 10 },
-  listContainerStyle: {
-    backgroundColor: '#fff',
-    marginLeft: deviceWidth * 0.27,
-    position: 'absolute',
-    opacity: 1,
-    top: 38,
-    width: deviceWidth * 0.7,
-    shadowColor: 'blue',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 1,
-  },
-  listStyle: {
-    margin: 2,
-    alignContent: 'center',
-  },
-  listItemStyle: {
-    flexDirection: 'row',
-    padding: 1,
-  },
-  listButtonStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 10,
-  },
   accNameTextStyle: { fontSize: 16 },
   accNameViewStyle: {
     marginTop: 10,

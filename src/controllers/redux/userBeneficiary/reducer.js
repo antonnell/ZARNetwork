@@ -61,9 +61,14 @@ const getFormattedBeneficiaryData = (state, action) => {
  * @method userBeneficiaryReducer : Reducer for maintianing user's beneficiaries for account details.
  */
 const userBeneficiaryReducer = (state = defaultState, action) => {
+  // eslint-disable-next-line no-console
+  console.log('CREATE_BENEFICIARY action : ', action);
   switch (action.type) {
     case `${CREATE_BENEFICIARY}${_SUCCESS}`: {
       const formattedData = getFormattedNewBeneficiaryData(state, action);
+      // eslint-disable-next-line no-console
+      console.log('CREATE_BENEFICIARY formattedData : ', formattedData);
+
       return formattedData;
     }
     case `${BENEFICIARY_DETAIL}${_SUCCESS}`: {
