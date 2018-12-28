@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StatusBar, View, Text, TouchableOpacity, Image, Dimensions, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ import TitleText from '../../common/TitleText';
 import { setNewWallet } from '../../controllers/api/userWallet';
 import { ACCOUNT_TYPE_LIST } from '../../common/constants';
 import TitleHeader from '../../common/TitleHeader';
+import Loader from '../../common/Loader';
 
 const deviceWidth = Dimensions.get('window').width;
 /**
@@ -37,6 +38,7 @@ class CreateWallet extends Component {
       name: '',
       typeUuid,
       isBackArrowPresent,
+      isLoading: false,
     };
     this.toggleAccountTypeList = this.toggleAccountTypeList.bind(this);
     this.handleAccountTypeList = this.handleAccountTypeList.bind(this);
@@ -94,14 +96,38 @@ class CreateWallet extends Component {
         description: name,
         type_uuid: typeUuid,
       };
+      this.setState({
+        isLoading: true,
+      });
       setNewWallet(payload)
-        .then(res => {
-          if (res && res.payload && res.payload.data && res.payload.data.status === 200) {
+        .then(result => {
+          this.setState({
+            isLoading: false,
+          });
+          if (
+            result &&
+            result.payload &&
+            result.payload.data &&
+            result.payload.data.status === 200
+          ) {
             navigation.goBack();
+          } else if (
+            result &&
+            result.error &&
+            result.error.response &&
+            result.error.response.data &&
+            result.error.response.data.message
+          ) {
+            const { message } = result.error.response.data;
+            Alert.alert('Error', message);
           }
         })
-        // eslint-disable-next-line no-console
-        .catch(err => console.log('errrrr : ', err));
+        .catch(error => {
+          this.setState({
+            isLoading: false,
+          });
+          Alert.alert('Error', error);
+        });
     }
   }
 
@@ -119,6 +145,17 @@ class CreateWallet extends Component {
     }
   }
 
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading === true) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
+  }
+
   render() {
     const { accountTypeList } = this.props;
     const { openAccountList, selectedType, name, typeUuid, isBackArrowPresent } = this.state;
@@ -133,6 +170,7 @@ class CreateWallet extends Component {
         activeOpacity={1}
       >
         <StatusBar backgroundColor="black" />
+        {this.renderLoader()}
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="CREATE WALLET"
@@ -182,6 +220,7 @@ class CreateWallet extends Component {
               validate={type => this.validate(type)}
             />
           </View>
+
           <View style={styles.buttonViewStyle}>
             <DesignButton
               name="CREATE"

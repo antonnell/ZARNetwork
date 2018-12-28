@@ -104,7 +104,12 @@ export default class Pay extends Component {
             showsVerticalScrollIndicator={false}
           >
             {arr.map(data => (
-              <RecentCard header={data.header} title={data.title} subtitle={data.subTitle} />
+              <RecentCard
+                key={Math.random()}
+                header={data.header}
+                title={data.title}
+                subtitle={data.subTitle}
+              />
             ))}
             <View style={{ height: deviceHeight * 0.1 }} />
           </ScrollView>

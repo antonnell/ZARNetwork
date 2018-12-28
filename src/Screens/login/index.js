@@ -9,7 +9,7 @@ import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 import SignIn from '../../images/SignIn.png';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
-
+import Loader from '../../common/Loader';
 /**
  * Component to call login api.
  */
@@ -24,6 +24,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      isLoading: false,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
@@ -64,20 +65,48 @@ class Login extends Component {
         email,
         password,
       };
+      this.setState({
+        isLoading: true,
+      });
 
       if (login) {
         login(payload)
           .then(result => {
-            console.log('result loginUserAction : ', result);
+            this.setState({
+              isLoading: false,
+            });
             if (result && result.payload && result.payload.status === 200) {
               navigation.navigate('TabBarView');
+            } else if (
+              result &&
+              result.error &&
+              result.error.response &&
+              result.error.response.data &&
+              result.error.response.data.message
+            ) {
+              const { message } = result.error.response.data;
+              Alert.alert('Error', message);
             }
           })
           .catch(error => {
-            console.log('error loginUserAction : ', error);
+            this.setState({
+              isLoading: false,
+            });
+            Alert.alert('Error', error);
           });
       }
     }
+  }
+
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading === true) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
   }
 
   render() {
@@ -100,6 +129,7 @@ class Login extends Component {
         <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
         </View>
+
         <View style={styles.emailTextFieldStyle}>
           <FloatLabelTextField
             type="email"
@@ -112,6 +142,7 @@ class Login extends Component {
             validate={type => this.validate(type)}
           />
         </View>
+
         <View style={styles.passwordTextFieldStyle}>
           <FloatLabelTextField
             type="password"
@@ -124,6 +155,7 @@ class Login extends Component {
             validate={type => this.validate(type)}
           />
         </View>
+        {this.renderLoader()}
         <View style={{ marginTop: deviceHeight * 0.08 }}>
           <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable />
         </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
+import { View, StatusBar, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FloatLabelTextField from '../../../common/FloatLabelTextField';
@@ -11,6 +11,7 @@ import ListCard from '../../../common/ListCard';
 import { WALLET_LIST } from '../../../common/constants';
 import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
+import Loader from '../../../common/Loader';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -40,6 +41,7 @@ class BeneficiaryDetails extends Component {
       openWalletList: false,
       accId,
       isBackArrowPresent,
+      isLoading: false,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
@@ -130,17 +132,53 @@ class BeneficiaryDetails extends Component {
         number: accountNumber,
         their_reference: reference,
       };
+      this.setState({
+        isLoading: true,
+      });
       if (setNewBeneficiary) {
         setNewBeneficiary(payload)
-          .then(res => {
-            if (res && res.payload && res.payload.data && res.payload.data.status === 200) {
+          .then(result => {
+            this.setState({
+              isLoading: false,
+            });
+            if (
+              result &&
+              result.payload &&
+              result.payload.data &&
+              result.payload.data.status === 200
+            ) {
               navigation.goBack();
+            } else if (
+              result &&
+              result.error &&
+              result.error.response &&
+              result.error.response.data &&
+              result.error.response.data.message
+            ) {
+              const { message } = result.error.response.data;
+              Alert.alert('Error', message);
             }
           })
           // eslint-disable-next-line no-console
-          .catch(err => console.log('errrrr : ', err));
+          .catch(error => {
+            this.setState({
+              isLoading: false,
+            });
+            Alert.alert('Error', error);
+          });
       }
     }
+  }
+
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading === true) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
   }
 
   render() {
@@ -166,6 +204,7 @@ class BeneficiaryDetails extends Component {
         activeOpacity={1}
       >
         <StatusBar backgroundColor="black" />
+        {this.renderLoader()}
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="BENEFICIARY DETAILS"

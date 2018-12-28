@@ -9,6 +9,7 @@ import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
 import { register } from '../../controllers/api/auth';
 import { checkPinLength } from '../../utility/index';
+import Loader from '../../common/Loader';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -68,18 +69,33 @@ class CreatePin extends Component {
         fingerprint: fingerPrint,
         mobile_number: mobileNumber,
       };
-
+      this.setState({
+        isLoading: true,
+      });
       if (register) {
         register(payload)
-          .then(response => {
-            if (response.payload && response.payload.data && response.payload.data.status === 200) {
+          .then(result => {
+            this.setState({
+              isLoading: false,
+            });
+            if (result.payload && result.payload.data && result.payload.data.status === 200) {
               navigation.navigate('RegistrationSuccess');
-            } else {
-              console.log('Registeration unsuccessfull ');
+            } else if (
+              result &&
+              result.error &&
+              result.error.response &&
+              result.error.response.data &&
+              result.error.response.data.message
+            ) {
+              const { message } = result.error.response.data;
+              Alert.alert('Error', message);
             }
           })
           .catch(error => {
-            console.log('error register : ', error);
+            this.setState({
+              isLoading: false,
+            });
+            Alert.alert('Error', error);
           });
       }
     }
@@ -138,6 +154,17 @@ class CreatePin extends Component {
       });
   };
 
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading === true) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
+  }
+
   render() {
     const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
     const { navigation } = this.props;
@@ -181,6 +208,7 @@ class CreatePin extends Component {
           <View style={{ marginTop: deviceHeight * 0.05 }}>
             <EvilIcons name="lock" size={48} />
           </View>
+          {this.renderLoader()}
           <GeneratePinCode
             navigation={navigation}
             updateForm={this.updateForm}
@@ -188,7 +216,6 @@ class CreatePin extends Component {
             colorData={colorData}
           />
         </View>
-
         <View style={styles.loginButtonView}>
           <DesignButton
             name={pinCodeObj.btnText}

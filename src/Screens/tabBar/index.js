@@ -89,6 +89,7 @@ export default class TabBarView extends Component {
 
           return (
             <TouchableOpacity
+              key={route.key}
               style={[styles.tabItem, { backgroundColor: viewColor }]}
               onPress={() => this.setState({ index: i })}
             >
