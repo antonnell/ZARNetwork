@@ -33,7 +33,7 @@ class BeneficiaryDetails extends Component {
     }
 
     this.state = {
-      email: '',
+      name: '',
       accountNumber: '',
       reference: '',
       selectedWallet,
@@ -77,10 +77,9 @@ class BeneficiaryDetails extends Component {
   }
 
   validate(type) {
-    // const { email } = this.state;
-    if (type === 'email') {
+    if (type === 'name') {
       this.setState({
-        email: '',
+        name: '',
       });
     }
     if (type === 'account') {
@@ -113,7 +112,7 @@ class BeneficiaryDetails extends Component {
    * @method handleAddBeneficiary : To add new beneficiary of selected account.
    */
   handleAddBeneficiary() {
-    const { accountNumber, reference, accId, email } = this.state;
+    const { accountNumber, reference, accId, name } = this.state;
     const { navigation } = this.props;
     if (
       accountNumber &&
@@ -122,12 +121,12 @@ class BeneficiaryDetails extends Component {
       reference !== '' &&
       accId &&
       accId !== '' &&
-      email &&
-      email !== ''
+      name &&
+      name !== ''
     ) {
       const payload = {
         account_uuid: accId,
-        name: email,
+        name,
         number: accountNumber,
         their_reference: reference,
       };
@@ -146,7 +145,7 @@ class BeneficiaryDetails extends Component {
 
   render() {
     const {
-      email,
+      name,
       accountNumber,
       reference,
       selectedWallet,
@@ -155,7 +154,7 @@ class BeneficiaryDetails extends Component {
       isBackArrowPresent,
     } = this.state;
     let isClickable = false;
-    if (email !== '' && accountNumber !== '' && reference !== '' && accId !== '') {
+    if (name !== '' && accountNumber !== '' && reference !== '' && accId !== '') {
       isClickable = true;
     }
     const { userWalletDetail } = this.props;
@@ -207,10 +206,10 @@ class BeneficiaryDetails extends Component {
           }}
         >
           <FloatLabelTextField
-            type="email"
-            placeholder="Email"
+            type="name"
+            placeholder="Name"
             autoCorrect={false}
-            value={email}
+            value={name}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}

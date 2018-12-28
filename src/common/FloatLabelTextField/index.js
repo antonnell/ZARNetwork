@@ -187,7 +187,7 @@ class FloatLabelTextField extends Component {
       });
       updateForm(value, type);
     }
-    if (type === 'accountName') {
+    if (type === 'name') {
       this.setState({
         text: value,
         error: '',
@@ -248,9 +248,9 @@ class FloatLabelTextField extends Component {
       validate(type);
     } else if (type === 'account') {
       validate(type);
-    } else if (type === 'accountName') {
+    } else if (type === 'name') {
       if (text === '') {
-        Alert.alert('Error', 'Account name cannot be empty');
+        Alert.alert('Error', 'Name field cannot be empty.');
         validate(type);
       }
     } else {
@@ -343,7 +343,7 @@ class FloatLabelTextField extends Component {
     );
   }
 
-  accountNameField() {
+  nameField() {
     const { text } = this.state;
     const {
       placeholder,
@@ -740,8 +740,8 @@ class FloatLabelTextField extends Component {
       if (type === 'reference') {
         return <View>{this.refernceField()}</View>;
       }
-      if (type === 'accountName') {
-        return <View>{this.accountNameField()}</View>;
+      if (type === 'name') {
+        return <View>{this.nameField()}</View>;
       }
     }
   }

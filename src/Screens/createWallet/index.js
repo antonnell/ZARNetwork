@@ -34,7 +34,7 @@ class CreateWallet extends Component {
     }
     this.state = {
       selectedType,
-      accountName: '',
+      name: '',
       typeUuid,
       isBackArrowPresent,
     };
@@ -74,9 +74,9 @@ class CreateWallet extends Component {
   }
 
   validate(type) {
-    if (type === 'accountName') {
+    if (type === 'name') {
       this.setState({
-        accountName: '',
+        name: '',
       });
     }
   }
@@ -86,12 +86,12 @@ class CreateWallet extends Component {
    *
    */
   handleCreateAccount() {
-    const { accountName, typeUuid } = this.state;
+    const { name, typeUuid } = this.state;
     const { navigation } = this.props;
 
-    if (accountName && accountName !== '' && typeUuid && typeUuid !== '') {
+    if (name && name !== '' && typeUuid && typeUuid !== '') {
       const payload = {
-        description: accountName,
+        description: name,
         type_uuid: typeUuid,
       };
       setNewWallet(payload)
@@ -121,9 +121,9 @@ class CreateWallet extends Component {
 
   render() {
     const { accountTypeList } = this.props;
-    const { openAccountList, selectedType, accountName, typeUuid, isBackArrowPresent } = this.state;
+    const { openAccountList, selectedType, name, typeUuid, isBackArrowPresent } = this.state;
     let isClickable = false;
-    if (accountName !== '' && typeUuid !== '') {
+    if (name !== '' && typeUuid !== '') {
       isClickable = true;
     }
     return (
@@ -172,10 +172,10 @@ class CreateWallet extends Component {
           </View>
           <View style={styles.accNameViewStyle}>
             <FloatLabelTextField
-              type="accountName"
+              type="name"
               placeholder="Account Name"
               autoCorrect={false}
-              value={accountName}
+              value={name}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
