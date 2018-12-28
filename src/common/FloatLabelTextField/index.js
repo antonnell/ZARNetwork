@@ -322,6 +322,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   defaultValue={defaultValue}
@@ -338,7 +339,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }
@@ -379,6 +380,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   defaultValue={defaultValue}
@@ -395,7 +397,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }
@@ -504,6 +506,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   keyboardType="numeric"
@@ -522,7 +525,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }
@@ -562,6 +565,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   defaultValue={defaultValue}
@@ -590,7 +594,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }
@@ -635,6 +639,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   keyboardType="numeric"
@@ -658,7 +663,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }
@@ -699,6 +704,7 @@ class FloatLabelTextField extends Component {
                     {
                       backgroundColor: inputBackgroundColor,
                       width: textFieldSize,
+                      backgroundColor: 'transparent',
                     },
                   ]}
                   keyboardType="numeric"
@@ -717,7 +723,7 @@ class FloatLabelTextField extends Component {
             </TextFieldHolder>
           </View>
         </View>
-        <View style={styles.underlineStyling} />
+        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
   }

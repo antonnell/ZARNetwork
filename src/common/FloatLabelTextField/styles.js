@@ -7,7 +7,7 @@ const isIOS = Platform.OS === 'ios';
 
 export default {
   container: {
-    height: 60,
+    height: 55,
     backgroundColor: 'transparent',
     justifyContent: 'center',
   },
@@ -33,6 +33,8 @@ export default {
     justifyContent: 'center',
     position: 'relative',
     opacity: 0.8,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(92,92,92)',
   },
   withBorder: {
     borderColor: '#C8C7CC',
