@@ -13,6 +13,7 @@ import CreateWallet from './src/Screens/createWallet';
 import PaymentNotification from './src/Screens/paymentNotification';
 import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 import StartScreen from './src/Screens/startScreen';
+import QRScanner from './src/common/QRScanner/view';
 
 const Routing = createStackNavigator(
   {
@@ -36,6 +37,9 @@ const Routing = createStackNavigator(
     },
     TabBarView: {
       screen: TabBarView,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
     },
     BeneficiaryDetails: {
       screen: BeneficiaryDetails,
@@ -54,6 +58,9 @@ const Routing = createStackNavigator(
     },
     StartScreen: {
       screen: StartScreen,
+    },
+    QRScanner: {
+      screen: QRScanner,
     },
   },
   {

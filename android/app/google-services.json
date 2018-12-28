@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "888539243135-o3nrmocmiccma4b4qnvt1pfb5csju1or.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fantom",
+            "certificate_hash": "cfa46f5d6ca9130106f0e1e960705ecd3d376538"
+          }
+        },
+        {
           "client_id": "888539243135-v98qv019tfovpqqbdda2rftg7fspjqhk.apps.googleusercontent.com",
           "client_type": 3
         }

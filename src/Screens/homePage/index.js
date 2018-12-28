@@ -16,6 +16,7 @@ import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
 import receiveIcon from '../../images/receiveIcon.png';
 import TitleHeader from '../../common/TitleHeader';
+import Loader from '../../common/Loader';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -23,7 +24,9 @@ const deviceWidth = Dimensions.get('window').width;
 class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLoading: false,
+    };
     this.renderCreateAccount = this.renderCreateAccount.bind(this);
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
   }
@@ -37,12 +40,30 @@ class HomePage extends Component {
     }
   }
 
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading === true) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
+  }
+
   renderAccountCards() {
     const { userWalletDetail, accountTypeList } = this.props;
+    const { isLoading } = this.state;
     const userWalletLength = userWalletDetail.length;
     const walletList = [];
 
     if (userWalletDetail && userWalletLength > 0) {
+      if (isLoading) {
+        this.setState({
+          isLoading: false,
+        });
+      }
+
       for (let index = 0; index < userWalletLength; index += 1) {
         // eslint-disable-next-line no-unused-vars
         let walletType = '-';
@@ -71,6 +92,10 @@ class HomePage extends Component {
           />
         );
       }
+    } else if (!isLoading) {
+      this.setState({
+        isLoading: true,
+      });
     }
     return walletList;
   }
@@ -165,6 +190,7 @@ class HomePage extends Component {
                 showsHorizontalScrollIndicator={false}
               >
                 {this.renderAccountCards()}
+                {this.renderLoader()}
                 <View style={{ width: deviceWidth * 0.02 }} />
               </ScrollView>
             </View>

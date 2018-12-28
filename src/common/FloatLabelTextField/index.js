@@ -614,6 +614,7 @@ class FloatLabelTextField extends Component {
       isShowRightText,
       rightTextValue,
       rightTextValueStyle,
+      onPressRightBtn,
     } = this.props;
 
     return (
@@ -655,7 +656,7 @@ class FloatLabelTextField extends Component {
                   autoCapitalize="none"
                 />
                 {isShowRightText && (
-                  <TouchableOpacity style={rightTextStyle}>
+                  <TouchableOpacity style={rightTextStyle} onPress={onPressRightBtn}>
                     <Text style={rightTextValueStyle}>{rightTextValue}</Text>
                   </TouchableOpacity>
                 )}
