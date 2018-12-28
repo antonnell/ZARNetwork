@@ -7,7 +7,7 @@ const isIOS = Platform.OS === 'ios';
 
 export default {
   container: {
-    height: 55,
+    height: 54,
     backgroundColor: 'transparent',
     justifyContent: 'center',
   },
