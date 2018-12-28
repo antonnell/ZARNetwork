@@ -5,22 +5,37 @@ import styles from './styles';
 
 export default class DesignButton extends React.PureComponent {
   render() {
-    const { isClickable, callMethod, name, btnMainStyle } = this.props;
+    const { isClickable, callMethod, name, btnMainStyle, btnTextColor } = this.props;
+
     let setButtonStyle = {
       ...styles.loginBtn,
-      btnMainStyle,
     };
+    if (btnMainStyle) {
+      setButtonStyle = {
+        ...styles.loginBtn,
+        ...btnMainStyle,
+      };
+    }
     if (!isClickable) {
       setButtonStyle = {
         ...styles.loginBtn,
         backgroundColor: '#70c5ef',
-        btnMainStyle,
+      };
+    }
+
+    let loginBtnTextStyling = {
+      ...styles.loginBtnText,
+    };
+    if (btnTextColor) {
+      loginBtnTextStyling = {
+        ...styles.loginBtnText,
+        ...btnTextColor,
       };
     }
 
     return (
       <TouchableOpacity style={setButtonStyle} onPress={callMethod} disabled={!isClickable}>
-        <Text style={styles.loginBtnText}>{name}</Text>
+        <Text style={loginBtnTextStyling}>{name}</Text>
       </TouchableOpacity>
     );
   }
@@ -30,10 +45,12 @@ DesignButton.defaultProps = {
   name: 'DONE',
   btnMainStyle: {},
   callMethod: () => {},
+  btnTextColor: {},
 };
 DesignButton.propTypes = {
   isClickable: PropTypes.bool,
   callMethod: PropTypes.func,
   name: PropTypes.string,
   btnMainStyle: PropTypes.objectOf(PropTypes.any),
+  btnTextColor: PropTypes.objectOf(PropTypes.any),
 };

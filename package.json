@@ -32,6 +32,7 @@
     "react-native-otp-inputs": "^1.0.0",
     "react-native-phone-input": "^0.2.1",
     "react-native-randombytes": "^3.5.1",
+    "react-native-swiper": "^1.5.14",
     "react-native-tab-view": "^1.3.1",
     "react-native-tcp": "^3.3.0",
     "react-native-touch-id": "^4.3.0",
