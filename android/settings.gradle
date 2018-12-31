@@ -1,4 +1,6 @@
 rootProject.name = 'fantom'
+include ':react-native-web3'
+project(':react-native-web3').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-web3/android')
 include ':react-native-randombytes'
 project(':react-native-randombytes').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-randombytes/android')
 include ':react-native-camera'
