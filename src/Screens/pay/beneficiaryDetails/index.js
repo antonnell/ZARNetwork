@@ -51,28 +51,14 @@ class BeneficiaryDetails extends Component {
     this.openScanner = this.openScanner.bind(this);
   }
 
-  toggleWalletList() {
-    const { openWalletList } = this.state;
-    this.setState({
-      openWalletList: !openWalletList,
-    });
-  }
-
   /**
    * @method handleWalletList : To handle selected account type from account list.
    *
    */
-  handleWalletList(item) {
-    const { openWalletList } = this.state;
+  onScanSuccess(address) {
     this.setState({
-      openWalletList: !openWalletList,
+      accountNumber: address,
     });
-    if (item && item.description) {
-      this.setState({
-        selectedWallet: item.description,
-        accId: item.uuid,
-      });
-    }
   }
 
   updateForm(value, type) {
@@ -171,12 +157,32 @@ class BeneficiaryDetails extends Component {
     }
   }
 
+  handleWalletList(item) {
+    const { openWalletList } = this.state;
+    this.setState({
+      openWalletList: !openWalletList,
+    });
+    if (item && item.description) {
+      this.setState({
+        selectedWallet: item.description,
+        accId: item.uuid,
+      });
+    }
+  }
+
+  toggleWalletList() {
+    const { openWalletList } = this.state;
+    this.setState({
+      openWalletList: !openWalletList,
+    });
+  }
+
   openScanner() {
     // eslint-disable-next-line no-console
     console.warn('openScanner');
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('QRScanner');
+      navigation.navigate('QRScanner', { onScanSuccess: this.onScanSuccess.bind(this) });
     }
   }
 

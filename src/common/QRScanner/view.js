@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
 import { View, StyleSheet, StatusBar, Alert } from 'react-native';
@@ -6,7 +7,7 @@ import Web3 from 'web3';
 // import arrowLeftButton from '../../../images/arrowLeft_White.png';
 // import Header from '../../../general/header/index';
 import QRCodeScanner from './index';
-
+import TitleHeader from '../TitleHeader';
 // const deviceHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
@@ -60,34 +61,28 @@ export default class ScanScreen extends Component {
     }
   }
 
-  onLeftIconPress() {
-    const { navigation } = this.props;
-    navigation.goBack();
-  }
+  // onLeftIconPress() {
+  //   this.props.navigation.goBack();
+  // }
 
   render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.mainContainerStyle}>
         <StatusBar barStyle="light-content" />
-        {/* <Header
-          text="QR Scan"
-          leftButtonIcon="chevron-left"
-          leftIconColor="#fff"
-          leftIconSize={30}
-          leftButtonStyle={{ marginLeft: -10 }}
-          onLeftIconPress={() => this.onLeftIconPress()}
-          textStyle={{ fontFamily: 'SFProDisplay-Semibold' }}
-          headerStyle={{
-            backgroundColor: 'rgb(44,52,58)',
-            height: deviceHeight < 810 ? 84 : (106 / 812) * deviceHeight,
-          }}
-        /> */}
+
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="QR SCANNER"
+          onBtnPress={() => navigation.goBack()}
+          isBackArrow
+        />
+
         <QRCodeScanner
           ref={scanner => {
             this.scanner = scanner;
           }}
           onRead={e => this.onSuccess(e)}
-          {...this.props}
         />
       </View>
     );
