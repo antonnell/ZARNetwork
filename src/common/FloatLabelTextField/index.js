@@ -107,6 +107,7 @@ class FloatLabelTextField extends Component {
       showPassword: false,
       passwordIcon: 'lock-outline', // "visibility-off",
       error: '',
+      email: '',
     };
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
     this.checkType = this.checkType.bind(this);
@@ -227,7 +228,7 @@ class FloatLabelTextField extends Component {
     const { validate } = this.props;
     if (type === 'email') {
       const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (email !== '') {
+      if (email !== '' && email !== undefined) {
         if (reg.test(email) === false) {
           Alert.alert('Error', 'Invalid Email');
           validate(type);
@@ -253,9 +254,6 @@ class FloatLabelTextField extends Component {
         Alert.alert('Error', 'Name field cannot be empty.');
         validate(type);
       }
-    } else {
-      Alert.alert('Error', 'Enter Email First');
-      validate(type);
     }
   }
 

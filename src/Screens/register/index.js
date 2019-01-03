@@ -90,17 +90,17 @@ export default class Register extends Component {
       });
     } else if (type === 'password') {
       if (email === '') {
-        Alert.alert('Error', 'Enter Email first');
-        this.setState({
-          password: '',
-        });
+        // Alert.alert('Error', 'Enter Email first');
+        // this.setState({
+        //   password: '',
+        // });
       }
     } else if (type === 'confirmPassword') {
       if (email === '') {
-        Alert.alert('Error', 'Enter Email first');
-        this.setState({
-          confirmPassword: '',
-        });
+        // Alert.alert('Error', 'Enter Email first');
+        // this.setState({
+        //   confirmPassword: '',
+        // });
       } else if (password === '') {
         Alert.alert('Error', 'Enter Password first');
         this.setState({ confirmPassword: '' });

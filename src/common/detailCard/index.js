@@ -20,7 +20,9 @@ export default class DetailCard extends Component {
       return (
         <View style={detailCardTopViewStyle}>
           <Image source={icon} style={imageStyle} resizeMode="contain" />
-          <Text style={detailCardTopTitleStyle}>{description}</Text>
+          <Text style={detailCardTopTitleStyle} numberOfLines={1}>
+            {description}
+          </Text>
         </View>
       );
     }

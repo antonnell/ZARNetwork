@@ -41,7 +41,7 @@ class Login extends Component {
         email: '',
       });
     } else if (type === 'password' && email === '') {
-      Alert.alert('Error', 'Enter Email first');
+      // Alert.alert('Error', 'Enter Email first');
       this.setState({
         password: '',
       });
@@ -114,7 +114,10 @@ class Login extends Component {
     console.log('authDetail in props : ', authDetail);
     console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
-
+    let isClickable = false;
+    if (email !== '' && password !== '') {
+      isClickable = true;
+    }
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -157,7 +160,7 @@ class Login extends Component {
         </View>
         {this.renderLoader()}
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable />
+          <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable={isClickable} />
         </View>
         <TouchableOpacity style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>

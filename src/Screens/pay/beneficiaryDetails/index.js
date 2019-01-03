@@ -178,8 +178,6 @@ class BeneficiaryDetails extends Component {
   }
 
   openScanner() {
-    // eslint-disable-next-line no-console
-    console.warn('openScanner');
     const { navigation } = this.props;
     if (navigation) {
       navigation.navigate('QRScanner', { onScanSuccess: this.onScanSuccess.bind(this) });
