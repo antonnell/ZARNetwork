@@ -113,4 +113,9 @@ export default StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  renderCardContainer: {
+    height: deviceHeight * 0.3,
+    width: deviceWidth,
+    paddingVertical: 10,
+  },
 });

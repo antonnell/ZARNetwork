@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   mainContainer: {
+    flex: 1,
     paddingHorizontal: deviceHeight * 0.04,
     paddingVertical: deviceHeight * 0.02,
     backgroundColor: 'transparent',

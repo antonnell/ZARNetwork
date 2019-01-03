@@ -14,6 +14,7 @@ import PaymentNotification from './src/Screens/paymentNotification';
 import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 import StartScreen from './src/Screens/startScreen';
 import QRScanner from './src/common/QRScanner/view';
+import Pay from './src/Screens/pay/index';
 
 const Routing = createStackNavigator(
   {
@@ -62,9 +63,12 @@ const Routing = createStackNavigator(
     QRScanner: {
       screen: QRScanner,
     },
+    PaySomeone: {
+      screen: Pay,
+    },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'StartScreen',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {

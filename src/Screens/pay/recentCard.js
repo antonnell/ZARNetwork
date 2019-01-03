@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import styles from './styles';
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+// import styles from './styles';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 // eslint-disable-next-line react/prefer-stateless-function
 export default class RecentCard extends Component {
   render() {
-    const { header, title, subtitle } = this.props;
+    const { header, title, subtitle, onPress } = this.props;
     return (
-      <View
+      <TouchableOpacity
         style={{
           width: deviceWidth * 0.9,
           // alignItems: 'center',
@@ -20,6 +20,7 @@ export default class RecentCard extends Component {
           borderRadius: 5,
           marginTop: 10,
         }}
+        onPress={onPress}
       >
         <View
           style={{
@@ -48,7 +49,21 @@ export default class RecentCard extends Component {
           </Text>
           <Text style={{ color: 'black', textAlign: 'center', fontSize: 14 }}>{subtitle}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
+
+RecentCard.defaultProps = {
+  header: '--',
+  title: '--',
+  subtitle: '--',
+  onPress: () => {},
+};
+
+RecentCard.propTypes = {
+  header: PropTypes.string,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  onPress: PropTypes.func,
+};

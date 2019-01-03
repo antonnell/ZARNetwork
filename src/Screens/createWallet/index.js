@@ -150,7 +150,7 @@ class CreateWallet extends Component {
    */
   renderLoader() {
     const { isLoading } = this.state;
-    if (isLoading === true) {
+    if (isLoading) {
       return <Loader isLoading={isLoading} loaderStyle={0.25} />;
     }
     return null;
@@ -170,7 +170,7 @@ class CreateWallet extends Component {
         activeOpacity={1}
       >
         <StatusBar backgroundColor="black" />
-        {this.renderLoader()}
+
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="CREATE WALLET"
@@ -229,6 +229,7 @@ class CreateWallet extends Component {
             />
           </View>
         </View>
+        {this.renderLoader()}
       </TouchableOpacity>
     );
   }

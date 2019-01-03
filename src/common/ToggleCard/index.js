@@ -9,7 +9,7 @@ export default class ToggleCard extends PureComponent {
     const { textVal, textStyle, containerStyle, toggleState, updateToggleClick } = this.props;
     let mainView = styles.mainContainer;
     let textStyleVal = styles.textStyle;
-    if (containerStyle) {
+    if (containerStyle && containerStyle !== null) {
       mainView = containerStyle;
     }
     if (textStyle) {
@@ -26,8 +26,8 @@ export default class ToggleCard extends PureComponent {
 }
 ToggleCard.defaultProps = {
   textVal: '',
-  textStyle: {},
-  containerStyle: {},
+  textStyle: null,
+  containerStyle: null,
   toggleState: false,
   updateToggleClick: () => {},
 };

@@ -189,7 +189,7 @@ class BeneficiaryDetails extends Component {
    */
   renderLoader() {
     const { isLoading } = this.state;
-    if (isLoading === true) {
+    if (isLoading) {
       return <Loader isLoading={isLoading} loaderStyle={0.25} />;
     }
     return null;
@@ -218,14 +218,14 @@ class BeneficiaryDetails extends Component {
         activeOpacity={1}
       >
         <StatusBar backgroundColor="black" />
-        {this.renderLoader()}
+
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="BENEFICIARY DETAILS"
           onBtnPress={this.handleGoBack}
           isBackArrow={isBackArrowPresent}
         />
-        <View style={{ zIndex: 99 }}>
+        <View style={{ zIndex: openWalletList ? 99 : 0 }}>
           <TitleCard
             icon={AccountType}
             titleCardMainViewStyle={styles.titleCardMainViewStyle}
@@ -302,6 +302,7 @@ class BeneficiaryDetails extends Component {
             isClickable={isClickable}
           />
         </View>
+        {this.renderLoader()}
       </TouchableOpacity>
     );
   }

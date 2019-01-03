@@ -62,7 +62,7 @@ const getFormattedBeneficiaryData = (state, action) => {
  */
 const userBeneficiaryReducer = (state = defaultState, action) => {
   // eslint-disable-next-line no-console
-  console.log('CREATE_BENEFICIARY action : ', action);
+  console.log('userBeneficiaryReducer action : ', action);
   switch (action.type) {
     case `${CREATE_BENEFICIARY}${_SUCCESS}`: {
       const formattedData = getFormattedNewBeneficiaryData(state, action);

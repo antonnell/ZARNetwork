@@ -76,7 +76,7 @@ class Login extends Component {
               isLoading: false,
             });
             if (result && result.payload && result.payload.status === 200) {
-              navigation.navigate('TabBarView');
+              navigation.navigate('Home');
             } else if (
               result &&
               result.error &&
@@ -103,7 +103,7 @@ class Login extends Component {
    */
   renderLoader() {
     const { isLoading } = this.state;
-    if (isLoading === true) {
+    if (isLoading) {
       return <Loader isLoading={isLoading} loaderStyle={0.25} />;
     }
     return null;
@@ -158,7 +158,7 @@ class Login extends Component {
             validate={type => this.validate(type)}
           />
         </View>
-        {this.renderLoader()}
+
         <View style={{ marginTop: deviceHeight * 0.08 }}>
           <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable={isClickable} />
         </View>
@@ -171,6 +171,7 @@ class Login extends Component {
         >
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
         </TouchableOpacity>
+        {this.renderLoader()}
       </View>
     );
   }

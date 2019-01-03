@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -29,6 +29,8 @@ class HomePage extends Component {
     };
     this.renderCreateAccount = this.renderCreateAccount.bind(this);
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
+    this.renderReceive = this.renderReceive.bind(this);
+    this.handleAccountPay = this.handleAccountPay.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +38,32 @@ class HomePage extends Component {
       getAccountType();
     }
     if (getWalletDetail) {
-      getWalletDetail();
+      this.setState({
+        isLoading: true,
+      });
+      getWalletDetail()
+        .then(() => {
+          this.setState({
+            isLoading: false,
+          });
+        })
+        .catch(err => {
+          this.setState({
+            isLoading: false,
+          });
+          Alert.alert('Error', err);
+        });
+    }
+  }
+
+  /**
+   * @method handleAccountPay : To open account payment screen
+   */
+  handleAccountPay() {
+    const isBackArrow = true;
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('PayBeneficiary', { isBackArrow });
     }
   }
 
@@ -45,25 +72,28 @@ class HomePage extends Component {
    */
   renderLoader() {
     const { isLoading } = this.state;
-    if (isLoading === true) {
-      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    if (isLoading) {
+      return (
+        <Loader
+          isLoading={isLoading}
+          loaderStyle={0.25}
+          containerStyle={{
+            height: deviceHeight * 0.3,
+            width: deviceWidth - 40,
+            marginHorizontal: 20,
+          }}
+        />
+      );
     }
     return null;
   }
 
   renderAccountCards() {
     const { userWalletDetail, accountTypeList } = this.props;
-    const { isLoading } = this.state;
     const userWalletLength = userWalletDetail.length;
     const walletList = [];
 
     if (userWalletDetail && userWalletLength > 0) {
-      if (isLoading) {
-        this.setState({
-          isLoading: false,
-        });
-      }
-
       for (let index = 0; index < userWalletLength; index += 1) {
         // eslint-disable-next-line no-unused-vars
         let walletType = '-';
@@ -89,15 +119,14 @@ class HomePage extends Component {
             detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
             detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
             detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
+            callMethod={this.handleAccountPay}
           />
         );
       }
-    } else if (!isLoading) {
-      this.setState({
-        isLoading: true,
-      });
+      return walletList;
     }
-    return walletList;
+
+    return this.renderNoAccountView();
   }
 
   /**
@@ -107,7 +136,7 @@ class HomePage extends Component {
     const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation && navigation.navigate) {
-      navigation.navigate('BeneficiaryDetails', { isBackArrow });
+      navigation.navigate('PaySomeone', { isBackArrow });
     }
   }
 
@@ -120,6 +149,50 @@ class HomePage extends Component {
     if (navigation && navigation.navigate) {
       navigation.navigate('CreateWallet', { isBackArrow });
     }
+  }
+
+  /**
+   * @method renderReceive : To render receive functionality
+   */
+  // eslint-disable-next-line class-methods-use-this
+  renderReceive() {
+    Alert.alert('Information', 'Under development.');
+  }
+
+  renderCards() {
+    const { isLoading } = this.state;
+    if (!isLoading) {
+      return (
+        <ScrollView
+          style={{
+            flex: 1,
+          }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
+          {this.renderAccountCards()}
+          <View style={{ width: deviceWidth * 0.02 }} />
+        </ScrollView>
+      );
+    }
+    return this.renderLoader();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  renderNoAccountView() {
+    return (
+      <View
+        style={{
+          height: deviceHeight * 0.3,
+          width: deviceWidth - 40,
+          marginHorizontal: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={{ fontSize: 16, color: 'red' }}>NO DATA FOUND</Text>
+      </View>
+    );
   }
 
   render() {
@@ -160,7 +233,7 @@ class HomePage extends Component {
             }}
           >
             <Wallet text="Pay Someone" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
-            <Wallet text="Receive" icon={receiveIcon} />
+            <Wallet text="Receive" icon={receiveIcon} handleWallet={this.renderReceive} />
             <Wallet
               text="Add Account"
               handleWallet={this.renderCreateAccount}
@@ -175,25 +248,7 @@ class HomePage extends Component {
             <View style={{ width: deviceWidth * 0.85, alignSelf: 'center' }}>
               <Text style={{ fontSize: 16 }}>Accounts</Text>
             </View>
-            <View
-              style={{
-                height: deviceHeight * 0.3,
-                width: deviceWidth,
-                paddingVertical: 10,
-              }}
-            >
-              <ScrollView
-                style={{
-                  flex: 1,
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-              >
-                {this.renderAccountCards()}
-                {this.renderLoader()}
-                <View style={{ width: deviceWidth * 0.02 }} />
-              </ScrollView>
-            </View>
+            <View style={styles.renderCardContainer}>{this.renderCards()}</View>
           </View>
           <View style={{ height: deviceHeight * 0.05 }} />
         </ScrollView>

@@ -112,7 +112,6 @@ export default class PhoneAuthTest extends Component {
       );
   }
   resendOTP = () => {
-    debugger;
     const { resendOTP } = this.state;
     firebase.initializeApp(config);
     firebase

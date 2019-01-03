@@ -9,36 +9,40 @@ const deviceHeight = Dimensions.get('window').height;
 // Styling
 const styles = StyleSheet.create({
   overlayView: {
-    flex: 1,
     position: 'absolute',
-    left: 0,
     top: 0,
-    opacity: 1.0,
-    backgroundColor: 'rgba(100, 100, 100, 0.3)',
-    width: deviceWidth,
+    left: 0,
+    // backgroundColor: 'rgba(100, 100, 100, 0.3)',
     height: deviceHeight,
-    zIndex: 12200,
+    width: deviceWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   activityIndicator: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 80,
   },
 });
 
 export default class Loading extends PureComponent {
   render() {
-    const { loaderStyle, loaderColor, isLoading } = this.props;
-    const activityIndicatorColor = loaderColor || 'rgba(0,0,0,1)';
-    const marginStyle = loaderStyle ? deviceHeight * loaderStyle - 40 : deviceHeight * 0.5 - 40;
+    // eslint-disable-next-line no-unused-vars
+    const { loaderStyle, loaderColor, isLoading, containerStyle } = this.props;
+    const activityIndicatorColor = loaderColor || 'rgb(0,177,251)';
+    // const marginStyle = loaderStyle ? deviceHeight * loaderStyle - 40 : deviceHeight * 0.5 - 40;
     if (isLoading === false) {
       return null;
     }
+
+    let mainContainerStyle = styles.overlayView;
+    if (containerStyle && containerStyle !== null) {
+      mainContainerStyle = { ...styles.overlayView, ...containerStyle };
+    }
     return (
-      <View style={styles.overlayView}>
+      <View style={mainContainerStyle}>
         <ActivityIndicator
           animating
-          style={[styles.activityIndicator, { marginTop: marginStyle }]}
+          style={[styles.activityIndicator]}
           size="large"
           color={activityIndicatorColor}
         />
@@ -50,6 +54,7 @@ export default class Loading extends PureComponent {
 // Specifies the default values for props:
 Loading.defaultProps = {
   isLoading: false,
+  containerStyle: {},
 };
 
 Loading.propTypes = {
@@ -58,4 +63,5 @@ Loading.propTypes = {
   // eslint-disable-next-line react/require-default-props
   loaderColor: PropTypes.string,
   isLoading: PropTypes.bool,
+  containerStyle: PropTypes.objectOf(PropTypes.any),
 };

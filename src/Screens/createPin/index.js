@@ -1,10 +1,19 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { Alert, View, Text, Dimensions, StatusBar, TouchableHighlight } from 'react-native';
+import {
+  Alert,
+  View,
+  Text,
+  Dimensions,
+  StatusBar,
+  TouchableHighlight,
+  ScrollView,
+} from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import DesignButton from '../../common/Button';
+import TitleHeader from '../../common/TitleHeader';
 import styles from './styles';
 import GeneratePinCode from '../../common/PinCode';
 import { register } from '../../controllers/api/auth';
@@ -159,7 +168,7 @@ class CreatePin extends Component {
    */
   renderLoader() {
     const { isLoading } = this.state;
-    if (isLoading === true) {
+    if (isLoading) {
       return <Loader isLoading={isLoading} loaderStyle={0.25} />;
     }
     return null;
@@ -191,7 +200,7 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return isTouchId ? (
+    return !isTouchId ? (
       <View style={styles.Container}>
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>Authenticate with Touch ID</Text>
@@ -200,29 +209,35 @@ class CreatePin extends Component {
     ) : (
       <View style={styles.Container}>
         <StatusBar barStyle="light-content" backgroundColor="black" />
-        <View style={{ marginTop: deviceHeight * 0.06 }}>
-          <Text style={styles.textStyle}>CREATE PIN</Text>
-        </View>
+        <TitleHeader title="CREATE PIN" />
 
-        <View style={styles.dialerView}>
+        <ScrollView
+          style={styles.dialerView}
+          contentContainerStyle={{ alignItems: 'center' }}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={{ marginTop: deviceHeight * 0.05 }}>
             <EvilIcons name="lock" size={48} />
           </View>
-          {this.renderLoader()}
-          <GeneratePinCode
-            navigation={navigation}
-            updateForm={this.updateForm}
-            pinCodeObj={pinCodeObj}
-            colorData={colorData}
-          />
-        </View>
-        <View style={styles.loginButtonView}>
-          <DesignButton
-            name={pinCodeObj.btnText}
-            isClickable={pinCodeObj.isBtnEnabled}
-            callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
-          />
-        </View>
+          <View style={{ flex: 1 }}>
+            <GeneratePinCode
+              navigation={navigation}
+              updateForm={this.updateForm}
+              pinCodeObj={pinCodeObj}
+              colorData={colorData}
+            />
+          </View>
+          <View style={styles.loginButtonView}>
+            <DesignButton
+              name={pinCodeObj.btnText}
+              isClickable={pinCodeObj.isBtnEnabled}
+              callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
+            />
+          </View>
+          <View style={{ height: deviceHeight * 0.08 }} />
+        </ScrollView>
+
+        {this.renderLoader()}
       </View>
     );
   }

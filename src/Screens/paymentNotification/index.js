@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // styles
 import styles from './styles';
@@ -19,6 +20,11 @@ const deviceHeight = Dimensions.get('window').height;
 class PaymentNotification extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    let isBackArrowPresent = false;
+    if (navigation && navigation.state && navigation.state.params) {
+      isBackArrowPresent = navigation.state.params.isBackArrow;
+    }
     this.state = {
       noBeneficiaryNotification: false,
       emailBeneficiaryNotification: false,
@@ -26,6 +32,7 @@ class PaymentNotification extends Component {
       noMyNotification: false,
       emailMyNotification: false,
       smsMyNotification: false,
+      isBackArrowPresent,
     };
   }
 
@@ -67,6 +74,7 @@ class PaymentNotification extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     const {
       noBeneficiaryNotification,
       emailBeneficiaryNotification,
@@ -74,12 +82,18 @@ class PaymentNotification extends Component {
       noMyNotification,
       emailMyNotification,
       smsMyNotification,
+      isBackArrowPresent,
     } = this.state;
 
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <TitleHeader iconName="keyboard-arrow-left" title="PAYMENT NOTIFICATION" />
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="PAYMENT NOTIFICATION"
+          isBackArrow={isBackArrowPresent}
+          onBtnPress={() => navigation.goBack()}
+        />
         <ScrollView style={{ height: deviceHeight }} showsVerticalScrollIndicator={false}>
           {/* Beneficiary Notification */}
           <TitleText
@@ -122,6 +136,11 @@ class PaymentNotification extends Component {
     );
   }
 }
+
+PaymentNotification.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  navigation: PropTypes.objectOf(PropTypes.any),
+};
 
 const mapStateToProps = () => ({
   // authDetail: state.userAuthReducer,

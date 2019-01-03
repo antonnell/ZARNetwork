@@ -34,15 +34,14 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   loginButtonView: {
-    position: 'absolute',
-    bottom: deviceHeight * 0.06,
-    alignItems: 'center',
+    marginTop: deviceHeight * 0.04,
+    // alignItems: 'center',
   },
   dialerView: {
     marginTop: 10,
-    position: 'absolute',
+    // position: 'absolute',
     // marginTop: deviceHeight * 0.1,
-    height: deviceHeight * 0.6,
-    alignItems: 'center',
+    height: deviceHeight,
+    // alignItems: 'center',
   },
 });

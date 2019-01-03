@@ -1,6 +1,7 @@
 // Library
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 // Style
 import styles from './styles';
 // components
@@ -19,14 +20,22 @@ const deviceWidth = Dimensions.get('window').width;
 export default class PayBeneficiary extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    let isBackArrowPresent = false;
+    if (navigation && navigation.state && navigation.state.params) {
+      isBackArrowPresent = navigation.state.params.isBackArrow;
+    }
+
     this.state = {
       accountNumber: '',
       reference: '',
       normalPaymentToggle: false,
       futurePaymentToggle: false,
       payBtnClicked: false,
+      isBackArrowPresent,
     };
     this.updateForm = this.updateForm.bind(this);
+    this.handlePayNotification = this.handlePayNotification.bind(this);
   }
 
   onPayBtnClick() {
@@ -62,18 +71,33 @@ export default class PayBeneficiary extends Component {
     this.setState({ [type]: value });
   }
 
+  handlePayNotification() {
+    const isBackArrow = true;
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('PaymentNotification', { isBackArrow });
+    }
+  }
+
   render() {
+    const { navigation } = this.props;
     const {
       accountNumber,
       reference,
       normalPaymentToggle,
       futurePaymentToggle,
       payBtnClicked,
+      isBackArrowPresent,
     } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <TitleHeader iconName="keyboard-arrow-left" title="PAY BENEFICIARY" />
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="PAY BENEFICIARY"
+          isBackArrow={isBackArrowPresent}
+          onBtnPress={() => navigation.goBack()}
+        />
         {/* header */}
         <ScrollView
           style={{
@@ -139,6 +163,7 @@ export default class PayBeneficiary extends Component {
             titleCardTextStyle={styles.notificationTextStyle}
             titleMaterialIconStyle={styles.notificationMaterialIconStyle}
             text="Payment Notification: none"
+            onPress={this.handlePayNotification}
           />
           {/* Toggle container */}
           <View style={styles.toggleContainerStyle}>
@@ -176,3 +201,8 @@ export default class PayBeneficiary extends Component {
     );
   }
 }
+
+PayBeneficiary.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  navigation: PropTypes.objectOf(PropTypes.any),
+};
