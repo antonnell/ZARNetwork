@@ -153,6 +153,38 @@ class Pay extends Component {
     //   {
     //     header: 'JM',
     //     title: 'Jacob E. Miller',
+    //     subTitle: 'ABSA BANK | 13425386475',
+    //   },
+    //   {
+    //     header: 'JL',
+    //     title: 'James J. Lomeli',
+    //     subTitle: 'ABSA BANK | 13425386475',
+    //   },
+    // ];
+    const { beneficiaries } = this.props;
+    // const { isLoading } = this.state;
+    // if (isLoading === true) {
+    //   return null;
+    // }
+
+    const beneficiaryList = [];
+    const beneficiariesLength = beneficiaries.length;
+    if (beneficiariesLength > 0) {
+      for (let i = 0; i < beneficiariesLength; i += 1) {
+        const header = getFirstCharOfString(beneficiaries[i].name);
+        const bankDetail = beneficiaries[i].bank_uuid ? beneficiaries[i].bank_uuid : '--';
+        beneficiaryList.push(
+          <RecentCard
+            key={Math.random()}
+            header={header}
+            title={beneficiaries[i].name}
+            subtitle={bankDetail}
+            onPress={this.handleAccountPay}
+          />
+        );
+      }
+      return beneficiaryList;
+    }
     return null;
   }
 
