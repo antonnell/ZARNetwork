@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -50,7 +51,6 @@
 		C183BAC021C22B9100E096EE /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C183BA8D21C22B9100E096EE /* GoogleAppMeasurement.framework */; };
 		C183BAC121C22B9100E096EE /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C183BA8E21C22B9100E096EE /* GoogleUtilities.framework */; };
 		C183BAC221C22B9100E096EE /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C183BA8F21C22B9100E096EE /* nanopb.framework */; };
-		C183BAC421C22BB600E096EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C183BAC321C22BB600E096EE /* GoogleService-Info.plist */; };
 		C183BB8521C2317700E096EE /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C183BB5821C2317700E096EE /* FirebaseAuth.framework */; };
 		C183BB8621C2317700E096EE /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C183BB8421C2317700E096EE /* GTMSessionFetcher.framework */; };
 		C612A5EB4C3B4025AE7BC12E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DA7EAE3370845A39F9B2DC8 /* SimpleLineIcons.ttf */; };
@@ -61,6 +61,7 @@
 		D83EB4A521D36D7A00B6AAA4 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D83EB4A421D36D7A00B6AAA4 /* Roboto-Regular.ttf */; };
 		E4CF50610EEF42DA8B492DDD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523073C6601648B38EAE6B38 /* MaterialIcons.ttf */; };
 		E70E14370D224BD48A7740FB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDFAFB8A88FE4BA7AB679632 /* EvilIcons.ttf */; };
+		F3067B3E21DF7F3300C0E54F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */; };
 		F493101BB68143BCAEF7127F /* libRNOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04532C5391F64C5DAA704391 /* libRNOS.a */; };
 		F4C2DDB50469421195A6DBEB /* libUdpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BE63D0B4649FDA820CA31 /* libUdpSockets.a */; };
 		FB0E7416ED714F2BB027619D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC154296D1D4873929993F7 /* libTouchID.a */; };
@@ -499,7 +500,6 @@
 		C183BA8D21C22B9100E096EE /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
 		C183BA8E21C22B9100E096EE /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		C183BA8F21C22B9100E096EE /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
-		C183BAC321C22BB600E096EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C183BB5821C2317700E096EE /* FirebaseAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = "<group>"; };
 		C183BB8421C2317700E096EE /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GTMSessionFetcher.framework; sourceTree = "<group>"; };
 		C26BA953D2D64EE18B99A124 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
@@ -510,6 +510,7 @@
 		D83EB4A221D36D7400B6AAA4 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		D83EB4A421D36D7A00B6AAA4 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		F0C44EEAC4AD444E9D18BA8E /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F3D3FB66A92A4D8397F732B3 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		F4B3DC8688E54BFB874E5AC2 /* libRNReactNativeWeb3.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReactNativeWeb3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -647,8 +648,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				C183BAC321C22BB600E096EE /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -707,7 +708,6 @@
 				C0D5BA14FD7A4C52BA4BFCBC /* libRNRandomBytes.a */,
 				12A5E956351342ACAA3CB591 /* libTcpSockets.a */,
 				845BE63D0B4649FDA820CA31 /* libUdpSockets.a */,
-				7CFF652BF2EA4BC0BCBF2CE5 /* libBVLinearGradient.a */,
 				AAFB2DCB5CB4484299A18316 /* libRNCamera.a */,
 				57B4129E7E0E426185404D75 /* libReactNativePermissions.a */,
 				F4B3DC8688E54BFB874E5AC2 /* libRNReactNativeWeb3.a */,
@@ -971,7 +971,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = KU8657JE49;
+						DevelopmentTeam = Z9Z83R4W7B;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1476,7 +1476,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				CD84938FF83B449EB76C9B5C /* AntDesign.ttf in Resources */,
-				C183BAC421C22BB600E096EE /* GoogleService-Info.plist in Resources */,
 				24F41F466B4C49D3B5F6280A /* Entypo.ttf in Resources */,
 				E70E14370D224BD48A7740FB /* EvilIcons.ttf in Resources */,
 				607DDAEC4B224901B9E5E2AF /* Feather.ttf in Resources */,
@@ -1493,6 +1492,7 @@
 				844E2E814CCE4EB9BACBDD86 /* Octicons.ttf in Resources */,
 				C612A5EB4C3B4025AE7BC12E /* SimpleLineIcons.ttf in Resources */,
 				74F6ECF1C8BE4DBABCDB92D3 /* Zocial.ttf in Resources */,
+				F3067B3E21DF7F3300C0E54F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1545,12 +1545,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = fantom/fantom.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = KU8657JE49;
+				DEVELOPMENT_TEAM = Z9Z83R4W7B;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Firebase",
@@ -1572,18 +1572,16 @@
 				);
 				INFOPLIST_FILE = fantom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.innow8.fantom;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fantom.pay;
 				PRODUCT_NAME = fantom;
 				PROVISIONING_PROFILE = "0e757aee-0090-4218-b6db-745a4e123150";
-				PROVISIONING_PROFILE_SPECIFIER = "Innow8 Wildcard Development Provisoning Profile";
+				PROVISIONING_PROFILE_SPECIFIER = Fantom_Pay_Dev_Profile;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1618,15 +1616,13 @@
 				);
 				INFOPLIST_FILE = fantom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.innow8.fantom;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fantom.pay;
 				PRODUCT_NAME = fantom;
 				PROVISIONING_PROFILE = "0e757aee-0090-4218-b6db-745a4e123150";
 				PROVISIONING_PROFILE_SPECIFIER = "Innow8 Wildcard Development Provisoning Profile";

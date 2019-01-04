@@ -6,14 +6,14 @@ import OtpVerification from './otpVerification';
 import GenerateOTP from './generateOTP';
 
 const config = {
-  appId: '1:888539243135:ios:35169b268735df00',
-  clientId: '888539243135-m8ev3lim2ljfhmkgiu637atp6qrdu5c9.apps.googleusercontent.com',
-  apiKey: 'AIzaSyD96UPaU0z1WN4ikxLhVfTtTxYT2_DM_6Y', // "<API_KEY>",
-  authDomain: 'fantompay-b6de5.firebaseapp.com', // "<PROJECT_ID>.firebaseapp.com",
-  databaseURL: 'https://fantompay-b6de5.firebaseio.com', // "https://<DATABASE_NAME>.firebaseio.com",
-  projectId: 'fantompay-b6de5', // "<PROJECT_ID>",
-  storageBucket: 'fantompay-b6de5.appspot.com', // "<BUCKET>.appspot.com",
-  messagingSenderId: '888539243135', // "<SENDER_ID>",
+  appId: '1:231567589892:ios:a1266d9f7b2ea10e',
+  clientId: '231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l.apps.googleusercontent.com',
+  apiKey: 'AIzaSyDpsNHpnVL9j9SF2TDR4LBWnjH6qFhgbRY', // "<API_KEY>",
+  authDomain: 'fantompay-ed985.firebaseapp.com', // "<PROJECT_ID>.firebaseapp.com",
+  databaseURL: 'https://fantompay-ed985.firebaseio.com', // "https://<DATABASE_NAME>.firebaseio.com",
+  projectId: 'fantompay-ed985', // "<PROJECT_ID>",
+  storageBucket: 'fantompay-ed985.appspot.com', // "<BUCKET>.appspot.com",
+  messagingSenderId: '231567589892', // "<SENDER_ID>",
 };
 export default class PhoneAuthTest extends Component {
   constructor(props) {
