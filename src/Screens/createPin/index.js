@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import {
   Alert,
   View,
-  Text,
+  // Text,
   Dimensions,
   StatusBar,
-  TouchableHighlight,
+  // TouchableHighlight,
   ScrollView,
 } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -176,6 +176,7 @@ class CreatePin extends Component {
 
   render() {
     const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
+    console.log('isTouchId : ', isTouchId);
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
@@ -200,13 +201,7 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return !isTouchId ? (
-      <View style={styles.Container}>
-        <TouchableHighlight onPress={this._pressHandler}>
-          <Text>Authenticate with Touch ID</Text>
-        </TouchableHighlight>
-      </View>
-    ) : (
+    return (
       <View style={styles.Container}>
         <StatusBar barStyle="light-content" backgroundColor="black" />
         <TitleHeader title="CREATE PIN" />
