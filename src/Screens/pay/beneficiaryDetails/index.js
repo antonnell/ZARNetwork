@@ -138,7 +138,12 @@ class BeneficiaryDetails extends Component {
               const len = beneficiaries.length;
               if (beneficiaries && len > 0) {
                 const beneficiaryReference = beneficiaries[len - 1].their_reference;
-                navigation.navigate('PayBeneficiary', { beneficiaryReference, isBackArrow: true });
+                const selectedBeneficiary = beneficiaries[len - 1];
+                navigation.navigate('PayBeneficiary', {
+                  beneficiaryReference,
+                  isBackArrow: true,
+                  selectedBeneficiary,
+                });
               }
             } else if (
               result &&

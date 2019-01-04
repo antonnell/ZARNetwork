@@ -15,6 +15,7 @@ import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 import StartScreen from './src/Screens/startScreen';
 import QRScanner from './src/common/QRScanner/view';
 import Pay from './src/Screens/pay/index';
+import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
 
 const Routing = createStackNavigator(
   {
@@ -44,6 +45,9 @@ const Routing = createStackNavigator(
     },
     BeneficiaryDetails: {
       screen: BeneficiaryDetails,
+    },
+    PaymentSuccess: {
+      screen: PaymentSuccess,
     },
     PayBeneficiary: {
       screen: PayBeneficiary,

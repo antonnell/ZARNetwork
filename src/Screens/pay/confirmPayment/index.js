@@ -10,7 +10,9 @@ import ProfileInfo from '../../../common/profileInfo';
 import DesignButton from '../../../common/Button';
 import TitleHeader from '../../../common/TitleHeader';
 import Card from './card';
+import { setNewRequest } from '../../../controllers/api/paymentRequest';
 import { getFirstCharOfString } from '../../../utility';
+import Loader from '../../../common/Loader';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -18,14 +20,87 @@ const deviceWidth = Dimensions.get('window').width;
 class ConfirmPayment extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLoading: false,
+    };
   }
 
   // eslint-disable-next-line class-methods-use-this
   onPayBtnPress() {
-    // console.log('Pay onPayBtnPress');
-    Alert.alert('test');
-    // this.props.navigation.navigate('')
+    Alert.alert(
+      'Payment Confirmation!',
+      'Are you sure  you want to pay?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        {
+          text: 'OK',
+          onPress: () => this.onClickConfiramtion(),
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  onClickConfiramtion = () => {
+    /*eslint-disable*/
+    const { navigation } = this.props;
+    const account_uuid = navigation.state.params.accountId;
+    const value = parseInt(navigation.state.params.amount);
+    const beneficiary_uuid = navigation.state.params.beneficiary_uuid;
+    const reference = navigation.state.params.reference;
+    if (
+      (account_uuid &&
+        account_uuid !== '' &&
+        value &&
+        value !== null &&
+        beneficiary_uuid &&
+        beneficiary_uuid !== '',
+      reference && reference !== '')
+    ) {
+      const payload = {
+        account_uuid,
+        value,
+        beneficiary_uuid,
+        my_reference: reference,
+      };
+      this.setState({
+        isLoading: true,
+      });
+      if (setNewRequest) {
+        setNewRequest(payload)
+          .then(result => {
+            this.setState({
+              isLoading: false,
+            });
+            if (result.payload && result.payload.data && result.payload.data.status === 200) {
+              navigation.navigate('PaymentSuccess', { params: navigation.state.params });
+            } else if (
+              result &&
+              result.error &&
+              result.error.response &&
+              result.error.response.data &&
+              result.error.response.data.message
+            ) {
+              const { message } = result.error.response.data;
+              Alert.alert('Error', message);
+            }
+          })
+          .catch(error => {
+            this.setState({
+              isLoading: false,
+            });
+            Alert.alert('Error', error);
+          });
+      }
+    }
+    // navigation.navigate('PaymentSuccess', { params: navigation.state.params});
+  };
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
   }
 
   render() {
@@ -138,6 +213,7 @@ class ConfirmPayment extends Component {
             <DesignButton name="PAY" isClickable callMethod={() => this.onPayBtnPress()} />
           </View>
         </ScrollView>
+        {this.renderLoader()}
       </View>
     );
   }
@@ -149,6 +225,7 @@ ConfirmPayment.defaultProps = {
 
 ConfirmPayment.propTypes = {
   userDetail: PropTypes.objectOf(PropTypes.any),
+  navigation: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

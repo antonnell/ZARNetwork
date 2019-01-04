@@ -87,6 +87,7 @@ class PayBeneficiary extends Component {
       reference,
       walletType,
       selectedWallet,
+      beneficiary_uuid: navigation.state.params.selectedBeneficiary.uuid,
     });
   }
 
