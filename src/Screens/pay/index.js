@@ -167,6 +167,7 @@ class Pay extends Component {
         <TitleHeader
           iconName="keyboard-arrow-left"
           onBtnPress={() => navigation.goBack()}
+          title="PAYMENT"
           rightIconName="search"
           isBackArrow={isBackArrowPresent}
           onRightBtnPress={() => {

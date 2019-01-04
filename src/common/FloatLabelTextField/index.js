@@ -18,6 +18,7 @@ import Password from '../../images/Password.png';
 import Mobile from '../../images/Mobile.png';
 import AccountNumber from '../../images/AccountNumber.png';
 import Wallet from '../../images/wallet.png';
+import ProfileImg from '../../images/ProfileImg.png';
 // Styling
 import styles from './styles';
 
@@ -421,7 +422,28 @@ class FloatLabelTextField extends Component {
       if (type === 'username') {
         return (
           <View>
-            <MaterialCommunityIcons name="person-outline" size={20} />
+            <MaterialCommunityIcons
+              name="person-outline"
+              size={20}
+              style={{
+                height: deviceHeight * 0.025,
+                width: deviceWidth * 0.1,
+              }}
+            />
+          </View>
+        );
+      }
+      if (type === 'name') {
+        return (
+          <View>
+            <Image
+              source={ProfileImg}
+              style={{
+                height: deviceHeight * 0.025,
+                width: deviceWidth * 0.1,
+              }}
+              resizeMode="contain"
+            />
           </View>
         );
       }

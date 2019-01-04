@@ -53,6 +53,9 @@ class PayBeneficiary extends Component {
     if (selectedWallet === '' && accId === '' && userWalletDetail && userWalletDetail.length > 0) {
       selectedWallet = userWalletDetail[0].description;
       accId = userWalletDetail[0].uuid;
+      walletType = getWalletType(accountTypeList, userWalletDetail[0]);
+      // eslint-disable-next-line prefer-destructuring
+      balance = userWalletDetail[0].balance;
     }
 
     this.state = {

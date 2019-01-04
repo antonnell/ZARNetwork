@@ -59,11 +59,11 @@ class HomePage extends Component {
   /**
    * @method handleAccountPay : To open account payment screen
    */
-  handleAccountPay(account) {
+  handleAccountPay() {
     const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('PayBeneficiary', { isBackArrow, selectedAccount: account });
+      navigation.navigate('PaySomeone', { isBackArrow });
     }
   }
 
@@ -119,7 +119,7 @@ class HomePage extends Component {
             detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
             detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
             detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
-            callMethod={account => this.handleAccountPay(account)}
+            callMethod={this.handleAccountPay}
           />
         );
       }
