@@ -51,18 +51,19 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   titleCardMainViewStyle: {
-    marginTop: deviceHeight * 0.05,
+    marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
-    // height: deviceHeight * 0.1,
-    padding: 12,
+    padding: 15,
     backgroundColor: 'rgb(0, 177, 251)',
     alignSelf: 'center',
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   titleCardImageStyle: {
-    height: deviceHeight * 0.03,
+    flex: 1,
+    height: deviceHeight * 0.04,
     width: deviceWidth * 0.1,
   },
   titleCardTextStyle: {
@@ -106,5 +107,11 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.05)',
     width: deviceWidth * 0.75,
     alignSelf: 'center',
+  },
+  listStyling: {
+    top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
+    left: -(deviceWidth * 0.25),
+    width: deviceWidth * 0.78,
+    height: deviceHeight * 0.3,
   },
 });

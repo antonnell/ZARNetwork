@@ -17,10 +17,12 @@ import Email from '../../images/Email.png';
 import Password from '../../images/Password.png';
 import Mobile from '../../images/Mobile.png';
 import AccountNumber from '../../images/AccountNumber.png';
+import Wallet from '../../images/wallet.png';
 // Styling
 import styles from './styles';
 
 const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
 class FloatingLabel extends Component {
   constructor(props) {
@@ -147,9 +149,9 @@ class FloatLabelTextField extends Component {
     if (type === 'number') {
       this.setState({
         text: value,
-        phoneNumber: value,
+        // phoneNumber: value,
       });
-      updateForm(value, 'phoneNumber');
+      updateForm(value, type);
     }
     if (type === 'account') {
       this.setState({
@@ -401,7 +403,7 @@ class FloatLabelTextField extends Component {
   }
 
   iconDisplay() {
-    const { type } = this.props;
+    const { type, imageType } = this.props;
     if (type && type !== '' && type !== undefined) {
       if (type === 'email') {
         return (
@@ -430,6 +432,7 @@ class FloatLabelTextField extends Component {
               source={Password}
               style={{
                 height: deviceHeight * 0.025,
+                width: deviceWidth * 0.1,
               }}
               resizeMode="contain"
             />
@@ -437,9 +440,17 @@ class FloatLabelTextField extends Component {
         );
       }
       if (type === 'number') {
+        let imgName = Mobile;
+        let imgStyle = {
+          height: deviceHeight * 0.03,
+          width: deviceWidth * 0.1,
+        };
+        if (imageType && imageType === 'amount') {
+          imgName = Wallet;
+        }
         return (
           <View>
-            <Image source={Mobile} resizeMode="contain" style={{ height: deviceHeight * 0.03 }} />
+            <Image source={imgName} resizeMode="contain" style={imgStyle} />
           </View>
         );
       }

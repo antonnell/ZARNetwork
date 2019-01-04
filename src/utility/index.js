@@ -73,3 +73,21 @@ export function getFirstCharOfString(str) {
   }
   return char;
 }
+
+/**
+ *
+ * @param {*} accountTypeList : List of supported account types.
+ * @param {*} account : User's wallet account.
+ */
+export function getWalletType(accountTypeList, account) {
+  let walletType = '';
+  if (accountTypeList && accountTypeList.length > 0) {
+    const accTypeLen = accountTypeList.length;
+    for (let i = 0; i < accTypeLen; i += 1) {
+      if (accountTypeList[i].uuid === account.type_uuid) {
+        walletType = accountTypeList[i].symbol ? accountTypeList[i].symbol : '-';
+      }
+    }
+  }
+  return walletType;
+}

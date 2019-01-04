@@ -134,7 +134,12 @@ class BeneficiaryDetails extends Component {
               result.payload.data &&
               result.payload.data.status === 200
             ) {
-              navigation.goBack();
+              const { beneficiaries } = this.props;
+              const len = beneficiaries.length;
+              if (beneficiaries && len > 0) {
+                const beneficiaryReference = beneficiaries[len - 1].their_reference;
+                navigation.navigate('PayBeneficiary', { beneficiaryReference, isBackArrow: true });
+              }
             } else if (
               result &&
               result.error &&
@@ -297,7 +302,8 @@ class BeneficiaryDetails extends Component {
         </View>
         <View style={{ marginTop: deviceHeight * 0.05, alignSelf: 'center' }}>
           <DesignButton
-            name="ADD"
+            name="DONE"
+            // name="ADD"
             callMethod={this.handleAddBeneficiary}
             isClickable={isClickable}
           />
@@ -310,14 +316,17 @@ class BeneficiaryDetails extends Component {
 BeneficiaryDetails.defaultProps = {
   userWalletDetail: [],
   navigation: {},
+  beneficiaries: [],
 };
 BeneficiaryDetails.propTypes = {
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
   navigation: PropTypes.objectOf(PropTypes.any),
+  beneficiaries: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   userWalletDetail: state.userWalletReducer.wallets,
+  beneficiaries: state.userBeneficiaryReducer.beneficiaries,
 });
 
 export default connect(mapStateToProps)(BeneficiaryDetails);

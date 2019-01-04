@@ -8,7 +8,7 @@ const deviceWidth = Dimensions.get('window').width;
 // eslint-disable-next-line react/prefer-stateless-function
 export default class RecentCard extends Component {
   render() {
-    const { header, title, subtitle, onPress } = this.props;
+    const { header, title, subtitle, onPress, beneficiary } = this.props;
     return (
       <TouchableOpacity
         style={{
@@ -20,7 +20,7 @@ export default class RecentCard extends Component {
           borderRadius: 5,
           marginTop: 10,
         }}
-        onPress={onPress}
+        onPress={() => onPress(beneficiary)}
       >
         <View
           style={{
@@ -59,6 +59,7 @@ RecentCard.defaultProps = {
   title: '--',
   subtitle: '--',
   onPress: () => {},
+  beneficiary: {},
 };
 
 RecentCard.propTypes = {
@@ -66,4 +67,5 @@ RecentCard.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   onPress: PropTypes.func,
+  beneficiary: PropTypes.objectOf(PropTypes.any),
 };

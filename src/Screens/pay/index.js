@@ -68,11 +68,11 @@ class Pay extends Component {
   /**
    * @method handleAccountPay : To open account payment screen
    */
-  handleAccountPay() {
+  handleAccountPay(beneficiary) {
     const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('PayBeneficiary', { isBackArrow });
+      navigation.navigate('PayBeneficiary', { isBackArrow, selectedBeneficiary: beneficiary });
     }
   }
 
@@ -129,38 +129,6 @@ class Pay extends Component {
   }
 
   renderBeneficiaryList() {
-    // const arr = [
-    //   {
-    //     header: 'JW',
-    //     title: 'Joseph S. Wiggins',
-    //     subTitle: 'CAPITEC | 13425386475',
-    //   },
-    //   {
-    //     header: 'JM',
-    //     title: 'Jacob E. Miller',
-    //     subTitle: 'ABSA BANK | 13425386475',
-    //   },
-    //   {
-    //     header: 'JL',
-    //     title: 'James J. Lomeli',
-    //     subTitle: 'ABSA BANK | 13425386475',
-    //   },
-    //   {
-    //     header: 'JW',
-    //     title: 'Joseph S. Wiggins',
-    //     subTitle: 'CAPITEC | 13425386475',
-    //   },
-    //   {
-    //     header: 'JM',
-    //     title: 'Jacob E. Miller',
-    //     subTitle: 'ABSA BANK | 13425386475',
-    //   },
-    //   {
-    //     header: 'JL',
-    //     title: 'James J. Lomeli',
-    //     subTitle: 'ABSA BANK | 13425386475',
-    //   },
-    // ];
     const { beneficiaries } = this.props;
     // const { isLoading } = this.state;
     // if (isLoading === true) {
@@ -179,6 +147,7 @@ class Pay extends Component {
             header={header}
             title={beneficiaries[i].name}
             subtitle={bankDetail}
+            beneficiary={beneficiaries[i]}
             onPress={this.handleAccountPay}
           />
         );

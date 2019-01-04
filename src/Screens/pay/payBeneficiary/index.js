@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 // Style
 import styles from './styles';
 // components
@@ -11,45 +12,80 @@ import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
-
+import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
+import { WALLET_LIST } from '../../../common/constants';
+import { getWalletType } from '../../../utility';
 // constants
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
-export default class PayBeneficiary extends Component {
+class PayBeneficiary extends Component {
   constructor(props) {
     super(props);
-    const { navigation } = this.props;
+    const { navigation, accountTypeList } = this.props;
     let isBackArrowPresent = false;
+    let reference = '';
+    let selectedWallet = '';
+    let accId = '';
+    let walletType = '';
+    let balance = '';
+
     if (navigation && navigation.state && navigation.state.params) {
-      isBackArrowPresent = navigation.state.params.isBackArrow;
+      const navigationState = navigation.state.params;
+      isBackArrowPresent = navigationState.isBackArrow;
+      if (navigationState.beneficiaryReference) {
+        reference = navigationState.beneficiaryReference;
+      }
+      if (navigationState.selectedAccount) {
+        selectedWallet = navigationState.selectedAccount.description;
+        accId = navigationState.selectedAccount.uuid;
+        walletType = getWalletType(accountTypeList, navigationState.selectedAccount);
+        // eslint-disable-next-line prefer-destructuring
+        balance = navigationState.selectedAccount.balance;
+      }
+      if (navigationState.selectedBeneficiary) {
+        reference = navigationState.selectedBeneficiary.their_reference;
+      }
+    }
+    const { userWalletDetail } = this.props;
+    if (selectedWallet === '' && accId === '' && userWalletDetail && userWalletDetail.length > 0) {
+      selectedWallet = userWalletDetail[0].description;
+      accId = userWalletDetail[0].uuid;
     }
 
     this.state = {
-      accountNumber: '',
-      reference: '',
+      number: '',
+      reference,
       normalPaymentToggle: false,
       futurePaymentToggle: false,
       payBtnClicked: false,
       isBackArrowPresent,
+      openWalletList: false,
+      selectedWallet,
+      accId,
+      walletType,
+      balance,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handlePayNotification = this.handlePayNotification.bind(this);
+    this.handleWalletList = this.handleWalletList.bind(this);
+    this.toggleWalletList = this.toggleWalletList.bind(this);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   onPayBtnClick() {
-    const { payBtnClicked } = this.state;
-    this.setState({
-      payBtnClicked: !payBtnClicked,
-    });
+    // const { payBtnClicked, accId, number, reference } = this.state;
+    // this.setState({
+    //   payBtnClicked: !payBtnClicked,
+    // });
   }
 
   validate(type) {
-    if (type === 'account') {
-      this.setState({
-        accountNumber: '',
-      });
+    if (type === 'number') {
+      // this.setState({
+      //   number: '',
+      // });
     }
     if (type === 'reference') {
       this.setState({
@@ -79,15 +115,47 @@ export default class PayBeneficiary extends Component {
     }
   }
 
+  handleWalletList(item) {
+    let walletType = '';
+    const { openWalletList } = this.state;
+    const { accountTypeList } = this.props;
+    this.setState({
+      openWalletList: !openWalletList,
+    });
+
+    walletType = getWalletType(accountTypeList, item);
+
+    if (item && item.description) {
+      this.setState({
+        selectedWallet: item.description,
+        accId: item.uuid,
+        balance: item.balance,
+        walletType,
+      });
+    }
+  }
+
+  toggleWalletList() {
+    const { openWalletList } = this.state;
+    this.setState({
+      openWalletList: !openWalletList,
+    });
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, userWalletDetail } = this.props;
     const {
-      accountNumber,
+      number,
       reference,
       normalPaymentToggle,
       futurePaymentToggle,
       payBtnClicked,
       isBackArrowPresent,
+      openWalletList,
+      accId,
+      selectedWallet,
+      balance,
+      walletType,
     } = this.state;
     return (
       <View style={styles.Container}>
@@ -116,14 +184,28 @@ export default class PayBeneficiary extends Component {
             titleText="Jane Smith"
             circularAvatarText="JS"
           />
-          <TitleCard
-            icon={AccountType}
-            titleCardMainViewStyle={styles.titleCardMainViewStyle}
-            titleCardImageStyle={styles.titleCardImageStyle}
-            titleCardTextStyle={styles.titleCardTextStyle}
-            titleMaterialIconStyle={styles.titleMaterialIconStyle}
-            text="ETH Wallet"
-          />
+          <View style={{ zIndex: openWalletList ? 99 : 0 }}>
+            <TitleCard
+              icon={AccountType}
+              titleCardMainViewStyle={styles.titleCardMainViewStyle}
+              titleCardImageStyle={styles.titleCardImageStyle}
+              titleCardTextStyle={styles.titleCardTextStyle}
+              titleMaterialIconStyle={styles.titleMaterialIconStyle}
+              // text="ETH Wallet"
+              text={selectedWallet}
+              onPress={this.toggleWalletList}
+            />
+            {openWalletList && (
+              <ListCard
+                selectedType={accId}
+                data={userWalletDetail}
+                handleList={item => this.handleWalletList(item)}
+                type={WALLET_LIST}
+                listStyle={styles.listStyling}
+              />
+            )}
+          </View>
+
           <View
             style={{
               alignSelf: 'center',
@@ -131,18 +213,19 @@ export default class PayBeneficiary extends Component {
             }}
           >
             <FloatLabelTextField
-              type="account"
+              type="number"
               placeholder="Amount"
               autoCorrect={false}
-              value={accountNumber}
+              value={number}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
+              imageType="amount"
               validate={type => this.validate(type)}
             />
             <View>
               <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
-                ETH 12.0987 available
+                {walletType} {balance} available
               </Text>
             </View>
             <FloatLabelTextField
@@ -205,4 +288,15 @@ export default class PayBeneficiary extends Component {
 PayBeneficiary.propTypes = {
   // eslint-disable-next-line react/require-default-props
   navigation: PropTypes.objectOf(PropTypes.any),
+  // eslint-disable-next-line react/require-default-props
+  userWalletDetail: PropTypes.arrayOf(PropTypes.any),
+  // eslint-disable-next-line react/require-default-props
+  accountTypeList: PropTypes.arrayOf(PropTypes.any),
 };
+
+const mapStateToProps = state => ({
+  userWalletDetail: state.userWalletReducer.wallets,
+  accountTypeList: state.supportedAccTypeReducer.types,
+});
+
+export default connect(mapStateToProps)(PayBeneficiary);

@@ -91,7 +91,7 @@ export default class DetailCard extends Component {
       <TouchableOpacity
         style={detailCardMainViewStyle}
         activeOpacity={activeOpacity}
-        onPress={callMethod}
+        onPress={() => callMethod(account)}
       >
         {this.renderTopDesign(
           isIcon,
