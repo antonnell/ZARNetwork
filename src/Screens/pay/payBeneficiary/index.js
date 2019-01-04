@@ -15,7 +15,8 @@ import ProfileInfo from '../../../common/profileInfo';
 import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
 import { WALLET_LIST } from '../../../common/constants';
-import { getWalletType } from '../../../utility';
+import { getWalletType, getFirstCharOfString } from '../../../utility';
+
 // constants
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -59,7 +60,6 @@ class PayBeneficiary extends Component {
       reference,
       normalPaymentToggle: false,
       futurePaymentToggle: false,
-      payBtnClicked: false,
       isBackArrowPresent,
       openWalletList: false,
       selectedWallet,
@@ -75,10 +75,16 @@ class PayBeneficiary extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   onPayBtnClick() {
-    // const { payBtnClicked, accId, number, reference } = this.state;
-    // this.setState({
-    //   payBtnClicked: !payBtnClicked,
-    // });
+    const { accId, number, reference, walletType, selectedWallet } = this.state;
+    const { navigation } = this.props;
+
+    navigation.navigate('ConfirmPayment', {
+      accountId: accId,
+      amount: number,
+      reference,
+      walletType,
+      selectedWallet,
+    });
   }
 
   validate(type) {
@@ -143,13 +149,37 @@ class PayBeneficiary extends Component {
   }
 
   render() {
-    const { navigation, userWalletDetail } = this.props;
+    const { navigation, userWalletDetail, userDetail } = this.props;
+
+    let userIcon = '--';
+    let subtitleText = '';
+    if (
+      userDetail.email &&
+      userDetail.email !== '' &&
+      userDetail.email !== null &&
+      userDetail.email !== undefined
+    ) {
+      userIcon = getFirstCharOfString(userDetail.email);
+      subtitleText = userDetail.email;
+    }
+    if (
+      userDetail.mobile_number &&
+      userDetail.mobile_number !== '' &&
+      userDetail.mobile_number !== null &&
+      userDetail.mobile_number !== undefined
+    ) {
+      if (subtitleText !== '') {
+        subtitleText = `${subtitleText} | ${userDetail.mobile_number}`;
+      } else {
+        subtitleText = userDetail.mobile_number;
+      }
+    }
+
     const {
       number,
       reference,
       normalPaymentToggle,
       futurePaymentToggle,
-      payBtnClicked,
       isBackArrowPresent,
       openWalletList,
       accId,
@@ -157,6 +187,11 @@ class PayBeneficiary extends Component {
       balance,
       walletType,
     } = this.state;
+    let isClickable = false;
+    if (accId !== '' && number !== '' && reference !== '') {
+      isClickable = true;
+    }
+
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -180,9 +215,9 @@ class PayBeneficiary extends Component {
             profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
-            subTitleText="ABSA BANK | 1342567896"
+            subTitleText={subtitleText}
             titleText="Jane Smith"
-            circularAvatarText="JS"
+            circularAvatarText={userIcon}
           />
           <View style={{ zIndex: openWalletList ? 99 : 0 }}>
             <TitleCard
@@ -271,7 +306,7 @@ class PayBeneficiary extends Component {
           <View style={{ marginTop: deviceHeight * 0.075 }}>
             <Button
               name="Pay"
-              isClickable={!payBtnClicked}
+              isClickable={isClickable}
               callMethod={() => {
                 this.onPayBtnClick();
               }}
@@ -284,6 +319,9 @@ class PayBeneficiary extends Component {
     );
   }
 }
+PayBeneficiary.defaultProps = {
+  userDetail: {},
+};
 
 PayBeneficiary.propTypes = {
   // eslint-disable-next-line react/require-default-props
@@ -292,11 +330,13 @@ PayBeneficiary.propTypes = {
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
   // eslint-disable-next-line react/require-default-props
   accountTypeList: PropTypes.arrayOf(PropTypes.any),
+  userDetail: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   userWalletDetail: state.userWalletReducer.wallets,
   accountTypeList: state.supportedAccTypeReducer.types,
+  userDetail: state.userAuthReducer.userDetail,
 });
 
 export default connect(mapStateToProps)(PayBeneficiary);

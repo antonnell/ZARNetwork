@@ -16,19 +16,23 @@ export default class DetailCard extends Component {
     description,
     number
   ) => {
+    let title = topTitleText;
+    if (description && description !== '' && description !== null && description !== undefined) {
+      title = description;
+    }
     if (isIcon) {
       return (
         <View style={detailCardTopViewStyle}>
           <Image source={icon} style={imageStyle} resizeMode="contain" />
           <Text style={detailCardTopTitleStyle} numberOfLines={1}>
-            {description}
+            {title}
           </Text>
         </View>
       );
     }
     return (
       <View style={detailCardTopViewStyle}>
-        <Text style={detailCardTopTitleStyle}>{description}</Text>
+        <Text style={detailCardTopTitleStyle}>{title}</Text>
         <Text style={detailCardSubTitleTextStyle}>{number}</Text>
       </View>
     );
@@ -42,13 +46,18 @@ export default class DetailCard extends Component {
     detailCardBottomTitleTextStyle,
     bottomTitleText,
     balance,
-    walletType
+    walletType,
+    amtBalance
   ) => {
+    let balanceVal = balance;
+    if (amtBalance && amtBalance !== '' && amtBalance !== null && amtBalance !== undefined) {
+      balanceVal = amtBalance;
+    }
     if (isSubTitle) {
       return (
         <View style={detailCardBottomViewStyle}>
           <Text style={detailCardBottomTitleTextStyle}>
-            {walletType} {balance}
+            {walletType} {balanceVal}
           </Text>
         </View>
       );
@@ -56,7 +65,7 @@ export default class DetailCard extends Component {
     return (
       <View style={detailCardBottomViewStyle}>
         <Text style={detailCardBottomTitleTextStyle}>
-          {walletType} {balance}
+          {walletType} {balanceVal}
         </Text>
         <Text style={detailCardBottomSubTitleTextStyle}>{bottomSubTitleText}</Text>
       </View>
@@ -84,6 +93,7 @@ export default class DetailCard extends Component {
       detailCardBottomSubTitleTextStyle,
       callMethod,
       activeOpacity,
+      amtBalance,
     } = this.props;
 
     const { balance, description, number } = account;
@@ -114,7 +124,8 @@ export default class DetailCard extends Component {
           detailCardBottomTitleTextStyle,
           bottomTitleText,
           balance,
-          walletType
+          walletType,
+          amtBalance
         )}
       </TouchableOpacity>
     );
@@ -137,6 +148,7 @@ DetailCard.defaultProps = {
   detailCardBottomTitleTextStyle: {},
   detailCardBottomSubTitleTextStyle: {},
   walletType: 'ETH',
+  amtBalance: '',
   account: {},
   callMethod: () => {},
   activeOpacity: 1,
@@ -162,4 +174,5 @@ DetailCard.propTypes = {
   detailCardBottomTitleTextStyle: PropTypes.objectOf(PropTypes.any),
   detailCardBottomSubTitleTextStyle: PropTypes.objectOf(PropTypes.any),
   activeOpacity: PropTypes.number,
+  amtBalance: PropTypes.string,
 };
