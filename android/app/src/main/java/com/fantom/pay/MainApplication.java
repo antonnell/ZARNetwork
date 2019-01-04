@@ -1,4 +1,4 @@
-package com.fantom;
+package com.fantom.pay;
 
 import android.app.Application;
 
