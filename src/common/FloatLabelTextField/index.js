@@ -413,6 +413,7 @@ class FloatLabelTextField extends Component {
               source={Email}
               style={{
                 height: deviceHeight * 0.02,
+                width: deviceWidth * 0.1,
               }}
               resizeMode="contain"
             />
@@ -482,7 +483,7 @@ class FloatLabelTextField extends Component {
             <Image
               source={AccountNumber}
               resizeMode="contain"
-              style={{ height: deviceHeight * 0.03 }}
+              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
             />
           </View>
         );
@@ -493,7 +494,8 @@ class FloatLabelTextField extends Component {
             <Image
               resizeMode="contain"
               source={Reference}
-              style={{ height: deviceHeight * 0.03 }}
+              style={{ height: deviceHeight * 0.03,
+                width: deviceWidth * 0.1, }}
             />
           </View>
         );

@@ -28,6 +28,7 @@ class Login extends Component {
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   updateForm(value, type) {
@@ -98,6 +99,13 @@ class Login extends Component {
     }
   }
 
+  handleGoBack() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.goBack();
+    }
+  }
+
   /**
    * @method renderLoader : To display loader indicator.
    */
@@ -121,7 +129,12 @@ class Login extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
-        <TitleHeader title="LOGIN" />
+        <TitleHeader
+          title="LOGIN"
+          isBackArrow
+          iconName="keyboard-arrow-left"
+          onBtnPress={this.handleGoBack}
+        />
         <View
           style={{
             marginTop: deviceHeight * 0.1,

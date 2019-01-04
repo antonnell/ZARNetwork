@@ -33,6 +33,7 @@ export default class Register extends Component {
       moreThanOneNumber: false,
     };
     this.updateForm = this.updateForm.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   checkConstraints(passwordVal) {
@@ -110,6 +111,13 @@ export default class Register extends Component {
           confirmPassword: '',
         });
       }
+    }
+  }
+
+  handleGoBack() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.goBack();
     }
   }
 
@@ -206,7 +214,8 @@ export default class Register extends Component {
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="REGISTER"
-          onBtnPress={() => navigation.goBack()}
+          isBackArrow
+          onBtnPress={this.handleGoBack}
         />
 
         <ScrollView
