@@ -206,8 +206,8 @@ class ConfirmPayment extends Component {
             <Card navigation={navigation} title="Account" subtitle={selectedWalletVal} />
             <View style={styles.seperaterStyle} />
             <Card navigation={navigation} title="Reference" subtitle={referenceVal} />
-            <View style={styles.seperaterStyle} />
-            <Card navigation={navigation} title="Notification Type" subtitle="None" />
+            {/* <View style={styles.seperaterStyle} />
+            <Card navigation={navigation} title="Notification Type" subtitle="None" /> */}
           </View>
           <View style={{ marginTop: deviceHeight * 0.05 }}>
             <DesignButton name="PAY" isClickable callMethod={() => this.onPayBtnPress()} />

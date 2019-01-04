@@ -94,11 +94,11 @@ If you get an error like Cannot find module ‘npmlog’, try installing npm dir
 The easiest way to install Xcode is via the [Mac App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Installing Xcode will also install the iOS Simulator and all the necessary tools to build your iOS app.
 
 - Testing your React Native Installation
-  Use the React Native command line interface to generate a new React Native project called “AwesomeProject”, then run react-native run-ios inside the newly created folder.
+  Use the React Native command line interface to generate a new React Native project called “FantomPay”, then run react-native run-ios inside the newly created folder.
 
 ```
-$react-native init Fantom
-$cd Fantom
+$react-native init FantomPay
+$cd FantomPay
 $react-native run-ios
 ```
 
@@ -118,7 +118,7 @@ You should see your new app running in the iOS Simulator shortly.
 ```
 git clone {Repository_url}
   eg:- https://github.com/fantom-foundation-private/fantom-pay.git
-cd Fantom
+cd FantomPay
 ```
 
 Run the following command
@@ -144,7 +144,7 @@ You can directly run the project using Xcode as steps mentioned above.
 
 1. Download and install Android Studio
    [Android Studio](https://developer.android.com/studio/install.html) provides the Android SDK and AVD (emulator) required to run and test your React Native apps. \* Android Studio requires the [Java SE Development Kit(JDK)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), version 8. You can type javac -version in a terminal to see what version you have, if any.
-   • Run the following Commands
+    Run the following Commands
    ```
    $javac -version
    javac 1.8.0_111
@@ -175,7 +175,7 @@ react-native run-android
 
 or
 • You can directly run the project using using android studio.
-Open Android studio and select the “Android” folder from ProjectFolder/Android.
+Open Android studio and select the “android” folder from ProjectFolder/android.
 Shortcut:- ctrl+r
 
 ## Running on Device
