@@ -18,6 +18,7 @@ import Password from '../../images/Password.png';
 import Mobile from '../../images/Mobile.png';
 import AccountNumber from '../../images/AccountNumber.png';
 import Wallet from '../../images/wallet.png';
+import ProfileImg from '../../images/ProfileImg.png';
 // Styling
 import styles from './styles';
 
@@ -412,6 +413,7 @@ class FloatLabelTextField extends Component {
               source={Email}
               style={{
                 height: deviceHeight * 0.02,
+                width: deviceWidth * 0.1,
               }}
               resizeMode="contain"
             />
@@ -421,7 +423,28 @@ class FloatLabelTextField extends Component {
       if (type === 'username') {
         return (
           <View>
-            <MaterialCommunityIcons name="person-outline" size={20} />
+            <MaterialCommunityIcons
+              name="person-outline"
+              size={20}
+              style={{
+                height: deviceHeight * 0.025,
+                width: deviceWidth * 0.1,
+              }}
+            />
+          </View>
+        );
+      }
+      if (type === 'name') {
+        return (
+          <View>
+            <Image
+              source={ProfileImg}
+              style={{
+                height: deviceHeight * 0.025,
+                width: deviceWidth * 0.1,
+              }}
+              resizeMode="contain"
+            />
           </View>
         );
       }
@@ -460,7 +483,7 @@ class FloatLabelTextField extends Component {
             <Image
               source={AccountNumber}
               resizeMode="contain"
-              style={{ height: deviceHeight * 0.03 }}
+              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
             />
           </View>
         );
@@ -471,7 +494,8 @@ class FloatLabelTextField extends Component {
             <Image
               resizeMode="contain"
               source={Reference}
-              style={{ height: deviceHeight * 0.03 }}
+              style={{ height: deviceHeight * 0.03,
+                width: deviceWidth * 0.1, }}
             />
           </View>
         );
