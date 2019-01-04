@@ -54,6 +54,7 @@ class Pay extends Component {
     }
   }
 
+ 
   /**
    * @method handleNewBeneficiary :To render pay screen.
    */

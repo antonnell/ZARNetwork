@@ -23,6 +23,7 @@ import { REQUEST_TYPE } from '../redux/base/constants';
  *  -> account_uuid {string} : uuid of wallet account.
  *  -> value {number} : amount.
  *  -> beneficiary_uuid {string} : uuid of beneficiary of wallet account.
+ * -> my_reference {string}: beneficiary reference
  * ******************************************************************************
  * @method encrypt : To encrypt the payload sent to create requests for account.
  * @param payload : Data to be encrypted.
