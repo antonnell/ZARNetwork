@@ -1591,10 +1591,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = fantom/fantom.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KU8657JE49;
+				DEVELOPMENT_TEAM = Z9Z83R4W7B;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Firebase",
@@ -1625,7 +1625,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fantom.pay;
 				PRODUCT_NAME = fantom;
 				PROVISIONING_PROFILE = "0e757aee-0090-4218-b6db-745a4e123150";
-				PROVISIONING_PROFILE_SPECIFIER = "Innow8 Wildcard Development Provisoning Profile";
+				PROVISIONING_PROFILE_SPECIFIER = Fantom_Pay_Dist_Profile;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
