@@ -494,8 +494,7 @@ class FloatLabelTextField extends Component {
             <Image
               resizeMode="contain"
               source={Reference}
-              style={{ height: deviceHeight * 0.03,
-                width: deviceWidth * 0.1, }}
+              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
             />
           </View>
         );
