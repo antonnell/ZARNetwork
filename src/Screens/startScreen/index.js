@@ -78,7 +78,7 @@ export default class StartScreen extends React.Component {
         <View style={{ marginTop: deviceHeight * 0.3 }}>
           <View style={{ marginTop: deviceHeight * 0.01 }}>
             <DesignButton
-              name="LOG IN"
+              name="SIGN IN"
               isClickable
               btnTextColor={styles.loginBtnTextColor}
               callMethod={this.onLoginBtnClick}

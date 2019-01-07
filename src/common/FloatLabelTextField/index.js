@@ -230,7 +230,8 @@ class FloatLabelTextField extends Component {
     const { email, text } = this.state;
     const { validate } = this.props;
     if (type === 'email') {
-      const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      // const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/;
       if (email !== '' && email !== undefined) {
         if (reg.test(email) === false) {
           Alert.alert('Error', 'Invalid Email');

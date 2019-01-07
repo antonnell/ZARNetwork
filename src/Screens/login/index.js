@@ -130,7 +130,7 @@ class Login extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         <TitleHeader
-          title="LOGIN"
+          title="SIGN IN"
           isBackArrow
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
@@ -173,7 +173,11 @@ class Login extends Component {
         </View>
 
         <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton name="Log In" callMethod={this.handleUserLogin} isClickable={isClickable} />
+          <DesignButton
+            name="Sign In"
+            callMethod={this.handleUserLogin}
+            isClickable={isClickable}
+          />
         </View>
         <TouchableOpacity style={{ marginTop: deviceHeight * 0.03 }}>
           <Text style={styles.textStyle}>Forgot Password</Text>
