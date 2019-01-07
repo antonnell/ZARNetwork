@@ -220,7 +220,7 @@ class ConfirmPayment extends Component {
 }
 
 ConfirmPayment.defaultProps = {
-  userDetail: {},
+  userDetail: null,
 };
 
 ConfirmPayment.propTypes = {

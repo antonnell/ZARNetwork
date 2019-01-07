@@ -59,7 +59,7 @@ RecentCard.defaultProps = {
   title: '--',
   subtitle: '--',
   onPress: () => {},
-  beneficiary: {},
+  beneficiary: null,
 };
 
 RecentCard.propTypes = {

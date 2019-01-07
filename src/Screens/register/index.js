@@ -299,7 +299,7 @@ export default class Register extends Component {
   }
 }
 Register.defaultProps = {
-  navigation: {},
+  navigation: null,
 };
 Register.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),

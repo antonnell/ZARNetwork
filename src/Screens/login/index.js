@@ -190,9 +190,9 @@ class Login extends Component {
   }
 }
 Login.defaultProps = {
-  authDetail: {},
-  errDetail: {},
-  navigation: {},
+  authDetail: null,
+  errDetail: null,
+  navigation: null,
 };
 
 Login.propTypes = {

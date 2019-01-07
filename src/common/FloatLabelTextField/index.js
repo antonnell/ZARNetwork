@@ -333,7 +333,7 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.unsetFocus()}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  keyboardType="default"
+                  keyboardType="email-address"
                   onEndEditing={() => this.onEndEditing(text, type)}
                 />
               </View>
@@ -494,8 +494,7 @@ class FloatLabelTextField extends Component {
             <Image
               resizeMode="contain"
               source={Reference}
-              style={{ height: deviceHeight * 0.03,
-                width: deviceWidth * 0.1, }}
+              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
             />
           </View>
         );
@@ -514,7 +513,12 @@ class FloatLabelTextField extends Component {
       value,
       maxLength,
       type,
+      imageType,
     } = this.props;
+    let keyboardType = 'phone-pad';
+    if (imageType && imageType === 'amount') {
+      keyboardType = 'numeric';
+    }
 
     return (
       <View style={styles.container}>
@@ -542,7 +546,7 @@ class FloatLabelTextField extends Component {
                       backgroundColor: 'transparent',
                     },
                   ]}
-                  keyboardType="numeric"
+                  keyboardType={keyboardType}
                   defaultValue={defaultValue}
                   value={value}
                   maxLength={maxLength}
@@ -550,7 +554,6 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.unsetFocus()}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  keyboardType="default"
                   maxLength={21}
                   autoCapitalize="none"
                 />
@@ -684,7 +687,6 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.unsetFocus()}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  keyboardType="default"
                   maxLength={21}
                   autoCapitalize="none"
                 />
@@ -741,7 +743,6 @@ class FloatLabelTextField extends Component {
                       backgroundColor: 'transparent',
                     },
                   ]}
-                  keyboardType="numeric"
                   defaultValue={defaultValue}
                   value={value}
                   maxLength={maxLength}

@@ -2,14 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, StatusBar, Dimensions, Image, Text } from 'react-native';
-import Swiper from 'react-native-swiper';
+// import Swiper from 'react-native-swiper';
 import StartScreenIcon from '../../images/startScreenIcon.png';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
-import FirstScreen from './firstScreen';
-import SecondScreen from './secondScreen';
-import ThirdScreen from './thirdScreen';
+// import FirstScreen from './firstScreen';
+// import SecondScreen from './secondScreen';
+// import ThirdScreen from './thirdScreen';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;

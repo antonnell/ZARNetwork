@@ -14,9 +14,9 @@ export default class TitleText extends React.PureComponent {
   }
 }
 TitleText.defaultProps = {
-  textStyle: {},
+  textStyle: null,
   titleText: 'Recent',
-  mainStyle: {},
+  mainStyle: null,
 };
 TitleText.propTypes = {
   textStyle: PropTypes.objectOf(PropTypes.any),
