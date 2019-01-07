@@ -257,10 +257,10 @@ class HomePage extends Component {
   }
 }
 HomePage.defaultProps = {
-  userDetail: {},
+  userDetail: null,
   userWalletDetail: [],
   accountTypeList: [],
-  navigation: {},
+  navigation: null,
 };
 HomePage.propTypes = {
   userDetail: PropTypes.objectOf(PropTypes.any),

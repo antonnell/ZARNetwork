@@ -238,7 +238,7 @@ class CreatePin extends Component {
   }
 }
 CreatePin.defaultProps = {
-  navigation: {},
+  navigation: null,
 };
 CreatePin.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),

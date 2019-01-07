@@ -125,8 +125,8 @@ export default class GeneratePinCode extends Component {
   }
 }
 GeneratePinCode.defaultProps = {
-  colorData: {},
-  pinCodeObj: {},
+  colorData: null,
+  pinCodeObj: null,
   updateForm: () => {},
 };
 GeneratePinCode.propTypes = {

@@ -66,7 +66,7 @@ TitleHeader.defaultProps = {
   title: '',
   iconName: '',
   rightIconName: '',
-  titleStyle: {},
+  titleStyle: null,
   isBackArrow: false,
   onBtnPress: () => {},
   onRightBtnPress: () => {},

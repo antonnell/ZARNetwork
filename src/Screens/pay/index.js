@@ -54,7 +54,6 @@ class Pay extends Component {
     }
   }
 
- 
   /**
    * @method handleNewBeneficiary :To render pay screen.
    */
@@ -214,7 +213,7 @@ class Pay extends Component {
   }
 }
 Pay.defaultProps = {
-  navigation: {},
+  navigation: null,
   beneficiaries: [],
 };
 
