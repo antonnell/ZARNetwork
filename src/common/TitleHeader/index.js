@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
+import { MaterialIconsType, MaterialCommunityIconsType } from '../constants';
 
 export default class TitleHeader extends Component {
   constructor(props) {
@@ -11,12 +13,17 @@ export default class TitleHeader extends Component {
   }
 
   renderLeftIcon() {
-    const { iconName, onBtnPress, isBackArrow } = this.props;
+    const { iconName, onBtnPress, isBackArrow, leftIconType } = this.props;
+
+    let IconType = MaterialIcons;
+    if (leftIconType === MaterialCommunityIconsType) {
+      IconType = MaterialCommunityIcons;
+    }
 
     if (iconName !== '' && isBackArrow) {
       return (
         <TouchableOpacity onPress={onBtnPress}>
-          <MaterialIcons name={iconName} size={24} style={{ fontWeight: 'bold' }} />
+          <IconType name={iconName} size={24} style={{ fontWeight: 'bold' }} />
         </TouchableOpacity>
       );
     }
@@ -24,16 +31,16 @@ export default class TitleHeader extends Component {
   }
 
   renderRightIcon() {
-    const { rightIconName, onRightBtnPress } = this.props;
+    const { rightIconName, onRightBtnPress, rightIconType } = this.props;
+    let IconType = MaterialIcons;
+    if (rightIconType === MaterialCommunityIconsType) {
+      IconType = MaterialCommunityIcons;
+    }
 
     if (rightIconName !== '') {
       return (
         <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
-          <MaterialIcons
-            name={rightIconName}
-            size={22}
-            style={{ fontWeight: 'bold', marginRight: 5 }}
-          />
+          <IconType name={rightIconName} size={22} style={{ fontWeight: 'bold', marginRight: 5 }} />
         </TouchableOpacity>
       );
     }
@@ -70,6 +77,8 @@ TitleHeader.defaultProps = {
   isBackArrow: false,
   onBtnPress: () => {},
   onRightBtnPress: () => {},
+  rightIconType: MaterialIconsType,
+  leftIconType: MaterialIconsType,
 };
 TitleHeader.propTypes = {
   title: PropTypes.string,
@@ -79,4 +88,6 @@ TitleHeader.propTypes = {
   onRightBtnPress: PropTypes.func,
   titleStyle: PropTypes.objectOf(PropTypes.any),
   isBackArrow: PropTypes.bool,
+  rightIconType: PropTypes.string,
+  leftIconType: PropTypes.string,
 };
