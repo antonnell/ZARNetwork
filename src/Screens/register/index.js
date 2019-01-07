@@ -41,7 +41,7 @@ export default class Register extends Component {
     const regOneLower = /^(?=.*[a-z]).{1,}$/;
     const regOneNumber = /^(?=.*\d).{1,}$/;
     if (passwordVal !== '') {
-      if (passwordVal.length > 8) {
+      if (passwordVal.length >= 8) {
         this.setState({ eightPlusCharacter: true });
       } else {
         this.setState({ eightPlusCharacter: false });

@@ -74,6 +74,7 @@
     "lint-staged": "^8.1.0",
     "metro-react-native-babel-preset": "0.50.0",
     "prettier": "^1.15.3",
+    "react-devtools-core": "^3.5.1",
     "react-test-renderer": "16.6.1",
     "rn-nodeify": "github:tradle/rn-nodeify"
   },
