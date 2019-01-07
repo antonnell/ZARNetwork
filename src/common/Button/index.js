@@ -43,9 +43,9 @@ export default class DesignButton extends React.PureComponent {
 DesignButton.defaultProps = {
   isClickable: false,
   name: 'DONE',
-  btnMainStyle: {},
+  btnMainStyle: null,
   callMethod: () => {},
-  btnTextColor: {},
+  btnTextColor: null,
 };
 DesignButton.propTypes = {
   isClickable: PropTypes.bool,

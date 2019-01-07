@@ -235,7 +235,7 @@ class CreateWallet extends Component {
   }
 }
 CreateWallet.defaultProps = {
-  navigation: {},
+  navigation: null,
   accountTypeList: [],
 };
 CreateWallet.propTypes = {

@@ -54,7 +54,7 @@ export default class Loading extends PureComponent {
 // Specifies the default values for props:
 Loading.defaultProps = {
   isLoading: false,
-  containerStyle: {},
+  containerStyle: null,
 };
 
 Loading.propTypes = {

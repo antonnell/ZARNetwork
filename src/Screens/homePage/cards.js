@@ -45,7 +45,7 @@ export default class Card extends Component {
 
 Card.defaultProps = {
   walletType: '-',
-  account: {},
+  account: null,
 };
 
 Card.propTypes = {
