@@ -320,7 +320,7 @@ class BeneficiaryDetails extends Component {
 }
 BeneficiaryDetails.defaultProps = {
   userWalletDetail: [],
-  navigation: {},
+  navigation: null,
   beneficiaries: [],
 };
 BeneficiaryDetails.propTypes = {
