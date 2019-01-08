@@ -17,6 +17,7 @@ import QRScanner from './src/common/QRScanner/view';
 import Pay from './src/Screens/pay/index';
 import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
 import ViewBeneficiaryList from './src/Screens/pay/allBeneficiaryList';
+import LaunchScreen from './src/Screens/launchScreen';
 
 const Routing = createStackNavigator(
   {
@@ -74,9 +75,12 @@ const Routing = createStackNavigator(
     ViewBeneficiaryList: {
       screen: ViewBeneficiaryList,
     },
+    LaunchScreen: {
+      screen: LaunchScreen,
+    },
   },
   {
-    initialRouteName: 'StartScreen',
+    initialRouteName: 'LaunchScreen',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {
