@@ -41,7 +41,6 @@ export default class AccountCard extends Component {
           </Text>
         </View>
         <Text style={accountCardrightBottomTextStyle}>
-          {' '}
           {walletType} {balanceVal}
         </Text>
       </TouchableOpacity>

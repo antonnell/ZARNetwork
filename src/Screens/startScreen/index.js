@@ -75,7 +75,7 @@ export default class StartScreen extends React.Component {
             Real-time transactions with near zero transaction costs
           </Text>
         </View>
-        <View style={{ marginTop: deviceHeight * 0.3 }}>
+        <View style={{ marginTop: deviceHeight * 0.3, bottom: 25 }}>
           <View style={{ marginTop: deviceHeight * 0.01 }}>
             <DesignButton
               name="SIGN IN"

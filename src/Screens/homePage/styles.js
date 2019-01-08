@@ -120,9 +120,10 @@ export default StyleSheet.create({
   },
   accountCardMainViewStyle: {
     backgroundColor: 'rgba(123,123,123,0.1)',
-    height: deviceHeight * 0.1,
+    // height: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
     borderRadius: 5,
+
     alignSelf: 'center',
     paddingLeft: 10,
     marginBottom: 20,
