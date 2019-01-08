@@ -30,6 +30,7 @@ class Login extends Component {
     this.updateForm = this.updateForm.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
+    this.handleForgotPassword = this.handleForgotPassword.bind(this);
   }
 
   updateForm(value, type) {
@@ -108,6 +109,14 @@ class Login extends Component {
   }
 
   /**
+   * @method handleForgotPassword : To Forgot Password functionality
+   */
+  // eslint-disable-next-line class-methods-use-this
+  handleForgotPassword() {
+    Alert.alert('Information', 'Forgot password under development.');
+  }
+
+  /**
    * @method renderLoader : To display loader indicator.
    */
   renderLoader() {
@@ -180,7 +189,10 @@ class Login extends Component {
             isClickable={isClickable}
           />
         </View>
-        <TouchableOpacity style={{ marginTop: deviceHeight * 0.03 }}>
+        <TouchableOpacity
+          style={{ marginTop: deviceHeight * 0.03 }}
+          onPress={this.handleForgotPassword}
+        >
           <Text style={styles.textStyle}>Forgot Password</Text>
         </TouchableOpacity>
         <TouchableOpacity

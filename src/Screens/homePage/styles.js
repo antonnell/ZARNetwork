@@ -90,6 +90,7 @@ export default StyleSheet.create({
     textAlign: 'right',
   },
   walletOptionContainerStyle: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -171,7 +171,7 @@ class HomePage extends Component {
    */
   // eslint-disable-next-line class-methods-use-this
   renderReceive() {
-    Alert.alert('Information', 'Receive under development.');
+    Alert.alert('Information', 'Request under development.');
   }
 
   renderCards() {
@@ -283,7 +283,6 @@ class HomePage extends Component {
             style={{
               marginTop: deviceHeight * 0.04,
               flexDirection: 'row',
-              justifyContent: 'space-between',
               width: deviceWidth * 0.78,
             }}
           >
