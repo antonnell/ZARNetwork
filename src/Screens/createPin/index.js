@@ -7,6 +7,7 @@ import {
   Dimensions,
   StatusBar,
   TouchableHighlight,
+  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -252,6 +253,12 @@ class CreatePin extends Component {
               callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
             />
           </View>
+          <TouchableOpacity
+            style={{ marginTop: deviceHeight * 0.03 }}
+            onPress={() => navigation.navigate('TermsConditions')}
+          >
+            <Text style={styles.textStyle}>Terms & Conditions</Text>
+          </TouchableOpacity>
           <View style={{ height: deviceHeight * 0.08 }} />
         </ScrollView>
 

@@ -19,6 +19,7 @@ import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
+import { MaterialCommunityIconsType } from '../../common/constants';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -33,6 +34,7 @@ class HomePage extends Component {
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
     this.renderReceive = this.renderReceive.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +57,16 @@ class HomePage extends Component {
           });
           Alert.alert('Error', err);
         });
+    }
+  }
+
+  /**
+   * @method handleLogout : To logout user.
+   */
+  handleLogout() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('StartScreen');
     }
   }
 
@@ -159,7 +171,7 @@ class HomePage extends Component {
    */
   // eslint-disable-next-line class-methods-use-this
   renderReceive() {
-    Alert.alert('Information', 'Under development.');
+    Alert.alert('Information', 'Receive under development.');
   }
 
   renderCards() {
@@ -211,7 +223,7 @@ class HomePage extends Component {
           justifyContent: 'center',
         }}
       >
-        <Text style={{ fontSize: 16, color: 'red' }}>NO DATA FOUND</Text>
+        <Text style={{ fontSize: 16, color: 'green' }}>NO DATA FOUND</Text>
       </View>
     );
   }
@@ -227,7 +239,12 @@ class HomePage extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         {/* header */}
-        <TitleHeader title="DASHBOARD" />
+        <TitleHeader
+          title="DASHBOARD"
+          rightIconName="logout"
+          onRightBtnPress={this.handleLogout}
+          rightIconType={MaterialCommunityIconsType}
+        />
 
         <ScrollView
           style={{

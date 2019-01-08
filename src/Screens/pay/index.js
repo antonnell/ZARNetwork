@@ -1,22 +1,17 @@
 /*eslint-disable */
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, Alert, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './styles';
 import Card from './card';
-import RecentCard from './recentCard';
 import TitleText from '../../common/TitleText';
-// import AllBeneficiary from '../../images/AllBeneficiary.png';
+import AllBeneficiary from '../../images/AllBeneficiary.png';
 import PayNewBeneficiary from '../../images/PayNewBeneficiary.png';
 import TitleHeader from '../../common/TitleHeader';
 import { getBeneficiaryDetail } from '../../controllers/api/beneficiary';
-import Loader from '../../common/Loader';
-import { getFirstCharOfString } from '../../utility/index';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { getTransactionDetail } from '../../controllers/api/transactions';
+import TransactionHistory from './transactionHistory';
 
 class Pay extends Component {
   constructor(props) {
@@ -31,7 +26,7 @@ class Pay extends Component {
       isLoading: false,
     };
     this.handleNewBeneficiary = this.handleNewBeneficiary.bind(this);
-    this.handleAccountPay = this.handleAccountPay.bind(this);
+    this.handleShowAllBeneficiary = this.handleShowAllBeneficiary.bind(this);
   }
 
   componentDidMount() {
@@ -39,8 +34,12 @@ class Pay extends Component {
       this.setState({
         isLoading: true,
       });
-      getBeneficiaryDetail()
-        .then(() => {
+
+      getBeneficiaryDetail();
+
+      getTransactionDetail()
+        .then(res => {
+          console.log('getTransactionDetail : ', res);
           this.setState({
             isLoading: false,
           });
@@ -59,108 +58,31 @@ class Pay extends Component {
    */
   handleNewBeneficiary() {
     const isBackArrow = true;
-    const { navigation } = this.props;
+    const { navigation, userWalletDetail } = this.props;
+    if (userWalletDetail && userWalletDetail.length === 0) {
+      Alert.alert('Information', 'You must have, atleast one account to pay to beneficiary!');
+      return;
+    }
     if (navigation && navigation.navigate) {
       navigation.navigate('BeneficiaryDetails', { isBackArrow });
     }
   }
 
   /**
-   * @method handleAccountPay : To open account payment screen
+   * @method handleShowAllBeneficiary : To display list of all beneficiaries for accounts of user.
    */
-  handleAccountPay(beneficiary) {
+  handleShowAllBeneficiary() {
     const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('PayBeneficiary', { isBackArrow, selectedBeneficiary: beneficiary });
+      navigation.navigate('ViewBeneficiaryList', { isBackArrow });
     }
-  }
-
-  /**
-   * @method renderLoader : To display loader indicator.
-   */
-  renderLoader() {
-    const { isLoading } = this.state;
-    if (isLoading) {
-      return (
-        <Loader
-          isLoading={isLoading}
-          loaderStyle={0.25}
-          containerStyle={{
-            height: deviceHeight * 0.5,
-            width: deviceWidth,
-          }}
-        />
-      );
-    }
-    return null;
-  }
-
-  renderNoBeneficiaryMessage() {
-    const { beneficiaries } = this.props;
-    const { isLoading } = this.state;
-    if (isLoading === true) {
-      return null;
-    }
-
-    const beneficiariesLength = beneficiaries.length;
-    if (beneficiariesLength === 0) {
-      return (
-        <View
-          style={{
-            backgroundColor: 'rgb(0,169,248)',
-            height: 40,
-            justifyContent: 'center',
-            marginLeft: 20,
-            marginRight: 20,
-            paddingLeft: 10,
-            borderStyle: 'solid',
-            borderRadius: 4,
-          }}
-        >
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>
-            No beneficiary details.
-          </Text>
-        </View>
-      );
-    }
-
-    return null;
-  }
-
-  renderBeneficiaryList() {
-    const { beneficiaries } = this.props;
-    // const { isLoading } = this.state;
-    // if (isLoading === true) {
-    //   return null;
-    // }
-
-    const beneficiaryList = [];
-    const beneficiariesLength = beneficiaries.length;
-    if (beneficiariesLength > 0) {
-      for (let i = 0; i < beneficiariesLength; i += 1) {
-        const header = getFirstCharOfString(beneficiaries[i].name);
-        const bankDetail = beneficiaries[i].bank_uuid ? beneficiaries[i].bank_uuid : '--';
-        beneficiaryList.push(
-          <RecentCard
-            key={Math.random()}
-            header={header}
-            title={beneficiaries[i].name}
-            subtitle={bankDetail}
-            beneficiary={beneficiaries[i]}
-            onPress={this.handleAccountPay}
-          />
-        );
-      }
-      return beneficiaryList;
-    }
-    return null;
   }
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { navigation } = this.props;
-    const { isBackArrowPresent } = this.state;
+    const { navigation, transactions } = this.props;
+    const { isBackArrowPresent, isLoading } = this.state;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -181,48 +103,39 @@ class Pay extends Component {
             icon={PayNewBeneficiary}
             onPress={this.handleNewBeneficiary}
           />
-          {/* For the time being this view is commented as per client requirements */}
-          {/* <View style={styles.seperaterStyle} />
-          <Card navigation={navigation} text="View all Beneficiary" icon={AllBeneficiary} /> */}
+          <View style={styles.seperaterStyle} />
+          <Card
+            navigation={navigation}
+            text="View all Beneficiary"
+            icon={AllBeneficiary}
+            onPress={this.handleShowAllBeneficiary}
+          />
         </View>
         <TitleText
-          titleText="All Beneficiary"
+          titleText="All Transactions"
           mainStyle={styles.mainStyle}
           textStyle={styles.recentTextStyle}
         />
-        <View
-          style={{
-            marginTop: deviceHeight * 0.02,
-          }}
-        >
-          {this.renderNoBeneficiaryMessage()}
-          <ScrollView
-            style={{
-              height: deviceHeight * 0.5,
-              width: deviceWidth,
-            }}
-            showsVerticalScrollIndicator={false}
-          >
-            {this.renderBeneficiaryList()}
-            <View style={{ height: deviceHeight * 0.1 }} />
-          </ScrollView>
-          {this.renderLoader()}
-        </View>
+        <TransactionHistory transactions={transactions} isLoading={isLoading} />
       </View>
     );
   }
 }
 Pay.defaultProps = {
   navigation: null,
+  userWalletDetail: [],
   beneficiaries: [],
 };
 
 Pay.propTypes = {
   navigation: PropTypes.shape({}),
   beneficiaries: PropTypes.arrayOf(PropTypes.any),
+  userWalletDetail: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   beneficiaries: state.userBeneficiaryReducer.beneficiaries,
+  transactions: state.userTransactionReducer.transactions,
+  userWalletDetail: state.userWalletReducer.wallets,
 });
 export default connect(mapStateToProps)(Pay);

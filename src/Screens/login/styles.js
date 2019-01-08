@@ -21,6 +21,12 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  fantomPayLogoContainer: {
+    marginTop: deviceHeight * 0.1,
+  },
+  fantomPayLogoImageStyle: {
+    height: 80,
+  },
   signInImageStyle: {
     height: deviceHeight * 0.06,
   },

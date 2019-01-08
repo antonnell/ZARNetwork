@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Component } from 'react';
 import { View, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';

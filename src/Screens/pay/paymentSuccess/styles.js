@@ -1,8 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+// const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   Container: {
     flex: 1,

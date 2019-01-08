@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: deviceHeight * 0.08,
+    marginTop: 30,
   },
 
   titleText: {

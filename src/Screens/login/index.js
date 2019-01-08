@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import styles from './styles';
 import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
-import SignIn from '../../images/SignIn.png';
+// import SignIn from '../../images/SignIn.png';
+import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
 import Loader from '../../common/Loader';
 /**
@@ -135,16 +136,16 @@ class Login extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
-        <View
-          style={{
-            marginTop: deviceHeight * 0.1,
-          }}
-        >
-          <Image source={SignIn} style={styles.signInImageStyle} resizeMode="contain" />
+        <View style={styles.fantomPayLogoContainer}>
+          <Image
+            source={FantomPayLogo}
+            style={styles.fantomPayLogoImageStyle}
+            resizeMode="contain"
+          />
         </View>
-        <View style={{ marginTop: deviceHeight * 0.01 }}>
+        {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
-        </View>
+        </View> */}
 
         <View style={styles.emailTextFieldStyle}>
           <FloatLabelTextField

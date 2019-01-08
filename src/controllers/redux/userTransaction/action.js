@@ -1,3 +1,4 @@
+/*eslint-disable */
 import action from '../base/action';
 import * as actions from '../base/constants';
 

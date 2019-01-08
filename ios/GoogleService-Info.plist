@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>888539243135-m8ev3lim2ljfhmkgiu637atp6qrdu5c9.apps.googleusercontent.com</string>
+	<string>231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.888539243135-m8ev3lim2ljfhmkgiu637atp6qrdu5c9</string>
+	<string>com.googleusercontent.apps.231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD96UPaU0z1WN4ikxLhVfTtTxYT2_DM_6Y</string>
+	<string>AIzaSyDpsNHpnVL9j9SF2TDR4LBWnjH6qFhgbRY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>888539243135</string>
+	<string>231567589892</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.innow8.fantom</string>
+	<string>com.fantom.pay</string>
 	<key>PROJECT_ID</key>
-	<string>fantompay-b6de5</string>
+	<string>fantompay-ed985</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fantompay-b6de5.appspot.com</string>
+	<string>fantompay-ed985.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:888539243135:ios:35169b268735df00</string>
+	<string>1:231567589892:ios:a1266d9f7b2ea10e</string>
 	<key>DATABASE_URL</key>
-	<string>https://fantompay-b6de5.firebaseio.com</string>
+	<string>https://fantompay-ed985.firebaseio.com</string>
 </dict>
 </plist>
