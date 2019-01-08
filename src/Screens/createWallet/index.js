@@ -220,6 +220,7 @@ class CreateWallet extends Component {
               placeholder="Account Name"
               autoCorrect={false}
               value={name}
+              maxLength={20}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}

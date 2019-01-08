@@ -16,6 +16,7 @@ import StartScreen from './src/Screens/startScreen';
 import QRScanner from './src/common/QRScanner/view';
 import Pay from './src/Screens/pay/index';
 import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
+import ViewBeneficiaryList from './src/Screens/pay/allBeneficiaryList';
 
 const Routing = createStackNavigator(
   {
@@ -69,6 +70,9 @@ const Routing = createStackNavigator(
     },
     PaySomeone: {
       screen: Pay,
+    },
+    ViewBeneficiaryList: {
+      screen: ViewBeneficiaryList,
     },
   },
   {

@@ -202,7 +202,7 @@ class HomePage extends Component {
           justifyContent: 'center',
         }}
       >
-        <Text style={{ fontSize: 16, color: 'red' }}>NO DATA FOUND</Text>
+        <Text style={{ fontSize: 16, color: 'green' }}>NO DATA FOUND</Text>
       </View>
     );
   }

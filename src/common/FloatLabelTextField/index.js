@@ -11,6 +11,7 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
+import Web3 from 'web3';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Reference from '../../images/Reference.png';
 import Email from '../../images/Email.png';
@@ -119,11 +120,12 @@ class FloatLabelTextField extends Component {
   }
 
   onEndEditing(value, type) {
-    const { confirm, updateForm } = this.props;
-    if (!confirm) {
-      updateForm(value, type);
-      setTimeout(() => this.validate(value, type), 5);
-    }
+    // const { confirm, updateForm } = this.props;
+    // if (!confirm) {
+    //   updateForm(value, type);
+    //   setTimeout(() => this.validate(value, type), 5);
+    // }
+    this.validate(value, type);
   }
 
   onChangeTextHandler(value, type) {
@@ -227,7 +229,7 @@ class FloatLabelTextField extends Component {
   }
 
   validate(value, type) {
-    const { email, text } = this.state;
+    const { email, text, accountNumber } = this.state;
     const { validate } = this.props;
     if (type === 'email') {
       // const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -252,11 +254,19 @@ class FloatLabelTextField extends Component {
     } else if (type === 'reference') {
       validate(type);
     } else if (type === 'account') {
-      validate(type);
+      if (accountNumber !== '' && !Web3.utils.isAddress(accountNumber)) {
+        Alert.alert('Error', 'Please enter valid account number.');
+        validate(type);
+      }
     } else if (type === 'name') {
       if (text === '') {
         Alert.alert('Error', 'Name field cannot be empty.');
         validate(type);
+      } else {
+        if (text.length > 20) {
+          Alert.alert('Error', 'Number of characters cannot be more then 20.');
+          validate(type);
+        }
       }
     }
   }
@@ -555,7 +565,6 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.unsetFocus()}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  maxLength={21}
                   autoCapitalize="none"
                 />
               </View>
@@ -614,7 +623,6 @@ class FloatLabelTextField extends Component {
                   placeholderTextColor="grey"
                   keyboardType="default"
                   secureTextEntry={!showPassword}
-                  maxLength={21}
                   autoCapitalize="none"
                   onEndEditing={() => this.onEndEditing(text, type)}
                 />
@@ -688,8 +696,8 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.unsetFocus()}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  maxLength={21}
                   autoCapitalize="none"
+                  onEndEditing={() => this.onEndEditing(text, type)}
                 />
                 {isShowRightText && (
                   <TouchableOpacity style={rightTextStyle} onPress={onPressRightBtn}>
@@ -752,7 +760,6 @@ class FloatLabelTextField extends Component {
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   keyboardType="default"
-                  maxLength={21}
                   autoCapitalize="none"
                 />
               </View>
