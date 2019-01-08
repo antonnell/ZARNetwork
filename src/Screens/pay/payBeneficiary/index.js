@@ -324,15 +324,15 @@ class PayBeneficiary extends Component {
   }
 }
 PayBeneficiary.defaultProps = {
-  userDetail: {},
+  userDetail: null,
+  navigation: null,
+  userWalletDetail: [],
+  accountTypeList: [],
 };
 
 PayBeneficiary.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   navigation: PropTypes.objectOf(PropTypes.any),
-  // eslint-disable-next-line react/require-default-props
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
-  // eslint-disable-next-line react/require-default-props
   accountTypeList: PropTypes.arrayOf(PropTypes.any),
   userDetail: PropTypes.objectOf(PropTypes.any),
 };

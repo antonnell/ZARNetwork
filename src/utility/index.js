@@ -1,3 +1,4 @@
+import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
 /* eslint-disable import/prefer-default-export */
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
@@ -76,8 +77,8 @@ export function getFirstCharOfString(str) {
 
 /**
  *
- * @param {*} accountTypeList : List of supported account types.
- * @param {*} account : User's wallet account.
+ * @param {Array} accountTypeList : List of supported account types.
+ * @param {object} account : User's wallet account.
  */
 export function getWalletType(accountTypeList, account) {
   let walletType = '';
@@ -90,4 +91,29 @@ export function getWalletType(accountTypeList, account) {
     }
   }
   return walletType;
+}
+
+/**
+ *
+ * @param {Array} availableList : List of available items.
+ * @param {string} name : value to be compared.
+ * @param {string} listType: Type of List
+ */
+export function isValidName(availableList, name, listType) {
+  const availableListLen = availableList.length;
+
+  if (listType === BENEFICIARY_TYPE_LIST) {
+    for (let index = 0; index < availableListLen; index += 1) {
+      if (availableList[index].name === name) {
+        return false;
+      }
+    }
+  } else if (listType === WALLET_LIST) {
+    for (let index = 0; index < availableListLen; index += 1) {
+      if (availableList[index].description === name) {
+        return false;
+      }
+    }
+  }
+  return true;
 }

@@ -41,7 +41,7 @@ export default class Register extends Component {
     const regOneLower = /^(?=.*[a-z]).{1,}$/;
     const regOneNumber = /^(?=.*\d).{1,}$/;
     if (passwordVal !== '') {
-      if (passwordVal.length > 8) {
+      if (passwordVal.length >= 8) {
         this.setState({ eightPlusCharacter: true });
       } else {
         this.setState({ eightPlusCharacter: false });
@@ -288,7 +288,7 @@ export default class Register extends Component {
           <View style={styles.loginButtonContainer}>
             <Text style={[styles.textStyle, { color: 'rgb(3,3,3)' }]}>Already registered?</Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text style={styles.textStyle}> Log In</Text>
+              <Text style={styles.textStyle}> Sign In</Text>
             </TouchableOpacity>
           </View>
 
@@ -299,7 +299,7 @@ export default class Register extends Component {
   }
 }
 Register.defaultProps = {
-  navigation: {},
+  navigation: null,
 };
 Register.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),

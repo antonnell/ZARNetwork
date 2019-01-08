@@ -15,7 +15,11 @@ import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 import StartScreen from './src/Screens/startScreen';
 import QRScanner from './src/common/QRScanner/view';
 import Pay from './src/Screens/pay/index';
+import AccountDetail from './src/Screens/homePage/account-detail';
 import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
+import ViewBeneficiaryList from './src/Screens/pay/allBeneficiaryList';
+import LaunchScreen from './src/Screens/launchScreen';
+import TermsConditions from './src/Screens/termsConditions';
 
 const Routing = createStackNavigator(
   {
@@ -70,9 +74,21 @@ const Routing = createStackNavigator(
     PaySomeone: {
       screen: Pay,
     },
+    AccountDetail: {
+      screen: AccountDetail,
+    },
+    ViewBeneficiaryList: {
+      screen: ViewBeneficiaryList,
+    },
+    LaunchScreen: {
+      screen: LaunchScreen,
+    },
+    TermsConditions: {
+      screen: TermsConditions,
+    },
   },
   {
-    initialRouteName: 'StartScreen',
+    initialRouteName: 'LaunchScreen',
     headerMode: 'none',
     mode: 'card',
     navigationOptions: {

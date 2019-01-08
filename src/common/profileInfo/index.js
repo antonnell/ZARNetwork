@@ -31,10 +31,10 @@ export default class ProfileInfo extends Component {
   }
 }
 ProfileInfo.defaultProps = {
-  profileInfoMainViewStyle: {},
-  circularAvatarTextStyle: {},
-  profileInfoSubTitleStyle: {},
-  profileInfoTitleStyle: {},
+  profileInfoMainViewStyle: null,
+  circularAvatarTextStyle: null,
+  profileInfoSubTitleStyle: null,
+  profileInfoTitleStyle: null,
   titleText: 'Jane Smith',
   subTitleText: 'jane@gmail.com',
   circularAvatarText: 'JS',

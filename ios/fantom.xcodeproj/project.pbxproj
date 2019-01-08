@@ -59,9 +59,9 @@
 		D83EB4A121D36D6E00B6AAA4 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D83EB4A021D36D6E00B6AAA4 /* Roboto-Light.ttf */; };
 		D83EB4A321D36D7400B6AAA4 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D83EB4A221D36D7400B6AAA4 /* Roboto-Medium.ttf */; };
 		D83EB4A521D36D7A00B6AAA4 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D83EB4A421D36D7A00B6AAA4 /* Roboto-Regular.ttf */; };
+		D88E16C021E339250050EF08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D88E16BF21E339250050EF08 /* GoogleService-Info.plist */; };
 		E4CF50610EEF42DA8B492DDD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523073C6601648B38EAE6B38 /* MaterialIcons.ttf */; };
 		E70E14370D224BD48A7740FB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDFAFB8A88FE4BA7AB679632 /* EvilIcons.ttf */; };
-		F3067B3E21DF7F3300C0E54F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */; };
 		F493101BB68143BCAEF7127F /* libRNOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04532C5391F64C5DAA704391 /* libRNOS.a */; };
 		F4C2DDB50469421195A6DBEB /* libUdpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BE63D0B4649FDA820CA31 /* libUdpSockets.a */; };
 		FB0E7416ED714F2BB027619D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AC154296D1D4873929993F7 /* libTouchID.a */; };
@@ -509,8 +509,8 @@
 		D83EB4A021D36D6E00B6AAA4 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		D83EB4A221D36D7400B6AAA4 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		D83EB4A421D36D7A00B6AAA4 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		D88E16BF21E339250050EF08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0C44EEAC4AD444E9D18BA8E /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F3D3FB66A92A4D8397F732B3 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		F4B3DC8688E54BFB874E5AC2 /* libRNReactNativeWeb3.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReactNativeWeb3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -643,12 +643,12 @@
 		13B07FAE1A68108700A75B9A /* fantom */ = {
 			isa = PBXGroup;
 			children = (
+				D88E16BF21E339250050EF08 /* GoogleService-Info.plist */,
 				4BBF52A121C8C8E900F5CF4B /* fantom.entitlements */,
 				C183BA8621C22B9100E096EE /* Firebase */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				F3067B3D21DF7F3200C0E54F /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -1492,7 +1492,7 @@
 				844E2E814CCE4EB9BACBDD86 /* Octicons.ttf in Resources */,
 				C612A5EB4C3B4025AE7BC12E /* SimpleLineIcons.ttf in Resources */,
 				74F6ECF1C8BE4DBABCDB92D3 /* Zocial.ttf in Resources */,
-				F3067B3E21DF7F3300C0E54F /* GoogleService-Info.plist in Resources */,
+				D88E16C021E339250050EF08 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

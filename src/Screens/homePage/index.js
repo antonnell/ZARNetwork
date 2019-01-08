@@ -3,7 +3,7 @@ import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-nati
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import ProfileInfo from '../../common/profileInfo';
+// import ProfileInfo from '../../common/profileInfo';
 import DetailCard from '../../common/detailCard';
 import styles from './styles';
 import Wallet from './wallet';
@@ -17,6 +17,9 @@ import paySomeoneIcon from '../../images/paySomeoneIcon.png';
 import receiveIcon from '../../images/receiveIcon.png';
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
+import ToggleButton from '../../common/ToggleButton';
+import AccountCard from '../../common/accountCard';
+import { MaterialCommunityIconsType } from '../../common/constants';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -31,6 +34,7 @@ class HomePage extends Component {
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
     this.renderReceive = this.renderReceive.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
@@ -57,38 +61,36 @@ class HomePage extends Component {
   }
 
   /**
+   * @method handleLogout : To logout user.
+   */
+  handleLogout() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('StartScreen');
+    }
+  }
+
+  /**
    * @method handleAccountPay : To open account payment screen
    */
-  handleAccountPay() {
+  handleAccountPay(event, account) {
+    event.preventDefault();
     const isBackArrow = true;
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('PaySomeone', { isBackArrow });
+      navigation.navigate('AccountDetail', { isBackArrow, account });
     }
   }
 
   /**
    * @method renderLoader : To display loader indicator.
    */
-  renderLoader() {
-    const { isLoading } = this.state;
-    if (isLoading) {
-      return (
-        <Loader
-          isLoading={isLoading}
-          loaderStyle={0.25}
-          containerStyle={{
-            height: deviceHeight * 0.3,
-            width: deviceWidth - 40,
-            marginHorizontal: 20,
-          }}
-        />
-      );
-    }
-    return null;
+  updateToggleValue() {
+    const { accountToggle } = this.state;
+    this.setState({ accountToggle: !accountToggle });
   }
 
-  renderAccountCards() {
+  renderAccountCards(toggle) {
     const { userWalletDetail, accountTypeList } = this.props;
     const userWalletLength = userWalletDetail.length;
     const walletList = [];
@@ -105,23 +107,36 @@ class HomePage extends Component {
             }
           }
         }
-
-        walletList.push(
-          <DetailCard
-            key={`${index}_card`}
-            account={userWalletDetail[index]}
-            walletType={walletType}
-            bottomSubTitleText="Current Balance"
-            detailCardMainViewStyle={styles.detailCardMainViewStyle}
-            detailCardTopViewStyle={styles.detailCardTopViewStyle}
-            detailCardTopTitleStyle={styles.detailCardTopTitleStyle}
-            detailCardBottomViewStyle={styles.detailCardBottomViewStyle}
-            detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
-            detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
-            detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
-            callMethod={this.handleAccountPay}
-          />
-        );
+        // eslint-disable-next-line  no-unused-expressions
+        toggle
+          ? walletList.push(
+              <DetailCard
+                key={`${index}_card`}
+                account={userWalletDetail[index]}
+                walletType={walletType}
+                bottomSubTitleText="Current Balance"
+                detailCardMainViewStyle={styles.detailCardMainViewStyle}
+                detailCardTopViewStyle={styles.detailCardTopViewStyle}
+                detailCardTopTitleStyle={styles.detailCardTopTitleStyle}
+                detailCardBottomViewStyle={styles.detailCardBottomViewStyle}
+                detailCardBottomSubTitleTextStyle={styles.detailCardBottomSubTitleTextStyle}
+                detailCardBottomTitleTextStyle={styles.detailCardBottomTitleTextStyle}
+                detailCardSubTitleTextStyle={styles.detailCardSubTitleTextStyle}
+                callMethod={event => this.handleAccountPay(event, userWalletDetail[index])}
+              />
+            )
+          : walletList.push(
+              <AccountCard
+                key={`${index}_card`}
+                account={userWalletDetail[index]}
+                walletType={walletType}
+                accountCardMainViewStyle={styles.accountCardMainViewStyle}
+                accountCardrightBottomTextStyle={styles.accountCardrightBottomTextStyle}
+                accountCardTopTitleStyle={styles.accountCardTopTitleStyle}
+                accountCardSubTitleTextStyle={styles.accountCardSubTitleTextStyle}
+                callMethod={event => this.handleAccountPay(event, userWalletDetail[index])}
+              />
+            );
       }
       return walletList;
     }
@@ -156,26 +171,44 @@ class HomePage extends Component {
    */
   // eslint-disable-next-line class-methods-use-this
   renderReceive() {
-    Alert.alert('Information', 'Under development.');
+    Alert.alert('Information', 'Request under development.');
   }
 
   renderCards() {
-    const { isLoading } = this.state;
+    const { isLoading, accountToggle } = this.state;
     if (!isLoading) {
       return (
         <ScrollView
           style={{
             flex: 1,
           }}
-          horizontal
+          horizontal={!accountToggle}
           showsHorizontalScrollIndicator={false}
         >
-          {this.renderAccountCards()}
+          {this.renderAccountCards(!accountToggle)}
           <View style={{ width: deviceWidth * 0.02 }} />
         </ScrollView>
       );
     }
     return this.renderLoader();
+  }
+
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading) {
+      return (
+        <Loader
+          isLoading={isLoading}
+          loaderStyle={0.25}
+          containerStyle={{
+            height: deviceHeight * 0.3,
+            width: deviceWidth - 40,
+            marginHorizontal: 20,
+          }}
+        />
+      );
+    }
+    return null;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -197,6 +230,7 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+    const { accountToggle } = this.state;
     let userIcon = '--';
     if (userDetail.email) {
       userIcon = getFirstCharOfString(userDetail.email);
@@ -205,7 +239,12 @@ class HomePage extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         {/* header */}
-        <TitleHeader title="DASHBOARD" />
+        <TitleHeader
+          title="DASHBOARD"
+          rightIconName="logout"
+          onRightBtnPress={this.handleLogout}
+          rightIconType={MaterialCommunityIconsType}
+        />
 
         <ScrollView
           style={{
@@ -215,7 +254,7 @@ class HomePage extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <ProfileInfo
+          {/* <ProfileInfo
             circularAvatarTextStyle={styles.circularAvatarTextStyle}
             profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
@@ -223,17 +262,32 @@ class HomePage extends Component {
             subTitleText={userDetail.email}
             titleText="Jane Smith"
             circularAvatarText={userIcon}
-          />
+          /> */}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: deviceWidth * 0.8,
+            }}
+          >
+            <View style={styles.profileInfoMainViewStyle}>
+              <Text style={styles.circularAvatarTextStyle}>{userIcon}</Text>
+            </View>
+            <View style={{ marginTop: deviceHeight * 0.05, paddingLeft: 15 }}>
+              {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
+              <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
+            </View>
+          </View>
           <View
             style={{
               marginTop: deviceHeight * 0.04,
               flexDirection: 'row',
-              justifyContent: 'space-between',
               width: deviceWidth * 0.78,
             }}
           >
-            <Wallet text="Pay Someone" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
-            <Wallet text="Receive" icon={receiveIcon} handleWallet={this.renderReceive} />
+            <Wallet text="Pay" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
+            <Wallet text="Request" icon={receiveIcon} handleWallet={this.renderReceive} />
             <Wallet
               text="Add Account"
               handleWallet={this.renderCreateAccount}
@@ -245,8 +299,16 @@ class HomePage extends Component {
               marginTop: deviceHeight * 0.1,
             }}
           >
-            <View style={{ width: deviceWidth * 0.85, alignSelf: 'center' }}>
-              <Text style={{ fontSize: 16 }}>Accounts</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{ width: deviceWidth * 0.85, alignSelf: 'center' }}>
+                <Text style={{ fontSize: 16 }}>Accounts</Text>
+              </View>
+              <ToggleButton
+                defaultValue={accountToggle}
+                onChangeValue={() => {
+                  this.updateToggleValue();
+                }}
+              />
             </View>
             <View style={styles.renderCardContainer}>{this.renderCards()}</View>
           </View>
@@ -257,10 +319,10 @@ class HomePage extends Component {
   }
 }
 HomePage.defaultProps = {
-  userDetail: {},
+  userDetail: null,
   userWalletDetail: [],
   accountTypeList: [],
-  navigation: {},
+  navigation: null,
 };
 HomePage.propTypes = {
   userDetail: PropTypes.objectOf(PropTypes.any),

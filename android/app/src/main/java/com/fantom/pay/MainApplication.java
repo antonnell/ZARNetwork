@@ -3,8 +3,8 @@ package com.fantom.pay;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNReactNativeWeb3Package;
 import com.bitgo.randombytes.RandomBytesPackage;
+import com.reactlibrary.RNReactNativeWeb3Package;
 import org.reactnative.camera.RNCameraPackage;
 import com.tradle.react.UdpSocketsModule;
 import com.peel.react.TcpSocketsModule;
@@ -35,8 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNReactNativeWeb3Package(),
             new RandomBytesPackage(),
+            new RNReactNativeWeb3Package(),
             new RNCameraPackage(),
             new UdpSocketsModule(),
             new TcpSocketsModule(),

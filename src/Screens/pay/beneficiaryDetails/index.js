@@ -8,10 +8,11 @@ import TitleCard from '../../../common/titleCard';
 import TitleHeader from '../../../common/TitleHeader';
 import AccountType from '../../../images/AccountType.png';
 import ListCard from '../../../common/ListCard';
-import { WALLET_LIST } from '../../../common/constants';
+import { WALLET_LIST, BENEFICIARY_TYPE_LIST } from '../../../common/constants';
 import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
 import Loader from '../../../common/Loader';
+import { isValidName } from '../../../utility/index';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -102,7 +103,13 @@ class BeneficiaryDetails extends Component {
    */
   handleAddBeneficiary() {
     const { accountNumber, reference, accId, name } = this.state;
-    const { navigation } = this.props;
+    const { navigation, beneficiaries } = this.props;
+
+    if (!isValidName(beneficiaries, name, BENEFICIARY_TYPE_LIST)) {
+      Alert.alert('Error', 'Beneficiary name already exists!');
+      return;
+    }
+
     if (
       accountNumber &&
       accountNumber !== '' &&
@@ -134,7 +141,6 @@ class BeneficiaryDetails extends Component {
               result.payload.data &&
               result.payload.data.status === 200
             ) {
-              const { beneficiaries } = this.props;
               const len = beneficiaries.length;
               if (beneficiaries && len > 0) {
                 const beneficiaryReference = beneficiaries[len - 1].their_reference;
@@ -273,6 +279,7 @@ class BeneficiaryDetails extends Component {
             placeholder="Name"
             autoCorrect={false}
             value={name}
+            // maxLength={20}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
@@ -320,7 +327,7 @@ class BeneficiaryDetails extends Component {
 }
 BeneficiaryDetails.defaultProps = {
   userWalletDetail: [],
-  navigation: {},
+  navigation: null,
   beneficiaries: [],
 };
 BeneficiaryDetails.propTypes = {

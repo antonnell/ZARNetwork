@@ -10,9 +10,10 @@ import FloatLabelTextField from '../../common/FloatLabelTextField';
 import DesignButton from '../../common/Button';
 import TitleText from '../../common/TitleText';
 import { setNewWallet } from '../../controllers/api/userWallet';
-import { ACCOUNT_TYPE_LIST } from '../../common/constants';
+import { ACCOUNT_TYPE_LIST, WALLET_LIST } from '../../common/constants';
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
+import { isValidName } from '../../utility/index';
 
 const deviceWidth = Dimensions.get('window').width;
 /**
@@ -89,7 +90,12 @@ class CreateWallet extends Component {
    */
   handleCreateAccount() {
     const { name, typeUuid } = this.state;
-    const { navigation } = this.props;
+    const { navigation, userWalletDetail } = this.props;
+
+    if (!isValidName(userWalletDetail, name, WALLET_LIST)) {
+      Alert.alert('Error', 'Wallet name already exists!');
+      return;
+    }
 
     if (name && name !== '' && typeUuid && typeUuid !== '') {
       const payload = {
@@ -214,6 +220,7 @@ class CreateWallet extends Component {
               placeholder="Account Name"
               autoCorrect={false}
               value={name}
+              maxLength={20}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
@@ -235,16 +242,19 @@ class CreateWallet extends Component {
   }
 }
 CreateWallet.defaultProps = {
-  navigation: {},
+  navigation: null,
   accountTypeList: [],
+  userWalletDetail: [],
 };
 CreateWallet.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),
   accountTypeList: PropTypes.arrayOf(PropTypes.any),
+  userWalletDetail: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   accountTypeList: state.supportedAccTypeReducer.types,
+  userWalletDetail: state.userWalletReducer.wallets,
 });
 
 export default connect(mapStateToProps)(CreateWallet);

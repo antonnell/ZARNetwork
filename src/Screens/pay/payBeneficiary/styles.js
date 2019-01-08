@@ -67,12 +67,10 @@ export default StyleSheet.create({
     width: deviceWidth * 0.1,
   },
   titleCardTextStyle: {
+    flex: 5,
     color: 'white',
-    fontSize: 15,
-    marginLeft: 12,
-  },
-  titleMaterialIconStyle: {
-    marginLeft: deviceHeight * 0.18,
+    fontSize: 16,
+    marginLeft: 14,
   },
   notificationImageStyle: {
     height: deviceHeight * 0.03,
@@ -112,6 +110,6 @@ export default StyleSheet.create({
     top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
     left: -(deviceWidth * 0.25),
     width: deviceWidth * 0.78,
-    height: deviceHeight * 0.3,
+    maxHeight: deviceHeight * 0.3,
   },
 });

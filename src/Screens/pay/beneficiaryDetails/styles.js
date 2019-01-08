@@ -80,13 +80,13 @@ export default StyleSheet.create({
   titleCardTextStyle: {
     flex: 5,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     marginLeft: 14,
   },
   listStyling: {
     top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
     left: -(deviceWidth * 0.16),
     width: deviceWidth * 0.78,
-    height: deviceHeight * 0.3,
+    maxHeight: deviceHeight * 0.3,
   },
 });

@@ -34,10 +34,10 @@ export default class TitleCard extends Component {
 TitleCard.defaultProps = {
   icon: 'person-outline',
   text: 'ETH Wallet',
-  titleCardMainViewStyle: {},
-  titleCardImageStyle: {},
-  titleCardTextStyle: {},
-  titleMaterialIconStyle: {},
+  titleCardMainViewStyle: null,
+  titleCardImageStyle: null,
+  titleCardTextStyle: null,
+  titleMaterialIconStyle: null,
   onPress: () => {},
 };
 
