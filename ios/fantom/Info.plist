@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Fantompay</string>
+	<string>Fantom Pay</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -36,7 +36,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -54,12 +54,24 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Allow permission to access your Media Library</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Allow permission to access your Bluetooth</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow permission to access your calendars</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow permission to access your Camera</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Allow permission to access your location</string>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Allow permission to access your Motion sensors</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Allow permission to access your Mic</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
@@ -89,8 +101,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

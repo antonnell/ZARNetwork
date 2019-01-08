@@ -6,9 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>1:231567589892:ios:a1266d9f7b2ea10e
-1:231567589892:ios:a1266d9f7b2ea10e
-1:231567589892:ios:a1266d9f7b2ea10e</string>
+		<string>webcredentials:fantompay-ed985.firebaseapp.com</string>
 	</array>
 </dict>
 </plist>
