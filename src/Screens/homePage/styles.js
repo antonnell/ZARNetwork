@@ -118,4 +118,31 @@ export default StyleSheet.create({
     width: deviceWidth,
     paddingVertical: 10,
   },
+  accountCardMainViewStyle: {
+    backgroundColor: 'rgba(123,123,123,0.1)',
+    height: deviceHeight * 0.1,
+    width: deviceWidth * 0.8,
+    borderRadius: 5,
+    alignSelf: 'center',
+    paddingLeft: 10,
+    marginBottom: 20,
+    paddingTop: 5,
+    shadowOpacity: 1,
+    shadowOffset: { width: 0, height: 3.7 },
+    shadowRadius: 5.3,
+    shadowColor: 'rgba(127, 127, 127, 0.15)',
+    elevation: 4,
+  },
+  accountCardrightBottomTextStyle: {
+    textAlign: 'right',
+    right: 10,
+    color: 'rgba(0,177,255,1)',
+  },
+  accountCardTopTitleStyle: {
+    color: 'black',
+    fontSize: 15,
+  },
+  accountCardSubTitleTextStyle: {
+    color: 'black',
+  },
 });

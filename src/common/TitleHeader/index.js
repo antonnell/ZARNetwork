@@ -12,7 +12,6 @@ export default class TitleHeader extends Component {
 
   renderLeftIcon() {
     const { iconName, onBtnPress, isBackArrow } = this.props;
-
     if (iconName !== '' && isBackArrow) {
       return (
         <TouchableOpacity onPress={onBtnPress}>

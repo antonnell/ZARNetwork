@@ -15,6 +15,7 @@ import ConfirmPayment from './src/Screens/pay/confirmPayment/index';
 import StartScreen from './src/Screens/startScreen';
 import QRScanner from './src/common/QRScanner/view';
 import Pay from './src/Screens/pay/index';
+import AccountDetail from './src/Screens/homePage/account-detail';
 import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
 
 const Routing = createStackNavigator(
@@ -69,6 +70,9 @@ const Routing = createStackNavigator(
     },
     PaySomeone: {
       screen: Pay,
+    },
+    AccountDetail: {
+      screen: AccountDetail,
     },
   },
   {

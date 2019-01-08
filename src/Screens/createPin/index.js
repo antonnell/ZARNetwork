@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import {
   Alert,
   View,
-  // Text,
+  Text,
   Dimensions,
   StatusBar,
-  // TouchableHighlight,
+  TouchableHighlight,
   ScrollView,
 } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -30,6 +30,7 @@ class CreatePin extends Component {
       pinCode: '',
       confirmPinCode: '',
       isClicked: false,
+      //  userFingerPrint:false,
     };
     this.handleUserRegister = this.handleUserRegister.bind(this);
     TouchID.isSupported()
@@ -66,8 +67,6 @@ class CreatePin extends Component {
       email !== '' &&
       password &&
       password !== '' &&
-      pin &&
-      pin !== '' &&
       mobileNumber &&
       mobileNumber !== ''
     ) {
@@ -84,6 +83,7 @@ class CreatePin extends Component {
       if (register) {
         register(payload)
           .then(result => {
+            console.log('Result', result);
             this.setState({
               isLoading: false,
             });
@@ -156,7 +156,20 @@ class CreatePin extends Component {
     };
     TouchID.authenticate('to demo this react-native component', optionalConfigObject)
       .then(() => {
-        Alert.alert('Authenticated Successfully');
+        const { pinCode } = this.state;
+        const { navigation } = this.props;
+        console.log(navigation.state.params.emailId);
+        const userEmailId = navigation.state.params.emailId;
+        const userPasssword = navigation.state.params.password;
+        const userPhoneNumber = navigation.state.params.phoneNumber;
+        const userFingerPrint = true;
+        this.handleUserRegister(
+          userEmailId,
+          userPasssword,
+          userPhoneNumber,
+          pinCode,
+          userFingerPrint
+        );
       })
       .catch(() => {
         Alert.alert('Authentication Failed');
@@ -201,7 +214,17 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return (
+    return isTouchId ? (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <TouchableHighlight
+          style={{ width: 200, alignSelf: 'center' }}
+          underlayColor="#ffffff"
+          onPress={this._pressHandler}
+        >
+          <Text style={{ textAlign: 'center' }}>Authenticate with Touch ID</Text>
+        </TouchableHighlight>
+      </View>
+    ) : (
       <View style={styles.Container}>
         <StatusBar barStyle="light-content" backgroundColor="black" />
         <TitleHeader title="CREATE PIN" />
