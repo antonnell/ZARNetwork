@@ -1,7 +1,5 @@
-import { Dimensions } from 'react-native';
+import { deviceWidth, deviceHeight } from '../../common/constants';
 
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
 const style = {
   imageBackground: {
     width: deviceWidth,

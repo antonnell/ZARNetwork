@@ -18,6 +18,7 @@ import Pay from './src/Screens/pay/index';
 import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
 import ViewBeneficiaryList from './src/Screens/pay/allBeneficiaryList';
 import LaunchScreen from './src/Screens/launchScreen';
+import TermsConditions from './src/Screens/termsConditions';
 
 const Routing = createStackNavigator(
   {
@@ -77,6 +78,9 @@ const Routing = createStackNavigator(
     },
     LaunchScreen: {
       screen: LaunchScreen,
+    },
+    TermsConditions: {
+      screen: TermsConditions,
     },
   },
   {

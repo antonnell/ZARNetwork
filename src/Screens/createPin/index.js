@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import {
   Alert,
   View,
-  // Text,
+  Text,
   Dimensions,
   StatusBar,
+  TouchableOpacity,
   // TouchableHighlight,
   ScrollView,
 } from 'react-native';
@@ -229,6 +230,12 @@ class CreatePin extends Component {
               callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
             />
           </View>
+          <TouchableOpacity
+            style={{ marginTop: deviceHeight * 0.03 }}
+            onPress={() => navigation.navigate('TermsConditions')}
+          >
+            <Text style={styles.textStyle}>Terms & Conditions</Text>
+          </TouchableOpacity>
           <View style={{ height: deviceHeight * 0.08 }} />
         </ScrollView>
 
