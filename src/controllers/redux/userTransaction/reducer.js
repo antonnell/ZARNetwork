@@ -1,5 +1,4 @@
 import { TRANSACTION_DETAIL, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
   transactions: [],
@@ -13,13 +12,12 @@ const getFormattedTxnData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const transactionData = decryptPayload(data.message);
-        if (transactionData.status === 'success' && transactionData.payload) {
-          const { payload } = transactionData;
+      if (data.result) {
+        const transactionData = data.result;
+        if (transactionData) {
           if (state && state.transactions) {
             const updatedState = Object.assign({}, state, {
-              transactions: payload.slice(),
+              transactions: transactionData.slice(),
             });
             return updatedState;
           }

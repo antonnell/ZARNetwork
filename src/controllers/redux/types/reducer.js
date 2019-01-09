@@ -1,5 +1,4 @@
 import { SUPPORTED_ACCOUNT_TYPE, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
   types: [],
@@ -13,15 +12,14 @@ const getFormattedTypeData = (state, action) => {
     const { data } = action.payload;
 
     if (data.status === 200) {
-      if (data.message) {
-        const typeData = decryptPayload(data.message);
-        if (typeData.status === 'success' && typeData.payload) {
-          const { payload } = typeData;
+      if (data.result) {
+        const typeData = data.result;
+        if (typeData) {
           let supportedAccTypeDetail;
-          if (payload.length) {
-            supportedAccTypeDetail = payload.slice();
+          if (typeData.length) {
+            supportedAccTypeDetail = typeData.slice();
           } else {
-            supportedAccTypeDetail = payload;
+            supportedAccTypeDetail = typeData;
           }
           return Object.assign({}, state, {
             types: supportedAccTypeDetail,

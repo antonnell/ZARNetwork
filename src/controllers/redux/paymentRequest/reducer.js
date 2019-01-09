@@ -5,7 +5,6 @@ import {
   GET_MERCHANT_PAY_REQUEST,
   _SUCCESS,
 } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
   payRequests: [],
@@ -19,13 +18,12 @@ const getFormattedNewReqData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const newReqData = decryptPayload(data.message);
-        if (newReqData.status === 'success' && newReqData.payload) {
-          const { payload } = newReqData;
+      if (data.result) {
+        const newReqData = data.result;
+        if (newReqData) {
           if (state && state.payRequests) {
             const oldReqData = state.payRequests.slice();
-            oldReqData.push(payload);
+            oldReqData.push(newReqData);
             const updatedState = Object.assign({}, state, {
               payRequests: oldReqData,
             });
@@ -46,13 +44,12 @@ const getFormattedReqData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const reqData = decryptPayload(data.message);
-        if (reqData.status === 'success' && reqData.payload) {
-          const { payload } = reqData;
+      if (data.result) {
+        const reqData = data.result;
+        if (reqData) {
           if (state && state.payRequests) {
             const updatedState = Object.assign({}, state, {
-              payRequests: payload.slice(),
+              payRequests: reqData.slice(),
             });
             return updatedState;
           }

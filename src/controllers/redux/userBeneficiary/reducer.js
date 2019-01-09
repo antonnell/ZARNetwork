@@ -1,5 +1,4 @@
 import { CREATE_BENEFICIARY, BENEFICIARY_DETAIL, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
   beneficiaries: [],
@@ -13,13 +12,12 @@ const getFormattedNewBeneficiaryData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const newBeneficaryData = decryptPayload(data.message);
-        if (newBeneficaryData.status === 'success' && newBeneficaryData.payload) {
-          const { payload } = newBeneficaryData;
+      if (data.result) {
+        const newBeneficaryData = data.result;
+        if (newBeneficaryData) {
           if (state && state.beneficiaries) {
             const oldBeneficiaries = state.beneficiaries.slice();
-            oldBeneficiaries.push(payload);
+            oldBeneficiaries.push(newBeneficaryData);
             const updatedState = Object.assign({}, state, {
               beneficiaries: oldBeneficiaries,
             });
@@ -40,13 +38,12 @@ const getFormattedBeneficiaryData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const beneficiaryData = decryptPayload(data.message);
-        if (beneficiaryData.status === 'success' && beneficiaryData.payload) {
-          const { payload } = beneficiaryData;
+      if (data.result) {
+        const beneficiaryData = data.result;
+        if (beneficiaryData) {
           if (state && state.beneficiaries) {
             const updatedState = Object.assign({}, state, {
-              beneficiaries: payload.slice(),
+              beneficiaries: beneficiaryData.slice(),
             });
             return updatedState;
           }
