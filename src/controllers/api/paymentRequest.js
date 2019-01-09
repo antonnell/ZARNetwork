@@ -7,8 +7,8 @@ import {
   createMerchantRequest,
   getMerchantRequests,
 } from '../redux/paymentRequest/action';
-import { encrypt } from '../utility/encryption';
-import { REQUEST_TYPE } from '../redux/base/constants';
+// import { encrypt } from '../utility/encryption';
+// import { REQUEST_TYPE } from '../redux/base/constants';
 
 /* ******************************************************************************************* */
 /*                                      Payment requests                                       */
@@ -33,17 +33,20 @@ import { REQUEST_TYPE } from '../redux/base/constants';
  */
 export const setNewRequest = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, REQUEST_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(createRequest(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(createRequest(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, REQUEST_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(createRequest(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });
 
 /**
@@ -120,17 +123,20 @@ export const deletePayRequestDetail = payload =>
  */
 export const createMerchantPayRequest = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, REQUEST_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(createMerchantRequest(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(createMerchantRequest(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, REQUEST_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(createMerchantRequest(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });
 
 /**

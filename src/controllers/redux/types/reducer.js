@@ -26,6 +26,21 @@ const getFormattedTypeData = (state, action) => {
           });
         }
       }
+      // if (data.message) {
+      //   const typeData = decryptPayload(data.message);
+      //   if (typeData.status === 'success' && typeData.payload) {
+      //     const { payload } = typeData;
+      //     let supportedAccTypeDetail;
+      //     if (payload.length) {
+      //       supportedAccTypeDetail = payload.slice();
+      //     } else {
+      //       supportedAccTypeDetail = payload;
+      //     }
+      //     return Object.assign({}, state, {
+      //       types: supportedAccTypeDetail,
+      //     });
+      //   }
+      // }
     }
   }
   return state;
