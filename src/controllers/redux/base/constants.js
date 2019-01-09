@@ -55,8 +55,8 @@ export const REQUEST_TYPE = 'requests';
 /**
  * List of api urls.
  */
-export const registerUrl = '/v0/register';
-export const loginUrl = '/v0/login';
+export const registerUrl = '/v1/register';
+export const loginUrl = '/v1/login';
 export const supportedAccountTypeUrl = '/v1/types';
 export const statusTypeUrl = '/v1/statuses';
 

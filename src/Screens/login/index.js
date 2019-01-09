@@ -128,7 +128,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log('this.state : ', this.state);
     const { authDetail, errDetail, navigation } = this.props;
     console.log('authDetail in props : ', authDetail);
     console.log('errDetail in props : ', errDetail);
