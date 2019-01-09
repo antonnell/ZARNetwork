@@ -232,6 +232,18 @@ class HomePage extends Component {
     const { userDetail } = this.props;
     const { accountToggle } = this.state;
     let userIcon = '--';
+    let setScrollViewStyle = {
+      ...styles.renderCardContainer,
+    };
+    if (accountToggle) {
+      setScrollViewStyle = {
+        ...styles.renderCardContainer,
+        // backgroundColor: 'green',
+        // height: deviceHeight * 0.4
+        //  marginTop: deviceHeight * 0.03,
+        height: deviceHeight * 0.5,
+      };
+    }
     if (userDetail.email) {
       userIcon = getFirstCharOfString(userDetail.email);
     }
@@ -310,7 +322,7 @@ class HomePage extends Component {
                 }}
               />
             </View>
-            <View style={styles.renderCardContainer}>{this.renderCards()}</View>
+            <View style={setScrollViewStyle}>{this.renderCards()}</View>
           </View>
           <View style={{ height: deviceHeight * 0.05 }} />
         </ScrollView>
