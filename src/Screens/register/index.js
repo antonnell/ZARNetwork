@@ -84,25 +84,26 @@ export default class Register extends Component {
   }
 
   validate(type) {
-    const { email, password, confirmPassword } = this.state;
+    const { password, confirmPassword } = this.state;
     if (type === 'email') {
       this.setState({
         email: '',
       });
     } else if (type === 'password') {
-      if (email === '') {
-        // Alert.alert('Error', 'Enter Email first');
-        // this.setState({
-        //   password: '',
-        // });
-      }
+      // if (email === '') {
+      //   Alert.alert('Error', 'Enter Email first');
+      //   this.setState({
+      //     password: '',
+      //   });
+      // }
     } else if (type === 'confirmPassword') {
-      if (email === '') {
-        // Alert.alert('Error', 'Enter Email first');
-        // this.setState({
-        //   confirmPassword: '',
-        // });
-      } else if (password === '') {
+      // if (email === '') {
+      //   Alert.alert('Error', 'Enter Email first');
+      //   this.setState({
+      //     confirmPassword: '',
+      //   });
+      // } else
+      if (password === '') {
         Alert.alert('Error', 'Enter Password first');
         this.setState({ confirmPassword: '' });
       } else if (password !== confirmPassword) {
@@ -268,6 +269,7 @@ export default class Register extends Component {
               placeholder="Confirm Password"
               autoCorrect={false}
               value={confirmPassword}
+              passwordValue={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}

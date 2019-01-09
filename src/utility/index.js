@@ -117,3 +117,17 @@ export function isValidName(availableList, name, listType) {
   }
   return true;
 }
+
+/**
+ * @param {string} email : Value to be tested for validity.
+ */
+export function isEmailValid(email) {
+  if (email && email !== '') {
+    const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,2}\w+)+$/; //eslint-disable-line
+    if (reg.test(email) === false) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+}

@@ -11,6 +11,7 @@ import TitleHeader from '../../common/TitleHeader';
 import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/FloatLabelTextField';
 import Loader from '../../common/Loader';
+import { isEmailValid } from '../../utility/index';
 /**
  * Component to call login api.
  */
@@ -38,13 +39,11 @@ class Login extends Component {
   }
 
   validate(type) {
-    const { email } = this.state;
     if (type === 'email') {
       this.setState({
         email: '',
       });
-    } else if (type === 'password' && email === '') {
-      // Alert.alert('Error', 'Enter Email first');
+    } else if (type === 'password') {
       this.setState({
         password: '',
       });
@@ -133,7 +132,7 @@ class Login extends Component {
     console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
     let isClickable = false;
-    if (email !== '' && password !== '') {
+    if (email && email !== '' && password && password !== '' && isEmailValid(email) === true) {
       isClickable = true;
     }
     return (
