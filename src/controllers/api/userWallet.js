@@ -1,7 +1,7 @@
 import { dispatch } from '../../store';
 import { createWallet, getWallet } from '../redux/userWallet/action';
-import { encrypt } from '../utility/encryption';
-import { WALLET_TYPE } from '../redux/base/constants';
+// import { encrypt } from '../utility/encryption';
+// import { WALLET_TYPE } from '../redux/base/constants';
 
 /**
  * ******************************************************************************
@@ -20,17 +20,20 @@ import { WALLET_TYPE } from '../redux/base/constants';
  */
 export const setNewWallet = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, WALLET_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(createWallet(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(createWallet(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, WALLET_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(createWallet(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });
 
 /**

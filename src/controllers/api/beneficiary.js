@@ -1,7 +1,7 @@
 import { dispatch } from '../../store';
 import { createBeneficiary, getBeneficiary } from '../redux/userBeneficiary/action';
-import { encrypt } from '../utility/encryption';
-import { BENEFICIARY_TYPE } from '../redux/base/constants';
+// import { encrypt } from '../utility/encryption';
+// import { BENEFICIARY_TYPE } from '../redux/base/constants';
 
 /**
  * ****************************************************************************************
@@ -22,17 +22,20 @@ import { BENEFICIARY_TYPE } from '../redux/base/constants';
  */
 export const setNewBeneficiary = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, BENEFICIARY_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(createBeneficiary(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(createBeneficiary(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, BENEFICIARY_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(createBeneficiary(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });
 
 /**
