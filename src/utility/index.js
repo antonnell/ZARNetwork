@@ -1,3 +1,4 @@
+import Moment from 'moment';
 import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
 /* eslint-disable import/prefer-default-export */
 
@@ -128,6 +129,22 @@ export function isEmailValid(email) {
       return false;
     }
     return true;
+  }
+  return false;
+}
+
+/**
+ * @param {string} expiryTime : Time value to be tested for session expiry.
+ */
+export function isSessionExpires(expiryTime) {
+  if (expiryTime && expiryTime !== '' && expiryTime !== undefined) {
+    const currentTime = Moment(new Date(), 'DD.MM.YYYY')
+      .toDate()
+      .getTime();
+    if (expiryTime >= currentTime) {
+      return true;
+    }
+    return false;
   }
   return false;
 }
