@@ -12,8 +12,8 @@ export default class ProfileInfo extends Component {
       profileInfoMainViewStyle,
       circularAvatarTextStyle,
       profileInfoSubTitleStyle,
-      // profileInfoTitleStyle,
-      // titleText,
+      profileInfoTitleStyle,
+      titleText,
       subTitleText,
       circularAvatarText,
     } = this.props;
@@ -23,7 +23,7 @@ export default class ProfileInfo extends Component {
           <Text style={circularAvatarTextStyle}>{circularAvatarText}</Text>
         </View>
         <View style={{ marginTop: deviceHeight * 0.015 }}>
-          {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
+          <Text style={profileInfoTitleStyle}>{titleText}</Text>
           <Text style={profileInfoSubTitleStyle}>{subTitleText}</Text>
         </View>
       </View>

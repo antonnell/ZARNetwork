@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import styles from './styles';
-import { MaterialIconsType, MaterialCommunityIconsType } from '../constants';
+import {
+  MaterialIconsType,
+  MaterialCommunityIconsType,
+  ImageIconType,
+  EvilIconsType,
+} from '../constants';
 
 export default class TitleHeader extends Component {
   constructor(props) {
@@ -18,15 +24,26 @@ export default class TitleHeader extends Component {
     let IconType = MaterialIcons;
     if (leftIconType === MaterialCommunityIconsType) {
       IconType = MaterialCommunityIcons;
+    } else if (leftIconType === EvilIconsType) {
+      IconType = EvilIcons;
     }
 
-    if (iconName !== '' && isBackArrow) {
+    if (leftIconType === ImageIconType) {
+      if (iconName !== '' && isBackArrow) {
+        return (
+          <TouchableOpacity onPress={onBtnPress}>
+            <Image style={{ height: 20, width: 20 }} source={iconName} resizeMode="contain" />
+          </TouchableOpacity>
+        );
+      }
+    } else if (iconName !== '' && isBackArrow) {
       return (
         <TouchableOpacity onPress={onBtnPress}>
           <IconType name={iconName} size={24} style={{ fontWeight: 'bold' }} />
         </TouchableOpacity>
       );
     }
+
     return null;
   }
 
@@ -35,9 +52,18 @@ export default class TitleHeader extends Component {
     let IconType = MaterialIcons;
     if (rightIconType === MaterialCommunityIconsType) {
       IconType = MaterialCommunityIcons;
+    } else if (rightIconType === EvilIconsType) {
+      IconType = EvilIcons;
     }
-
-    if (rightIconName !== '') {
+    if (rightIconType === ImageIconType) {
+      if (rightIconName !== '') {
+        return (
+          <TouchableOpacity onPress={onRightBtnPress}>
+            <Image style={{ height: 20, width: 20 }} source={rightIconName} resizeMode="contain" />
+          </TouchableOpacity>
+        );
+      }
+    } else if (rightIconName !== '') {
       return (
         <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
           <IconType name={rightIconName} size={22} style={{ fontWeight: 'bold', marginRight: 5 }} />

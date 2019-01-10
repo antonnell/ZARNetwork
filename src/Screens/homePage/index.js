@@ -19,7 +19,7 @@ import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
-import { MaterialCommunityIconsType } from '../../common/constants';
+import { EvilIconsType } from '../../common/constants';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -34,7 +34,7 @@ class HomePage extends Component {
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
     this.renderReceive = this.renderReceive.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleOpenProfileScreen = this.handleOpenProfileScreen.bind(this);
   }
 
   componentDidMount() {
@@ -61,12 +61,12 @@ class HomePage extends Component {
   }
 
   /**
-   * @method handleLogout : To logout user.
+   * @method handleOpenProfileScreen : To open user's profile screen.
    */
-  handleLogout() {
+  handleOpenProfileScreen() {
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('StartScreen');
+      navigation.navigate('ProfileScreen');
     }
   }
 
@@ -253,9 +253,9 @@ class HomePage extends Component {
         {/* header */}
         <TitleHeader
           title="DASHBOARD"
-          rightIconName="logout"
-          onRightBtnPress={this.handleLogout}
-          rightIconType={MaterialCommunityIconsType}
+          rightIconName="user"
+          onRightBtnPress={this.handleOpenProfileScreen}
+          rightIconType={EvilIconsType}
         />
 
         <ScrollView

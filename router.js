@@ -20,6 +20,7 @@ import PaymentSuccess from './src/Screens/pay/paymentSuccess/index';
 import ViewBeneficiaryList from './src/Screens/pay/allBeneficiaryList';
 import LaunchScreen from './src/Screens/launchScreen';
 import TermsConditions from './src/Screens/termsConditions';
+import ProfileScreen from './src/Screens/profileScreen';
 
 const Routing = createStackNavigator(
   {
@@ -28,6 +29,9 @@ const Routing = createStackNavigator(
     },
     Home: {
       screen: Home,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
     },
     Phone: {
       screen: Phone,
@@ -67,6 +71,9 @@ const Routing = createStackNavigator(
     },
     StartScreen: {
       screen: StartScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
     },
     QRScanner: {
       screen: QRScanner,
@@ -85,6 +92,9 @@ const Routing = createStackNavigator(
     },
     TermsConditions: {
       screen: TermsConditions,
+    },
+    ProfileScreen: {
+      screen: ProfileScreen,
     },
   },
   {

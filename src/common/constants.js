@@ -11,3 +11,5 @@ export const BENEFICIARY_TYPE_LIST = 'BENEFICIARY_TYPE_LIST';
 /* Icon Types */
 export const MaterialIconsType = 'MaterialIconsType';
 export const MaterialCommunityIconsType = 'MaterialCommunityIconsType';
+export const ImageIconType = 'ImageIconType';
+export const EvilIconsType = 'EvilIconsType';
