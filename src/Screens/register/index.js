@@ -96,6 +96,10 @@ export default class Register extends Component {
       //     password: '',
       //   });
       // }
+      if (password === '') {
+        // Alert.alert('Error', 'Enter Password first.');
+        this.setState({ confirmPassword: '' });
+      }
     } else if (type === 'confirmPassword') {
       // if (email === '') {
       //   Alert.alert('Error', 'Enter Email first');
@@ -104,10 +108,10 @@ export default class Register extends Component {
       //   });
       // } else
       if (password === '') {
-        Alert.alert('Error', 'Enter Password first');
+        Alert.alert('Error', 'Enter Password first.');
         this.setState({ confirmPassword: '' });
-      } else if (password !== confirmPassword) {
-        Alert.alert('Error', 'Password does not match..');
+      } else if (confirmPassword !== '' && password !== confirmPassword) {
+        Alert.alert('Error', 'Password does not matched.');
         this.setState({
           confirmPassword: '',
         });

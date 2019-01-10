@@ -27,6 +27,9 @@ import styles from './styles';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
+/**
+ * @class FloatingLabel : For label floating with text input.
+ */
 class FloatingLabel extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +82,9 @@ class FloatingLabel extends Component {
   }
 }
 
-// eslint-disable-next-line react/no-multi-comp
+/**
+ * @class TextFieldHolder : For wrapper of text input.
+ */
 class TextFieldHolder extends Component {
   constructor(props) {
     super(props);
@@ -103,6 +108,9 @@ class TextFieldHolder extends Component {
   }
 }
 
+/**
+ * @class FloatLabelTextField : Generic component for text inputs.
+ */
 class FloatLabelTextField extends Component {
   constructor(props) {
     super(props);
@@ -116,6 +124,7 @@ class FloatLabelTextField extends Component {
       email: '',
       accountNumber: '',
     };
+
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
     this.checkType = this.checkType.bind(this);
     this.errorDisplay = this.errorDisplay.bind(this);
@@ -358,6 +367,95 @@ class FloatLabelTextField extends Component {
     if (!noBorder) {
       return styles.withBorder;
     }
+  }
+
+  inputFieldProp(inputType, valueType) {
+    let inputFieldSettings = {
+      keyboardType: 'default',
+    };
+    if (inputType && inputType !== '' && valueType && valueType !== '') {
+      if (inputType === 'text') {
+        inputFieldSettings = {
+          keyboardType: 'default',
+        };
+      } else if (inputType === 'number') {
+        inputFieldSettings = {
+          keyboardType: 'numeric',
+        };
+      } else if (inputType === 'email') {
+        inputFieldSettings = {
+          keyboardType: 'email',
+        };
+      } else if (inputType === 'password') {
+        inputFieldSettings = {
+          keyboardType: 'default',
+        };
+      }
+    }
+    return inputFieldSettings;
+  }
+
+  renderInputField() {
+    const { text } = this.state;
+    const {
+      placeholder,
+      autoCorrect,
+      inputBackgroundColor,
+      textFieldSize,
+      defaultValue,
+      value,
+      maxLength,
+      inputType,
+      valueType,
+    } = this.props;
+
+    const inputFieldSettings = this.inputFieldProp(inputType, valueType);
+
+    console.log('inputFieldSettings : ', inputFieldSettings);
+    return (
+      <View style={styles.container}>
+        <View style={styles.viewContainer}>
+          <View style={[styles.fieldContainer, this.withBorder()]}>
+            <FloatingLabel visible={text}>
+              <Text style={[styles.fieldLabel, this.labelStyle()]}>
+                {this.placeholderValue(placeholder)}
+              </Text>
+            </FloatingLabel>
+            <TextFieldHolder withValue={text}>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+
+                <TextInput
+                  {...this.props}
+                  ref="input"
+                  autoCorrect={autoCorrect}
+                  autoCapitalize="none"
+                  underlineColorAndroid="transparent"
+                  style={[
+                    styles.valueText,
+                    {
+                      backgroundColor: inputBackgroundColor,
+                      width: textFieldSize,
+                      backgroundColor: 'transparent',
+                    },
+                  ]}
+                  defaultValue={defaultValue}
+                  value={value}
+                  maxLength={maxLength}
+                  onFocus={() => this.setFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
+                  onChangeText={text => this.onChangeTextHandler(text, type)}
+                  placeholderTextColor="grey"
+                  keyboardType="email-address"
+                  onEndEditing={() => this.onEndEditing(text, type)}
+                />
+              </View>
+            </TextFieldHolder>
+          </View>
+        </View>
+        {/* <View style={styles.underlineStyling} /> */}
+      </View>
+    );
   }
 
   emailField() {
@@ -836,24 +934,25 @@ class FloatLabelTextField extends Component {
   checkType() {
     const { type } = this.props;
     if (type && type !== '' && type !== undefined) {
-      if (type === 'username' || type === 'email') {
-        return <View>{this.emailField()}</View>;
-      }
-      if (type === 'password' || type === 'confirmPassword') {
-        return <View>{this.passwordField()}</View>;
-      }
-      if (type === 'number') {
-        return <View>{this.mobileField()}</View>;
-      }
-      if (type === 'account') {
-        return <View>{this.accountField()}</View>;
-      }
-      if (type === 'reference') {
-        return <View>{this.refernceField()}</View>;
-      }
-      if (type === 'name') {
-        return <View>{this.nameField()}</View>;
-      }
+      return <View>{this.renderInputField()}</View>;
+      // if (type === 'username' || type === 'email') {
+      //   return <View>{this.emailField()}</View>;
+      // }
+      // if (type === 'password' || type === 'confirmPassword') {
+      //   return <View>{this.passwordField()}</View>;
+      // }
+      // if (type === 'number') {
+      //   return <View>{this.mobileField()}</View>;
+      // }
+      // if (type === 'account') {
+      //   return <View>{this.accountField()}</View>;
+      // }
+      // if (type === 'reference') {
+      //   return <View>{this.refernceField()}</View>;
+      // }
+      // if (type === 'name') {
+      //   return <View>{this.nameField()}</View>;
+      // }
     }
   }
 
