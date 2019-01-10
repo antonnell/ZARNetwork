@@ -137,28 +137,21 @@ class FloatLabelTextField extends Component {
     //   updateForm(value, type);
     //   setTimeout(() => this.validate(value, type), 5);
     // }
-    this.validate(value, type);
+
+    /////////
+   // this.validate(value, type);
   }
 
   onChangeTextHandler(value, type) {
     const { email, updateForm } = this.props;
     if (type === 'password') {
-      if (email === '') {
-        updateForm(value, type);
-        setTimeout(() => this.validate(value, type), 10);
-        this.setState({
-          text: value,
-          error: '',
-        });
-      } else {
         updateForm(value, type);
         this.setState({
           text: value,
           error: '',
         });
-      }
     }
-
+   
     if (type === 'number') {
       this.setState({
         text: value,
@@ -217,17 +210,17 @@ class FloatLabelTextField extends Component {
     });
   }
 
-  setShowPassword() {
-    const { showPassword } = this.state;
-    let passwordIconName = 'visibility-off';
-    if (!showPassword) {
-      passwordIconName = 'visibility';
-    }
-    this.setState({
-      passwordIcon: passwordIconName,
-      showPassword: !showPassword,
-    });
-  }
+  // setShowPassword() {
+  //   const { showPassword } = this.state;
+  //   let passwordIconName = 'visibility-off';
+  //   if (!showPassword) {
+  //     passwordIconName = 'visibility';
+  //   }
+  //   this.setState({
+  //     passwordIcon: passwordIconName,
+  //     showPassword: !showPassword,
+  //   });
+  // }
 
   clearState() {
     this.setState({
@@ -235,46 +228,89 @@ class FloatLabelTextField extends Component {
       error: '',
     });
   }
+  // validateValues(value, type) {
+  //   const { email, text, accountNumber } = this.state;
+  //   if (type === 'email') {
+  //     if (email !== '' && email !== undefined) {
+  //       if (isEmailValid(email) === false) {
+  //         Alert.alert('Error', 'Invalid Email');
+  //         validate(type);
+  //         this.setState({
+  //           text: '',
+  //           email: '',
+  //         });
+  //       }
+  //     }
+  //   } 
+  // }
 
   onBlurTextInput(value, type) {
+    const { validateFields, checkEmptyFields } = this.props
     this.unsetFocus();
-    if (type === 'email' && value === '') {
-      this.setState({
-        text: '',
-        email: '',
-      });
+    if (type === 'email') {
+      if (value === '') {
+        checkEmptyFields(type);
+        this.setState({
+          text: '',
+        });
+      } else {
+         validateFields(type);
+         this.setState({
+           text: '',
+         })
+      }
     } else if (type === 'username' && value === '') {
       this.setState({
         text: '',
       });
-    } else if (type === 'confirmPassword' && value === '') {
+    } else if (type === 'confirmPassword') {
+      if(value === '') {
+        checkEmptyFields(type);
       this.setState({
         text: '',
       });
+      } else {
+        validateFields(type);
+        this.setState({
+          text: '',
+        })
+      }
     } else if (type === 'password' && value === '') {
+      checkEmptyFields(type);
       this.setState({
         text: '',
       });
     } else if (type === 'number' && value === '') {
+      checkEmptyFields(type);
       this.setState({
         text: '',
       });
     } else if (type === 'reference' && value === '') {
+      checkEmptyFields(type);
       this.setState({
         text: '',
       });
-    } else if (type === 'account' && value === '') {
+    } else if (type === 'account') {
+      if(value === '') {
+        checkEmptyFields(type);
       this.setState({
         text: '',
-        accountNumber: '',
       });
+      } else {
+        validateFields(type);
+        this.setState({
+          text: '',
+        })
+      }
     } else if (type === 'name' && value === '') {
+      checkEmptyFields(type);
       this.setState({
         text: '',
       });
     }
   }
 
+  //Delete this validate method after removing this from all other components
   validate(value, type) {
     const { email, text, accountNumber } = this.state;
     const { validate } = this.props;
@@ -372,23 +408,28 @@ class FloatLabelTextField extends Component {
   inputFieldProp(inputType, valueType) {
     let inputFieldSettings = {
       keyboardType: 'default',
+      secureTextEntry: false,
     };
     if (inputType && inputType !== '' && valueType && valueType !== '') {
       if (inputType === 'text') {
         inputFieldSettings = {
           keyboardType: 'default',
+          secureTextEntry: false,
         };
       } else if (inputType === 'number') {
         inputFieldSettings = {
           keyboardType: 'numeric',
+          secureTextEntry: false,
         };
       } else if (inputType === 'email') {
         inputFieldSettings = {
-          keyboardType: 'email',
+          keyboardType: 'email-address',
+          secureTextEntry: false,
         };
       } else if (inputType === 'password') {
         inputFieldSettings = {
           keyboardType: 'default',
+          secureTextEntry: true,
         };
       }
     }
@@ -404,6 +445,7 @@ class FloatLabelTextField extends Component {
       textFieldSize,
       defaultValue,
       value,
+      type,
       maxLength,
       inputType,
       valueType,
@@ -446,7 +488,8 @@ class FloatLabelTextField extends Component {
                   onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
-                  keyboardType="email-address"
+                  keyboardType={inputFieldSettings.keyboardType}
+                  secureTextEntry={inputFieldSettings.secureTextEntry}
                   onEndEditing={() => this.onEndEditing(text, type)}
                 />
               </View>
@@ -458,121 +501,121 @@ class FloatLabelTextField extends Component {
     );
   }
 
-  emailField() {
-    const { text } = this.state;
-    const {
-      placeholder,
-      autoCorrect,
-      inputBackgroundColor,
-      textFieldSize,
-      defaultValue,
-      value,
-      maxLength,
-      type,
-    } = this.props;
-    return (
-      <View style={styles.container}>
-        <View style={styles.viewContainer}>
-          <View style={[styles.fieldContainer, this.withBorder()]}>
-            <FloatingLabel visible={text}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>
-                {this.placeholderValue(placeholder)}
-              </Text>
-            </FloatingLabel>
-            <TextFieldHolder withValue={text}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+  // emailField() {
+  //   const { text } = this.state;
+  //   const {
+  //     placeholder,
+  //     autoCorrect,
+  //     inputBackgroundColor,
+  //     textFieldSize,
+  //     defaultValue,
+  //     value,
+  //     maxLength,
+  //     type,
+  //   } = this.props;
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.viewContainer}>
+  //         <View style={[styles.fieldContainer, this.withBorder()]}>
+  //           <FloatingLabel visible={text}>
+  //             <Text style={[styles.fieldLabel, this.labelStyle()]}>
+  //               {this.placeholderValue(placeholder)}
+  //             </Text>
+  //           </FloatingLabel>
+  //           <TextFieldHolder withValue={text}>
+  //             <View style={{ flexDirection: 'row' }}>
+  //               <View style={styles.iconStyle}>{this.iconDisplay()}</View>
 
-                <TextInput
-                  {...this.props}
-                  ref="input"
-                  autoCorrect={autoCorrect}
-                  autoCapitalize="none"
-                  underlineColorAndroid="transparent"
-                  style={[
-                    styles.valueText,
-                    {
-                      backgroundColor: inputBackgroundColor,
-                      width: textFieldSize,
-                      backgroundColor: 'transparent',
-                    },
-                  ]}
-                  defaultValue={defaultValue}
-                  value={value}
-                  maxLength={maxLength}
-                  onFocus={() => this.setFocus()}
-                  onBlur={() => this.onBlurTextInput(value, type)}
-                  onChangeText={text => this.onChangeTextHandler(text, type)}
-                  placeholderTextColor="grey"
-                  keyboardType="email-address"
-                  onEndEditing={() => this.onEndEditing(text, type)}
-                />
-              </View>
-            </TextFieldHolder>
-          </View>
-        </View>
-        {/* <View style={styles.underlineStyling} /> */}
-      </View>
-    );
-  }
+  //               <TextInput
+  //                 {...this.props}
+  //                 ref="input"
+  //                 autoCorrect={autoCorrect}
+  //                 autoCapitalize="none"
+  //                 underlineColorAndroid="transparent"
+  //                 style={[
+  //                   styles.valueText,
+  //                   {
+  //                     backgroundColor: inputBackgroundColor,
+  //                     width: textFieldSize,
+  //                     backgroundColor: 'transparent',
+  //                   },
+  //                 ]}
+  //                 defaultValue={defaultValue}
+  //                 value={value}
+  //                 maxLength={maxLength}
+  //                 onFocus={() => this.setFocus()}
+  //                 onBlur={() => this.onBlurTextInput(value, type)}
+  //                 onChangeText={text => this.onChangeTextHandler(text, type)}
+  //                 placeholderTextColor="grey"
+  //                 keyboardType="email-address"
+  //                 onEndEditing={() => this.onEndEditing(text, type)}
+  //               />
+  //             </View>
+  //           </TextFieldHolder>
+  //         </View>
+  //       </View>
+  //       {/* <View style={styles.underlineStyling} /> */}
+  //     </View>
+  //   );
+  // }
 
-  nameField() {
-    const { text } = this.state;
-    const {
-      placeholder,
-      autoCorrect,
-      inputBackgroundColor,
-      textFieldSize,
-      defaultValue,
-      value,
-      maxLength,
-      type,
-    } = this.props;
-    return (
-      <View style={styles.container}>
-        <View style={styles.viewContainer}>
-          <View style={[styles.fieldContainer, this.withBorder()]}>
-            <FloatingLabel visible={text}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>
-                {this.placeholderValue(placeholder)}
-              </Text>
-            </FloatingLabel>
-            <TextFieldHolder withValue={text}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+  // nameField() {
+  //   const { text } = this.state;
+  //   const {
+  //     placeholder,
+  //     autoCorrect,
+  //     inputBackgroundColor,
+  //     textFieldSize,
+  //     defaultValue,
+  //     value,
+  //     maxLength,
+  //     type,
+  //   } = this.props;
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.viewContainer}>
+  //         <View style={[styles.fieldContainer, this.withBorder()]}>
+  //           <FloatingLabel visible={text}>
+  //             <Text style={[styles.fieldLabel, this.labelStyle()]}>
+  //               {this.placeholderValue(placeholder)}
+  //             </Text>
+  //           </FloatingLabel>
+  //           <TextFieldHolder withValue={text}>
+  //             <View style={{ flexDirection: 'row' }}>
+  //               <View style={styles.iconStyle}>{this.iconDisplay()}</View>
 
-                <TextInput
-                  {...this.props}
-                  ref="input"
-                  autoCorrect={autoCorrect}
-                  autoCapitalize="none"
-                  underlineColorAndroid="transparent"
-                  style={[
-                    styles.valueText,
-                    {
-                      backgroundColor: inputBackgroundColor,
-                      width: textFieldSize,
-                      backgroundColor: 'transparent',
-                    },
-                  ]}
-                  defaultValue={defaultValue}
-                  value={value}
-                  maxLength={maxLength}
-                  onFocus={() => this.setFocus()}
-                  onBlur={() => this.onBlurTextInput(value, type)}
-                  onChangeText={text1 => this.onChangeTextHandler(text1, type)}
-                  placeholderTextColor="grey"
-                  keyboardType="default"
-                  onEndEditing={() => this.onEndEditing(text, type)}
-                />
-              </View>
-            </TextFieldHolder>
-          </View>
-        </View>
-        {/* <View style={styles.underlineStyling} /> */}
-      </View>
-    );
-  }
+  //               <TextInput
+  //                 {...this.props}
+  //                 ref="input"
+  //                 autoCorrect={autoCorrect}
+  //                 autoCapitalize="none"
+  //                 underlineColorAndroid="transparent"
+  //                 style={[
+  //                   styles.valueText,
+  //                   {
+  //                     backgroundColor: inputBackgroundColor,
+  //                     width: textFieldSize,
+  //                     backgroundColor: 'transparent',
+  //                   },
+  //                 ]}
+  //                 defaultValue={defaultValue}
+  //                 value={value}
+  //                 maxLength={maxLength}
+  //                 onFocus={() => this.setFocus()}
+  //                 onBlur={() => this.onBlurTextInput(value, type)}
+  //                 onChangeText={text1 => this.onChangeTextHandler(text1, type)}
+  //                 placeholderTextColor="grey"
+  //                 keyboardType="default"
+  //                 onEndEditing={() => this.onEndEditing(text, type)}
+  //               />
+  //             </View>
+  //           </TextFieldHolder>
+  //         </View>
+  //       </View>
+  //       {/* <View style={styles.underlineStyling} /> */}
+  //     </View>
+  //   );
+  // }
 
   iconDisplay() {
     const { type, imageType } = this.props;
@@ -673,136 +716,136 @@ class FloatLabelTextField extends Component {
     }
   }
 
-  mobileField() {
-    const { text } = this.state;
-    const {
-      placeholder,
-      autoCorrect,
-      inputBackgroundColor,
-      textFieldSize,
-      defaultValue,
-      value,
-      maxLength,
-      type,
-      imageType,
-    } = this.props;
-    let keyboardType = 'phone-pad';
-    if (imageType && imageType === 'amount') {
-      keyboardType = 'numeric';
-    }
+  // mobileField() {
+  //   const { text } = this.state;
+  //   const {
+  //     placeholder,
+  //     autoCorrect,
+  //     inputBackgroundColor,
+  //     textFieldSize,
+  //     defaultValue,
+  //     value,
+  //     maxLength,
+  //     type,
+  //     imageType,
+  //   } = this.props;
+  //   let keyboardType = 'phone-pad';
+  //   if (imageType && imageType === 'amount') {
+  //     keyboardType = 'numeric';
+  //   }
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.viewContainer}>
-          <View style={[styles.fieldContainer, this.withBorder()]}>
-            <FloatingLabel visible={text}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>
-                {this.placeholderValue(placeholder)}
-              </Text>
-            </FloatingLabel>
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.viewContainer}>
+  //         <View style={[styles.fieldContainer, this.withBorder()]}>
+  //           <FloatingLabel visible={text}>
+  //             <Text style={[styles.fieldLabel, this.labelStyle()]}>
+  //               {this.placeholderValue(placeholder)}
+  //             </Text>
+  //           </FloatingLabel>
 
-            <TextFieldHolder withValue={text}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
-                <TextInput
-                  {...this.props}
-                  ref="input"
-                  autoCorrect={autoCorrect}
-                  underlineColorAndroid="transparent"
-                  style={[
-                    styles.valueText,
-                    {
-                      backgroundColor: inputBackgroundColor,
-                      width: textFieldSize,
-                      backgroundColor: 'transparent',
-                    },
-                  ]}
-                  keyboardType={keyboardType}
-                  defaultValue={defaultValue}
-                  value={value}
-                  maxLength={maxLength}
-                  onFocus={() => this.setFocus()}
-                  onBlur={() => this.onBlurTextInput(value, type)}
-                  onChangeText={text => this.onChangeTextHandler(text, type)}
-                  placeholderTextColor="grey"
-                  autoCapitalize="none"
-                />
-              </View>
-            </TextFieldHolder>
-          </View>
-        </View>
-        {/* <View style={styles.underlineStyling} /> */}
-      </View>
-    );
-  }
+  //           <TextFieldHolder withValue={text}>
+  //             <View style={{ flexDirection: 'row' }}>
+  //               <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+  //               <TextInput
+  //                 {...this.props}
+  //                 ref="input"
+  //                 autoCorrect={autoCorrect}
+  //                 underlineColorAndroid="transparent"
+  //                 style={[
+  //                   styles.valueText,
+  //                   {
+  //                     backgroundColor: inputBackgroundColor,
+  //                     width: textFieldSize,
+  //                     backgroundColor: 'transparent',
+  //                   },
+  //                 ]}
+  //                 keyboardType={keyboardType}
+  //                 defaultValue={defaultValue}
+  //                 value={value}
+  //                 maxLength={maxLength}
+  //                 onFocus={() => this.setFocus()}
+  //                 onBlur={() => this.onBlurTextInput(value, type)}
+  //                 onChangeText={text => this.onChangeTextHandler(text, type)}
+  //                 placeholderTextColor="grey"
+  //                 autoCapitalize="none"
+  //               />
+  //             </View>
+  //           </TextFieldHolder>
+  //         </View>
+  //       </View>
+  //       {/* <View style={styles.underlineStyling} /> */}
+  //     </View>
+  //   );
+  // }
 
-  passwordField() {
-    const { text, passwordIcon, showPassword } = this.state;
-    const {
-      placeholder,
-      autoCorrect,
-      inputBackgroundColor,
-      textFieldSize,
-      defaultValue,
-      value,
-      maxLength,
-      type,
-    } = this.props;
-    return (
-      <View style={styles.container}>
-        <View style={styles.viewContainer}>
-          <View style={[styles.fieldContainer, this.withBorder()]}>
-            <FloatingLabel visible={text}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>
-                {this.placeholderValue(placeholder)}
-              </Text>
-            </FloatingLabel>
+  // passwordField() {
+  //   const { text, passwordIcon, showPassword } = this.state;
+  //   const {
+  //     placeholder,
+  //     autoCorrect,
+  //     inputBackgroundColor,
+  //     textFieldSize,
+  //     defaultValue,
+  //     value,
+  //     maxLength,
+  //     type,
+  //   } = this.props;
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.viewContainer}>
+  //         <View style={[styles.fieldContainer, this.withBorder()]}>
+  //           <FloatingLabel visible={text}>
+  //             <Text style={[styles.fieldLabel, this.labelStyle()]}>
+  //               {this.placeholderValue(placeholder)}
+  //             </Text>
+  //           </FloatingLabel>
 
-            <TextFieldHolder withValue={text}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
-                <TextInput
-                  {...this.props}
-                  ref="input"
-                  autoCorrect={autoCorrect}
-                  underlineColorAndroid="transparent"
-                  style={[
-                    styles.valueText,
-                    {
-                      backgroundColor: inputBackgroundColor,
-                      width: textFieldSize,
-                      backgroundColor: 'transparent',
-                    },
-                  ]}
-                  defaultValue={defaultValue}
-                  value={value}
-                  maxLength={maxLength}
-                  onFocus={() => this.setFocus()}
-                  onBlur={() => this.onBlurTextInput(value, type)}
-                  onChangeText={text => this.onChangeTextHandler(text, type)}
-                  placeholderTextColor="grey"
-                  keyboardType="default"
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  onEndEditing={() => this.onEndEditing(value, type)}
-                />
-                {/* <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
-                  <Image
-                    source={Password}
-                    resizeMode="contain"
-                    style={{
-                      height: deviceHeight * 0.03,
-                    }}
-                  />
-                </TouchableOpacity> */}
-              </View>
-            </TextFieldHolder>
-          </View>
-        </View>
-        {/* <View style={styles.underlineStyling} /> */}
-      </View>
-    );
-  }
+  //           <TextFieldHolder withValue={text}>
+  //             <View style={{ flexDirection: 'row' }}>
+  //               <View style={styles.iconStyle}>{this.iconDisplay()}</View>
+  //               <TextInput
+  //                 {...this.props}
+  //                 ref="input"
+  //                 autoCorrect={autoCorrect}
+  //                 underlineColorAndroid="transparent"
+  //                 style={[
+  //                   styles.valueText,
+  //                   {
+  //                     backgroundColor: inputBackgroundColor,
+  //                     width: textFieldSize,
+  //                     backgroundColor: 'transparent',
+  //                   },
+  //                 ]}
+  //                 defaultValue={defaultValue}
+  //                 value={value}
+  //                 maxLength={maxLength}
+  //                 onFocus={() => this.setFocus()}
+  //                 onBlur={() => this.onBlurTextInput(value, type)}
+  //                 onChangeText={text => this.onChangeTextHandler(text, type)}
+  //                 placeholderTextColor="grey"
+  //                 keyboardType="default"
+  //                 secureTextEntry={!showPassword}
+  //                 autoCapitalize="none"
+  //                 onEndEditing={() => this.onEndEditing(value, type)}
+  //               />
+  //               {/* <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
+  //                 <Image
+  //                   source={Password}
+  //                   resizeMode="contain"
+  //                   style={{
+  //                     height: deviceHeight * 0.03,
+  //                   }}
+  //                 />
+  //               </TouchableOpacity> */}
+  //             </View>
+  //           </TextFieldHolder>
+  //         </View>
+  //       </View>
+  //       {/* <View style={styles.underlineStyling} /> */}
+  //     </View>
+  //   );
+  // }
 
   accountField() {
     const { text } = this.state;

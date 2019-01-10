@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { View, StatusBar, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import FloatLabelTextField from '../../../common/FloatLabelTextField';
+// import FloatLabelTextField from '../../../common/FloatLabelTextField';
+import Web3 from 'web3';
+import FloatLabelTextField from '../../../common/updatedFloatLabel';
+
 import DesignButton from '../../../common/Button';
 import TitleCard from '../../../common/titleCard';
 import TitleHeader from '../../../common/TitleHeader';
@@ -66,21 +69,47 @@ class BeneficiaryDetails extends Component {
     this.setState({ [type]: value });
   }
 
-  validate(type) {
-    if (type === 'name') {
-      this.setState({
-        name: '',
-      });
-    }
+  // validate(type) {
+  //   if (type === 'name') {
+  //     this.setState({
+  //       name: '',
+  //     });
+  //   }
+  //   if (type === 'account') {
+  //     this.setState({
+  //       accountNumber: '',
+  //     });
+  //   }
+  //   if (type === 'reference') {
+  //     this.setState({
+  //       reference: '',
+  //     });
+  //   }
+  // }
+  validateFields(type) {
+    const { accountNumber } = this.state;
     if (type === 'account') {
-      this.setState({
-        accountNumber: '',
-      });
+      if (accountNumber !== '' && !Web3.utils.isAddress(accountNumber)) {
+        Alert.alert('Error', 'Please enter valid account number.');
+        this.setState({
+          accountNumber: '',
+        });
+      }
     }
-    if (type === 'reference') {
-      this.setState({
-        reference: '',
-      });
+  }
+
+  checkEmptyFields(type) {
+    const { name, accountNumber } = this.state;
+    if (type === 'name') {
+      Alert.alert('Error', 'Enter name!');
+    } else if (type === 'account') {
+      if (name !== '') {
+        Alert.alert('Error', 'Enter account number!');
+      }
+    } else if (type === 'reference') {
+      if (accountNumber !== '') {
+        Alert.alert('Error', 'Enter reference!');
+      }
     }
   }
 
@@ -283,7 +312,9 @@ class BeneficiaryDetails extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
+            // validate={type => this.validate(type)}
+            validateFields={type => this.validateFields(type)}
+            checkEmptyFields={type => this.checkEmptyFields(type)}
           />
 
           <FloatLabelTextField
@@ -294,12 +325,14 @@ class BeneficiaryDetails extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={isShowRightText ? deviceWidth * 0.42 : deviceWidth * 0.73}
-            validate={type => this.validate(type)}
+            // validate={type => this.validate(type)}
             isShowRightText={isShowRightText}
             rightTextStyle={styles.rightTextStyle}
             rightTextValue="Scan QR Code"
             rightTextValueStyle={styles.rightTextValueStyle}
             onPressRightBtn={this.openScanner}
+            validateFields={type => this.validateFields(type)}
+            checkEmptyFields={type => this.checkEmptyFields(type)}
           />
           <FloatLabelTextField
             type="reference"
@@ -309,7 +342,9 @@ class BeneficiaryDetails extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
+            // validate={type => this.validate(type)}
+            validateFields={type => this.validateFields(type)}
+            checkEmptyFields={type => this.checkEmptyFields(type)}
           />
         </View>
         <View style={{ marginTop: deviceHeight * 0.05, alignSelf: 'center' }}>

@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 import walletImg from '../../images/wallet.png';
 import ListCard from '../../common/ListCard';
-import FloatLabelTextField from '../../common/FloatLabelTextField';
+// import FloatLabelTextField from '../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../common/updatedFloatLabel';
+
 import DesignButton from '../../common/Button';
 import TitleText from '../../common/TitleText';
 import { setNewWallet } from '../../controllers/api/userWallet';
@@ -48,6 +50,12 @@ class CreateWallet extends Component {
     this.handleGoBack = this.handleGoBack.bind(this);
   }
 
+  checkEmptyFields = type => {
+    if (type === 'name') {
+      Alert.alert('Error', 'Enter account name!');
+    }
+  };
+
   toggleAccountTypeList() {
     const { openAccountList } = this.state;
     this.setState({
@@ -76,13 +84,13 @@ class CreateWallet extends Component {
     this.setState({ [type]: value });
   }
 
-  validate(type) {
-    if (type === 'name') {
-      this.setState({
-        name: '',
-      });
-    }
-  }
+  // validate(type) {
+  //   if (type === 'name') {
+  //     this.setState({
+  //       name: '',
+  //     });
+  //   }
+  // }
 
   /**
    * @method handleCreateAccount : To create new wallet account.
@@ -224,7 +232,9 @@ class CreateWallet extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
+              // validate={type => this.validate(type)}
+              // validateFields={type=>this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
 

@@ -1,6 +1,6 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -8,7 +8,9 @@ import styles from './styles';
 // components
 import ToggleCard from '../../../common/ToggleCard';
 import Button from '../../../common/Button';
-import FloatLabelTextField from '../../../common/FloatLabelTextField';
+// import FloatLabelTextField from '../../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../../common/updatedFloatLabel';
+
 import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
@@ -91,18 +93,18 @@ class PayBeneficiary extends Component {
     });
   }
 
-  validate(type) {
-    if (type === 'number') {
-      // this.setState({
-      //   number: '',
-      // });
-    }
-    if (type === 'reference') {
-      this.setState({
-        reference: '',
-      });
-    }
-  }
+  // validate(type) {
+  //   if (type === 'number') {
+  //     // this.setState({
+  //     //   number: '',
+  //     // });
+  //   }
+  //   if (type === 'reference') {
+  //     this.setState({
+  //       reference: '',
+  //     });
+  //   }
+  // }
 
   updateToggleValue(type) {
     const { normalPaymentToggle, futurePaymentToggle } = this.state;
@@ -142,6 +144,17 @@ class PayBeneficiary extends Component {
         balance: item.balance,
         walletType,
       });
+    }
+  }
+
+  checkEmptyFields(type) {
+    const { number } = this.state;
+    if (type === 'number') {
+      Alert.alert('Error', 'Enter amount!');
+    } else if (type === 'reference') {
+      if (number !== '') {
+        Alert.alert('Error', 'Enter reference!');
+      }
     }
   }
 
@@ -260,7 +273,9 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               imageType="amount"
-              validate={type => this.validate(type)}
+              // validate={type => this.validate(type)}
+              // validateFields={type=>this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
             <View>
               <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
@@ -276,6 +291,8 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validate={type => this.validate(type)}
+              //  validateFields={type=>this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <TitleCard

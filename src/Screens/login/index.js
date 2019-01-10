@@ -9,7 +9,8 @@ import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 // import SignIn from '../../images/SignIn.png';
 import FantomPayLogo from '../../images/FantomPay.png';
-import FloatLabelTextField from '../../common/FloatLabelTextField';
+// import FloatLabelTextField from '../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
 /**
@@ -38,15 +39,38 @@ class Login extends Component {
     this.setState({ [type]: value });
   }
 
-  validate(type) {
+  // validate(type) {
+  //   if (type === 'email') {
+  //     this.setState({
+  //       email: '',
+  //     });
+  //   } else if (type === 'password') {
+  //     this.setState({
+  //       password: '',
+  //     });
+  //   }
+  // }
+  validateFields(type) {
+    console.log('Enter!@#!@#@$!@#$%!#$%#$%@#$%#^%#$^', type);
+    const { email } = this.state;
     if (type === 'email') {
-      this.setState({
-        email: '',
-      });
+      if (email !== '' && email !== undefined) {
+        if (isEmailValid(email) === false) {
+          Alert.alert('Error', 'Invalid Email');
+        }
+      }
+    }
+  }
+
+  checkEmptyFields(type) {
+    const { email } = this.state;
+    console.log('Empty Fileds', type);
+    if (type === 'email') {
+      Alert.alert('Error', 'Enter email!');
     } else if (type === 'password') {
-      this.setState({
-        password: '',
-      });
+      if (email !== '' && isEmailValid(email)) {
+        Alert.alert('Error', 'Enter password!');
+      }
     }
   }
 
@@ -158,26 +182,34 @@ class Login extends Component {
         <View style={styles.emailTextFieldStyle}>
           <FloatLabelTextField
             type="email"
+            inputType="email"
+            valueType="email"
             placeholder="Email"
             autoCorrect={false}
             value={email}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
+            //  validate={type => this.validate(type)}
+            validateFields={type => this.validateFields(type)}
+            checkEmptyFields={type => this.checkEmptyFields(type)}
           />
         </View>
 
         <View style={styles.passwordTextFieldStyle}>
           <FloatLabelTextField
             type="password"
+            inputType="password"
+            valueType="password"
             placeholder="Password"
             autoCorrect={false}
             value={password}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
+            // validate={type => this.validate(type)}
+            validateFields={type => this.validateFields(type)}
+            checkEmptyFields={type => this.checkEmptyFields(type)}
           />
         </View>
 
