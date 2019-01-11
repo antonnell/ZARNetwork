@@ -312,6 +312,8 @@ class BeneficiaryDetails extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
+            inputType="name"
+            valueType="name"
             // validate={type => this.validate(type)}
             validateFields={type => this.validateFields(type)}
             checkEmptyFields={type => this.checkEmptyFields(type)}
@@ -320,6 +322,8 @@ class BeneficiaryDetails extends Component {
           <FloatLabelTextField
             type="account"
             placeholder="Account Number"
+            inputType="account"
+            valueType="account"
             autoCorrect={false}
             value={accountNumber}
             updateForm={this.updateForm}
@@ -336,6 +340,8 @@ class BeneficiaryDetails extends Component {
           />
           <FloatLabelTextField
             type="reference"
+            inputType="reference"
+            valueType="reference"
             placeholder="Reference"
             autoCorrect={false}
             value={reference}

@@ -225,6 +225,8 @@ class CreateWallet extends Component {
           <View style={styles.accNameViewStyle}>
             <FloatLabelTextField
               type="name"
+              inputType="name"
+              valueType="name"
               placeholder="Account Name"
               autoCorrect={false}
               value={name}

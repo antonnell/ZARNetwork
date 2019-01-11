@@ -61,9 +61,13 @@ class CreatePin extends Component {
    * ******************************************************************************
    */
   // eslint-disable-next-line react/sort-comp
-  handleUserRegister(email, password, mobileNumber, pin, fingerPrint) {
+  handleUserRegister(firstname, surname, email, password, mobileNumber, pin, fingerPrint) {
     const { navigation } = this.props;
     if (
+      firstname &&
+      firstname !== '' &&
+      surname &&
+      surname !== '' &&
       email &&
       email !== '' &&
       password &&
@@ -72,6 +76,8 @@ class CreatePin extends Component {
       mobileNumber !== ''
     ) {
       const payload = {
+        firstname,
+        surname,
         email,
         password,
         pin,
@@ -121,7 +127,9 @@ class CreatePin extends Component {
     } else {
       const { pinCode, confirmPinCode } = this.state;
       const { navigation } = this.props;
-      console.log(navigation.state.params.emailId);
+      console.log(navigation.state.params.lastName, 'Last Name!!!!');
+      const userFirstName = navigation.state.params.firstName;
+      const userLastName = navigation.state.params.lastName;
       const userEmailId = navigation.state.params.emailId;
       const userPasssword = navigation.state.params.password;
       const userPhoneNumber = navigation.state.params.phoneNumber;
@@ -131,6 +139,8 @@ class CreatePin extends Component {
           userFingerPrint = '';
         }
         this.handleUserRegister(
+          userFirstName,
+          userLastName,
           userEmailId,
           userPasssword,
           userPhoneNumber,
@@ -160,11 +170,15 @@ class CreatePin extends Component {
         const { pinCode } = this.state;
         const { navigation } = this.props;
         console.log(navigation.state.params.emailId);
+        const userFirstName = navigation.state.params.firstName;
+        const userLastName = navigation.state.params.lastName;
         const userEmailId = navigation.state.params.emailId;
         const userPasssword = navigation.state.params.password;
         const userPhoneNumber = navigation.state.params.phoneNumber;
         const userFingerPrint = true;
         this.handleUserRegister(
+          userFirstName,
+          userLastName,
           userEmailId,
           userPasssword,
           userPhoneNumber,
@@ -215,7 +229,7 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return isTouchId ? (
+    return !isTouchId ? (
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <TouchableHighlight
           style={{ width: 200, alignSelf: 'center' }}
