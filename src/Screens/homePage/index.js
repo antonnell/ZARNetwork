@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -19,10 +19,7 @@ import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
-import { EvilIconsType } from '../../common/constants';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { EvilIconsType, deviceHeight, deviceWidth } from '../../common/constants';
 
 class HomePage extends Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StatusBar, ScrollView, Alert } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -81,9 +82,16 @@ class UserProfile extends Component {
    */
   handleLogout() {
     const { navigation } = this.props;
-    if (navigation) {
-      navigation.navigate('StartScreen');
-    }
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'StartScreen',
+        }),
+      ],
+    });
+
+    navigation.dispatch(resetAction);
   }
 
   editData() {

@@ -134,7 +134,7 @@ export function isEmailValid(email) {
 }
 
 /**
- * @param {string} expiryTime : Time value to be tested for session expiry.
+ * @param {string} expiryTime : Time value to be tested for session expiry ( expiryTime is timestamp ).
  */
 export function isSessionExpires(expiryTime) {
   if (expiryTime && expiryTime !== '' && expiryTime !== undefined) {
