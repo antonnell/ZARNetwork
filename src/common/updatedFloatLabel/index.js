@@ -484,6 +484,7 @@ class FloatLabelTextField extends Component {
       maxLength,
       inputType,
       valueType,
+      editable
     } = this.props;
 
     const inputFieldSettings = this.inputFieldProp(inputType, valueType);
@@ -505,6 +506,7 @@ class FloatLabelTextField extends Component {
                 <TextInput
                   {...this.props}
                   ref="input"
+                  editable={editable}
                   autoCorrect={autoCorrect}
                   autoCapitalize="none"
                   underlineColorAndroid="transparent"

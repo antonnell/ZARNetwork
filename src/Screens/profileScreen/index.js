@@ -120,6 +120,7 @@ class UserProfile extends Component {
           >
             <FloatLabelTextField
               type="name"
+              editable={false}
               inputType="text"
               valueType="name"
               placeholder="First Name"
@@ -134,6 +135,7 @@ class UserProfile extends Component {
 
             <FloatLabelTextField
               type="name"
+              editable={false}
               inputType="text"
               valueType="name"
               placeholder="Last Name"
@@ -147,6 +149,7 @@ class UserProfile extends Component {
             />
             <FloatLabelTextField
               type="email"
+              editable={false}
               inputType="email"
               valueType="email"
               placeholder="Email"
