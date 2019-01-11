@@ -209,6 +209,13 @@ class FloatLabelTextField extends Component {
       });
       updateForm(value, type);
     }
+    if (type === 'oldpassword') {
+      this.setState({
+        text: value,
+        error: '',
+      });
+      updateForm(value, 'oldPassword');
+    }
     // if (type === 'name') {
     //   this.setState({
     //     text: value,
@@ -304,7 +311,12 @@ class FloatLabelTextField extends Component {
       this.setState({
         text: '',
       });
-    } else if (type === 'number' && value === '') {
+    } else if (type === 'oldpassword' && value === '') {
+      checkEmptyFields(type);
+      this.setState({
+        test:'',
+      });
+    }else if (type === 'number' && value === '') {
       checkEmptyFields(type);
       this.setState({
         text: '',
@@ -713,7 +725,7 @@ class FloatLabelTextField extends Component {
           </View>
         );
       }
-      if (type === 'password' || type === 'confirmPassword') {
+      if (type === 'password' || type === 'confirmPassword' || type === 'oldpassword') {
         return (
           <View>
             <Image

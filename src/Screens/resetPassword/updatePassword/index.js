@@ -17,7 +17,7 @@ class UpdatePassword extends Component {
     super(props);
     this.state = {
       oldPassword: '',
-      newPassword: '',
+      password: '',
       confirmPassword: '',
       isLoading: false,
       eightPlusCharacter: false,
@@ -48,13 +48,13 @@ class UpdatePassword extends Component {
    * ******************************************************************************
    */
   handleResetPassword() {
-    const { oldPassword, newPassword, confirmPassword } = this.state;
+    const { oldPassword, password, confirmPassword } = this.state;
 
     if (
       oldPassword &&
       oldPassword !== '' &&
-      newPassword &&
-      newPassword !== '' &&
+      password &&
+      password !== '' &&
       confirmPassword &&
       confirmPassword !== ''
     ) {
@@ -81,9 +81,9 @@ class UpdatePassword extends Component {
    * @method validateFields : To validate text input.
    */
   validateFields(type) {
-    const { newPassword, confirmPassword } = this.state;
+    const { password, confirmPassword } = this.state;
     if (type === 'confirmPassword') {
-      if (newPassword !== '' && confirmPassword !== '' && newPassword !== confirmPassword) {
+      if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
         Alert.alert('Error', 'Password does not matched.');
         this.setState({
           confirmPassword: '',
@@ -96,11 +96,15 @@ class UpdatePassword extends Component {
    * @method checkEmptyFields : To validate text input fields.
    */
   checkEmptyFields(type) {
-    const { newPassword } = this.state;
-    if (type === 'oldPassword') {
+    const { oldPassword, password } = this.state;
+    if (type === 'oldpassword') {
       Alert.alert('Error', 'Enter old password!');
+    } else if (type === 'password') {
+      if (oldPassword !== '') {
+        Alert.alert('Error', 'Enter password!');
+      }
     } else if (type === 'confirmPassword') {
-      if (newPassword !== '') {
+      if (password !== '') {
         Alert.alert('Error', 'Enter confirm password!');
       }
     }
@@ -120,7 +124,7 @@ class UpdatePassword extends Component {
   render() {
     const {
       oldPassword,
-      newPassword,
+      password,
       confirmPassword,
       eightPlusCharacter,
       moreThanOneCapital,
@@ -131,8 +135,8 @@ class UpdatePassword extends Component {
     if (
       oldPassword &&
       oldPassword !== '' &&
-      newPassword &&
-      newPassword !== '' &&
+      password &&
+      password !== '' &&
       confirmPassword &&
       confirmPassword !== ''
     ) {
@@ -168,7 +172,7 @@ class UpdatePassword extends Component {
 
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
-              type="password"
+              type="oldpassword"
               inputType="password"
               valueType="password"
               placeholder="Old Password"
@@ -188,7 +192,7 @@ class UpdatePassword extends Component {
               valueType="password"
               placeholder="New Password"
               autoCorrect={false}
-              value={newPassword}
+              value={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
@@ -204,7 +208,7 @@ class UpdatePassword extends Component {
               placeholder="Confirm Password"
               autoCorrect={false}
               value={confirmPassword}
-              passwordValue={newPassword}
+              passwordValue={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
