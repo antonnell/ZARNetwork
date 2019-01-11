@@ -12,7 +12,7 @@ import DesignButton from '../../../common/Button';
 import TitleHeader from '../../../common/TitleHeader';
 import Card from './card';
 import { setNewRequest } from '../../../controllers/api/paymentRequest';
-import { getFirstCharOfString } from '../../../utility';
+import { getAccountIcon, getFullName } from '../../../utility';
 import Loader from '../../../common/Loader';
 
 const deviceHeight = Dimensions.get('window').height;
@@ -132,7 +132,8 @@ class ConfirmPayment extends Component {
       }
     }
 
-    let userIcon = '--';
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
     let subtitleText = '';
     if (
       userDetail.email &&
@@ -140,7 +141,6 @@ class ConfirmPayment extends Component {
       userDetail.email !== null &&
       userDetail.email !== undefined
     ) {
-      userIcon = getFirstCharOfString(userDetail.email);
       subtitleText = userDetail.email;
     }
     if (
@@ -180,7 +180,7 @@ class ConfirmPayment extends Component {
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
             subTitleText={subtitleText}
-            titleText="Jane Smith"
+            titleText={fullName}
             circularAvatarText={userIcon}
           />
           <DetailCard

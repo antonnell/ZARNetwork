@@ -96,7 +96,15 @@ export default class DetailCard extends Component {
       amtBalance,
     } = this.props;
 
-    const { balance, description, number } = account;
+    let balanceVal = '';
+    let descriptionText = '';
+    let accountNumber = '';
+    if (account && account !== null) {
+      balanceVal = account.balance;
+      descriptionText = account.description;
+      accountNumber = account.number;
+    }
+
     return (
       <TouchableOpacity
         style={detailCardMainViewStyle}
@@ -112,8 +120,8 @@ export default class DetailCard extends Component {
           detailCardTopTitleStyle,
           topTitleText,
           detailCardTopViewStyle,
-          description,
-          number
+          descriptionText,
+          accountNumber
         )}
 
         {this.renderBottomDesign(
@@ -123,7 +131,7 @@ export default class DetailCard extends Component {
           detailCardBottomViewStyle,
           detailCardBottomTitleTextStyle,
           bottomTitleText,
-          balance,
+          balanceVal,
           walletType,
           amtBalance
         )}
