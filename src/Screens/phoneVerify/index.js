@@ -34,6 +34,8 @@ export default class PhoneAuthTest extends Component {
     console.log('Navigation EMail', navigation.state.params.emailId);
     const userEmailId = navigation.state.params.emailId;
     const userPasssword = navigation.state.params.password;
+    const userFirstName = navigation.state.params.firstName;
+    const userLastName = navigation.state.params.lastName;
     const { codeInput, verificationId } = this.state;
     if (verificationId && codeInput.length) {
       const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, codeInput);
@@ -42,6 +44,8 @@ export default class PhoneAuthTest extends Component {
         .signInWithCredential(credential)
         .then(() => {
           navigation.navigate('CreatePin', {
+            firstName: userFirstName,
+            lastName: userLastName,
             emailId: userEmailId,
             password: userPasssword,
             phoneNumber,

@@ -266,6 +266,8 @@ class PayBeneficiary extends Component {
           >
             <FloatLabelTextField
               type="number"
+              inputType="number"
+              valueType="number"
               placeholder="Amount"
               autoCorrect={false}
               value={number}
@@ -284,6 +286,8 @@ class PayBeneficiary extends Component {
             </View>
             <FloatLabelTextField
               type="reference"
+              inputType="reference"
+              valueType="reference"
               placeholder="Reference"
               autoCorrect={false}
               value={reference}

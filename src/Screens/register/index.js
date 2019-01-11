@@ -29,6 +29,8 @@ export default class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      firstName: '',
+      lastName: '',
       eightPlusCharacter: false,
       moreThanOneCapital: false,
       moreThanOneLower: false,
@@ -139,9 +141,17 @@ export default class Register extends Component {
   }
 
   checkEmptyFields(type) {
-    const { email, password } = this.state;
-    if (type === 'email') {
-      Alert.alert('Error', 'Enter email!');
+    const { firstName, lastName, email, password } = this.state;
+    if (type === 'firstname') {
+      Alert.alert('Error', 'Enter first name!');
+    } else if (type === 'lastname') {
+      if (firstName !== '') {
+        Alert.alert('Error', 'Enter last name!');
+      }
+    } else if (type === 'email') {
+      if (lastName !== '') {
+        Alert.alert('Error', 'Enter email!');
+      }
     } else if (type === 'password') {
       if (email !== '' && isEmailValid(email)) {
         Alert.alert('Error', 'Enter password!');
@@ -162,8 +172,8 @@ export default class Register extends Component {
 
   nextBtnPressed() {
     const { navigation } = this.props;
-    const { email, password } = this.state;
-    navigation.navigate('Phone', { emailId: email, password });
+    const { email, password, firstName, lastName } = this.state;
+    navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
   }
 
   renderPasswordContraintsContainer() {
@@ -228,12 +238,16 @@ export default class Register extends Component {
       email,
       password,
       confirmPassword,
+      firstName,
+      lastName,
       eightPlusCharacter,
       moreThanOneCapital,
       moreThanOneLower,
       moreThanOneNumber,
     } = this.state;
     if (
+      firstName !== '' &&
+      lastName !== '' &&
       email !== '' &&
       password !== '' &&
       confirmPassword !== '' &&
@@ -274,6 +288,40 @@ export default class Register extends Component {
             />
           </View>
 
+          {/* First Name field */}
+          <View style={styles.textFieldStyle}>
+            <FloatLabelTextField
+              type="firstname"
+              inputType="text"
+              valueType="text"
+              placeholder="First Name"
+              autoCorrect={false}
+              value={firstName}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              // validate={type => this.validate(type)}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+          </View>
+          {/* Last Name field */}
+          <View style={styles.textFieldStyle}>
+            <FloatLabelTextField
+              type="lastname"
+              inputType="text"
+              valueType="text"
+              placeholder="Last Name"
+              autoCorrect={false}
+              value={lastName}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              // validate={type => this.validate(type)}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+          </View>
           {/* EMAIL field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
