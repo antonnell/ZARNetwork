@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import TitleHeader from '../../common/TitleHeader';
 import ProfileInfo from '../../common/profileInfo';
-import { deviceHeight, deviceWidth, ImageIconType } from '../../common/constants';
-import { getFirstCharOfString } from '../../utility';
+
+import {
+  deviceHeight,
+  deviceWidth,
+  ImageIconType,
+  MaterialIconsType,
+} from '../../common/constants';
+import { getFirstCharOfString, isEmailValid } from '../../utility';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import DesignButton from '../../common/Button';
 import editIcon from '../../images/Edit.png';
@@ -22,10 +28,45 @@ class UserProfile extends Component {
       lastName: userDetail.surname,
       email: userDetail.email,
       isBackArrowPresent: true,
+      isEditable: false,
     };
 
+    this.updateForm = this.updateForm.bind(this);
+    this.validateFields = this.validateFields.bind(this);
+    this.checkEmptyFields = this.checkEmptyFields.bind(this);
+    this.editData = this.editData.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  updateForm(value, type) {
+    this.setState({ [type]: value });
+  }
+
+  validateFields(type) {
+    const { email } = this.state;
+    if (type === 'email') {
+      if (email !== '' && email !== undefined) {
+        if (isEmailValid(email) === false) {
+          Alert.alert('Error', 'Invalid Email');
+        }
+      }
+    }
+  }
+
+  checkEmptyFields(type) {
+    const { firstName, lastName } = this.state;
+    if (type === 'firstname') {
+      Alert.alert('Error', 'Enter first name!');
+    } else if (type === 'lastname') {
+      if (firstName !== '') {
+        Alert.alert('Error', 'Enter last name!');
+      }
+    } else if (type === 'email') {
+      if (lastName !== '') {
+        Alert.alert('Error', 'Enter email!');
+      }
+    }
   }
 
   handleGoBack() {
@@ -43,6 +84,14 @@ class UserProfile extends Component {
     if (navigation) {
       navigation.navigate('StartScreen');
     }
+  }
+
+  editData() {
+    const { isEditable } = this.state;
+    console.log('isEditableisEditableisEditable', isEditable);
+    this.setState({
+      isEditable: !isEditable,
+    });
   }
 
   renderProfileInfo() {
@@ -88,8 +137,10 @@ class UserProfile extends Component {
   }
 
   render() {
-    const { isBackArrowPresent, firstName, lastName, email } = this.state;
-
+    const { isBackArrowPresent, firstName, lastName, email, isEditable } = this.state;
+    const editable = !!isEditable;
+    const rightIcon = !isEditable ? editIcon : 'cancel';
+    const rightIconType = !isEditable ? ImageIconType : MaterialIconsType;
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -98,9 +149,9 @@ class UserProfile extends Component {
           title="VIEW PROFILE"
           isBackArrow={isBackArrowPresent}
           onBtnPress={this.handleGoBack}
-          rightIconName={editIcon}
-          rightIconType={ImageIconType}
-          onRightBtnPress={() => {}}
+          rightIconName={rightIcon}
+          rightIconType={rightIconType}
+          onRightBtnPress={this.editData}
         />
         <ScrollView
           style={{
@@ -119,8 +170,8 @@ class UserProfile extends Component {
             }}
           >
             <FloatLabelTextField
-              type="name"
-              editable={false}
+              type="firstname"
+              editable={editable}
               inputType="text"
               valueType="name"
               placeholder="First Name"
@@ -129,13 +180,13 @@ class UserProfile extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validateFields={type => this.validateFields(type)}
-              // checkEmptyFields={type => this.checkEmptyFields(type)}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
 
             <FloatLabelTextField
-              type="name"
-              editable={false}
+              type="lastname"
+              editable={editable}
               inputType="text"
               valueType="name"
               placeholder="Last Name"
@@ -144,12 +195,12 @@ class UserProfile extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validateFields={type => this.validateFields(type)}
-              // checkEmptyFields={type => this.checkEmptyFields(type)}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
             <FloatLabelTextField
               type="email"
-              editable={false}
+              editable={editable}
               inputType="email"
               valueType="email"
               placeholder="Email"
@@ -158,12 +209,16 @@ class UserProfile extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validateFields={type => this.validateFields(type)}
-              // checkEmptyFields={type => this.checkEmptyFields(type)}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <View style={{ marginTop: deviceHeight * 0.08 }}>
-            <DesignButton name="LOGOUT" callMethod={this.handleLogout} isClickable />
+            {!isEditable ? (
+              <DesignButton name="LOGOUT" callMethod={this.handleLogout} isClickable />
+            ) : (
+              <DesignButton name="SAVE" callMethod={this.handleLogout} isClickable />
+            )}
           </View>
         </ScrollView>
       </View>
