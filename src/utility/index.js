@@ -148,3 +148,45 @@ export function isSessionExpires(expiryTime) {
   }
   return false;
 }
+
+/**
+ * @param {string} passwordVal : Password value to be checked.
+ * @param {CallableFunction} updateState : Callback method to update state of password validity.
+ */
+export function isPasswordValid(passwordVal, updateState) {
+  const regOneCapital = /^(?=.*[A-Z]).{1,}$/;
+  const regOneLower = /^(?=.*[a-z]).{1,}$/;
+  const regOneNumber = /^(?=.*\d).{1,}$/;
+
+  if (passwordVal !== '') {
+    if (passwordVal.length >= 8) {
+      updateState('eightPlusCharacter', true);
+    } else {
+      updateState('eightPlusCharacter', false);
+    }
+
+    if (regOneCapital.test(passwordVal)) {
+      updateState('moreThanOneCapital', true);
+    } else {
+      updateState('moreThanOneCapital', false);
+    }
+
+    if (regOneLower.test(passwordVal)) {
+      updateState('moreThanOneLower', true);
+    } else {
+      updateState('moreThanOneLower', false);
+    }
+
+    if (regOneNumber.test(passwordVal)) {
+      updateState('moreThanOneNumber', true);
+    } else {
+      updateState('moreThanOneNumber', false);
+    }
+  } else {
+    // if password length is 0
+    updateState('moreThanOneNumber', false);
+    updateState('moreThanOneLower', false);
+    updateState('moreThanOneCapital', false);
+    updateState('eightPlusCharacter', false);
+  }
+}
