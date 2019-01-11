@@ -132,11 +132,13 @@ class Login extends Component {
   }
 
   /**
-   * @method handleForgotPassword : To Forgot Password functionality
+   * @method handleForgotPassword : To render forgot password screen.
    */
-  // eslint-disable-next-line class-methods-use-this
   handleForgotPassword() {
-    Alert.alert('Information', 'Forgot password under development.');
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('ResetPassword');
+    }
   }
 
   /**
