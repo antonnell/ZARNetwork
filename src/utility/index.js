@@ -190,3 +190,55 @@ export function isPasswordValid(passwordVal, updateState) {
     updateState('eightPlusCharacter', false);
   }
 }
+
+/**
+ * @method getAccountIcon : To create account icon text.
+ * @param {object} userDetail : Object of user's detail.
+ */
+export function getAccountIcon(userDetail) {
+  let userIcon = '--';
+  if (userDetail && userDetail !== null && userDetail !== undefined) {
+    if (
+      userDetail.firstname &&
+      userDetail.firstname !== null &&
+      userDetail.firstname !== undefined
+    ) {
+      userIcon = getFirstCharOfString(userDetail.firstname);
+    }
+    if (userDetail.surname && userDetail.surname !== null && userDetail.surname !== undefined) {
+      if (userIcon !== '--') {
+        userIcon = `${userIcon}${getFirstCharOfString(userDetail.surname)}`;
+      } else {
+        userIcon = getFirstCharOfString(userDetail.surname);
+      }
+    }
+  }
+
+  return userIcon;
+}
+
+/**
+ * @method getFullName : To get full name of user.
+ * @param {object} userDetail : Object of user's detail.
+ */
+export function getFullName(userDetail) {
+  let fullName = '--';
+  if (userDetail && userDetail !== null && userDetail !== undefined) {
+    if (
+      userDetail.firstname &&
+      userDetail.firstname !== null &&
+      userDetail.firstname !== undefined
+    ) {
+      fullName = userDetail.firstname;
+    }
+    if (userDetail.surname && userDetail.surname !== null && userDetail.surname !== undefined) {
+      if (fullName !== '--') {
+        fullName = `${fullName} ${userDetail.surname}`;
+      } else {
+        fullName = userDetail.surname;
+      }
+    }
+  }
+
+  return fullName;
+}

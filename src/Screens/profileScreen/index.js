@@ -12,7 +12,7 @@ import {
   ImageIconType,
   MaterialIconsType,
 } from '../../common/constants';
-import { getFirstCharOfString, isEmailValid } from '../../utility';
+import { isEmailValid, getAccountIcon, getFullName } from '../../utility';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import DesignButton from '../../common/Button';
 import editIcon from '../../images/Edit.png';
@@ -88,37 +88,23 @@ class UserProfile extends Component {
 
   editData() {
     const { isEditable } = this.state;
-    console.log('isEditableisEditableisEditable', isEditable);
     this.setState({
       isEditable: !isEditable,
     });
   }
 
   renderProfileInfo() {
-    const { firstName, lastName, email } = this.state;
+    const { email } = this.state;
+    const { userDetail } = this.props;
 
-    let userIcon = '';
+    const userIcon = getAccountIcon(userDetail);
     let subtitleText = '';
-    let titleText = '';
-    if (firstName && firstName !== '' && firstName !== null && firstName !== undefined) {
-      userIcon = getFirstCharOfString(firstName);
-      titleText = firstName;
-    }
-
-    if (lastName && lastName !== '' && lastName !== null && lastName !== undefined) {
-      userIcon = `${userIcon} ${getFirstCharOfString(lastName)}`;
-      titleText = `${titleText} ${lastName}`;
-    }
+    const titleText = getFullName(userDetail);
 
     if (email && email !== '' && email !== null && email !== undefined) {
       subtitleText = email;
     }
-    if (userIcon === '') {
-      userIcon = '--';
-    }
-    if (titleText === '') {
-      titleText = '--';
-    }
+
     if (subtitleText === '') {
       subtitleText = '--';
     }

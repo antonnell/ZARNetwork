@@ -17,7 +17,7 @@ import ProfileInfo from '../../../common/profileInfo';
 import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
 import { WALLET_LIST } from '../../../common/constants';
-import { getWalletType, getFirstCharOfString } from '../../../utility';
+import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
 
 // constants
 const deviceHeight = Dimensions.get('window').height;
@@ -168,15 +168,16 @@ class PayBeneficiary extends Component {
   render() {
     const { navigation, userWalletDetail, userDetail } = this.props;
 
-    let userIcon = '--';
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
     let subtitleText = '';
+
     if (
       userDetail.email &&
       userDetail.email !== '' &&
       userDetail.email !== null &&
       userDetail.email !== undefined
     ) {
-      userIcon = getFirstCharOfString(userDetail.email);
       subtitleText = userDetail.email;
     }
     if (
@@ -204,6 +205,7 @@ class PayBeneficiary extends Component {
       balance,
       walletType,
     } = this.state;
+
     let isClickable = false;
     if (accId !== '' && number !== '' && reference !== '') {
       isClickable = true;
@@ -233,7 +235,7 @@ class PayBeneficiary extends Component {
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
             subTitleText={subtitleText}
-            titleText="Jane Smith"
+            titleText={fullName}
             circularAvatarText={userIcon}
           />
           <View style={{ zIndex: openWalletList ? 99 : 0 }}>

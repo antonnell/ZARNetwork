@@ -10,7 +10,7 @@ import Wallet from './wallet';
 
 import { getAccountType } from '../../controllers/api/accountType';
 import { getWalletDetail } from '../../controllers/api/userWallet';
-import { getFirstCharOfString } from '../../utility/index';
+import { getAccountIcon, getFullName } from '../../utility/index';
 
 import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
@@ -231,22 +231,20 @@ class HomePage extends Component {
   render() {
     const { userDetail } = this.props;
     const { accountToggle } = this.state;
-    let userIcon = '--';
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
     let setScrollViewStyle = {
       ...styles.renderCardContainer,
     };
     if (accountToggle) {
       setScrollViewStyle = {
         ...styles.renderCardContainer,
-        // backgroundColor: 'green',
         // height: deviceHeight * 0.4
         //  marginTop: deviceHeight * 0.03,
         height: deviceHeight * 0.5,
       };
     }
-    if (userDetail.email) {
-      userIcon = getFirstCharOfString(userDetail.email);
-    }
+
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
@@ -287,7 +285,7 @@ class HomePage extends Component {
               <Text style={styles.circularAvatarTextStyle}>{userIcon}</Text>
             </View>
             <View style={{ marginTop: deviceHeight * 0.05, paddingLeft: 15 }}>
-              {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
+              <Text style={styles.profileInfoTitleStyle}>{fullName}</Text>
               <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
             </View>
           </View>
