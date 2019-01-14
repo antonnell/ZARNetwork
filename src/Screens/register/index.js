@@ -82,17 +82,14 @@ export default class Register extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
-          this.setState({
-            email: '',
-          });
         }
       }
     } else if (type === 'confirmPassword') {
       if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
         Alert.alert('Error', 'Password does not matched.');
-        this.setState({
-          confirmPassword: '',
-        });
+        // this.setState({
+        //   confirmPassword: '',
+        // });
       }
     }
   }
@@ -129,7 +126,15 @@ export default class Register extends Component {
 
   nextBtnPressed() {
     const { navigation } = this.props;
-    const { email, password, firstName, lastName } = this.state;
+    const { email, password, firstName, confirmPassword, lastName } = this.state;
+    if (isEmailValid(email) === false) {
+      Alert.alert('Error', 'Invalid Email');
+      return;
+    }
+    if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
+      Alert.alert('Error', 'Password does not matched.');
+      return;
+    }
     navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
   }
 

@@ -176,16 +176,11 @@ class FloatLabelTextField extends Component {
         if (validateFields) {
           validateFields(type);
         }
-        if (type === 'email') {
-          this.setState({
-            text: '',
-          });
-        }
-        if (type === 'confirmPassword') {
-          this.setState({
-            text: '',
-          });
-        }
+        // if (type === 'confirmPassword') {
+        //   this.setState({
+        //     text: '',
+        //   });
+        // }
         if (type === 'accountNumber') {
           this.setState({
             text: '',

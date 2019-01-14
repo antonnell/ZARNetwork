@@ -3,7 +3,7 @@ import { REGISTER, LOGIN, _SUCCESS } from '../base/constants';
 const sha256 = require('sha256');
 
 const defaultState = {
-  userDetail: [],
+  userDetail: null,
 };
 
 /**

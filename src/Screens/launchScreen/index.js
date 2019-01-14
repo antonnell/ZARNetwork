@@ -13,9 +13,9 @@ class SplashScreen extends Component {
   /**
    * Render different screens based on user is already a registered user or not.
    */
-  componentWillMount() {
+  componentDidMount() {
     const { authDetail, navigation } = this.props;
-    if (authDetail && authDetail.length > 0) {
+    if (authDetail && authDetail !== null) {
       const { expires } = authDetail.jwt;
       if (expires && isSessionExpires(expires)) {
         setTimeout(() => navigation.navigate('Home'), 4000);

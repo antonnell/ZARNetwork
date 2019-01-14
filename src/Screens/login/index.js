@@ -42,9 +42,6 @@ class Login extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
-          this.setState({
-            email: '',
-          });
         }
       }
     }
@@ -146,8 +143,6 @@ class Login extends Component {
     console.log('authDetail in props : ', authDetail);
     console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
-    console.log('Login  ---> email : ', email);
-    console.log('Login  ---> password : ', password);
 
     let isClickable = false;
     if (email && email !== '' && password && password !== '' && isEmailValid(email) === true) {
