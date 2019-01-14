@@ -10,7 +10,7 @@ import {
 
 const defaultState = {
   status: null,
-  message: '',
+  result: '',
   loading: false,
 };
 
@@ -20,8 +20,8 @@ const defaultState = {
 const getFormattedAuthData = action => {
   if (action && action.error && action.error.response) {
     const { data } = action.error.response;
-    const { message, status } = data;
-    return { message, status, loading: false };
+    const { result, status } = data;
+    return { result, status, loading: false };
   }
   return {};
 };
@@ -32,8 +32,8 @@ const getFormattedAuthData = action => {
 const getFormattedTypeData = action => {
   if (action && action.error && action.error.response) {
     const { data } = action.error.response;
-    const { message, status } = data;
-    return { message, status, loading: false };
+    const { result, status } = data;
+    return { result, status, loading: false };
   }
   return {};
 };
@@ -44,8 +44,8 @@ const getFormattedTypeData = action => {
 const getFormattedWalletData = action => {
   if (action && action.error && action.error.response) {
     const { data } = action.error.response;
-    const { message, status } = data;
-    return { message, status, loading: false };
+    const { result, status } = data;
+    return { result, status, loading: false };
   }
   return {};
 };

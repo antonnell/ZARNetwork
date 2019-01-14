@@ -67,21 +67,21 @@ class ConfirmPayment extends Component {
       });
       if (setNewRequest) {
         setNewRequest(payload)
-          .then(result => {
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (result.payload && result.payload.data && result.payload.data.status === 200) {
+            if (res.payload && res.payload.data && res.payload.data.status === 200) {
               navigation.navigate('PaymentSuccess', { params: navigation.state.params });
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {

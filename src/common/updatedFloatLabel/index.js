@@ -9,7 +9,7 @@ import Password from '../../images/Password.png';
 import Mobile from '../../images/Mobile.png';
 import AccountNumber from '../../images/AccountNumber.png';
 import Wallet from '../../images/wallet.png';
-import ProfileImg from '../../images/ProfileImg.png';
+// import ProfileImg from '../../images/ProfileImg.png';
 import UserImg from '../../images/User.png';
 // Styling
 import styles from './styles';
@@ -111,7 +111,6 @@ class FloatLabelTextField extends Component {
       showPassword: false,
       passwordIcon: 'lock-outline', // "visibility-off",
       error: '',
-      accountNumber: '',
     };
 
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
@@ -129,75 +128,13 @@ class FloatLabelTextField extends Component {
   }
 
   onChangeTextHandler(value, type) {
-    console.log('onChangeTextHandler  ------>  value :', value);
-    console.log('onChangeTextHandler  ------>  type :', type);
     const { updateForm } = this.props;
-    if (type === 'password') {
+    if (type !== '' && updateForm) {
       updateForm(value, type);
       this.setState({
         text: value,
         error: '',
       });
-    }
-
-    if (type === 'firstname') {
-      this.setState({
-        text: value,
-      });
-      updateForm(value, 'firstName');
-    }
-    if (type === 'lastname') {
-      this.setState({
-        text: value,
-      });
-      updateForm(value, 'lastName');
-    }
-    if (type === 'number') {
-      this.setState({
-        text: value,
-      });
-      updateForm(value, type);
-    }
-    if (type === 'account') {
-      this.setState({
-        text: value,
-        accountNumber: value,
-      });
-      updateForm(value, 'accountNumber');
-    }
-    if (type === 'reference') {
-      this.setState({
-        text: value,
-        reference: value,
-      });
-      updateForm(value, 'reference');
-    }
-
-    if (type === 'email') {
-      this.setState({
-        text: value,
-      });
-      updateForm(value, type);
-    }
-    if (type === 'username') {
-      this.setState({
-        text: value,
-      });
-      updateForm(value, type);
-    }
-    if (type === 'confirmPassword') {
-      this.setState({
-        text: value,
-        error: '',
-      });
-      updateForm(value, type);
-    }
-    if (type === 'oldpassword') {
-      this.setState({
-        text: value,
-        error: '',
-      });
-      updateForm(value, 'oldPassword');
     }
   }
 
@@ -225,102 +162,41 @@ class FloatLabelTextField extends Component {
       error: '',
     });
   }
-  // validateValues(value, type) {
-  //   const { email, text, accountNumber } = this.state;
-  //   if (type === 'email') {
-  //     if (email !== '' && email !== undefined) {
-  //       if (isEmailValid(email) === false) {
-  //         Alert.alert('Error', 'Invalid Email');
-  //         validate(type);
-  //         this.setState({
-  //           text: '',
-  //           email: '',
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
 
   onBlurTextInput(value, type) {
-    console.log('onBlurTextInput  ------>  value :', value);
-    console.log('onBlurTextInput  ------>  type :', type);
     const { validateFields, checkEmptyFields } = this.props;
     this.unsetFocus();
-    if (type === 'email') {
+
+    if (type && type !== '') {
       if (value === '') {
-        // checkEmptyFields(type);
-        // this.setState({
-        //   text: '',
-        // });
+        if (checkEmptyFields) {
+          checkEmptyFields(type);
+        }
       } else {
-        validateFields(type);
-        this.setState({
-          text: '',
-        });
+        if (validateFields) {
+          validateFields(type);
+        }
+        if (type === 'email') {
+          this.setState({
+            text: '',
+          });
+        }
+        if (type === 'confirmPassword') {
+          this.setState({
+            text: '',
+          });
+        }
+        if (type === 'accountNumber') {
+          this.setState({
+            text: '',
+          });
+        }
+        if (type === 'number') {
+          this.setState({
+            text: '',
+          });
+        }
       }
-    } else if (type === 'firstname' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'lastname' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'username' && value === '') {
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'confirmPassword') {
-      if (value === '') {
-        checkEmptyFields(type);
-        this.setState({
-          text: '',
-        });
-      } else {
-        validateFields(type);
-        this.setState({
-          text: '',
-        });
-      }
-    } else if (type === 'password' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'oldpassword' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        test: '',
-      });
-    } else if (type === 'number' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'reference' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
-    } else if (type === 'account') {
-      if (value === '') {
-        checkEmptyFields(type);
-        this.setState({
-          text: '',
-        });
-      } else {
-        validateFields(type);
-        this.setState({
-          text: '',
-        });
-      }
-    } else if (type === 'name' && value === '') {
-      checkEmptyFields(type);
-      this.setState({
-        text: '',
-      });
     }
   }
 
@@ -512,7 +388,7 @@ class FloatLabelTextField extends Component {
       //     </View>
       //   );
       // }
-      if (type === 'firstname' || type === 'lastname' || type === 'name') {
+      if (type === 'firstName' || type === 'lastName' || type === 'name') {
         return (
           <View>
             <Image
@@ -526,7 +402,7 @@ class FloatLabelTextField extends Component {
           </View>
         );
       }
-      if (type === 'password' || type === 'confirmPassword' || type === 'oldpassword') {
+      if (type === 'password' || type === 'confirmPassword' || type === 'oldPassword') {
         return (
           <View>
             <Image
@@ -555,7 +431,7 @@ class FloatLabelTextField extends Component {
           </View>
         );
       }
-      if (type === 'account') {
+      if (type === 'accountNumber') {
         return (
           <View>
             <Image

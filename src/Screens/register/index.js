@@ -82,6 +82,9 @@ export default class Register extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
         }
       }
     } else if (type === 'confirmPassword') {
@@ -190,7 +193,7 @@ export default class Register extends Component {
           {/* First Name field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
-              type="firstname"
+              type="firstName"
               inputType="text"
               valueType="name"
               placeholder="First Name"
@@ -206,7 +209,7 @@ export default class Register extends Component {
           {/* Last Name field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
-              type="lastname"
+              type="lastName"
               inputType="text"
               valueType="name"
               placeholder="Last Name"

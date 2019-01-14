@@ -73,6 +73,8 @@ class PayBeneficiary extends Component {
     this.handlePayNotification = this.handlePayNotification.bind(this);
     this.handleWalletList = this.handleWalletList.bind(this);
     this.toggleWalletList = this.toggleWalletList.bind(this);
+    this.validateFields = this.validateFields.bind(this);
+    this.checkEmptyFields = this.checkEmptyFields.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -144,15 +146,33 @@ class PayBeneficiary extends Component {
     }
   }
 
-  checkEmptyFields(type) {
-    const { number } = this.state;
+  validateFields(type) {
+    const { number, balance } = this.state;
     if (type === 'number') {
-      Alert.alert('Error', 'Enter amount!');
-    } else if (type === 'reference') {
-      if (number !== '') {
-        Alert.alert('Error', 'Enter reference!');
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(number)) {
+        Alert.alert('Error', 'Amount field should be number!');
+        this.setState({
+          number: '',
+        });
+      } else if (number > balance) {
+        Alert.alert('Error', 'Insufficient balance!');
+        this.setState({
+          number: '',
+        });
       }
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  checkEmptyFields(type) {
+    // const { number , reference} = this.state;
+    if (type === 'number') {
+      Alert.alert('Error', 'Enter amount!');
+    }
+    //  else if (type === 'reference') {
+    //   Alert.alert('Error', 'Enter reference!');
+    // }
   }
 
   toggleWalletList() {
@@ -202,7 +222,6 @@ class PayBeneficiary extends Component {
       balance,
       walletType,
     } = this.state;
-
     let isClickable = false;
     if (accId !== '' && number !== '' && reference !== '') {
       isClickable = true;
@@ -274,8 +293,8 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               imageType="amount"
-              // validateFields={type=>this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
+              validateFields={this.validateFields}
+              checkEmptyFields={this.checkEmptyFields}
             />
             <View>
               <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
@@ -292,8 +311,8 @@ class PayBeneficiary extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
+              validate={this.validate}
+              checkEmptyFields={this.checkEmptyFields}
             />
           </View>
           <TitleCard

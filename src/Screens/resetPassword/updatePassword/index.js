@@ -172,7 +172,7 @@ class UpdatePassword extends Component {
 
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
-              type="oldpassword"
+              type="oldPassword"
               inputType="text"
               valueType="password"
               placeholder="Old Password"

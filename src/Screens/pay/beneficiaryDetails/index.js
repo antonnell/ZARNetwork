@@ -72,7 +72,7 @@ class BeneficiaryDetails extends Component {
 
   validateFields(type) {
     const { accountNumber } = this.state;
-    if (type === 'account') {
+    if (type === 'accountNumber') {
       if (accountNumber !== '' && !Web3.prototype.isAddress(accountNumber)) {
         Alert.alert('Error', 'Please enter valid account number.');
         this.setState({
@@ -145,16 +145,11 @@ class BeneficiaryDetails extends Component {
       });
       if (setNewBeneficiary) {
         setNewBeneficiary(payload)
-          .then(result => {
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (
-              result &&
-              result.payload &&
-              result.payload.data &&
-              result.payload.data.status === 200
-            ) {
+            if (res && res.payload && res.payload.data && res.payload.data.status === 200) {
               const len = beneficiaries.length;
               if (beneficiaries && len > 0) {
                 const beneficiaryReference = beneficiaries[len - 1].their_reference;
@@ -166,14 +161,14 @@ class BeneficiaryDetails extends Component {
                 });
               }
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {
@@ -240,8 +235,12 @@ class BeneficiaryDetails extends Component {
     }
     const { userWalletDetail } = this.props;
     const isShowRightText = true;
+    let ParentView = View;
+    if (openWalletList) {
+      ParentView = TouchableOpacity;
+    }
     return (
-      <TouchableOpacity
+      <ParentView
         style={styles.Container}
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
@@ -303,7 +302,7 @@ class BeneficiaryDetails extends Component {
           />
 
           <FloatLabelTextField
-            type="account"
+            type="accountNumber"
             placeholder="Account Number"
             inputType="text"
             valueType="text"
@@ -343,7 +342,7 @@ class BeneficiaryDetails extends Component {
           />
         </View>
         {this.renderLoader()}
-      </TouchableOpacity>
+      </ParentView>
     );
   }
 }

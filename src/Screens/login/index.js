@@ -50,19 +50,18 @@ class Login extends Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  checkEmptyFields(type) {
-    console.log('checkEmptyFields type : ', type);
-    // const { email } = this.state;
-    // if (type === 'email') {
-    //   Alert.alert('Error', 'Enter email!');
-    // } else
-    // if (type === 'password') {
-    //   if (email !== '' && isEmailValid(email)) {
-    //     Alert.alert('Error', 'Enter password!');
-    //   }
-    // }
-  }
+  // checkEmptyFields(type) {
+  // console.log('checkEmptyFields type : ', type);
+  // const { email } = this.state;
+  // if (type === 'email') {
+  //   Alert.alert('Error', 'Enter email!');
+  // } else
+  // if (type === 'password') {
+  //   if (email !== '' && isEmailValid(email)) {
+  //     Alert.alert('Error', 'Enter password!');
+  //   }
+  // }
+  // }
 
   /**
    * ******************************************************************************
@@ -87,21 +86,21 @@ class Login extends Component {
 
       if (login) {
         login(payload)
-          .then(result => {
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (result && result.payload && result.payload.status === 200) {
+            if (res && res.payload && res.payload.status === 200) {
               navigation.navigate('Home');
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {
@@ -186,7 +185,7 @@ class Login extends Component {
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
             validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
+            // checkEmptyFields={type => this.checkEmptyFields(type)}
           />
         </View>
 
@@ -202,7 +201,7 @@ class Login extends Component {
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
             validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
+            // checkEmptyFields={type => this.checkEmptyFields(type)}
           />
         </View>
 

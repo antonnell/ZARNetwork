@@ -164,7 +164,7 @@ class UserProfile extends Component {
             }}
           >
             <FloatLabelTextField
-              type="firstname"
+              type="firstName"
               editable={editable}
               inputType="text"
               valueType="name"
@@ -179,7 +179,7 @@ class UserProfile extends Component {
             />
 
             <FloatLabelTextField
-              type="lastname"
+              type="lastName"
               editable={editable}
               inputType="text"
               valueType="name"
