@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Animated, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Animated, Image, StyleSheet } from 'react-native';
 import { TabView } from 'react-native-tab-view';
 // Black colored Images
 import Home from '../../images/Home.png';
@@ -18,8 +18,7 @@ import ReceiveWhiteImg from '../../images/ReceiveWhite.png';
 import HomePage from '../homePage';
 import Pay from '../pay/index';
 
-const deviceHeight = Dimensions.get('window').height;
-// const deviceWidth = Dimensions.get('window').width;
+import { deviceHeight } from '../../common/constants';
 
 // const FirstRoute = () => <View style={{ flex: 1, backgroundColor: 'blue' }} />;
 const SecondRoute = () => <View style={{ flex: 1, backgroundColor: 'green' }} />;

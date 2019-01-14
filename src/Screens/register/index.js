@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
 import DesignButton from '../../common/Button';
 import FantomPayLogo from '../../images/FantomPay.png';
-// import FloatLabelTextField from '../../common/FloatLabelTextField';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../common/constants';
 
 export default class Register extends Component {
   constructor(props) {
@@ -203,14 +192,13 @@ export default class Register extends Component {
             <FloatLabelTextField
               type="firstname"
               inputType="text"
-              valueType="text"
+              valueType="name"
               placeholder="First Name"
               autoCorrect={false}
               value={firstName}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               validateFields={type => this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
@@ -220,14 +208,13 @@ export default class Register extends Component {
             <FloatLabelTextField
               type="lastname"
               inputType="text"
-              valueType="text"
+              valueType="name"
               placeholder="Last Name"
               autoCorrect={false}
               value={lastName}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               validateFields={type => this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
@@ -244,7 +231,6 @@ export default class Register extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               validateFields={type => this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
@@ -253,7 +239,7 @@ export default class Register extends Component {
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="password"
-              inputType="password"
+              inputType="text"
               valueType="password"
               placeholder="Password"
               autoCorrect={false}
@@ -261,7 +247,6 @@ export default class Register extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               validateFields={type => this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
@@ -270,7 +255,7 @@ export default class Register extends Component {
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="confirmPassword"
-              inputType="password"
+              inputType="text"
               valueType="password"
               placeholder="Confirm Password"
               autoCorrect={false}
@@ -279,7 +264,6 @@ export default class Register extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               validateFields={type => this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />

@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../common/constants';
 
 this.flagValue = '';
 this.phoneNumber = '';

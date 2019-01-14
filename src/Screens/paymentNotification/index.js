@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // Library
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { View, StatusBar, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ import TitleText from '../../common/TitleText';
 import ToggleCard from '../../common/ToggleCard';
 
 // constants
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight } from '../../common/constants';
 
 class PaymentNotification extends Component {
   constructor(props) {

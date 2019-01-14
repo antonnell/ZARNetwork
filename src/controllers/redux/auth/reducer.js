@@ -72,12 +72,10 @@ const userAuthReducer = (state = defaultState, action) => {
   switch (action.type) {
     case `${REGISTER}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(state, action);
-
       return formattedData;
     }
     case `${LOGIN}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(state, action);
-
       return formattedData;
     }
     default:

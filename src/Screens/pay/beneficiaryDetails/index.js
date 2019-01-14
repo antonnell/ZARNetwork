@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, TouchableOpacity, Alert } from 'react-native';
+import { View, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-// import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import Web3 from 'web3';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 
@@ -11,14 +10,16 @@ import TitleCard from '../../../common/titleCard';
 import TitleHeader from '../../../common/TitleHeader';
 import AccountType from '../../../images/AccountType.png';
 import ListCard from '../../../common/ListCard';
-import { WALLET_LIST, BENEFICIARY_TYPE_LIST } from '../../../common/constants';
+import {
+  WALLET_LIST,
+  BENEFICIARY_TYPE_LIST,
+  deviceHeight,
+  deviceWidth,
+} from '../../../common/constants';
 import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
 import Loader from '../../../common/Loader';
 import { isValidName } from '../../../utility/index';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 class BeneficiaryDetails extends Component {
   constructor(props) {
@@ -69,27 +70,10 @@ class BeneficiaryDetails extends Component {
     this.setState({ [type]: value });
   }
 
-  // validate(type) {
-  //   if (type === 'name') {
-  //     this.setState({
-  //       name: '',
-  //     });
-  //   }
-  //   if (type === 'account') {
-  //     this.setState({
-  //       accountNumber: '',
-  //     });
-  //   }
-  //   if (type === 'reference') {
-  //     this.setState({
-  //       reference: '',
-  //     });
-  //   }
-  // }
   validateFields(type) {
     const { accountNumber } = this.state;
     if (type === 'account') {
-      if (accountNumber !== '' && !Web3.utils.isAddress(accountNumber)) {
+      if (accountNumber !== '' && !Web3.prototype.isAddress(accountNumber)) {
         Alert.alert('Error', 'Please enter valid account number.');
         this.setState({
           accountNumber: '',
@@ -142,6 +126,7 @@ class BeneficiaryDetails extends Component {
     if (
       accountNumber &&
       accountNumber !== '' &&
+      Web3.prototype.isAddress(accountNumber) &&
       reference &&
       reference !== '' &&
       accId &&
@@ -191,7 +176,6 @@ class BeneficiaryDetails extends Component {
               Alert.alert('Error', message);
             }
           })
-          // eslint-disable-next-line no-console
           .catch(error => {
             this.setState({
               isLoading: false,
@@ -305,6 +289,8 @@ class BeneficiaryDetails extends Component {
         >
           <FloatLabelTextField
             type="name"
+            inputType="text"
+            valueType="name"
             placeholder="Name"
             autoCorrect={false}
             value={name}
@@ -312,9 +298,6 @@ class BeneficiaryDetails extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            inputType="name"
-            valueType="name"
-            // validate={type => this.validate(type)}
             validateFields={type => this.validateFields(type)}
             checkEmptyFields={type => this.checkEmptyFields(type)}
           />
@@ -322,14 +305,13 @@ class BeneficiaryDetails extends Component {
           <FloatLabelTextField
             type="account"
             placeholder="Account Number"
-            inputType="account"
-            valueType="account"
+            inputType="text"
+            valueType="text"
             autoCorrect={false}
             value={accountNumber}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={isShowRightText ? deviceWidth * 0.42 : deviceWidth * 0.73}
-            // validate={type => this.validate(type)}
             isShowRightText={isShowRightText}
             rightTextStyle={styles.rightTextStyle}
             rightTextValue="Scan QR Code"
@@ -340,15 +322,14 @@ class BeneficiaryDetails extends Component {
           />
           <FloatLabelTextField
             type="reference"
-            inputType="reference"
-            valueType="reference"
+            inputType="text"
+            valueType="text"
             placeholder="Reference"
             autoCorrect={false}
             value={reference}
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            // validate={type => this.validate(type)}
             validateFields={type => this.validateFields(type)}
             checkEmptyFields={type => this.checkEmptyFields(type)}
           />

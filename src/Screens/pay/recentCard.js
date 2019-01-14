@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 // import styles from './styles';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../common/constants';
+
 // eslint-disable-next-line react/prefer-stateless-function
 export default class RecentCard extends Component {
   render() {

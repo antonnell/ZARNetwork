@@ -173,7 +173,7 @@ class UpdatePassword extends Component {
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="oldpassword"
-              inputType="password"
+              inputType="text"
               valueType="password"
               placeholder="Old Password"
               autoCorrect={false}
@@ -188,7 +188,7 @@ class UpdatePassword extends Component {
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="password"
-              inputType="password"
+              inputType="text"
               valueType="password"
               placeholder="New Password"
               autoCorrect={false}
@@ -203,7 +203,7 @@ class UpdatePassword extends Component {
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="confirmPassword"
-              inputType="password"
+              inputType="text"
               valueType="password"
               placeholder="Confirm Password"
               autoCorrect={false}

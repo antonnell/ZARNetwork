@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 import walletImg from '../../images/wallet.png';
 import ListCard from '../../common/ListCard';
-// import FloatLabelTextField from '../../common/FloatLabelTextField';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 
 import DesignButton from '../../common/Button';
@@ -225,7 +224,7 @@ class CreateWallet extends Component {
           <View style={styles.accNameViewStyle}>
             <FloatLabelTextField
               type="name"
-              inputType="name"
+              inputType="text"
               valueType="name"
               placeholder="Account Name"
               autoCorrect={false}
@@ -234,7 +233,6 @@ class CreateWallet extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validate={type => this.validate(type)}
               // validateFields={type=>this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />

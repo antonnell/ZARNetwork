@@ -1,6 +1,5 @@
 import Moment from 'moment';
 import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
-/* eslint-disable import/prefer-default-export */
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   const colorData = {
@@ -68,6 +67,10 @@ export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   return colorData;
 }
 
+/**
+ *
+ * @param {string} str : String value whose first character is to be returned.
+ */
 export function getFirstCharOfString(str) {
   let char = '--';
   if (str.length > 0) {

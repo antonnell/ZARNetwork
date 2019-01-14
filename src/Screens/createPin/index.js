@@ -4,7 +4,6 @@ import {
   Alert,
   View,
   Text,
-  Dimensions,
   StatusBar,
   TouchableHighlight,
   TouchableOpacity,
@@ -20,8 +19,7 @@ import GeneratePinCode from '../../common/PinCode';
 import { register } from '../../controllers/api/auth';
 import { checkPinLength } from '../../utility/index';
 import Loader from '../../common/Loader';
-
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight } from '../../common/constants';
 
 class CreatePin extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -8,7 +8,6 @@ import styles from './styles';
 // components
 import ToggleCard from '../../../common/ToggleCard';
 import Button from '../../../common/Button';
-// import FloatLabelTextField from '../../../common/FloatLabelTextField';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 
 import TitleHeader from '../../../common/TitleHeader';
@@ -16,12 +15,10 @@ import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
 import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
-import { WALLET_LIST } from '../../../common/constants';
 import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
 
 // constants
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { WALLET_LIST, deviceWidth, deviceHeight } from '../../../common/constants';
 
 class PayBeneficiary extends Component {
   constructor(props) {
@@ -277,7 +274,6 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               imageType="amount"
-              // validate={type => this.validate(type)}
               // validateFields={type=>this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
@@ -288,8 +284,8 @@ class PayBeneficiary extends Component {
             </View>
             <FloatLabelTextField
               type="reference"
-              inputType="reference"
-              valueType="reference"
+              inputType="text"
+              valueType="text"
               placeholder="Reference"
               autoCorrect={false}
               value={reference}
@@ -297,7 +293,6 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validate={type => this.validate(type)}
-              //  validateFields={type=>this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>

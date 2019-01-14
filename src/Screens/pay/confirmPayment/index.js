@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
+import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -14,9 +14,7 @@ import Card from './card';
 import { setNewRequest } from '../../../controllers/api/paymentRequest';
 import { getAccountIcon, getFullName } from '../../../utility';
 import Loader from '../../../common/Loader';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceHeight, deviceWidth } from '../../../common/constants';
 
 class ConfirmPayment extends Component {
   constructor(props) {

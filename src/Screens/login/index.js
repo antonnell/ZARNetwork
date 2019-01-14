@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -9,17 +9,14 @@ import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 // import SignIn from '../../images/SignIn.png';
 import FantomPayLogo from '../../images/FantomPay.png';
-// import FloatLabelTextField from '../../common/FloatLabelTextField';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
+import { deviceWidth, deviceHeight } from '../../common/constants';
 /**
  * Component to call login api.
  */
 import { login } from '../../controllers/api/auth';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 class Login extends Component {
   constructor(props) {
@@ -39,39 +36,32 @@ class Login extends Component {
     this.setState({ [type]: value });
   }
 
-  // validate(type) {
-  //   if (type === 'email') {
-  //     this.setState({
-  //       email: '',
-  //     });
-  //   } else if (type === 'password') {
-  //     this.setState({
-  //       password: '',
-  //     });
-  //   }
-  // }
   validateFields(type) {
-    console.log('Enter!@#!@#@$!@#$%!#$%#$%@#$%#^%#$^', type);
     const { email } = this.state;
     if (type === 'email') {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
         }
       }
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   checkEmptyFields(type) {
-    const { email } = this.state;
-    console.log('Empty Fileds', type);
-    if (type === 'email') {
-      Alert.alert('Error', 'Enter email!');
-    } else if (type === 'password') {
-      if (email !== '' && isEmailValid(email)) {
-        Alert.alert('Error', 'Enter password!');
-      }
-    }
+    console.log('checkEmptyFields type : ', type);
+    // const { email } = this.state;
+    // if (type === 'email') {
+    //   Alert.alert('Error', 'Enter email!');
+    // } else
+    // if (type === 'password') {
+    //   if (email !== '' && isEmailValid(email)) {
+    //     Alert.alert('Error', 'Enter password!');
+    //   }
+    // }
   }
 
   /**
@@ -157,6 +147,9 @@ class Login extends Component {
     console.log('authDetail in props : ', authDetail);
     console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
+    console.log('Login  ---> email : ', email);
+    console.log('Login  ---> password : ', password);
+
     let isClickable = false;
     if (email && email !== '' && password && password !== '' && isEmailValid(email) === true) {
       isClickable = true;
@@ -192,7 +185,6 @@ class Login extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            //  validate={type => this.validate(type)}
             validateFields={type => this.validateFields(type)}
             checkEmptyFields={type => this.checkEmptyFields(type)}
           />
@@ -201,7 +193,7 @@ class Login extends Component {
         <View style={styles.passwordTextFieldStyle}>
           <FloatLabelTextField
             type="password"
-            inputType="password"
+            inputType="text"
             valueType="password"
             placeholder="Password"
             autoCorrect={false}
@@ -209,7 +201,6 @@ class Login extends Component {
             updateForm={this.updateForm}
             inputBackgroundColor="#fff"
             textFieldSize={deviceWidth * 0.73}
-            // validate={type => this.validate(type)}
             validateFields={type => this.validateFields(type)}
             checkEmptyFields={type => this.checkEmptyFields(type)}
           />

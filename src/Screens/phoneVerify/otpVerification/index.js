@@ -1,14 +1,13 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import OtpInputs from 'react-native-otp-inputs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import CustomisedButton from '../../../common/Button';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../../common/constants';
 
 export default class OtpVerification extends Component {
   constructor(props) {
