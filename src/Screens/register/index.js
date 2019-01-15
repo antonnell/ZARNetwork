@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
 import DesignButton from '../../common/Button';
@@ -41,41 +42,6 @@ export default class Register extends Component {
     this.setState({ [type]: value });
   }
 
-  // validate(type) {
-  //   const { password, confirmPassword } = this.state;
-  //   if (type === 'email') {
-  //     this.setState({
-  //       email: '',
-  //     });
-  //   } else if (type === 'password') {
-  //     // if (email === '') {
-  //     //   Alert.alert('Error', 'Enter Email first');
-  //     //   this.setState({
-  //     //     password: '',
-  //     //   });
-  //     // }
-  //     if (password === '') {
-  //       // Alert.alert('Error', 'Enter Password first.');
-  //       this.setState({ confirmPassword: '' });
-  //     }
-  //   } else if (type === 'confirmPassword') {
-  //     // if (email === '') {
-  //     //   Alert.alert('Error', 'Enter Email first');
-  //     //   this.setState({
-  //     //     confirmPassword: '',
-  //     //   });
-  //     // } else
-  //     if (password === '') {
-  //      // Alert.alert('Error', 'Enter Password first.');
-  //       this.setState({ confirmPassword: '' });
-  //     } else if (confirmPassword !== '' && password !== confirmPassword) {
-  //       Alert.alert('Error', 'Password does not matched.');
-  //       this.setState({
-  //         confirmPassword: '',
-  //       });
-  //     }
-  //   }
-  // }
   validateFields(type) {
     const { email, password, confirmPassword } = this.state;
     if (type === 'email') {
@@ -178,7 +144,7 @@ export default class Register extends Component {
           onBtnPress={this.handleGoBack}
         />
 
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -300,7 +266,7 @@ export default class Register extends Component {
           </View>
 
           <View style={{ height: deviceHeight * 0.05 }} />
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
