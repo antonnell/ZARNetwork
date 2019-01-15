@@ -33,7 +33,6 @@ class UpdatePassword extends Component {
 
   updateForm(value, type) {
     if (type === 'password') {
-      this.setState({ confirmPassword: '' });
       isPasswordValid(value, (key, updatedState) => {
         this.setState({
           [key]: updatedState,

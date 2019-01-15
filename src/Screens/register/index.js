@@ -32,7 +32,6 @@ export default class Register extends Component {
 
   updateForm(value, type) {
     if (type === 'password') {
-      this.setState({ confirmPassword: '' });
       isPasswordValid(value, (key, updatedState) => {
         this.setState({
           [key]: updatedState,
@@ -43,7 +42,15 @@ export default class Register extends Component {
   }
 
   validateFields(type) {
-    const { email, password, confirmPassword } = this.state;
+    const {
+      email,
+      password,
+      confirmPassword,
+      eightPlusCharacter,
+      moreThanOneCapital,
+      moreThanOneLower,
+      moreThanOneNumber,
+    } = this.state;
     if (type === 'email') {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
@@ -53,6 +60,19 @@ export default class Register extends Component {
           });
           return 'invalid';
         }
+      }
+    } else if (type === 'password') {
+      if (
+        (password && !eightPlusCharacter) ||
+        !moreThanOneCapital ||
+        !moreThanOneLower ||
+        !moreThanOneNumber
+      ) {
+        Alert.alert('Error', 'Invalid password');
+        this.setState({
+          password: '',
+        });
+        return 'invalid';
       }
     } else if (type === 'confirmPassword') {
       if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {

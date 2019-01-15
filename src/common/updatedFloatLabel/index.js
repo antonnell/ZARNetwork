@@ -164,7 +164,6 @@ class FloatLabelTextField extends Component {
   onBlurTextInput(value, type) {
     const { validateFields, checkEmptyFields } = this.props;
     this.unsetFocus();
-
     if (type && type !== '') {
       if (value === '') {
         if (checkEmptyFields) {
