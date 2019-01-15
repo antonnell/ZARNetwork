@@ -18,6 +18,8 @@ import {
   deviceWidth,
   invalid,
   valid,
+  invalidAccNumber,
+  invalidBeneficiaryName,
 } from '../../../common/constants';
 import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
@@ -77,7 +79,7 @@ class BeneficiaryDetails extends Component {
     const { accountNumber } = this.state;
     if (type === 'accountNumber') {
       if (accountNumber !== '' && !Web3.prototype.isAddress(accountNumber)) {
-        Alert.alert('Error', 'Please enter valid account number.');
+        Alert.alert('Invalid Account Number', invalidAccNumber);
         this.setState({
           accountNumber: '',
         });
@@ -87,20 +89,20 @@ class BeneficiaryDetails extends Component {
     return valid;
   }
 
-  checkEmptyFields(type) {
-    const { name, accountNumber } = this.state;
-    if (type === 'name') {
-      Alert.alert('Error', 'Enter name!');
-    } else if (type === 'account') {
-      if (name !== '') {
-        Alert.alert('Error', 'Enter account number!');
-      }
-    } else if (type === 'reference') {
-      if (accountNumber !== '') {
-        Alert.alert('Error', 'Enter reference!');
-      }
-    }
-  }
+  // checkEmptyFields(type) {
+  //   const { name, accountNumber } = this.state;
+  //   if (type === 'name') {
+  //     Alert.alert('Error', 'Enter name!');
+  //   } else if (type === 'account') {
+  //     if (name !== '') {
+  //       Alert.alert('Error', 'Enter account number!');
+  //     }
+  //   } else if (type === 'reference') {
+  //     if (accountNumber !== '') {
+  //       Alert.alert('Error', 'Enter reference!');
+  //     }
+  //   }
+  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -124,7 +126,7 @@ class BeneficiaryDetails extends Component {
     const { navigation, beneficiaries } = this.props;
 
     if (!isValidName(beneficiaries, name, BENEFICIARY_TYPE_LIST)) {
-      Alert.alert('Error', 'Beneficiary name already exists!');
+      Alert.alert('Duplicate Name', invalidBeneficiaryName);
       return;
     }
 
@@ -311,7 +313,6 @@ class BeneficiaryDetails extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
 
             <FloatLabelTextField
@@ -330,7 +331,6 @@ class BeneficiaryDetails extends Component {
               rightTextValueStyle={styles.rightTextValueStyle}
               onPressRightBtn={this.openScanner}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
             <FloatLabelTextField
               type="reference"
@@ -343,7 +343,6 @@ class BeneficiaryDetails extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <View style={{ marginTop: deviceHeight * 0.05, alignSelf: 'center' }}>

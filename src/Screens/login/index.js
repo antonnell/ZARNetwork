@@ -13,7 +13,7 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
-import { deviceWidth, deviceHeight, invalid, valid } from '../../common/constants';
+import { deviceWidth, deviceHeight, invalid, valid, invalidEmail } from '../../common/constants';
 /**
  * Component to call login api.
  */
@@ -42,7 +42,7 @@ class Login extends Component {
     if (type === 'email') {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
-          Alert.alert('Error', 'Invalid Email');
+          Alert.alert('Invalid Email', invalidEmail);
           this.setState({
             email: '',
           });
@@ -194,7 +194,6 @@ class Login extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              // checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
 
@@ -210,7 +209,6 @@ class Login extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              // checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
 

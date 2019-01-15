@@ -10,7 +10,7 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
-import { deviceHeight, deviceWidth, invalid, valid } from '../../common/constants';
+import { deviceHeight, deviceWidth, invalid, valid, invalidEmail } from '../../common/constants';
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class ResetPassword extends Component {
 
     if (email && email !== '') {
       if (isEmailValid(email) === false) {
-        Alert.alert('Error', 'Invalid Email');
+        Alert.alert('Invalid email', invalidEmail);
         return;
       }
       this.setState({
@@ -72,7 +72,7 @@ class ResetPassword extends Component {
     if (type === 'email') {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
-          Alert.alert('Error', 'Invalid Email');
+          Alert.alert('Invalid Email', invalidEmail);
           this.setState({
             email: '',
           });

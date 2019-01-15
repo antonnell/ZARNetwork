@@ -9,7 +9,14 @@ import TitleHeader from '../../../common/TitleHeader';
 import FantomPayLogo from '../../../images/FantomPay.png';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 import Loader from '../../../common/Loader';
-import { deviceHeight, deviceWidth, invalid, valid } from '../../../common/constants';
+import {
+  deviceHeight,
+  deviceWidth,
+  invalid,
+  valid,
+  invalidPassword,
+  invalidConfirmPassword,
+} from '../../../common/constants';
 import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
 
@@ -81,10 +88,31 @@ class UpdatePassword extends Component {
    * @method validateFields : To validate text input.
    */
   validateFields(type) {
-    const { password, confirmPassword } = this.state;
-    if (type === 'confirmPassword') {
+    const {
+      password,
+      confirmPassword,
+      eightPlusCharacter,
+      moreThanOneCapital,
+      moreThanOneLower,
+      moreThanOneNumber,
+    } = this.state;
+
+    if (type === 'password') {
+      if (
+        (password && !eightPlusCharacter) ||
+        !moreThanOneCapital ||
+        !moreThanOneLower ||
+        !moreThanOneNumber
+      ) {
+        Alert.alert('Invalid Password', invalidPassword);
+        this.setState({
+          password: '',
+        });
+        return invalid;
+      }
+    } else if (type === 'confirmPassword') {
       if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
-        Alert.alert('Error', 'Password does not matched.');
+        Alert.alert('Invalid Password', invalidConfirmPassword);
         this.setState({
           confirmPassword: '',
         });
@@ -97,20 +125,20 @@ class UpdatePassword extends Component {
   /**
    * @method checkEmptyFields : To validate text input fields.
    */
-  checkEmptyFields(type) {
-    const { oldPassword, password } = this.state;
-    if (type === 'oldpassword') {
-      Alert.alert('Error', 'Enter old password!');
-    } else if (type === 'password') {
-      if (oldPassword !== '') {
-        Alert.alert('Error', 'Enter password!');
-      }
-    } else if (type === 'confirmPassword') {
-      if (password !== '') {
-        Alert.alert('Error', 'Enter confirm password!');
-      }
-    }
-  }
+  // checkEmptyFields(type) {
+  //   const { oldPassword, password } = this.state;
+  //   if (type === 'oldpassword') {
+  //     Alert.alert('Error', 'Enter old password!');
+  //   } else if (type === 'password') {
+  //     if (oldPassword !== '') {
+  //       Alert.alert('Error', 'Enter password!');
+  //     }
+  //   } else if (type === 'confirmPassword') {
+  //     if (password !== '') {
+  //       Alert.alert('Error', 'Enter confirm password!');
+  //     }
+  //   }
+  // }
 
   /**
    * @method renderLoader : To display loader indicator.
@@ -184,7 +212,6 @@ class UpdatePassword extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <View style={styles.textFieldStyle}>
@@ -199,7 +226,6 @@ class UpdatePassword extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <View style={styles.textFieldStyle}>
@@ -215,7 +241,6 @@ class UpdatePassword extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           <PasswordConstraints

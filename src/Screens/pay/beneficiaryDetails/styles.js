@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
   listStyling: {
     top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
-    left: -(deviceWidth * 0.16),
+    left: -(deviceWidth * 0.26),
     width: deviceWidth * 0.78,
     maxHeight: deviceHeight * 0.3,
   },

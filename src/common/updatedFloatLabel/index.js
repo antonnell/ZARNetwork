@@ -263,7 +263,6 @@ class FloatLabelTextField extends Component {
 
     const inputFieldSettings = this.inputFieldProp(inputType, valueType);
 
-    console.log('inputFieldSettings : ', inputFieldSettings);
     return (
       <View style={styles.container}>
         <View style={styles.viewContainer}>

@@ -10,7 +10,15 @@ import FloatLabelTextField from '../../common/updatedFloatLabel';
 import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
 
-import { deviceWidth, deviceHeight, invalid, valid } from '../../common/constants';
+import {
+  deviceWidth,
+  deviceHeight,
+  invalid,
+  valid,
+  invalidEmail,
+  invalidPassword,
+  invalidConfirmPassword,
+} from '../../common/constants';
 
 export default class Register extends Component {
   constructor(props) {
@@ -54,11 +62,11 @@ export default class Register extends Component {
     if (type === 'email') {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
-          Alert.alert('Error', 'Invalid Email');
+          Alert.alert('Invalid email', invalidEmail);
           this.setState({
             email: '',
           });
-          return 'invalid';
+          return invalid;
         }
       }
     } else if (type === 'password') {
@@ -68,15 +76,15 @@ export default class Register extends Component {
         !moreThanOneLower ||
         !moreThanOneNumber
       ) {
-        Alert.alert('Error', 'Invalid password');
+        Alert.alert('Invalid Password', invalidPassword);
         this.setState({
           password: '',
         });
-        return 'invalid';
+        return invalid;
       }
     } else if (type === 'confirmPassword') {
       if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
-        Alert.alert('Error', 'Password does not matched.');
+        Alert.alert('Invalid Password', invalidConfirmPassword);
         this.setState({
           confirmPassword: '',
         });
@@ -86,28 +94,28 @@ export default class Register extends Component {
     return valid;
   }
 
-  checkEmptyFields(type) {
-    const { firstName, lastName, email, password } = this.state;
-    if (type === 'firstname') {
-      Alert.alert('Error', 'Enter first name!');
-    } else if (type === 'lastname') {
-      if (firstName !== '') {
-        Alert.alert('Error', 'Enter last name!');
-      }
-    } else if (type === 'email') {
-      if (lastName !== '') {
-        Alert.alert('Error', 'Enter email!');
-      }
-    } else if (type === 'password') {
-      if (email !== '' && isEmailValid(email)) {
-        Alert.alert('Error', 'Enter password!');
-      }
-    } else if (type === 'confirmPassword') {
-      if (password !== '') {
-        Alert.alert('Error', 'Enter confirm password!');
-      }
-    }
-  }
+  // checkEmptyFields(type) {
+  //   const { firstName, lastName, email, password } = this.state;
+  //   if (type === 'firstname') {
+  //     Alert.alert('Error', 'Enter first name!');
+  //   } else if (type === 'lastname') {
+  //     if (firstName !== '') {
+  //       Alert.alert('Error', 'Enter last name!');
+  //     }
+  //   } else if (type === 'email') {
+  //     if (lastName !== '') {
+  //       Alert.alert('Error', 'Enter email!');
+  //     }
+  //   } else if (type === 'password') {
+  //     if (email !== '' && isEmailValid(email)) {
+  //       Alert.alert('Error', 'Enter password!');
+  //     }
+  //   } else if (type === 'confirmPassword') {
+  //     if (password !== '') {
+  //       Alert.alert('Error', 'Enter confirm password!');
+  //     }
+  //   }
+  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -120,11 +128,11 @@ export default class Register extends Component {
     const { navigation } = this.props;
     const { email, password, firstName, confirmPassword, lastName } = this.state;
     if (isEmailValid(email) === false) {
-      Alert.alert('Error', 'Invalid Email');
+      Alert.alert('Invalid Email', invalidEmail);
       return;
     }
     if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
-      Alert.alert('Error', 'Password does not matched.');
+      Alert.alert('Invalid Password', invalidConfirmPassword);
       return;
     }
     navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
@@ -200,7 +208,6 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           {/* Last Name field */}
@@ -216,7 +223,6 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           {/* EMAIL field */}
@@ -232,7 +238,6 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           {/* Password field */}
@@ -248,7 +253,6 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           {/* confirm Password field */}
@@ -265,7 +269,6 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
           {/* Password Match */}

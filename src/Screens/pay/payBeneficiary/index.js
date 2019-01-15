@@ -19,7 +19,15 @@ import AccountType from '../../../images/AccountType.png';
 import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
 
 // constants
-import { WALLET_LIST, deviceWidth, deviceHeight, invalid, valid } from '../../../common/constants';
+import {
+  WALLET_LIST,
+  deviceWidth,
+  deviceHeight,
+  invalid,
+  valid,
+  invalidAmount,
+  insufficientBalance,
+} from '../../../common/constants';
 
 class PayBeneficiary extends Component {
   constructor(props) {
@@ -75,7 +83,6 @@ class PayBeneficiary extends Component {
     this.handleWalletList = this.handleWalletList.bind(this);
     this.toggleWalletList = this.toggleWalletList.bind(this);
     this.validateFields = this.validateFields.bind(this);
-    this.checkEmptyFields = this.checkEmptyFields.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -92,19 +99,6 @@ class PayBeneficiary extends Component {
       beneficiary_uuid: navigation.state.params.selectedBeneficiary.uuid,
     });
   }
-
-  // validate(type) {
-  //   if (type === 'number') {
-  //     // this.setState({
-  //     //   number: '',
-  //     // });
-  //   }
-  //   if (type === 'reference') {
-  //     this.setState({
-  //       reference: '',
-  //     });
-  //   }
-  // }
 
   updateToggleValue(type) {
     const { normalPaymentToggle, futurePaymentToggle } = this.state;
@@ -152,14 +146,14 @@ class PayBeneficiary extends Component {
     if (type === 'number') {
       // eslint-disable-next-line no-restricted-globals
       if (isNaN(number)) {
-        Alert.alert('Error', 'Amount field should be number!');
+        Alert.alert('Invalid Amount', invalidAmount);
         this.setState({
           number: '',
         });
         return invalid;
       }
       if (number > balance) {
-        Alert.alert('Error', 'Insufficient balance!');
+        Alert.alert('Insufficient Balance', insufficientBalance);
         this.setState({
           number: '',
         });
@@ -170,15 +164,15 @@ class PayBeneficiary extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  checkEmptyFields(type) {
-    // const { number , reference} = this.state;
-    if (type === 'number') {
-      Alert.alert('Error', 'Enter amount!');
-    }
-    //  else if (type === 'reference') {
-    //   Alert.alert('Error', 'Enter reference!');
-    // }
-  }
+  // checkEmptyFields(type) {
+  // const { number , reference} = this.state;
+  // if (type === 'number') {
+  //   Alert.alert('Error', 'Enter amount!');
+  // }
+  //  else if (type === 'reference') {
+  //   Alert.alert('Error', 'Enter reference!');
+  // }
+  // }
 
   toggleWalletList() {
     const { openWalletList } = this.state;
@@ -313,7 +307,6 @@ class PayBeneficiary extends Component {
               textFieldSize={deviceWidth * 0.73}
               imageType="amount"
               validateFields={this.validateFields}
-              checkEmptyFields={this.checkEmptyFields}
             />
             <View>
               <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
@@ -331,7 +324,6 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validate={this.validate}
-              checkEmptyFields={this.checkEmptyFields}
             />
           </View>
           <TitleCard
