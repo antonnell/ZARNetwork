@@ -1,7 +1,7 @@
 /* eslint-disable */
 // libraries
 import React, { Component } from 'react';
-import { Text, View, TextInput, Animated, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { Text, View, TextInput, Animated, TouchableOpacity, Image } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Reference from '../../images/Reference.png';
 import Email from '../../images/Email.png';
@@ -13,9 +13,7 @@ import Wallet from '../../images/wallet.png';
 import UserImg from '../../images/User.png';
 // Styling
 import styles from './styles';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceHeight, deviceWidth, invalid, valid } from '../../common/constants';
 
 /**
  * @class FloatingLabel : For label floating with text input.
@@ -173,23 +171,14 @@ class FloatLabelTextField extends Component {
           checkEmptyFields(type);
         }
       } else {
+        let status = '';
         if (validateFields) {
-          validateFields(type);
-        }
-        // if (type === 'confirmPassword') {
-        //   this.setState({
-        //     text: '',
-        //   });
-        // }
-        if (type === 'accountNumber') {
-          this.setState({
-            text: '',
-          });
-        }
-        if (type === 'number') {
-          this.setState({
-            text: '',
-          });
+          status = validateFields(type);
+          if (status === invalid) {
+            this.setState({
+              text: '',
+            });
+          }
         }
       }
     }

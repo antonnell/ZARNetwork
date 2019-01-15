@@ -1,6 +1,7 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, Alert, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -18,7 +19,7 @@ import AccountType from '../../../images/AccountType.png';
 import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
 
 // constants
-import { WALLET_LIST, deviceWidth, deviceHeight } from '../../../common/constants';
+import { WALLET_LIST, deviceWidth, deviceHeight, invalid, valid } from '../../../common/constants';
 
 class PayBeneficiary extends Component {
   constructor(props) {
@@ -155,13 +156,17 @@ class PayBeneficiary extends Component {
         this.setState({
           number: '',
         });
-      } else if (number > balance) {
+        return invalid;
+      }
+      if (number > balance) {
         Alert.alert('Error', 'Insufficient balance!');
         this.setState({
           number: '',
         });
+        return invalid;
       }
     }
+    return valid;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -180,6 +185,13 @@ class PayBeneficiary extends Component {
     this.setState({
       openWalletList: !openWalletList,
     });
+  }
+
+  /**
+   * @method handleCloseDropdown : To close wallet list dropdown on clicking outside dropdown.
+   */
+  handleCloseDropdown() {
+    this.setState({ openWalletList: false });
   }
 
   render() {
@@ -226,9 +238,16 @@ class PayBeneficiary extends Component {
     if (accId !== '' && number !== '' && reference !== '') {
       isClickable = true;
     }
-
+    let ParentView = View;
+    if (openWalletList) {
+      ParentView = TouchableOpacity;
+    }
     return (
-      <View style={styles.Container}>
+      <ParentView
+        style={styles.Container}
+        onPress={() => this.handleCloseDropdown()}
+        activeOpacity={1}
+      >
         <StatusBar backgroundColor="black" />
         <TitleHeader
           iconName="keyboard-arrow-left"
@@ -237,7 +256,7 @@ class PayBeneficiary extends Component {
           onBtnPress={() => navigation.goBack()}
         />
         {/* header */}
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -355,8 +374,8 @@ class PayBeneficiary extends Component {
           </View>
 
           <View style={{ height: deviceHeight * 0.1 }} />
-        </ScrollView>
-      </View>
+        </KeyboardAwareScrollView>
+      </ParentView>
     );
   }
 }

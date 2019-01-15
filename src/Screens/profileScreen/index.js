@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, StatusBar, Alert } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import TitleHeader from '../../common/TitleHeader';
 import ProfileInfo from '../../common/profileInfo';
@@ -12,6 +13,8 @@ import {
   deviceWidth,
   ImageIconType,
   MaterialIconsType,
+  invalid,
+  valid,
 } from '../../common/constants';
 import { isEmailValid, getAccountIcon, getFullName } from '../../utility';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
@@ -50,9 +53,14 @@ class UserProfile extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
+          return invalid;
         }
       }
     }
+    return valid;
   }
 
   checkEmptyFields(type) {
@@ -147,7 +155,7 @@ class UserProfile extends Component {
           rightIconType={rightIconType}
           onRightBtnPress={this.editData}
         />
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -214,7 +222,7 @@ class UserProfile extends Component {
               <DesignButton name="SAVE" callMethod={this.handleLogout} isClickable />
             )}
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }

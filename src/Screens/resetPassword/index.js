@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
@@ -9,7 +10,7 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
-import { deviceHeight, deviceWidth } from '../../common/constants';
+import { deviceHeight, deviceWidth, invalid, valid } from '../../common/constants';
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class ResetPassword extends Component {
 
     if (email && email !== '') {
       if (isEmailValid(email) === false) {
-        // Alert.alert('Error', 'Invalid Email');
+        Alert.alert('Error', 'Invalid Email');
         return;
       }
       this.setState({
@@ -72,23 +73,14 @@ class ResetPassword extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
+          return invalid;
         }
       }
     }
-  }
-
-  /**
-   * @method checkEmptyFields : To validate email.
-   */
-  checkEmptyFields(type) {
-    const { email } = this.state;
-    if (type === 'email') {
-      Alert.alert('Error', 'Enter email!');
-    } else if (type === 'password') {
-      if (email !== '' && isEmailValid(email)) {
-        Alert.alert('Error', 'Enter password!');
-      }
-    }
+    return valid;
   }
 
   /**
@@ -117,47 +109,55 @@ class ResetPassword extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
-        <View style={styles.fantomPayLogoContainer}>
-          <Image
-            source={FantomPayLogo}
-            style={styles.fantomPayLogoImageStyle}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.mainTextViewStyle}>
-          <Text style={styles.mainTextStyle}>Forgot your password?</Text>
-          <View style={styles.subTextViewStyle}>
-            <Text style={styles.subTextStyle}>
-              Enter your email below to receive your password reset instructions
-            </Text>
+        <KeyboardAwareScrollView
+          style={{
+            height: deviceHeight,
+            width: deviceWidth,
+          }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center' }}
+        >
+          <View style={styles.fantomPayLogoContainer}>
+            <Image
+              source={FantomPayLogo}
+              style={styles.fantomPayLogoImageStyle}
+              resizeMode="contain"
+            />
           </View>
-        </View>
+          <View style={styles.mainTextViewStyle}>
+            <Text style={styles.mainTextStyle}>Forgot your password?</Text>
+            <View style={styles.subTextViewStyle}>
+              <Text style={styles.subTextStyle}>
+                Enter your email below to receive your password reset instructions
+              </Text>
+            </View>
+          </View>
 
-        <View style={styles.emailTextFieldStyle}>
-          <FloatLabelTextField
-            type="email"
-            inputType="email"
-            valueType="email"
-            placeholder="Email"
-            autoCorrect={false}
-            value={email}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
-        </View>
+          <View style={styles.emailTextFieldStyle}>
+            <FloatLabelTextField
+              type="email"
+              inputType="email"
+              valueType="email"
+              placeholder="Email"
+              autoCorrect={false}
+              value={email}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+            />
+          </View>
 
-        <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton
-            name="RESET PASSWORD"
-            callMethod={this.handleResetPassword}
-            isClickable={isClickable}
-          />
-        </View>
+          <View style={{ marginTop: deviceHeight * 0.08 }}>
+            <DesignButton
+              name="RESET PASSWORD"
+              callMethod={this.handleResetPassword}
+              isClickable={isClickable}
+            />
+          </View>
 
-        {this.renderLoader()}
+          {this.renderLoader()}
+        </KeyboardAwareScrollView>
       </View>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Alert, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import DesignButton from '../../../common/Button';
@@ -8,7 +9,7 @@ import TitleHeader from '../../../common/TitleHeader';
 import FantomPayLogo from '../../../images/FantomPay.png';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 import Loader from '../../../common/Loader';
-import { deviceHeight, deviceWidth } from '../../../common/constants';
+import { deviceHeight, deviceWidth, invalid, valid } from '../../../common/constants';
 import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
 
@@ -88,8 +89,10 @@ class UpdatePassword extends Component {
         this.setState({
           confirmPassword: '',
         });
+        return invalid;
       }
     }
+    return valid;
   }
 
   /**
@@ -151,7 +154,7 @@ class UpdatePassword extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -232,7 +235,7 @@ class UpdatePassword extends Component {
           </View>
 
           {this.renderLoader()}
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }

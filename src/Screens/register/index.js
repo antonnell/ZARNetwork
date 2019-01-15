@@ -10,7 +10,7 @@ import FloatLabelTextField from '../../common/updatedFloatLabel';
 import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
 
-import { deviceWidth, deviceHeight } from '../../common/constants';
+import { deviceWidth, deviceHeight, invalid, valid } from '../../common/constants';
 
 export default class Register extends Component {
   constructor(props) {
@@ -48,16 +48,22 @@ export default class Register extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
+          return 'invalid';
         }
       }
     } else if (type === 'confirmPassword') {
       if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
         Alert.alert('Error', 'Password does not matched.');
-        // this.setState({
-        //   confirmPassword: '',
-        // });
+        this.setState({
+          confirmPassword: '',
+        });
+        return invalid;
       }
     }
+    return valid;
   }
 
   checkEmptyFields(type) {

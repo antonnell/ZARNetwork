@@ -3,6 +3,7 @@ import { View, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Web3 from 'web3';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 
 import DesignButton from '../../../common/Button';
@@ -15,6 +16,8 @@ import {
   BENEFICIARY_TYPE_LIST,
   deviceHeight,
   deviceWidth,
+  invalid,
+  valid,
 } from '../../../common/constants';
 import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
@@ -78,8 +81,10 @@ class BeneficiaryDetails extends Component {
         this.setState({
           accountNumber: '',
         });
+        return invalid;
       }
     }
+    return valid;
   }
 
   checkEmptyFields(type) {
@@ -253,95 +258,104 @@ class BeneficiaryDetails extends Component {
           onBtnPress={this.handleGoBack}
           isBackArrow={isBackArrowPresent}
         />
-        <View style={{ zIndex: openWalletList ? 99 : 0 }}>
-          <TitleCard
-            icon={AccountType}
-            titleCardMainViewStyle={styles.titleCardMainViewStyle}
-            titleCardImageStyle={styles.titleCardImageStyle}
-            titleCardTextStyle={styles.titleCardTextStyle}
-            titleMaterialIconStyle={
-              {
-                // marginLeft: deviceWidth < 380 ? deviceWidth * 0.2 : deviceWidth * 0.3,
-              }
-            }
-            // text="Account Type"
-            text={selectedWallet}
-            onPress={this.toggleWalletList}
-          />
-          {openWalletList && (
-            <ListCard
-              selectedType={accId}
-              data={userWalletDetail}
-              handleList={item => this.handleWalletList(item)}
-              type={WALLET_LIST}
-              listStyle={styles.listStyling}
-            />
-          )}
-        </View>
-
-        <View
+        <KeyboardAwareScrollView
           style={{
-            marginTop: deviceHeight * 0.07,
-            width: deviceWidth * 0.8,
-            alignSelf: 'center',
+            height: deviceHeight,
+            width: deviceWidth,
           }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center' }}
         >
-          <FloatLabelTextField
-            type="name"
-            inputType="text"
-            valueType="name"
-            placeholder="Name"
-            autoCorrect={false}
-            value={name}
-            // maxLength={20}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
+          <View style={{ zIndex: openWalletList ? 99 : 0 }}>
+            <TitleCard
+              icon={AccountType}
+              titleCardMainViewStyle={styles.titleCardMainViewStyle}
+              titleCardImageStyle={styles.titleCardImageStyle}
+              titleCardTextStyle={styles.titleCardTextStyle}
+              titleMaterialIconStyle={
+                {
+                  // marginLeft: deviceWidth < 380 ? deviceWidth * 0.2 : deviceWidth * 0.3,
+                }
+              }
+              // text="Account Type"
+              text={selectedWallet}
+              onPress={this.toggleWalletList}
+            />
+            {openWalletList && (
+              <ListCard
+                selectedType={accId}
+                data={userWalletDetail}
+                handleList={item => this.handleWalletList(item)}
+                type={WALLET_LIST}
+                listStyle={styles.listStyling}
+              />
+            )}
+          </View>
 
-          <FloatLabelTextField
-            type="accountNumber"
-            placeholder="Account Number"
-            inputType="text"
-            valueType="text"
-            autoCorrect={false}
-            value={accountNumber}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={isShowRightText ? deviceWidth * 0.42 : deviceWidth * 0.73}
-            isShowRightText={isShowRightText}
-            rightTextStyle={styles.rightTextStyle}
-            rightTextValue="Scan QR Code"
-            rightTextValueStyle={styles.rightTextValueStyle}
-            onPressRightBtn={this.openScanner}
-            validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
-          <FloatLabelTextField
-            type="reference"
-            inputType="text"
-            valueType="text"
-            placeholder="Reference"
-            autoCorrect={false}
-            value={reference}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validateFields={type => this.validateFields(type)}
-            checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
-        </View>
-        <View style={{ marginTop: deviceHeight * 0.05, alignSelf: 'center' }}>
-          <DesignButton
-            name="DONE"
-            // name="ADD"
-            callMethod={this.handleAddBeneficiary}
-            isClickable={isClickable}
-          />
-        </View>
-        {this.renderLoader()}
+          <View
+            style={{
+              marginTop: deviceHeight * 0.07,
+              width: deviceWidth * 0.8,
+              alignSelf: 'center',
+            }}
+          >
+            <FloatLabelTextField
+              type="name"
+              inputType="text"
+              valueType="name"
+              placeholder="Name"
+              autoCorrect={false}
+              value={name}
+              // maxLength={20}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+
+            <FloatLabelTextField
+              type="accountNumber"
+              placeholder="Account Number"
+              inputType="text"
+              valueType="text"
+              autoCorrect={false}
+              value={accountNumber}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={isShowRightText ? deviceWidth * 0.42 : deviceWidth * 0.73}
+              isShowRightText={isShowRightText}
+              rightTextStyle={styles.rightTextStyle}
+              rightTextValue="Scan QR Code"
+              rightTextValueStyle={styles.rightTextValueStyle}
+              onPressRightBtn={this.openScanner}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+            <FloatLabelTextField
+              type="reference"
+              inputType="text"
+              valueType="text"
+              placeholder="Reference"
+              autoCorrect={false}
+              value={reference}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+              checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+          </View>
+          <View style={{ marginTop: deviceHeight * 0.05, alignSelf: 'center' }}>
+            <DesignButton
+              name="DONE"
+              // name="ADD"
+              callMethod={this.handleAddBeneficiary}
+              isClickable={isClickable}
+            />
+          </View>
+          {this.renderLoader()}
+        </KeyboardAwareScrollView>
       </ParentView>
     );
   }

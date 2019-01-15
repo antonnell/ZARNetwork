@@ -83,14 +83,6 @@ class CreateWallet extends Component {
     this.setState({ [type]: value });
   }
 
-  // validate(type) {
-  //   if (type === 'name') {
-  //     this.setState({
-  //       name: '',
-  //     });
-  //   }
-  // }
-
   /**
    * @method handleCreateAccount : To create new wallet account.
    *
@@ -228,7 +220,6 @@ class CreateWallet extends Component {
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              // validateFields={type=>this.validateFields(type)}
               checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>

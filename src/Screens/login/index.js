@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
@@ -12,7 +13,7 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
-import { deviceWidth, deviceHeight } from '../../common/constants';
+import { deviceWidth, deviceHeight, invalid, valid } from '../../common/constants';
 /**
  * Component to call login api.
  */
@@ -42,9 +43,14 @@ class Login extends Component {
       if (email !== '' && email !== undefined) {
         if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
+          this.setState({
+            email: '',
+          });
+          return invalid;
         }
       }
     }
+    return valid;
   }
 
   // checkEmptyFields(type) {
@@ -157,68 +163,78 @@ class Login extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
-        <View style={styles.fantomPayLogoContainer}>
-          <Image
-            source={FantomPayLogo}
-            style={styles.fantomPayLogoImageStyle}
-            resizeMode="contain"
-          />
-        </View>
-        {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
+        <KeyboardAwareScrollView
+          style={{
+            height: deviceHeight,
+            width: deviceWidth,
+          }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center' }}
+        >
+          <View style={styles.fantomPayLogoContainer}>
+            <Image
+              source={FantomPayLogo}
+              style={styles.fantomPayLogoImageStyle}
+              resizeMode="contain"
+            />
+          </View>
+          {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
         </View> */}
 
-        <View style={styles.emailTextFieldStyle}>
-          <FloatLabelTextField
-            type="email"
-            inputType="email"
-            valueType="email"
-            placeholder="Email"
-            autoCorrect={false}
-            value={email}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validateFields={type => this.validateFields(type)}
-            // checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
-        </View>
+          <View style={styles.emailTextFieldStyle}>
+            <FloatLabelTextField
+              type="email"
+              inputType="email"
+              valueType="email"
+              placeholder="Email"
+              autoCorrect={false}
+              value={email}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+              // checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+          </View>
 
-        <View style={styles.passwordTextFieldStyle}>
-          <FloatLabelTextField
-            type="password"
-            inputType="text"
-            valueType="password"
-            placeholder="Password"
-            autoCorrect={false}
-            value={password}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validateFields={type => this.validateFields(type)}
-            // checkEmptyFields={type => this.checkEmptyFields(type)}
-          />
-        </View>
+          <View style={styles.passwordTextFieldStyle}>
+            <FloatLabelTextField
+              type="password"
+              inputType="text"
+              valueType="password"
+              placeholder="Password"
+              autoCorrect={false}
+              value={password}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+              // checkEmptyFields={type => this.checkEmptyFields(type)}
+            />
+          </View>
 
-        <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton
-            name="Sign In"
-            callMethod={this.handleUserLogin}
-            isClickable={isClickable}
-          />
-        </View>
-        <TouchableOpacity
-          style={{ marginTop: deviceHeight * 0.03 }}
-          onPress={this.handleForgotPassword}
-        >
-          <Text style={styles.textStyle}>Forgot Password</Text>
-        </TouchableOpacity>
+          <View style={{ marginTop: deviceHeight * 0.08 }}>
+            <DesignButton
+              name="Sign In"
+              callMethod={this.handleUserLogin}
+              isClickable={isClickable}
+            />
+          </View>
+          <TouchableOpacity
+            style={{ marginTop: deviceHeight * 0.03 }}
+            onPress={this.handleForgotPassword}
+          >
+            <Text style={styles.textStyle}>Forgot Password</Text>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
         <TouchableOpacity
           style={styles.bottomTextViewStyle}
           onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
         </TouchableOpacity>
+
         {this.renderLoader()}
       </View>
     );
