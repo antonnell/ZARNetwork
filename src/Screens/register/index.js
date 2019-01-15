@@ -286,7 +286,7 @@ export default class Register extends Component {
           {/* Login text */}
           <View style={styles.loginButtonContainer}>
             <Text style={[styles.textStyle, { color: 'rgb(3,3,3)' }]}>Already registered?</Text>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.textStyle}> Sign In</Text>
             </TouchableOpacity>
           </View>
