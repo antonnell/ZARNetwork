@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "231567589892",
+    "firebase_url": "https://fantompay-ed985.firebaseio.com",
+    "project_id": "fantompay-ed985",
+    "storage_bucket": "fantompay-ed985.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231567589892:android:a1266d9f7b2ea10e",
+        "android_client_info": {
+          "package_name": "com.fantom.pay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231567589892-tve2mqckevkkvp20uhj15e6u1sdvu8at.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fantom.pay",
+            "certificate_hash": "cfa46f5d6ca9130106f0e1e960705ecd3d376538"
+          }
+        },
+        {
+          "client_id": "231567589892-2fqkc6ng7po9qjau41serads4f8up597.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHuRHwFIHaZymEYmXUwbutD_nOLr3mrLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231567589892-2fqkc6ng7po9qjau41serads4f8up597.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fantom.pay"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDpsNHpnVL9j9SF2TDR4LBWnjH6qFhgbRY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>231567589892</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fantom.pay</string>
+	<key>PROJECT_ID</key>
+	<string>fantompay-ed985</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fantompay-ed985.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:231567589892:ios:a1266d9f7b2ea10e</string>
+	<key>DATABASE_URL</key>
+	<string>https://fantompay-ed985.firebaseio.com</string>
+</dict>
+</plist>
