@@ -8,6 +8,7 @@ import userWalletReducer from './userWallet/reducer';
 import userBeneficiaryReducer from './userBeneficiary/reducer';
 import userTransactionReducer from './userTransaction/reducer';
 import payRequestReducer from './paymentRequest/reducer';
+import otpReducer from './otp/reducer';
 
 const rootReducer = combineReducers({
   userAuthReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   userBeneficiaryReducer,
   userTransactionReducer,
   payRequestReducer,
+  otpReducer,
 });
 
 export default rootReducer;

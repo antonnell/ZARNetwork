@@ -43,6 +43,10 @@ export const GET_MERCHANT_PAY_REQUEST = 'GET_MERCHANT_PAY_REQUEST';
 export const _SUCCESS = '_SUCCESS';
 export const _FAIL = '_FAIL';
 
+/** for Otp */
+export const SENDOTP = 'SENDOTP';
+export const VALIDATEOTP = 'VALIDATEOTP';
+
 /**
  * Types for encryption :-
  */
@@ -75,3 +79,6 @@ export const payRequestsUrl = '/v1/requests';
 export const accountPayRequestsUrl = `${payRequestsUrl}/accounts`;
 export const uuidPayRequestsUrl = `${payRequestsUrl}`;
 export const merchantPayRequestsUrl = '/v0/requests';
+
+export const sendOtpUrl = '/v1/sendOtp';
+export const validateOtpUrl = '/v1/validateOtp';

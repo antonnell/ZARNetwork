@@ -5,6 +5,8 @@ import firebase from 'react-native-firebase';
 import OtpVerification from './otpVerification';
 import GenerateOTP from './generateOTP';
 
+import { sendOtpApi } from '../../controllers/api/otp';
+
 const config = {
   appId: '1:231567589892:ios:a1266d9f7b2ea10e',
   clientId: '231567589892-kgkk4kemko7v6bv06f3kfo544li6j44l.apps.googleusercontent.com',
@@ -59,13 +61,39 @@ export default class PhoneAuthTest extends Component {
 
   signIn() {
     const { phoneNumber } = this.state;
-    if (phoneNumber.length > 3) {
-      setTimeout(() => {
-        this.sendVerificationCode();
-      }, 1000);
-    } else {
-      Alert.alert('Please Enter the phone number.');
+    //Alert.alert('Please Enter the phone number.');
+
+    const payload = {
+      mobile_number: phoneNumber,
+    };
+    this.setState({
+      isLoading: true,
+    });
+    if (phoneNumber) {
+      sendOtpApi(payload)
+        .then(res => {
+          this.setState({
+            isLoading: false,
+          });
+          if (res && res.payload && res.payload.status === 200) {
+            console.log(res.payload, 'res.payload');
+          }
+        })
+        .catch(error => {
+          this.setState({
+            isLoading: false,
+          });
+          Alert.alert('Error', error);
+        });
     }
+
+    // if (phoneNumber.length > 3) {
+    //   setTimeout(() => {
+    //     this.sendVerificationCode();
+    //   }, 1000);
+    // } else {
+    //   Alert.alert('Please Enter the phone number.');
+    // }
   }
   sendVerificationCode() {
     const { phoneNumber } = this.state;

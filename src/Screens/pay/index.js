@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { Component } from 'react';
 import { View, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types';
@@ -125,17 +124,14 @@ class Pay extends Component {
 Pay.defaultProps = {
   navigation: null,
   userWalletDetail: [],
-  beneficiaries: [],
 };
 
 Pay.propTypes = {
   navigation: PropTypes.shape({}),
-  beneficiaries: PropTypes.arrayOf(PropTypes.any),
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
-  beneficiaries: state.userBeneficiaryReducer.beneficiaries,
   transactions: state.userTransactionReducer.transactions,
   userWalletDetail: state.userWalletReducer.wallets,
 });
