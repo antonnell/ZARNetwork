@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
 import DesignButton from '../../common/Button';
 import FantomPayLogo from '../../images/FantomPay.png';
-import FloatLabelTextField from '../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../common/updatedFloatLabel';
+import { isEmailValid, isPasswordValid } from '../../utility/index';
+import PasswordConstraints from '../../common/PasswordConstraints';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import {
+  deviceWidth,
+  deviceHeight,
+  invalid,
+  valid,
+  invalidEmail,
+  invalidPassword,
+  invalidConfirmPassword,
+} from '../../common/constants';
 
 export default class Register extends Component {
   constructor(props) {
@@ -27,6 +27,8 @@ export default class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      firstName: '',
+      lastName: '',
       eightPlusCharacter: false,
       moreThanOneCapital: false,
       moreThanOneLower: false,
@@ -36,83 +38,84 @@ export default class Register extends Component {
     this.handleGoBack = this.handleGoBack.bind(this);
   }
 
-  checkConstraints(passwordVal) {
-    const regOneCapital = /^(?=.*[A-Z]).{1,}$/;
-    const regOneLower = /^(?=.*[a-z]).{1,}$/;
-    const regOneNumber = /^(?=.*\d).{1,}$/;
-    if (passwordVal !== '') {
-      if (passwordVal.length >= 8) {
-        this.setState({ eightPlusCharacter: true });
-      } else {
-        this.setState({ eightPlusCharacter: false });
-      }
-
-      if (regOneCapital.test(passwordVal)) {
-        this.setState({ moreThanOneCapital: true });
-      } else {
-        this.setState({ moreThanOneCapital: false });
-      }
-
-      if (regOneLower.test(passwordVal)) {
-        this.setState({ moreThanOneLower: true });
-      } else {
-        this.setState({ moreThanOneLower: false });
-      }
-
-      if (regOneNumber.test(passwordVal)) {
-        this.setState({ moreThanOneNumber: true });
-      } else {
-        this.setState({ moreThanOneNumber: false });
-      }
-    } else {
-      // if password length is 0
-      this.setState({
-        moreThanOneNumber: false,
-        moreThanOneLower: false,
-        moreThanOneCapital: false,
-        eightPlusCharacter: false,
-      });
-    }
-  }
-
   updateForm(value, type) {
     if (type === 'password') {
-      this.setState({ confirmPassword: '' });
-      this.checkConstraints(value);
+      isPasswordValid(value, (key, updatedState) => {
+        this.setState({
+          [key]: updatedState,
+        });
+      });
     }
     this.setState({ [type]: value });
   }
 
-  validate(type) {
-    const { email, password, confirmPassword } = this.state;
+  validateFields(type) {
+    const {
+      email,
+      password,
+      confirmPassword,
+      eightPlusCharacter,
+      moreThanOneCapital,
+      moreThanOneLower,
+      moreThanOneNumber,
+    } = this.state;
     if (type === 'email') {
-      this.setState({
-        email: '',
-      });
+      if (email !== '' && email !== undefined) {
+        if (isEmailValid(email) === false) {
+          Alert.alert('Invalid email', invalidEmail);
+          this.setState({
+            email: '',
+          });
+          return invalid;
+        }
+      }
     } else if (type === 'password') {
-      if (email === '') {
-        // Alert.alert('Error', 'Enter Email first');
-        // this.setState({
-        //   password: '',
-        // });
+      if (
+        (password && !eightPlusCharacter) ||
+        !moreThanOneCapital ||
+        !moreThanOneLower ||
+        !moreThanOneNumber
+      ) {
+        Alert.alert('Invalid Password', invalidPassword);
+        this.setState({
+          password: '',
+        });
+        return invalid;
       }
     } else if (type === 'confirmPassword') {
-      if (email === '') {
-        // Alert.alert('Error', 'Enter Email first');
-        // this.setState({
-        //   confirmPassword: '',
-        // });
-      } else if (password === '') {
-        Alert.alert('Error', 'Enter Password first');
-        this.setState({ confirmPassword: '' });
-      } else if (password !== confirmPassword) {
-        Alert.alert('Error', 'Password does not match..');
+      if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
+        Alert.alert('Invalid Password', invalidConfirmPassword);
         this.setState({
           confirmPassword: '',
         });
+        return invalid;
       }
     }
+    return valid;
   }
+
+  // checkEmptyFields(type) {
+  //   const { firstName, lastName, email, password } = this.state;
+  //   if (type === 'firstname') {
+  //     Alert.alert('Error', 'Enter first name!');
+  //   } else if (type === 'lastname') {
+  //     if (firstName !== '') {
+  //       Alert.alert('Error', 'Enter last name!');
+  //     }
+  //   } else if (type === 'email') {
+  //     if (lastName !== '') {
+  //       Alert.alert('Error', 'Enter email!');
+  //     }
+  //   } else if (type === 'password') {
+  //     if (email !== '' && isEmailValid(email)) {
+  //       Alert.alert('Error', 'Enter password!');
+  //     }
+  //   } else if (type === 'confirmPassword') {
+  //     if (password !== '') {
+  //       Alert.alert('Error', 'Enter confirm password!');
+  //     }
+  //   }
+  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -123,63 +126,16 @@ export default class Register extends Component {
 
   nextBtnPressed() {
     const { navigation } = this.props;
-    const { email, password } = this.state;
-    navigation.navigate('Phone', { emailId: email, password });
-  }
-
-  renderPasswordContraintsContainer() {
-    return (
-      <View style={{ marginTop: deviceHeight * 0.06 }}>
-        <View style={styles.passwordConstraints}>
-          {this.renderConstraintText('8+ characters')}
-          <View style={{ width: deviceWidth * 0.03 }} />
-          {this.renderConstraintText('1+ Capital letter')}
-        </View>
-
-        <View style={[styles.passwordConstraints, { marginTop: deviceHeight * 0.03 }]}>
-          {this.renderConstraintText('1+ Lower case letter')}
-          <View style={{ width: deviceWidth * 0.03 }} />
-          {this.renderConstraintText('1+ Number')}
-        </View>
-      </View>
-    );
-  }
-
-  renderConstraintText(textVal) {
-    const {
-      eightPlusCharacter,
-      moreThanOneCapital,
-      moreThanOneLower,
-      moreThanOneNumber,
-    } = this.state;
-    let iconName = 'close';
-
-    let iconColor = 'rgb(245,0,0)';
-
-    let textColor = 'rgba(3,3,3,0.5)';
-    if (textVal === '8+ characters' && eightPlusCharacter) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Capital letter' && moreThanOneCapital) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Lower case letter' && moreThanOneLower) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
-    } else if (textVal === '1+ Number' && moreThanOneNumber) {
-      iconName = 'check';
-      iconColor = 'rgb(84,154,236)';
-      textColor = 'rgba(3,3,3,1)';
+    const { email, password, firstName, confirmPassword, lastName } = this.state;
+    if (isEmailValid(email) === false) {
+      Alert.alert('Invalid Email', invalidEmail);
+      return;
     }
-    return (
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <MaterialIcons name={iconName} color={iconColor} size={deviceWidth < 375 ? 14 : 18} />
-        <Text style={[styles.constraintsTextStyle, { color: textColor }]}>{textVal}</Text>
-      </View>
-    );
+    if (password !== '' && confirmPassword !== '' && password !== confirmPassword) {
+      Alert.alert('Invalid Password', invalidConfirmPassword);
+      return;
+    }
+    navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
   }
 
   render() {
@@ -189,12 +145,16 @@ export default class Register extends Component {
       email,
       password,
       confirmPassword,
+      firstName,
+      lastName,
       eightPlusCharacter,
       moreThanOneCapital,
       moreThanOneLower,
       moreThanOneNumber,
     } = this.state;
     if (
+      firstName !== '' &&
+      lastName !== '' &&
       email !== '' &&
       password !== '' &&
       confirmPassword !== '' &&
@@ -218,7 +178,7 @@ export default class Register extends Component {
           onBtnPress={this.handleGoBack}
         />
 
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -235,47 +195,89 @@ export default class Register extends Component {
             />
           </View>
 
+          {/* First Name field */}
+          <View style={styles.textFieldStyle}>
+            <FloatLabelTextField
+              type="firstName"
+              inputType="text"
+              valueType="name"
+              placeholder="First Name"
+              autoCorrect={false}
+              value={firstName}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+            />
+          </View>
+          {/* Last Name field */}
+          <View style={styles.textFieldStyle}>
+            <FloatLabelTextField
+              type="lastName"
+              inputType="text"
+              valueType="name"
+              placeholder="Last Name"
+              autoCorrect={false}
+              value={lastName}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+            />
+          </View>
           {/* EMAIL field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="email"
+              inputType="email"
+              valueType="email"
               placeholder="Email"
               autoCorrect={false}
               value={email}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
+              validateFields={type => this.validateFields(type)}
             />
           </View>
           {/* Password field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="password"
+              inputType="text"
+              valueType="password"
               placeholder="Password"
               autoCorrect={false}
               value={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
+              validateFields={type => this.validateFields(type)}
             />
           </View>
           {/* confirm Password field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="confirmPassword"
+              inputType="text"
+              valueType="password"
               placeholder="Confirm Password"
               autoCorrect={false}
               value={confirmPassword}
+              passwordValue={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
+              validateFields={type => this.validateFields(type)}
             />
           </View>
           {/* Password Match */}
-          {this.renderPasswordContraintsContainer()}
+          <PasswordConstraints
+            eightPlusCharacter={eightPlusCharacter}
+            moreThanOneCapital={moreThanOneCapital}
+            moreThanOneLower={moreThanOneLower}
+            moreThanOneNumber={moreThanOneNumber}
+          />
           {/* Next button */}
           <View style={{ marginTop: deviceHeight * 0.08 }}>
             <DesignButton
@@ -287,13 +289,13 @@ export default class Register extends Component {
           {/* Login text */}
           <View style={styles.loginButtonContainer}>
             <Text style={[styles.textStyle, { color: 'rgb(3,3,3)' }]}>Already registered?</Text>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.textStyle}> Sign In</Text>
             </TouchableOpacity>
           </View>
 
           <View style={{ height: deviceHeight * 0.05 }} />
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }

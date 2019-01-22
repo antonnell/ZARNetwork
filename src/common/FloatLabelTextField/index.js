@@ -20,6 +20,7 @@ import Mobile from '../../images/Mobile.png';
 import AccountNumber from '../../images/AccountNumber.png';
 import Wallet from '../../images/wallet.png';
 import ProfileImg from '../../images/ProfileImg.png';
+import { isEmailValid } from '../../utility/index';
 // Styling
 import styles from './styles';
 
@@ -46,18 +47,19 @@ class FloatingLabel extends Component {
   componentWillReceiveProps(newProps) {
     const { paddingAnim, opacityAnim } = this.state;
     Animated.timing(paddingAnim, {
-      toValue: newProps.visible ? 3 : 9,
+      toValue: newProps.visible !== '' ? 3 : 9,
       duration: 150,
     }).start();
 
     return Animated.timing(opacityAnim, {
-      toValue: newProps.visible ? 1 : 0,
+      toValue: newProps.visible !== '' ? 1 : 0,
       duration: 150,
     }).start();
   }
 
   render() {
     const { paddingAnim, opacityAnim } = this.state;
+
     const { children } = this.props;
     return (
       <Animated.View
@@ -112,6 +114,7 @@ class FloatLabelTextField extends Component {
       passwordIcon: 'lock-outline', // "visibility-off",
       error: '',
       email: '',
+      accountNumber: '',
     };
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
     this.checkType = this.checkType.bind(this);
@@ -137,14 +140,12 @@ class FloatLabelTextField extends Component {
         this.setState({
           text: value,
           error: '',
-          password: value,
         });
       } else {
         updateForm(value, type);
         this.setState({
           text: value,
           error: '',
-          password: value,
         });
       }
     }
@@ -189,7 +190,6 @@ class FloatLabelTextField extends Component {
       this.setState({
         text: value,
         error: '',
-        password: value,
       });
       updateForm(value, type);
     }
@@ -224,48 +224,110 @@ class FloatLabelTextField extends Component {
     this.setState({
       text: '',
       error: '',
-      password: '',
     });
+  }
+
+  onBlurTextInput(value, type) {
+    this.unsetFocus();
+    if (type === 'email' && value === '') {
+      this.setState({
+        text: '',
+        email: '',
+      });
+    } else if (type === 'username' && value === '') {
+      this.setState({
+        text: '',
+      });
+    } else if (type === 'confirmPassword' && value === '') {
+      this.setState({
+        text: '',
+      });
+    } else if (type === 'password' && value === '') {
+      this.setState({
+        text: '',
+      });
+    } else if (type === 'number' && value === '') {
+      this.setState({
+        text: '',
+      });
+    } else if (type === 'reference' && value === '') {
+      this.setState({
+        text: '',
+      });
+    } else if (type === 'account' && value === '') {
+      this.setState({
+        text: '',
+        accountNumber: '',
+      });
+    } else if (type === 'name' && value === '') {
+      this.setState({
+        text: '',
+      });
+    }
   }
 
   validate(value, type) {
     const { email, text, accountNumber } = this.state;
     const { validate } = this.props;
     if (type === 'email') {
-      // const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,2}\w+)+$/;
       if (email !== '' && email !== undefined) {
-        if (reg.test(email) === false) {
+        if (isEmailValid(email) === false) {
           Alert.alert('Error', 'Invalid Email');
           validate(type);
+          this.setState({
+            text: '',
+            email: '',
+          });
         }
       }
     } else if (type === 'username') {
       // this.props.updateForm(value, type);
     } else if (type === 'confirmPassword') {
+      const { passwordValue } = this.props;
+
       // this.props.updateForm(value, type);
       validate(type);
+      if (passwordValue && passwordValue === '') {
+        this.setState({
+          text: '',
+        });
+      }
+      if (passwordValue && passwordValue !== '' && passwordValue !== value) {
+        this.setState({
+          text: '',
+        });
+      }
     } else if (type === 'password') {
-      validate(type);
-      // this.props.updateForm(value, type);
+      if (value === '') {
+        validate(type);
+      }
     } else if (type === 'number') {
       validate(type);
-      // this.props.updateForm(value, type);
     } else if (type === 'reference') {
       validate(type);
     } else if (type === 'account') {
       if (accountNumber !== '' && !Web3.utils.isAddress(accountNumber)) {
         Alert.alert('Error', 'Please enter valid account number.');
         validate(type);
+        this.setState({
+          text: '',
+          accountNumber: '',
+        });
       }
     } else if (type === 'name') {
       if (text === '') {
         Alert.alert('Error', 'Name field cannot be empty.');
         validate(type);
+        this.setState({
+          text: '',
+        });
       } else {
         if (text.length > 20) {
           Alert.alert('Error', 'Number of characters cannot be more then 20.');
           validate(type);
+          this.setState({
+            text: '',
+          });
         }
       }
     }
@@ -341,7 +403,7 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   keyboardType="email-address"
@@ -399,7 +461,7 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text1 => this.onChangeTextHandler(text1, type)}
                   placeholderTextColor="grey"
                   keyboardType="default"
@@ -562,7 +624,7 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   autoCapitalize="none"
@@ -618,13 +680,13 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   keyboardType="default"
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
-                  onEndEditing={() => this.onEndEditing(text, type)}
+                  onEndEditing={() => this.onEndEditing(value, type)}
                 />
                 {/* <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
                   <Image
@@ -693,7 +755,7 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   autoCapitalize="none"
@@ -756,7 +818,7 @@ class FloatLabelTextField extends Component {
                   value={value}
                   maxLength={maxLength}
                   onFocus={() => this.setFocus()}
-                  onBlur={() => this.unsetFocus()}
+                  onBlur={() => this.onBlurTextInput(value, type)}
                   onChangeText={text => this.onChangeTextHandler(text, type)}
                   placeholderTextColor="grey"
                   keyboardType="default"

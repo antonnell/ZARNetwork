@@ -1,6 +1,7 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Alert, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -8,18 +9,25 @@ import styles from './styles';
 // components
 import ToggleCard from '../../../common/ToggleCard';
 import Button from '../../../common/Button';
-import FloatLabelTextField from '../../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../../common/updatedFloatLabel';
+
 import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
 import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
-import { WALLET_LIST } from '../../../common/constants';
-import { getWalletType, getFirstCharOfString } from '../../../utility';
+import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
 
 // constants
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import {
+  WALLET_LIST,
+  deviceWidth,
+  deviceHeight,
+  invalid,
+  valid,
+  invalidAmount,
+  insufficientBalance,
+} from '../../../common/constants';
 
 class PayBeneficiary extends Component {
   constructor(props) {
@@ -74,6 +82,7 @@ class PayBeneficiary extends Component {
     this.handlePayNotification = this.handlePayNotification.bind(this);
     this.handleWalletList = this.handleWalletList.bind(this);
     this.toggleWalletList = this.toggleWalletList.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -89,19 +98,6 @@ class PayBeneficiary extends Component {
       selectedWallet,
       beneficiary_uuid: navigation.state.params.selectedBeneficiary.uuid,
     });
-  }
-
-  validate(type) {
-    if (type === 'number') {
-      // this.setState({
-      //   number: '',
-      // });
-    }
-    if (type === 'reference') {
-      this.setState({
-        reference: '',
-      });
-    }
   }
 
   updateToggleValue(type) {
@@ -145,6 +141,39 @@ class PayBeneficiary extends Component {
     }
   }
 
+  validateFields(type) {
+    const { number, balance } = this.state;
+    if (type === 'number') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(number)) {
+        Alert.alert('Invalid Amount', invalidAmount);
+        this.setState({
+          number: '',
+        });
+        return invalid;
+      }
+      if (number > balance) {
+        Alert.alert('Insufficient Balance', insufficientBalance);
+        this.setState({
+          number: '',
+        });
+        return invalid;
+      }
+    }
+    return valid;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  // checkEmptyFields(type) {
+  // const { number , reference} = this.state;
+  // if (type === 'number') {
+  //   Alert.alert('Error', 'Enter amount!');
+  // }
+  //  else if (type === 'reference') {
+  //   Alert.alert('Error', 'Enter reference!');
+  // }
+  // }
+
   toggleWalletList() {
     const { openWalletList } = this.state;
     this.setState({
@@ -152,18 +181,26 @@ class PayBeneficiary extends Component {
     });
   }
 
+  /**
+   * @method handleCloseDropdown : To close wallet list dropdown on clicking outside dropdown.
+   */
+  handleCloseDropdown() {
+    this.setState({ openWalletList: false });
+  }
+
   render() {
     const { navigation, userWalletDetail, userDetail } = this.props;
 
-    let userIcon = '--';
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
     let subtitleText = '';
+
     if (
       userDetail.email &&
       userDetail.email !== '' &&
       userDetail.email !== null &&
       userDetail.email !== undefined
     ) {
-      userIcon = getFirstCharOfString(userDetail.email);
       subtitleText = userDetail.email;
     }
     if (
@@ -195,9 +232,16 @@ class PayBeneficiary extends Component {
     if (accId !== '' && number !== '' && reference !== '') {
       isClickable = true;
     }
-
+    let ParentView = View;
+    if (openWalletList) {
+      ParentView = TouchableOpacity;
+    }
     return (
-      <View style={styles.Container}>
+      <ParentView
+        style={styles.Container}
+        onPress={() => this.handleCloseDropdown()}
+        activeOpacity={1}
+      >
         <StatusBar backgroundColor="black" />
         <TitleHeader
           iconName="keyboard-arrow-left"
@@ -206,7 +250,7 @@ class PayBeneficiary extends Component {
           onBtnPress={() => navigation.goBack()}
         />
         {/* header */}
-        <ScrollView
+        <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
             width: deviceWidth,
@@ -220,7 +264,7 @@ class PayBeneficiary extends Component {
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
             subTitleText={subtitleText}
-            titleText="Jane Smith"
+            titleText={fullName}
             circularAvatarText={userIcon}
           />
           <View style={{ zIndex: openWalletList ? 99 : 0 }}>
@@ -253,6 +297,8 @@ class PayBeneficiary extends Component {
           >
             <FloatLabelTextField
               type="number"
+              inputType="number"
+              valueType="number"
               placeholder="Amount"
               autoCorrect={false}
               value={number}
@@ -260,7 +306,7 @@ class PayBeneficiary extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               imageType="amount"
-              validate={type => this.validate(type)}
+              validateFields={this.validateFields}
             />
             <View>
               <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
@@ -269,13 +315,15 @@ class PayBeneficiary extends Component {
             </View>
             <FloatLabelTextField
               type="reference"
+              inputType="text"
+              valueType="text"
               placeholder="Reference"
               autoCorrect={false}
               value={reference}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
+              validate={this.validate}
             />
           </View>
           <TitleCard
@@ -318,8 +366,8 @@ class PayBeneficiary extends Component {
           </View>
 
           <View style={{ height: deviceHeight * 0.1 }} />
-        </ScrollView>
-      </View>
+        </KeyboardAwareScrollView>
+      </ParentView>
     );
   }
 }

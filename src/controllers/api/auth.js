@@ -1,7 +1,7 @@
 import { dispatch } from '../../store';
 import { loginUser, registerUser } from '../redux/auth/action';
-import { encrypt } from '../utility/encryption';
-import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
+// import { encrypt } from '../utility/encryption';
+// import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
 
 /**
  * ******************************************************************************
@@ -15,17 +15,20 @@ import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
  */
 export const register = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, REGISTER_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(registerUser(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(registerUser(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, REGISTER_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(registerUser(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });
 
 /**
@@ -40,15 +43,18 @@ export const register = payload =>
  */
 export const login = payload =>
   new Promise((resolve, reject) => {
-    encrypt(payload, LOGIN_TYPE)
-      .then(data => {
-        if (data.data) {
-          dispatch(loginUser(data.data))
-            .then(result => resolve(result))
-            .catch(err => reject(err));
-        } else {
-          reject(new Error(data.error));
-        }
-      })
+    dispatch(loginUser(payload))
+      .then(result => resolve(result))
       .catch(err => reject(err));
+    // encrypt(payload, LOGIN_TYPE)
+    //   .then(data => {
+    //     if (data.data) {
+    //       dispatch(loginUser(data.data))
+    //         .then(result => resolve(result))
+    //         .catch(err => reject(err));
+    //     } else {
+    //       reject(new Error(data.error));
+    //     }
+    //   })
+    //   .catch(err => reject(err));
   });

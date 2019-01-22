@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, TouchableOpacity, Image, Dimensions, Alert } from 'react-native';
+import { StatusBar, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import styles from './styles';
 import walletImg from '../../images/wallet.png';
 import ListCard from '../../common/ListCard';
-import FloatLabelTextField from '../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../common/updatedFloatLabel';
+
 import DesignButton from '../../common/Button';
 import TitleText from '../../common/TitleText';
 import { setNewWallet } from '../../controllers/api/userWallet';
-import { ACCOUNT_TYPE_LIST, WALLET_LIST } from '../../common/constants';
+import {
+  ACCOUNT_TYPE_LIST,
+  WALLET_LIST,
+  deviceWidth,
+  deviceHeight,
+  invalidAccountName,
+} from '../../common/constants';
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import { isValidName } from '../../utility/index';
 
-const deviceWidth = Dimensions.get('window').width;
 /**
  * @class CreateWallet : Component to render create account screen.
  */
@@ -48,6 +56,12 @@ class CreateWallet extends Component {
     this.handleGoBack = this.handleGoBack.bind(this);
   }
 
+  // checkEmptyFields = type => {
+  //   if (type === 'name') {
+  //     Alert.alert('Error', 'Enter account name!');
+  //   }
+  // };
+
   toggleAccountTypeList() {
     const { openAccountList } = this.state;
     this.setState({
@@ -76,14 +90,6 @@ class CreateWallet extends Component {
     this.setState({ [type]: value });
   }
 
-  validate(type) {
-    if (type === 'name') {
-      this.setState({
-        name: '',
-      });
-    }
-  }
-
   /**
    * @method handleCreateAccount : To create new wallet account.
    *
@@ -93,7 +99,7 @@ class CreateWallet extends Component {
     const { navigation, userWalletDetail } = this.props;
 
     if (!isValidName(userWalletDetail, name, WALLET_LIST)) {
-      Alert.alert('Error', 'Wallet name already exists!');
+      Alert.alert('Duplicate Account Name', invalidAccountName);
       return;
     }
 
@@ -106,26 +112,21 @@ class CreateWallet extends Component {
         isLoading: true,
       });
       setNewWallet(payload)
-        .then(result => {
+        .then(res => {
           this.setState({
             isLoading: false,
           });
-          if (
-            result &&
-            result.payload &&
-            result.payload.data &&
-            result.payload.data.status === 200
-          ) {
+          if (res && res.payload && res.payload.data && res.payload.data.status === 200) {
             navigation.goBack();
           } else if (
-            result &&
-            result.error &&
-            result.error.response &&
-            result.error.response.data &&
-            result.error.response.data.message
+            res &&
+            res.error &&
+            res.error.response &&
+            res.error.response.data &&
+            res.error.response.data.result
           ) {
-            const { message } = result.error.response.data;
-            Alert.alert('Error', message);
+            const { result } = res.error.response.data;
+            Alert.alert('Error', result);
           }
         })
         .catch(error => {
@@ -183,60 +184,70 @@ class CreateWallet extends Component {
           onBtnPress={this.handleGoBack}
           isBackArrow={isBackArrowPresent}
         />
-        <View style={styles.createWalletImageViewStyle}>
-          <Image source={walletImg} style={styles.createWalletImageStyle} resizeMode="contain" />
-        </View>
-        <View style={styles.createWalletTextViewStyle}>
-          <Text style={styles.createWalletTextStyle}>Create Wallet</Text>
-        </View>
-        <View style={styles.bottomViewStyle}>
-          <TitleText
-            titleText="Account Type"
-            mainStyle={styles.accountViewStyle}
-            textStyle={styles.accountTextStyle}
-          />
-          <View style={styles.accountListViewStyle}>
-            <View style={styles.accSymbolViewStyle}>
-              <Text style={styles.accSymbolTextStyle}>{selectedType}</Text>
+        <KeyboardAwareScrollView
+          style={{
+            height: deviceHeight,
+            width: deviceWidth,
+          }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center' }}
+        >
+          <View style={styles.createWalletImageViewStyle}>
+            <Image source={walletImg} style={styles.createWalletImageStyle} resizeMode="contain" />
+          </View>
+          <View style={styles.createWalletTextViewStyle}>
+            <Text style={styles.createWalletTextStyle}>Create Wallet</Text>
+          </View>
+          <View style={styles.bottomViewStyle}>
+            <TitleText
+              titleText="Account Type"
+              mainStyle={styles.accountViewStyle}
+              textStyle={styles.accountTextStyle}
+            />
+            <View style={styles.accountListViewStyle}>
+              <View style={styles.accSymbolViewStyle}>
+                <Text style={styles.accSymbolTextStyle}>{selectedType}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.accDropdownViewStyle}
+                onPress={this.toggleAccountTypeList}
+              >
+                <MaterialIcons name="arrow-drop-down" size={24} style={styles.dropdownIconStyle} />
+              </TouchableOpacity>
+              {openAccountList && (
+                <ListCard
+                  selectedType={typeUuid}
+                  data={accountTypeList}
+                  handleList={item => this.handleAccountTypeList(item)}
+                  type={ACCOUNT_TYPE_LIST}
+                />
+              )}
             </View>
-            <TouchableOpacity
-              style={styles.accDropdownViewStyle}
-              onPress={this.toggleAccountTypeList}
-            >
-              <MaterialIcons name="arrow-drop-down" size={24} style={styles.dropdownIconStyle} />
-            </TouchableOpacity>
-            {openAccountList && (
-              <ListCard
-                selectedType={typeUuid}
-                data={accountTypeList}
-                handleList={item => this.handleAccountTypeList(item)}
-                type={ACCOUNT_TYPE_LIST}
+            <View style={styles.accNameViewStyle}>
+              <FloatLabelTextField
+                type="name"
+                inputType="text"
+                valueType="name"
+                placeholder="Account Name"
+                autoCorrect={false}
+                value={name}
+                maxLength={20}
+                updateForm={this.updateForm}
+                inputBackgroundColor="#fff"
+                textFieldSize={deviceWidth * 0.73}
               />
-            )}
-          </View>
-          <View style={styles.accNameViewStyle}>
-            <FloatLabelTextField
-              type="name"
-              placeholder="Account Name"
-              autoCorrect={false}
-              value={name}
-              maxLength={20}
-              updateForm={this.updateForm}
-              inputBackgroundColor="#fff"
-              textFieldSize={deviceWidth * 0.73}
-              validate={type => this.validate(type)}
-            />
-          </View>
+            </View>
 
-          <View style={styles.buttonViewStyle}>
-            <DesignButton
-              name="CREATE"
-              callMethod={this.handleCreateAccount}
-              isClickable={isClickable}
-            />
+            <View style={styles.buttonViewStyle}>
+              <DesignButton
+                name="CREATE"
+                callMethod={this.handleCreateAccount}
+                isClickable={isClickable}
+              />
+            </View>
           </View>
-        </View>
-        {this.renderLoader()}
+          {this.renderLoader()}
+        </KeyboardAwareScrollView>
       </TouchableOpacity>
     );
   }

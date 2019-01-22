@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StatusBar, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceHeight, deviceWidth } from '../../common/constants';
 
 export default class AccountDetail extends Component {
   renderDetail = (heading, desc) => (

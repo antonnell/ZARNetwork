@@ -1,23 +1,23 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 // import SignIn from '../../images/SignIn.png';
 import FantomPayLogo from '../../images/FantomPay.png';
-import FloatLabelTextField from '../../common/FloatLabelTextField';
+import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
+import { isEmailValid } from '../../utility/index';
+import { deviceWidth, deviceHeight, invalid, valid, invalidEmail } from '../../common/constants';
 /**
  * Component to call login api.
  */
 import { login } from '../../controllers/api/auth';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
 
 class Login extends Component {
   constructor(props) {
@@ -37,19 +37,34 @@ class Login extends Component {
     this.setState({ [type]: value });
   }
 
-  validate(type) {
+  validateFields(type) {
     const { email } = this.state;
     if (type === 'email') {
-      this.setState({
-        email: '',
-      });
-    } else if (type === 'password' && email === '') {
-      // Alert.alert('Error', 'Enter Email first');
-      this.setState({
-        password: '',
-      });
+      if (email !== '' && email !== undefined) {
+        if (isEmailValid(email) === false) {
+          Alert.alert('Invalid Email', invalidEmail);
+          this.setState({
+            email: '',
+          });
+          return invalid;
+        }
+      }
     }
+    return valid;
   }
+
+  // checkEmptyFields(type) {
+  // console.log('checkEmptyFields type : ', type);
+  // const { email } = this.state;
+  // if (type === 'email') {
+  //   Alert.alert('Error', 'Enter email!');
+  // } else
+  // if (type === 'password') {
+  //   if (email !== '' && isEmailValid(email)) {
+  //     Alert.alert('Error', 'Enter password!');
+  //   }
+  // }
+  // }
 
   /**
    * ******************************************************************************
@@ -74,21 +89,21 @@ class Login extends Component {
 
       if (login) {
         login(payload)
-          .then(result => {
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (result && result.payload && result.payload.status === 200) {
+            if (res && res.payload && res.payload.status === 200) {
               navigation.navigate('Home');
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {
@@ -109,11 +124,13 @@ class Login extends Component {
   }
 
   /**
-   * @method handleForgotPassword : To Forgot Password functionality
+   * @method handleForgotPassword : To render forgot password screen.
    */
-  // eslint-disable-next-line class-methods-use-this
   handleForgotPassword() {
-    Alert.alert('Information', 'Forgot password under development.');
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('ResetPassword');
+    }
   }
 
   /**
@@ -128,12 +145,16 @@ class Login extends Component {
   }
 
   render() {
-    const { authDetail, errDetail, navigation } = this.props;
-    console.log('authDetail in props : ', authDetail);
-    console.log('errDetail in props : ', errDetail);
+    const {
+      //  authDetail, errDetail,
+      navigation,
+    } = this.props;
+    // console.log('authDetail in props : ', authDetail);
+    // console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
+
     let isClickable = false;
-    if (email !== '' && password !== '') {
+    if (email && email !== '' && password && password !== '' && isEmailValid(email) === true) {
       isClickable = true;
     }
     return (
@@ -145,81 +166,95 @@ class Login extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
-        <View style={styles.fantomPayLogoContainer}>
-          <Image
-            source={FantomPayLogo}
-            style={styles.fantomPayLogoImageStyle}
-            resizeMode="contain"
-          />
-        </View>
-        {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
+        <KeyboardAwareScrollView
+          style={{
+            height: deviceHeight,
+            width: deviceWidth,
+          }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: 'center' }}
+        >
+          <View style={styles.fantomPayLogoContainer}>
+            <Image
+              source={FantomPayLogo}
+              style={styles.fantomPayLogoImageStyle}
+              resizeMode="contain"
+            />
+          </View>
+          {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
         </View> */}
 
-        <View style={styles.emailTextFieldStyle}>
-          <FloatLabelTextField
-            type="email"
-            placeholder="Email"
-            autoCorrect={false}
-            value={email}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
-          />
-        </View>
+          <View style={styles.emailTextFieldStyle}>
+            <FloatLabelTextField
+              type="email"
+              inputType="email"
+              valueType="email"
+              placeholder="Email"
+              autoCorrect={false}
+              value={email}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+            />
+          </View>
 
-        <View style={styles.passwordTextFieldStyle}>
-          <FloatLabelTextField
-            type="password"
-            placeholder="Password"
-            autoCorrect={false}
-            value={password}
-            updateForm={this.updateForm}
-            inputBackgroundColor="#fff"
-            textFieldSize={deviceWidth * 0.73}
-            validate={type => this.validate(type)}
-          />
-        </View>
+          <View style={styles.passwordTextFieldStyle}>
+            <FloatLabelTextField
+              type="password"
+              inputType="text"
+              valueType="password"
+              placeholder="Password"
+              autoCorrect={false}
+              value={password}
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+            />
+          </View>
 
-        <View style={{ marginTop: deviceHeight * 0.08 }}>
-          <DesignButton
-            name="Sign In"
-            callMethod={this.handleUserLogin}
-            isClickable={isClickable}
-          />
-        </View>
-        <TouchableOpacity
-          style={{ marginTop: deviceHeight * 0.03 }}
-          onPress={this.handleForgotPassword}
-        >
-          <Text style={styles.textStyle}>Forgot Password</Text>
-        </TouchableOpacity>
+          <View style={{ marginTop: deviceHeight * 0.08 }}>
+            <DesignButton
+              name="Sign In"
+              callMethod={this.handleUserLogin}
+              isClickable={isClickable}
+            />
+          </View>
+          <TouchableOpacity
+            style={{ marginTop: deviceHeight * 0.03 }}
+            onPress={this.handleForgotPassword}
+          >
+            <Text style={styles.textStyle}>Forgot Password</Text>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
         <TouchableOpacity
           style={styles.bottomTextViewStyle}
           onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
         </TouchableOpacity>
+
         {this.renderLoader()}
       </View>
     );
   }
 }
 Login.defaultProps = {
-  authDetail: null,
-  errDetail: null,
+  // authDetail: null,
+  //  errDetail: null,
   navigation: null,
 };
 
 Login.propTypes = {
-  authDetail: PropTypes.objectOf(PropTypes.any),
-  errDetail: PropTypes.objectOf(PropTypes.any),
+  // authDetail: PropTypes.objectOf(PropTypes.any),
+  //  errDetail: PropTypes.objectOf(PropTypes.any),
   navigation: PropTypes.objectOf(PropTypes.any),
 };
-const mapStateToProps = state => ({
-  authDetail: state.userAuthReducer.userDetail,
-  errDetail: state.errorHandlerReducer,
-});
-
-export default connect(mapStateToProps)(Login);
+// const mapStateToProps = state => ({
+//   // authDetail: state.userAuthReducer.userDetail,
+//   // errDetail: state.errorHandlerReducer,
+// });
+export default Login;
+// export default connect(mapStateToProps)(Login);

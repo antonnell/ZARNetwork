@@ -1,5 +1,4 @@
 import { STATUS_TYPE, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = [];
 
@@ -11,15 +10,14 @@ const getFormattedStatusTypeData = action => {
     const { data } = action.payload;
 
     if (data.status === 200) {
-      if (data.message) {
-        const statusTypeData = decryptPayload(data.message);
-        if (statusTypeData.status === 'success' && statusTypeData.payload) {
-          const { payload } = statusTypeData;
+      if (data.result) {
+        const statusTypeData = data.result;
+        if (statusTypeData) {
           let statusTypeDetail;
-          if (payload.length) {
-            statusTypeDetail = payload.slice();
+          if (statusTypeData.length) {
+            statusTypeDetail = statusTypeData.slice();
           } else {
-            statusTypeDetail = payload;
+            statusTypeDetail = statusTypeData;
           }
           return statusTypeDetail;
         }

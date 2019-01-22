@@ -1,5 +1,4 @@
 import { CREATE_WALLET, WALLET_DETAIL, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const defaultState = {
   wallets: [],
@@ -13,13 +12,12 @@ const getFormattedNewWalletData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const newWalletData = decryptPayload(data.message);
-        if (newWalletData.status === 'success' && newWalletData.payload) {
-          const { payload } = newWalletData;
+      if (data.result) {
+        const newWalletData = data.result;
+        if (newWalletData) {
           if (state && state.wallets) {
             const oldWalletAccounts = state.wallets.slice();
-            oldWalletAccounts.push(payload);
+            oldWalletAccounts.push(newWalletData);
             const updatedState = Object.assign({}, state, {
               wallets: oldWalletAccounts,
             });
@@ -40,13 +38,12 @@ const getFormattedWalletData = (state, action) => {
   if (action && action.payload && action.payload.data) {
     const { data } = action.payload;
     if (data.status === 200) {
-      if (data.message) {
-        const walletData = decryptPayload(data.message);
-        if (walletData.status === 'success' && walletData.payload) {
-          const { payload } = walletData;
+      if (data.result) {
+        const walletData = data.result;
+        if (walletData) {
           if (state && state.wallets) {
             const updatedState = Object.assign({}, state, {
-              wallets: payload.slice(),
+              wallets: walletData.slice(),
             });
             return updatedState;
           }

@@ -1,4 +1,3 @@
-/*eslint-disable */
 import React, { Component } from 'react';
 import { View, StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types';
@@ -12,6 +11,7 @@ import TitleHeader from '../../common/TitleHeader';
 import { getBeneficiaryDetail } from '../../controllers/api/beneficiary';
 import { getTransactionDetail } from '../../controllers/api/transactions';
 import TransactionHistory from './transactionHistory';
+import { noWalletAccount } from '../../common/constants';
 
 class Pay extends Component {
   constructor(props) {
@@ -38,8 +38,7 @@ class Pay extends Component {
       getBeneficiaryDetail();
 
       getTransactionDetail()
-        .then(res => {
-          console.log('getTransactionDetail : ', res);
+        .then(() => {
           this.setState({
             isLoading: false,
           });
@@ -60,7 +59,7 @@ class Pay extends Component {
     const isBackArrow = true;
     const { navigation, userWalletDetail } = this.props;
     if (userWalletDetail && userWalletDetail.length === 0) {
-      Alert.alert('Information', 'You must have, atleast one account to pay to beneficiary!');
+      Alert.alert('No Wallet Account Found', noWalletAccount);
       return;
     }
     if (navigation && navigation.navigate) {
@@ -124,17 +123,14 @@ class Pay extends Component {
 Pay.defaultProps = {
   navigation: null,
   userWalletDetail: [],
-  beneficiaries: [],
 };
 
 Pay.propTypes = {
   navigation: PropTypes.shape({}),
-  beneficiaries: PropTypes.arrayOf(PropTypes.any),
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
-  beneficiaries: state.userBeneficiaryReducer.beneficiaries,
   transactions: state.userTransactionReducer.transactions,
   userWalletDetail: state.userWalletReducer.wallets,
 });

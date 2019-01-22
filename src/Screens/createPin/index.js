@@ -4,7 +4,6 @@ import {
   Alert,
   View,
   Text,
-  Dimensions,
   StatusBar,
   TouchableHighlight,
   TouchableOpacity,
@@ -20,8 +19,7 @@ import GeneratePinCode from '../../common/PinCode';
 import { register } from '../../controllers/api/auth';
 import { checkPinLength } from '../../utility/index';
 import Loader from '../../common/Loader';
-
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight } from '../../common/constants';
 
 class CreatePin extends Component {
   constructor(props) {
@@ -36,7 +34,6 @@ class CreatePin extends Component {
     this.handleUserRegister = this.handleUserRegister.bind(this);
     TouchID.isSupported()
       .then(res => {
-        console.log('res is', res);
         if (res === 'TouchID') {
           this.setState({
             isTouchId: true,
@@ -61,9 +58,14 @@ class CreatePin extends Component {
    * ******************************************************************************
    */
   // eslint-disable-next-line react/sort-comp
-  handleUserRegister(email, password, mobileNumber, pin, fingerPrint) {
+  handleUserRegister(firstname, surname, email, password, mobileNumber, pin, fingerPrint) {
     const { navigation } = this.props;
+
     if (
+      firstname &&
+      firstname !== '' &&
+      surname &&
+      surname !== '' &&
       email &&
       email !== '' &&
       password &&
@@ -72,6 +74,8 @@ class CreatePin extends Component {
       mobileNumber !== ''
     ) {
       const payload = {
+        firstname,
+        surname,
         email,
         password,
         pin,
@@ -83,22 +87,21 @@ class CreatePin extends Component {
       });
       if (register) {
         register(payload)
-          .then(result => {
-            console.log('Result', result);
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (result.payload && result.payload.data && result.payload.data.status === 200) {
+            if (res.payload && res.payload.data && res.payload.data.status === 200) {
               navigation.navigate('RegistrationSuccess');
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {
@@ -113,7 +116,6 @@ class CreatePin extends Component {
 
   nextBtnClicked = (event, pinCodeObj) => {
     event.preventDefault();
-    console.log('pinCode oBj', pinCodeObj);
     if (pinCodeObj.btnText === 'Next') {
       this.setState({
         isClicked: true,
@@ -121,7 +123,8 @@ class CreatePin extends Component {
     } else {
       const { pinCode, confirmPinCode } = this.state;
       const { navigation } = this.props;
-      console.log(navigation.state.params.emailId);
+      const userFirstName = navigation.state.params.firstName;
+      const userLastName = navigation.state.params.lastName;
       const userEmailId = navigation.state.params.emailId;
       const userPasssword = navigation.state.params.password;
       const userPhoneNumber = navigation.state.params.phoneNumber;
@@ -131,6 +134,8 @@ class CreatePin extends Component {
           userFingerPrint = '';
         }
         this.handleUserRegister(
+          userFirstName,
+          userLastName,
           userEmailId,
           userPasssword,
           userPhoneNumber,
@@ -159,12 +164,15 @@ class CreatePin extends Component {
       .then(() => {
         const { pinCode } = this.state;
         const { navigation } = this.props;
-        console.log(navigation.state.params.emailId);
+        const userFirstName = navigation.state.params.firstName;
+        const userLastName = navigation.state.params.lastName;
         const userEmailId = navigation.state.params.emailId;
         const userPasssword = navigation.state.params.password;
         const userPhoneNumber = navigation.state.params.phoneNumber;
         const userFingerPrint = true;
         this.handleUserRegister(
+          userFirstName,
+          userLastName,
           userEmailId,
           userPasssword,
           userPhoneNumber,
@@ -190,13 +198,11 @@ class CreatePin extends Component {
 
   render() {
     const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
-    console.log('isTouchId : ', isTouchId);
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
     if (!isClicked && confirmPinCode === '') {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
-      console.log('colorData pinCode', colorData);
       pinCodeObj = {
         title: 'Enter a 4 digit PIN to login with',
         btnText: 'Next',
@@ -206,7 +212,6 @@ class CreatePin extends Component {
       };
     } else {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
-      console.log('colorData', colorData);
       pinCodeObj = {
         title: 'Confirm 4 digit PIN Code',
         btnText: 'Done',
@@ -215,7 +220,7 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return isTouchId ? (
+    return !isTouchId ? (
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <TouchableHighlight
           style={{ width: 200, alignSelf: 'center' }}

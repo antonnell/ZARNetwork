@@ -1,9 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { View, Text, StatusBar, Dimensions } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight, deviceWidth } from '../../common/constants';
 
 export default class ThirdScreen extends React.PureComponent {
   render() {

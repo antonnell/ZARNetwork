@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import success from '../../../images/success.png';
 import DesignButton from '../../../common/Button';
 
 import styles from './styles';
 
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight } from '../../../common/constants';
 
 export default class PaymentSuccess extends Component {
   constructor(props) {

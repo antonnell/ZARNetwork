@@ -1,10 +1,9 @@
 import { REGISTER, LOGIN, _SUCCESS } from '../base/constants';
-import { decryptPayload } from '../../utility/decryption';
 
 const sha256 = require('sha256');
 
 const defaultState = {
-  userDetail: [],
+  userDetail: null,
 };
 
 /**
@@ -16,15 +15,16 @@ const getFormattedAuthData = (state, action) => {
     const { data } = action.payload;
 
     if (data.status === 200) {
-      if (data.message) {
-        const userAuthData = decryptPayload(data.message);
-        if (userAuthData.status === 'success' && userAuthData.payload) {
-          const { payload } = userAuthData;
-          if (payload) {
+      if (data.result) {
+        const userAuthData = data.result;
+        if (userAuthData) {
+          if (userAuthData) {
             const {
               created,
               description,
               email,
+              firstname,
+              surname,
               jwt,
               // eslint-disable-next-line camelcase
               mobile_number,
@@ -32,12 +32,14 @@ const getFormattedAuthData = (state, action) => {
               // eslint-disable-next-line camelcase
               user_type_uuid,
               uuid,
-            } = payload;
+            } = userAuthData;
 
             const userAuthDetails = {
               created,
               description,
               email,
+              firstname,
+              surname,
               jwt,
               mobile_number,
               modified,
@@ -49,7 +51,7 @@ const getFormattedAuthData = (state, action) => {
               userAuthDetails.xAccessToken = jwt.token;
             }
             if (email) {
-              const xKey = sha256(payload.email);
+              const xKey = sha256(userAuthData.email);
               userAuthDetails.xKey = xKey;
             }
             return Object.assign({}, state, {
@@ -70,7 +72,6 @@ const userAuthReducer = (state = defaultState, action) => {
   switch (action.type) {
     case `${REGISTER}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(state, action);
-
       return formattedData;
     }
     case `${LOGIN}${_SUCCESS}`: {

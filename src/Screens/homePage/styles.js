@@ -118,6 +118,7 @@ export default StyleSheet.create({
     height: deviceHeight * 0.3,
     width: deviceWidth,
     paddingVertical: 10,
+    // backgroundColor: 'red',
   },
   accountCardMainViewStyle: {
     backgroundColor: 'rgba(123,123,123,0.1)',

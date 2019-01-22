@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
+import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ import Wallet from './wallet';
 
 import { getAccountType } from '../../controllers/api/accountType';
 import { getWalletDetail } from '../../controllers/api/userWallet';
-import { getFirstCharOfString } from '../../utility/index';
+import { getAccountIcon, getFullName } from '../../utility/index';
 
 import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
@@ -19,10 +19,7 @@ import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
-import { MaterialCommunityIconsType } from '../../common/constants';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { EvilIconsType, deviceHeight, deviceWidth } from '../../common/constants';
 
 class HomePage extends Component {
   constructor(props) {
@@ -34,7 +31,7 @@ class HomePage extends Component {
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
     this.renderReceive = this.renderReceive.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleOpenProfileScreen = this.handleOpenProfileScreen.bind(this);
   }
 
   componentDidMount() {
@@ -61,12 +58,12 @@ class HomePage extends Component {
   }
 
   /**
-   * @method handleLogout : To logout user.
+   * @method handleOpenProfileScreen : To open user's profile screen.
    */
-  handleLogout() {
+  handleOpenProfileScreen() {
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('StartScreen');
+      navigation.navigate('ProfileScreen');
     }
   }
 
@@ -231,19 +228,29 @@ class HomePage extends Component {
   render() {
     const { userDetail } = this.props;
     const { accountToggle } = this.state;
-    let userIcon = '--';
-    if (userDetail.email) {
-      userIcon = getFirstCharOfString(userDetail.email);
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
+    let setScrollViewStyle = {
+      ...styles.renderCardContainer,
+    };
+    if (accountToggle) {
+      setScrollViewStyle = {
+        ...styles.renderCardContainer,
+        // height: deviceHeight * 0.4
+        //  marginTop: deviceHeight * 0.03,
+        height: deviceHeight * 0.5,
+      };
     }
+
     return (
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         {/* header */}
         <TitleHeader
           title="DASHBOARD"
-          rightIconName="logout"
-          onRightBtnPress={this.handleLogout}
-          rightIconType={MaterialCommunityIconsType}
+          rightIconName="user"
+          onRightBtnPress={this.handleOpenProfileScreen}
+          rightIconType={EvilIconsType}
         />
 
         <ScrollView
@@ -275,7 +282,7 @@ class HomePage extends Component {
               <Text style={styles.circularAvatarTextStyle}>{userIcon}</Text>
             </View>
             <View style={{ marginTop: deviceHeight * 0.05, paddingLeft: 15 }}>
-              {/* <Text style={profileInfoTitleStyle}>{titleText}</Text> */}
+              <Text style={styles.profileInfoTitleStyle}>{fullName}</Text>
               <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
             </View>
           </View>
@@ -310,7 +317,7 @@ class HomePage extends Component {
                 }}
               />
             </View>
-            <View style={styles.renderCardContainer}>{this.renderCards()}</View>
+            <View style={setScrollViewStyle}>{this.renderCards()}</View>
           </View>
           <View style={{ height: deviceHeight * 0.05 }} />
         </ScrollView>

@@ -1,9 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { View, Text, StatusBar, Dimensions } from 'react-native';
-
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { View, Text, StatusBar } from 'react-native';
+import { deviceWidth, deviceHeight } from '../../common/constants';
 
 export default class SecondScreen extends React.PureComponent {
   render() {

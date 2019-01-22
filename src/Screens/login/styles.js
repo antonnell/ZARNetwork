@@ -56,7 +56,11 @@ export default StyleSheet.create({
   bottomTextViewStyle: {
     position: 'absolute',
     bottom: 0,
-    alignSelf: 'center',
-    marginBottom: deviceHeight * 0.03,
+    alignItems: 'center',
+    width: deviceWidth,
+    height: 35,
+    backgroundColor: 'white',
+    paddingTop: 5,
+    paddingBottom: 10,
   },
 });

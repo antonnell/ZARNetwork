@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../common/constants';
 
 this.flagValue = '';
 this.phoneNumber = '';
@@ -37,57 +36,82 @@ export default class GenerateOTP extends Component {
     // const type = this.phone.getNumberType();
 
     const value = this.phone.getValue();
-    updateForm(value, 'phoneNumber');
+    updateForm(value, 'phoneNumber', valid);
     this.setState({
       phoneValid: valid,
     });
   }
 
-  render() {
-    const { phoneValid } = this.state;
-    const { navigation, signIn } = this.props;
+  renderPhoneInputField() {
     return (
-      <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
-        <View
-          style={{
-            width: deviceWidth,
-            alignItems: 'center',
-            marginTop: deviceHeight * 0.1,
-            flexDirection: 'row',
+      <View style={styles.mobileTextFieldStyle}>
+        <PhoneInput
+          ref={ref => {
+            this.phone = ref;
           }}
-        >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons
-              color="#000"
-              size={24}
-              style={{ marginLeft: 10 }}
-              name="keyboard-arrow-left"
-            />
-          </TouchableOpacity>
-          <Text style={styles.textStyle}>GENERATE OTP</Text>
-        </View>
-        <View style={{ marginTop: deviceHeight * 0.1 }}>
-          <Text style={styles.infoTextStyle}>
-            Enter your mobile number and tap next to enter the code we send you via SMS
-          </Text>
-        </View>
-        <View style={styles.mobileTextFieldStyle}>
-          <PhoneInput
-            ref={ref => {
-              this.phone = ref;
-            }}
-            style={styles.phoneInputStyle}
-            onSelectCountry={country => this.selectedCountry(country)}
-            onChangePhoneNumber={number => {
-              this.onChangePhoneNumber(number);
-            }}
-          />
-        </View>
-        <View style={{ marginTop: deviceHeight * 0.04 }}>
-          <DesignButton name="Next " callMethod={signIn} isClickable={phoneValid} />
-        </View>
+          style={styles.phoneInputStyle}
+          onSelectCountry={country => this.selectedCountry(country)}
+          onChangePhoneNumber={number => {
+            this.onChangePhoneNumber(number);
+          }}
+        />
       </View>
     );
+  }
+
+  renderView() {
+    const { phoneValid } = this.state;
+    const { navigation, signIn, navigationFrom } = this.props;
+    if (!navigationFrom) {
+      return (
+        <View style={styles.Container}>
+          <StatusBar backgroundColor="black" />
+          <View
+            style={{
+              width: deviceWidth,
+              alignItems: 'center',
+              marginTop: deviceHeight * 0.1,
+              flexDirection: 'row',
+            }}
+          >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialIcons
+                color="#000"
+                size={24}
+                style={{ marginLeft: 10 }}
+                name="keyboard-arrow-left"
+              />
+            </TouchableOpacity>
+            <Text style={styles.textStyle}>GENERATE OTP</Text>
+          </View>
+          <View style={{ marginTop: deviceHeight * 0.1 }}>
+            <Text style={styles.infoTextStyle}>
+              Enter your mobile number and tap next to enter the code we send you via SMS
+            </Text>
+          </View>
+          {/* <View style={styles.mobileTextFieldStyle}>
+            <PhoneInput
+              ref={ref => {
+                this.phone = ref;
+              }}
+              style={styles.phoneInputStyle}
+              onSelectCountry={country => this.selectedCountry(country)}
+              onChangePhoneNumber={number => {
+                this.onChangePhoneNumber(number);
+              }}
+            />
+          </View> */}
+          {this.renderPhoneInputField()}
+          <View style={{ marginTop: deviceHeight * 0.04 }}>
+            <DesignButton name="Next " callMethod={signIn} isClickable={phoneValid} />
+          </View>
+        </View>
+      );
+    }
+    return this.renderPhoneInputField();
+  }
+
+  render() {
+    return this.renderView();
   }
 }

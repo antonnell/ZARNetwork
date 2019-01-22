@@ -1,5 +1,5 @@
+import Moment from 'moment';
 import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
-/* eslint-disable import/prefer-default-export */
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   const colorData = {
@@ -67,6 +67,10 @@ export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   return colorData;
 }
 
+/**
+ *
+ * @param {string} str : String value whose first character is to be returned.
+ */
 export function getFirstCharOfString(str) {
   let char = '--';
   if (str.length > 0) {
@@ -116,4 +120,128 @@ export function isValidName(availableList, name, listType) {
     }
   }
   return true;
+}
+
+/**
+ * @param {string} email : Value to be tested for validity.
+ */
+export function isEmailValid(email) {
+  if (email && email !== '') {
+    const reg = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,2}\w+)+$/; //eslint-disable-line
+    if (reg.test(email) === false) {
+      return false;
+    }
+    return true;
+  }
+  return false;
+}
+
+/**
+ * @param {string} expiryTime : Time value to be tested for session expiry ( expiryTime is timestamp ).
+ */
+export function isSessionExpires(expiryTime) {
+  if (expiryTime && expiryTime !== '' && expiryTime !== undefined) {
+    const currentTime = Moment(new Date(), 'DD.MM.YYYY')
+      .toDate()
+      .getTime();
+    if (expiryTime >= currentTime) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+}
+
+/**
+ * @param {string} passwordVal : Password value to be checked.
+ * @param {CallableFunction} updateState : Callback method to update state of password validity.
+ */
+export function isPasswordValid(passwordVal, updateState) {
+  const regOneCapital = /^(?=.*[A-Z]).{1,}$/;
+  const regOneLower = /^(?=.*[a-z]).{1,}$/;
+  const regOneNumber = /^(?=.*\d).{1,}$/;
+
+  if (passwordVal !== '') {
+    if (passwordVal.length >= 8) {
+      updateState('eightPlusCharacter', true);
+    } else {
+      updateState('eightPlusCharacter', false);
+    }
+
+    if (regOneCapital.test(passwordVal)) {
+      updateState('moreThanOneCapital', true);
+    } else {
+      updateState('moreThanOneCapital', false);
+    }
+
+    if (regOneLower.test(passwordVal)) {
+      updateState('moreThanOneLower', true);
+    } else {
+      updateState('moreThanOneLower', false);
+    }
+
+    if (regOneNumber.test(passwordVal)) {
+      updateState('moreThanOneNumber', true);
+    } else {
+      updateState('moreThanOneNumber', false);
+    }
+  } else {
+    // if password length is 0
+    updateState('moreThanOneNumber', false);
+    updateState('moreThanOneLower', false);
+    updateState('moreThanOneCapital', false);
+    updateState('eightPlusCharacter', false);
+  }
+}
+
+/**
+ * @method getAccountIcon : To create account icon text.
+ * @param {object} userDetail : Object of user's detail.
+ */
+export function getAccountIcon(userDetail) {
+  let userIcon = '--';
+  if (userDetail && userDetail !== null && userDetail !== undefined) {
+    if (
+      userDetail.firstname &&
+      userDetail.firstname !== null &&
+      userDetail.firstname !== undefined
+    ) {
+      userIcon = getFirstCharOfString(userDetail.firstname);
+    }
+    if (userDetail.surname && userDetail.surname !== null && userDetail.surname !== undefined) {
+      if (userIcon !== '--') {
+        userIcon = `${userIcon}${getFirstCharOfString(userDetail.surname)}`;
+      } else {
+        userIcon = getFirstCharOfString(userDetail.surname);
+      }
+    }
+  }
+
+  return userIcon;
+}
+
+/**
+ * @method getFullName : To get full name of user.
+ * @param {object} userDetail : Object of user's detail.
+ */
+export function getFullName(userDetail) {
+  let fullName = '--';
+  if (userDetail && userDetail !== null && userDetail !== undefined) {
+    if (
+      userDetail.firstname &&
+      userDetail.firstname !== null &&
+      userDetail.firstname !== undefined
+    ) {
+      fullName = userDetail.firstname;
+    }
+    if (userDetail.surname && userDetail.surname !== null && userDetail.surname !== undefined) {
+      if (fullName !== '--') {
+        fullName = `${fullName} ${userDetail.surname}`;
+      } else {
+        fullName = userDetail.surname;
+      }
+    }
+  }
+
+  return fullName;
 }

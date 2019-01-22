@@ -1,14 +1,14 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import OtpInputs from 'react-native-otp-inputs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import CustomisedButton from '../../../common/Button';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth, deviceHeight } from '../../../common/constants';
+import TimerCountdown from 'react-native-timer-countdown';
 
 export default class OtpVerification extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ export default class OtpVerification extends Component {
         color: 'rgba(0, 0, 0, 1)',
       };
     }
-    console.log('this.props!!!!!, otp', this.props);
     return (
       <View style={styles.Container}>
         <View
@@ -79,6 +78,25 @@ export default class OtpVerification extends Component {
             <Text style={resendOTPTextColor}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
+        {this.props.isResendDisable && (
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 10,
+            }}
+          >
+            <Text>You can resend otp in next </Text>
+            <TimerCountdown
+              initialSecondsRemaining={1000 * 30}
+              onTick={secondsRemaining => console.log('tick', secondsRemaining)}
+              onTimeElapsed={() => console.log('complete')}
+              allowFontScaling
+              style={{ fontSize: 14 }}
+            />
+          </View>
+        )}
       </View>
     );
   }

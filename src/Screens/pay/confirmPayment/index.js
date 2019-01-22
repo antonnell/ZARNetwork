@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, StatusBar, Dimensions, ScrollView, Alert } from 'react-native';
+import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,11 +12,9 @@ import DesignButton from '../../../common/Button';
 import TitleHeader from '../../../common/TitleHeader';
 import Card from './card';
 import { setNewRequest } from '../../../controllers/api/paymentRequest';
-import { getFirstCharOfString } from '../../../utility';
+import { getAccountIcon, getFullName } from '../../../utility';
 import Loader from '../../../common/Loader';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import { deviceHeight, deviceWidth } from '../../../common/constants';
 
 class ConfirmPayment extends Component {
   constructor(props) {
@@ -69,21 +67,21 @@ class ConfirmPayment extends Component {
       });
       if (setNewRequest) {
         setNewRequest(payload)
-          .then(result => {
+          .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (result.payload && result.payload.data && result.payload.data.status === 200) {
+            if (res.payload && res.payload.data && res.payload.data.status === 200) {
               navigation.navigate('PaymentSuccess', { params: navigation.state.params });
             } else if (
-              result &&
-              result.error &&
-              result.error.response &&
-              result.error.response.data &&
-              result.error.response.data.message
+              res &&
+              res.error &&
+              res.error.response &&
+              res.error.response.data &&
+              res.error.response.data.result
             ) {
-              const { message } = result.error.response.data;
-              Alert.alert('Error', message);
+              const { result } = res.error.response.data;
+              Alert.alert('Error', result);
             }
           })
           .catch(error => {
@@ -132,7 +130,8 @@ class ConfirmPayment extends Component {
       }
     }
 
-    let userIcon = '--';
+    const userIcon = getAccountIcon(userDetail);
+    const fullName = getFullName(userDetail);
     let subtitleText = '';
     if (
       userDetail.email &&
@@ -140,7 +139,6 @@ class ConfirmPayment extends Component {
       userDetail.email !== null &&
       userDetail.email !== undefined
     ) {
-      userIcon = getFirstCharOfString(userDetail.email);
       subtitleText = userDetail.email;
     }
     if (
@@ -180,7 +178,7 @@ class ConfirmPayment extends Component {
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
             subTitleText={subtitleText}
-            titleText="Jane Smith"
+            titleText={fullName}
             circularAvatarText={userIcon}
           />
           <DetailCard
