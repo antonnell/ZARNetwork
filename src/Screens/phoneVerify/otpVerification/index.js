@@ -78,7 +78,7 @@ export default class OtpVerification extends Component {
             <Text style={resendOTPTextColor}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
-        {!this.props.isResendDisable && (
+        {this.props.isResendDisable && (
           <View
             style={{
               alignItems: 'center',
