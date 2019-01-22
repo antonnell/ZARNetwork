@@ -62,7 +62,6 @@ export default class GeneratePinCode extends Component {
   };
 
   render() {
-    console.log(this.state, '123');
     const { pinCodeObj, colorData } = this.props;
     return (
       <View style={{ flex: 1 }}>

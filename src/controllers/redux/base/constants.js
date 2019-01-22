@@ -46,6 +46,7 @@ export const _FAIL = '_FAIL';
 /** for Otp */
 export const SENDOTP = 'SENDOTP';
 export const VALIDATEOTP = 'VALIDATEOTP';
+export const FORGOTPASSWORD = 'FORGOTPASSWORD';
 
 /**
  * Types for encryption :-
@@ -82,3 +83,4 @@ export const merchantPayRequestsUrl = '/v0/requests';
 
 export const sendOtpUrl = '/v1/sendOtp';
 export const validateOtpUrl = '/v1/validateOtp';
+export const forgotPasswordUrl = '/v1/updatePassword';

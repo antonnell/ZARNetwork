@@ -6,11 +6,10 @@ import OtpInputs from 'react-native-otp-inputs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import CustomisedButton from '../../../common/Button';
-
 import { deviceWidth, deviceHeight } from '../../../common/constants';
 import TimerCountdown from 'react-native-timer-countdown';
 
-export default class OtpVerification extends Component {
+export default class VerifyOTP extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -78,7 +77,7 @@ export default class OtpVerification extends Component {
             <Text style={resendOTPTextColor}>Resend OTP</Text>
           </TouchableOpacity>
         </View>
-        {!this.props.isResendDisable && (
+        {this.props.isResendDisable && (
           <View
             style={{
               alignItems: 'center',

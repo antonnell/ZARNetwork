@@ -7,17 +7,25 @@ import styles from './styles';
 import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 import FantomPayLogo from '../../images/FantomPay.png';
-import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
 import { deviceHeight, deviceWidth, invalid, valid, invalidEmail } from '../../common/constants';
 
+import PhoneVerify from '../phoneVerify';
+import VerifyOTP from './VerifyOTP';
+
+import { sendOtpApi, validateOtpApi } from '../../controllers/api/otp';
+
+// const i = 0;
 class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       isLoading: false,
+      otpSent: false,
+      isResendDisable: true,
+      // clickable: false,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleResetPassword = this.handleResetPassword.bind(this);
@@ -28,34 +36,93 @@ class ResetPassword extends Component {
     this.setState({ [type]: value });
   }
 
+  // handleResetPassword(number) {
+  //   this.phoneNumber = number;
+  //   this.updateInfo();
+  // }
+
+  handleResetPassword(number, validNumber) {
+    this.phoneNumber = number;
+    this.validPhone = validNumber;
+    // if (i === 0 && validNumber) {
+    //   i += 1;
+    //   this.setState({
+    //     clickable: validNumber,
+    //   });
+    // }
+  }
+
+  sendVerificationOTP() {
+    const { phoneNumber } = this;
+    this.setState({
+      isResendDisable: true,
+    });
+    if (this.validPhone) {
+      setTimeout(() => {
+        this.setState({
+          isResendDisable: false,
+        });
+      }, 30000);
+
+      const payload = {
+        mobile_number: phoneNumber,
+      };
+      this.setState({
+        isLoading: true,
+      });
+
+      if (phoneNumber) {
+        sendOtpApi(payload)
+          .then(res => {
+            this.setState({
+              isLoading: false,
+            });
+            if (res && res.payload && res.payload.status === 200) {
+              this.setState({
+                otpSent: true,
+              });
+            }
+          })
+          .catch(error => {
+            this.setState({
+              isLoading: false,
+            });
+            Alert.alert('Error', error);
+          });
+      }
+    } else {
+      Alert.alert('Please enter a valid number');
+    }
+  }
+
   /**
    * ******************************************************************************
    * @method handleResetPassword : To perform action for email verification.
    * ******************************************************************************
    */
-  handleResetPassword() {
-    const { email } = this.state;
-    const { navigation } = this.props;
+  // handleResetPassword() {
+  //   const { email } = this.state;
+  //   const { navigation } = this.props;
 
-    if (email && email !== '') {
-      if (isEmailValid(email) === false) {
-        Alert.alert('Invalid email', invalidEmail);
-        return;
-      }
-      this.setState({
-        isLoading: true,
-      });
-      setTimeout(() => {
-        this.setState({
-          isLoading: false,
-        });
-        Alert.alert('Information', 'Check your email box to confirm reset password.');
-        if (navigation) {
-          navigation.navigate('UpdatePassword');
-        }
-      }, 1000);
-    }
-  }
+  //   if (email && email !== '') {
+  //     if (isEmailValid(email) === false) {
+  //       Alert.alert('Invalid email', invalidEmail);
+  //       return;
+  //     }
+  //     this.setState({
+  //       isLoading: true,
+  //     });
+  //     setTimeout(() => {
+  //       this.setState({
+  //         isLoading: false,
+  //       });
+  //       Alert.alert('Information', 'Check your email box to confirm reset password.');
+  //       if (navigation) {
+  //         navigation.navigate('UpdatePassword');
+  //       }
+  //     }, 1000);
+  //   }
+  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -86,6 +153,38 @@ class ResetPassword extends Component {
   /**
    * @method renderLoader : To display loader indicator.
    */
+
+  confirmCode() {
+    const { navigation } = this.props;
+    const { codeInput } = this.state;
+
+    const payload = {
+      mobile_number: this.phoneNumber,
+      token: codeInput,
+    };
+    this.setState({
+      isLoading: true,
+    });
+    validateOtpApi(payload)
+      .then(res => {
+        this.setState({
+          isLoading: false,
+        });
+        if (res && res.payload && res.payload.status === 200) {
+          navigation.navigate('UpdatePassword', {
+            phoneNumber: this.phoneNumber,
+            uuid: res.payload.data.result.uuid,
+          });
+        }
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+        });
+        Alert.alert('Error', error);
+      });
+  }
+
   renderLoader() {
     const { isLoading } = this.state;
     if (isLoading) {
@@ -95,10 +194,26 @@ class ResetPassword extends Component {
   }
 
   render() {
-    const { email } = this.state;
-    let isClickable = false;
-    if (email !== '') {
-      isClickable = true;
+    const { otpSent, isResendDisable } = this.state;
+    const { navigation } = this.props;
+    // let isClickable = false;
+    // if (this.phoneNumber && this.phoneNumber.length > 3) {
+    //   isClickable = true;
+    // }
+    if (otpSent) {
+      return (
+        <View style={{ flex: 1 }}>
+          <VerifyOTP
+            phoneNumber={this.phoneNumber}
+            // resendOTP={this.phoneNumber}
+            updateForm={this.updateForm}
+            navigation={navigation}
+            isResendDisable={isResendDisable}
+            confirmCode={() => this.confirmCode()}
+            resendOTP={() => this.sendVerificationOTP()}
+          />
+        </View>
+      );
     }
     return (
       <View style={styles.Container}>
@@ -128,31 +243,29 @@ class ResetPassword extends Component {
             <Text style={styles.mainTextStyle}>Forgot your password?</Text>
             <View style={styles.subTextViewStyle}>
               <Text style={styles.subTextStyle}>
-                Enter your email below to receive your password reset instructions
+                Enter your mobile number below to receive an OTP for reseting password.
               </Text>
             </View>
           </View>
 
           <View style={styles.emailTextFieldStyle}>
-            <FloatLabelTextField
-              type="email"
-              inputType="email"
-              valueType="email"
-              placeholder="Email"
-              autoCorrect={false}
-              value={email}
-              updateForm={this.updateForm}
-              inputBackgroundColor="#fff"
-              textFieldSize={deviceWidth * 0.73}
-              validateFields={type => this.validateFields(type)}
+            <PhoneVerify
+              ref={ref => {
+                this.phone = ref;
+              }}
+              ResetPassword={(phoneNumber, validNumber) =>
+                this.handleResetPassword(phoneNumber, validNumber)
+              }
+              navigation={navigation}
+              navigationFrom="forgotScreen"
             />
           </View>
 
           <View style={{ marginTop: deviceHeight * 0.08 }}>
             <DesignButton
               name="RESET PASSWORD"
-              callMethod={this.handleResetPassword}
-              isClickable={isClickable}
+              callMethod={() => this.sendVerificationOTP()}
+              isClickable
             />
           </View>
 

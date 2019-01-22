@@ -19,12 +19,13 @@ import {
 } from '../../../common/constants';
 import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
+import { forgotPasswordApi } from '../../../controllers/api/forgotPassword';
 
 class UpdatePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      oldPassword: '',
+      // oldPassword: '',
       password: '',
       confirmPassword: '',
       isLoading: false,
@@ -55,26 +56,42 @@ class UpdatePassword extends Component {
    * ******************************************************************************
    */
   handleResetPassword() {
-    const { oldPassword, password, confirmPassword } = this.state;
+    // const { oldPassword, password, confirmPassword } = this.state;
+    // // oldPassword &&
+    // // oldPassword !== '' &&
+    // if (password && password !== '' && confirmPassword && confirmPassword !== '') {
+    //   this.setState({
+    //     isLoading: true,
+    //   });
+    //   setTimeout(() => {
+    //     this.setState({
+    //       isLoading: false,
+    //     });
+    //     Alert.alert('Information', 'Password updated.');
+    //   }, 1000);
+    // }
 
-    if (
-      oldPassword &&
-      oldPassword !== '' &&
-      password &&
-      password !== '' &&
-      confirmPassword &&
-      confirmPassword !== ''
-    ) {
-      this.setState({
-        isLoading: true,
-      });
-      setTimeout(() => {
+    const { navigation } = this.props;
+    const { confirmPassword } = this.state;
+    const payload = {
+      validation_uuid: navigation.state.params.uuid,
+      new_password: confirmPassword,
+    };
+    forgotPasswordApi(payload)
+      .then(res => {
         this.setState({
           isLoading: false,
         });
-        Alert.alert('Information', 'Password updated.');
-      }, 1000);
-    }
+        if (res && res.payload && res.payload.status === 200) {
+          navigation.navigate('Login');
+        }
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+        });
+        Alert.alert('Error', error);
+      });
   }
 
   handleGoBack() {
@@ -153,7 +170,7 @@ class UpdatePassword extends Component {
 
   render() {
     const {
-      oldPassword,
+      // oldPassword,
       password,
       confirmPassword,
       eightPlusCharacter,
@@ -162,14 +179,7 @@ class UpdatePassword extends Component {
       moreThanOneNumber,
     } = this.state;
     let isClickable = false;
-    if (
-      oldPassword &&
-      oldPassword !== '' &&
-      password &&
-      password !== '' &&
-      confirmPassword &&
-      confirmPassword !== ''
-    ) {
+    if (password && password !== '' && confirmPassword && confirmPassword !== '') {
       isClickable = true;
     }
     return (
@@ -201,7 +211,7 @@ class UpdatePassword extends Component {
           </View>
 
           <View style={styles.textFieldStyle}>
-            <FloatLabelTextField
+            {/* <FloatLabelTextField
               type="oldPassword"
               inputType="text"
               valueType="password"
@@ -212,7 +222,7 @@ class UpdatePassword extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-            />
+            /> */}
           </View>
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField

@@ -38,8 +38,7 @@ class Pay extends Component {
       getBeneficiaryDetail();
 
       getTransactionDetail()
-        .then(res => {
-          console.log('getTransactionDetail : ', res);
+        .then(() => {
           this.setState({
             isLoading: false,
           });

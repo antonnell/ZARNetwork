@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
@@ -145,9 +145,12 @@ class Login extends Component {
   }
 
   render() {
-    const { authDetail, errDetail, navigation } = this.props;
-    console.log('authDetail in props : ', authDetail);
-    console.log('errDetail in props : ', errDetail);
+    const {
+      //  authDetail, errDetail,
+      navigation,
+    } = this.props;
+    // console.log('authDetail in props : ', authDetail);
+    // console.log('errDetail in props : ', errDetail);
     const { email, password } = this.state;
 
     let isClickable = false;
@@ -239,19 +242,19 @@ class Login extends Component {
   }
 }
 Login.defaultProps = {
-  authDetail: null,
-  errDetail: null,
+  // authDetail: null,
+  //  errDetail: null,
   navigation: null,
 };
 
 Login.propTypes = {
-  authDetail: PropTypes.objectOf(PropTypes.any),
-  errDetail: PropTypes.objectOf(PropTypes.any),
+  // authDetail: PropTypes.objectOf(PropTypes.any),
+  //  errDetail: PropTypes.objectOf(PropTypes.any),
   navigation: PropTypes.objectOf(PropTypes.any),
 };
-const mapStateToProps = state => ({
-  authDetail: state.userAuthReducer.userDetail,
-  errDetail: state.errorHandlerReducer,
-});
-
-export default connect(mapStateToProps)(Login);
+// const mapStateToProps = state => ({
+//   // authDetail: state.userAuthReducer.userDetail,
+//   // errDetail: state.errorHandlerReducer,
+// });
+export default Login;
+// export default connect(mapStateToProps)(Login);

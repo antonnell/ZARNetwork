@@ -34,7 +34,6 @@ class CreatePin extends Component {
     this.handleUserRegister = this.handleUserRegister.bind(this);
     TouchID.isSupported()
       .then(res => {
-        console.log('res is', res);
         if (res === 'TouchID') {
           this.setState({
             isTouchId: true,
@@ -61,6 +60,7 @@ class CreatePin extends Component {
   // eslint-disable-next-line react/sort-comp
   handleUserRegister(firstname, surname, email, password, mobileNumber, pin, fingerPrint) {
     const { navigation } = this.props;
+
     if (
       firstname &&
       firstname !== '' &&
@@ -116,7 +116,6 @@ class CreatePin extends Component {
 
   nextBtnClicked = (event, pinCodeObj) => {
     event.preventDefault();
-    console.log('pinCode oBj', pinCodeObj);
     if (pinCodeObj.btnText === 'Next') {
       this.setState({
         isClicked: true,
@@ -124,7 +123,6 @@ class CreatePin extends Component {
     } else {
       const { pinCode, confirmPinCode } = this.state;
       const { navigation } = this.props;
-      console.log(navigation.state.params.lastName, 'Last Name!!!!');
       const userFirstName = navigation.state.params.firstName;
       const userLastName = navigation.state.params.lastName;
       const userEmailId = navigation.state.params.emailId;
@@ -166,7 +164,6 @@ class CreatePin extends Component {
       .then(() => {
         const { pinCode } = this.state;
         const { navigation } = this.props;
-        console.log(navigation.state.params.emailId);
         const userFirstName = navigation.state.params.firstName;
         const userLastName = navigation.state.params.lastName;
         const userEmailId = navigation.state.params.emailId;
@@ -201,13 +198,11 @@ class CreatePin extends Component {
 
   render() {
     const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
-    console.log('isTouchId : ', isTouchId);
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
     if (!isClicked && confirmPinCode === '') {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
-      console.log('colorData pinCode', colorData);
       pinCodeObj = {
         title: 'Enter a 4 digit PIN to login with',
         btnText: 'Next',
@@ -217,7 +212,6 @@ class CreatePin extends Component {
       };
     } else {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
-      console.log('colorData', colorData);
       pinCodeObj = {
         title: 'Confirm 4 digit PIN Code',
         btnText: 'Done',
