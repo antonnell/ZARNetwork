@@ -87,6 +87,10 @@ $npm install -g react-native-cli
 
 If you get an error like Cannot find module ‘npmlog’, try installing npm directly: curl -0 -L http://npmjs.org/install.sh | sudo sh.
 
+## Code Quality
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0b806f5bc76f4c2cbe0c46c9072f49a6)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fantom-foundation-private/fantom-pay&amp;utm_campaign=Badge_Grade)
+
 ## iOS SETUP
 
 ## Xcode
