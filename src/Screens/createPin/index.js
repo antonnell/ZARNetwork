@@ -26,22 +26,32 @@ class CreatePin extends Component {
     super(props);
     this.state = {
       isTouchId: false,
+      biometryType: '',
       pinCode: '',
       confirmPinCode: '',
       isClicked: false,
       //  userFingerPrint:false,
     };
     this.handleUserRegister = this.handleUserRegister.bind(this);
+  }
+
+  componentDidMount() {
     TouchID.isSupported()
-      .then(res => {
-        if (res === 'TouchID') {
+      .then(biometryType => {
+        if (biometryType === 'TouchID') {
           this.setState({
             isTouchId: true,
+            biometryType: 'TouchID',
+          });
+        } else if (biometryType === 'FaceID') {
+          this.setState({
+            isTouchId: true,
+            biometryType: 'FaceID',
           });
         }
       })
       .catch(err => {
-        console.log('err is', err);
+        console.log('TouchID.isSupported err is', err);
       });
   }
 
@@ -111,45 +121,46 @@ class CreatePin extends Component {
   }
 
   nextBtnClicked = (event, pinCodeObj) => {
+    const { pinCode, confirmPinCode } = this.state;
     event.preventDefault();
     const { isTouchId } = this.state;
     if (pinCodeObj.btnText === 'Next') {
       this.setState({
         isClicked: true,
       });
-    } else if (isTouchId) {
-      this._pressHandler();
+    } else if (
+      pinCodeObj.btnText === 'Done' &&
+      pinCode === confirmPinCode &&
+      pinCode.length === confirmPinCode.length
+    ) {
+      if (isTouchId) {
+        this._pressHandler();
+      } else {
+        this.onRegistrationRequest('');
+      }
     } else {
-      this.onRegistrationRequest();
+      Alert.alert('Alert', ' 4 digit PIN you have entered do not match.');
     }
   };
 
-  onRegistrationRequest() {
-    const { pinCode, confirmPinCode } = this.state;
+  onRegistrationRequest(userFingerPrint) {
+    const { pinCode } = this.state;
     const { navigation } = this.props;
     const userFirstName = navigation.state.params.firstName;
     const userLastName = navigation.state.params.lastName;
     const userEmailId = navigation.state.params.emailId;
     const userPasssword = navigation.state.params.password;
     const userPhoneNumber = navigation.state.params.phoneNumber;
-    let userFingerPrint = navigation.state.params.fingerPrint;
 
-    if (pinCode === confirmPinCode && pinCode.length === confirmPinCode.length) {
-      if (!userFingerPrint) {
-        userFingerPrint = '';
-      }
-      this.handleUserRegister(
-        userFirstName,
-        userLastName,
-        userEmailId,
-        userPasssword,
-        userPhoneNumber,
-        pinCode,
-        userFingerPrint
-      );
-    } else {
-      Alert.alert('Failed');
-    }
+    this.handleUserRegister(
+      userFirstName,
+      userLastName,
+      userEmailId,
+      userPasssword,
+      userPhoneNumber,
+      pinCode,
+      userFingerPrint
+    );
   }
 
   updateForm = (value, type) => {
@@ -157,6 +168,7 @@ class CreatePin extends Component {
   };
 
   _pressHandler = () => {
+    const { biometryType } = this.state;
     const optionalConfigObject = {
       title: 'Authentication Required', // Android
       imageColor: '#e00606', // Android
@@ -168,9 +180,9 @@ class CreatePin extends Component {
       unifiedErrors: false, // use unified error messages (default false)
       passcodeFallback: false, // iOS
     };
-    TouchID.authenticate('Please authenticate your TouchID', optionalConfigObject)
+    TouchID.authenticate(`Please authenticate using your  ${biometryType}`, optionalConfigObject)
       .then(() => {
-        this.onRegistrationRequest();
+        this.onRegistrationRequest(true);
       })
       .catch(() => {
         Alert.alert('Authentication Failed');
@@ -205,27 +217,17 @@ class CreatePin extends Component {
     } else {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
       pinCodeObj = {
-        title: 'Confirm 4 digit PIN Code',
+        title: 'Confirm your 4 digit PIN ',
         btnText: 'Done',
         type: 'confirmPinCode',
         text: confirmPinCode,
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    // return !isTouchId ? (
-    //   <View style={{ flex: 1, justifyContent: 'center' }}>
-    //     <TouchableHighlight
-    //       style={{ width: 200, alignSelf: 'center' }}
-    //       underlayColor="#ffffff"
-    //       onPress={this._pressHandler}
-    //     >
-    //       <Text style={{ textAlign: 'center' }}>Authenticate with Touch ID</Text>
-    //     </TouchableHighlight>
-    //   </View>
-    // ) :
+
     return (
       <View style={styles.Container}>
-        <StatusBar barStyle="light-content" backgroundColor="black" />
+        <StatusBar barStyle="dark-content" />
         <TitleHeader title="CREATE PIN" />
 
         <ScrollView

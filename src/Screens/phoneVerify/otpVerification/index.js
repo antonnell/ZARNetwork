@@ -16,7 +16,7 @@ export default class OtpVerification extends Component {
     this.state = {};
   }
   render() {
-    const { navigation, updateForm, confirmCode, isResendDisable, resendOTP } = this.props;
+    const { navigation, updateForm, confirmCode, isResendDisable, resendOTP, goBack } = this.props;
     let resendOTPTextColor = {
       ...styles.resenOtpTextStyle,
     };
@@ -36,7 +36,7 @@ export default class OtpVerification extends Component {
             flexDirection: 'row',
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={goBack}>
             <MaterialIcons
               color="#000"
               size={24}

@@ -30,6 +30,7 @@ export default class PhoneAuthTest extends Component {
       phoneValid: false,
     };
     this.updateForm = this.updateForm.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   confirmCode = () => {
@@ -246,6 +247,12 @@ export default class PhoneAuthTest extends Component {
     this.setState({ [type]: value, resendOTP: value, phoneValid: phoneValid });
   }
 
+  goBack(){
+    this.setState({
+      verificationId: false
+    })
+  }
+
   renderPhoneNumberInput() {
     const { phoneNumber } = this.state;
     const { navigation } = this.props;
@@ -268,6 +275,7 @@ export default class PhoneAuthTest extends Component {
     const { phoneNumber, resendOTP } = this.state;
     return (
       <OtpVerification
+      goBack={this.goBack}
         phoneNumber={phoneNumber}
         resendOTP={resendOTP}
         updateForm={this.updateForm}

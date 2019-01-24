@@ -148,4 +148,17 @@ export default StyleSheet.create({
   accountCardSubTitleTextStyle: {
     color: 'black',
   },
+
+  accountCardListItemOneStyle: {
+    backgroundColor: '#f2f2f2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+  },
+  accountCardListItemTwoStyle: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+  },
 });

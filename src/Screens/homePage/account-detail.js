@@ -6,8 +6,8 @@ import TitleHeader from '../../common/TitleHeader';
 import { deviceHeight, deviceWidth } from '../../common/constants';
 
 export default class AccountDetail extends Component {
-  renderDetail = (heading, desc) => (
-    <View style={{ flex: 1, flexDirection: 'row', padding: 5 }}>
+  renderDetail = (heading, desc, itemStyle) => (
+    <View style={[itemStyle, { flexDirection: 'row', padding: 5 }]}>
       <Text style={{ flex: 1 }}>{heading}:</Text>
       <Text style={{ flex: 2, paddingLeft: 10 }}>{desc}</Text>
     </View>
@@ -37,30 +37,32 @@ export default class AccountDetail extends Component {
             height: deviceHeight,
             width: deviceWidth,
           }}
-          scrollEnabled={deviceHeight > 730}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
           <View
             style={{
-              marginTop: deviceHeight * 0.1,
+              marginTop: 30,
               width: deviceWidth * 0.8,
-              // backgroundColor: 'red',
             }}
           >
-            {this.renderDetail('Description', account.description)}
-            {this.renderDetail('Uuid', account.uuid)}
-            {this.renderDetail('User_uuid', account.user_uuid)}
-            {this.renderDetail('Type_uuid', account.type_uuid)}
-            {this.renderDetail('Number', account.number)}
-            {this.renderDetail('Block', account.block)}
-            {this.renderDetail('Balance', account.balance)}
-            {this.renderDetail('Bank_uuid', bankUuid)}
-            {this.renderDetail('Branch_uuid', branchUuid)}
-            {this.renderDetail('Modified', modified)}
-            {this.renderDetail('Sepa_code', sepaCode)}
-            {this.renderDetail('Swift_code', swiftCode)}
-            {this.renderDetail('Created', account.created)}
+            {this.renderDetail(
+              'Description',
+              account.description,
+              styles.accountCardListItemOneStyle
+            )}
+            {this.renderDetail('Uuid', account.uuid, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('User_uuid', account.user_uuid, styles.accountCardListItemOneStyle)}
+            {this.renderDetail('Type_uuid', account.type_uuid, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('Number', account.number, styles.accountCardListItemOneStyle)}
+            {this.renderDetail('Block', account.block, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('Balance', account.balance, styles.accountCardListItemOneStyle)}
+            {this.renderDetail('Bank_uuid', bankUuid, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('Branch_uuid', branchUuid, styles.accountCardListItemOneStyle)}
+            {this.renderDetail('Modified', modified, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('Sepa_code', sepaCode, styles.accountCardListItemOneStyle)}
+            {this.renderDetail('Swift_code', swiftCode, styles.accountCardListItemTwoStyle)}
+            {this.renderDetail('Created', account.created, styles.accountCardListItemOneStyle)}
           </View>
           <View style={{ height: deviceHeight * 0.05 }} />
         </ScrollView>
