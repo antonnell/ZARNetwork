@@ -32,3 +32,11 @@ export const loginUser = data =>
       },
     },
   });
+
+/**
+ * @method clearAuthDetail : Action for clear state of auth reducer.
+ */
+export const clearAuthDetail = () =>
+  action({
+    type: actions.CLEAR_AUTH,
+  });

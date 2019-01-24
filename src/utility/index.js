@@ -1,5 +1,5 @@
 import Moment from 'moment';
-import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
+import { BENEFICIARY_TYPE_LIST, WALLET_LIST, deviceHeight, deviceWidth } from '../common/constants';
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   const colorData = {
@@ -220,6 +220,14 @@ export function getAccountIcon(userDetail) {
   return userIcon;
 }
 
+export function titleCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 /**
  * @method getFullName : To get full name of user.
  * @param {object} userDetail : Object of user's detail.
@@ -242,6 +250,13 @@ export function getFullName(userDetail) {
       }
     }
   }
-
+  fullName = titleCase(fullName);
   return fullName;
+}
+
+export function isIPhoneX() {
+  if (deviceHeight === 812 && deviceWidth === 375) {
+    return true;
+  }
+  return false;
 }

@@ -5,7 +5,7 @@ import {
   View,
   Text,
   StatusBar,
-  TouchableHighlight,
+  // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -44,10 +44,6 @@ class CreatePin extends Component {
         console.log('err is', err);
       });
   }
-
-  updateForm = (value, type) => {
-    this.setState({ [type]: value });
-  };
 
   /**
    * ******************************************************************************
@@ -116,36 +112,48 @@ class CreatePin extends Component {
 
   nextBtnClicked = (event, pinCodeObj) => {
     event.preventDefault();
+    const { isTouchId } = this.state;
     if (pinCodeObj.btnText === 'Next') {
       this.setState({
         isClicked: true,
       });
+    } else if (isTouchId) {
+      this._pressHandler();
     } else {
-      const { pinCode, confirmPinCode } = this.state;
-      const { navigation } = this.props;
-      const userFirstName = navigation.state.params.firstName;
-      const userLastName = navigation.state.params.lastName;
-      const userEmailId = navigation.state.params.emailId;
-      const userPasssword = navigation.state.params.password;
-      const userPhoneNumber = navigation.state.params.phoneNumber;
-      let userFingerPrint = navigation.state.params.fingerPrint;
-      if (pinCode === confirmPinCode && pinCode.length === confirmPinCode.length) {
-        if (!userFingerPrint) {
-          userFingerPrint = '';
-        }
-        this.handleUserRegister(
-          userFirstName,
-          userLastName,
-          userEmailId,
-          userPasssword,
-          userPhoneNumber,
-          pinCode,
-          userFingerPrint
-        );
-      } else {
-        Alert.alert('Failed');
-      }
+      this.onRegistrationRequest();
     }
+  };
+
+  onRegistrationRequest() {
+    const { pinCode, confirmPinCode } = this.state;
+    const { navigation } = this.props;
+    const userFirstName = navigation.state.params.firstName;
+    const userLastName = navigation.state.params.lastName;
+    const userEmailId = navigation.state.params.emailId;
+    const userPasssword = navigation.state.params.password;
+    const userPhoneNumber = navigation.state.params.phoneNumber;
+    let userFingerPrint = navigation.state.params.fingerPrint;
+
+    if (pinCode === confirmPinCode && pinCode.length === confirmPinCode.length) {
+      if (!userFingerPrint) {
+        userFingerPrint = '';
+      }
+      this.handleUserRegister(
+        userFirstName,
+        userLastName,
+        userEmailId,
+        userPasssword,
+        userPhoneNumber,
+        pinCode,
+        userFingerPrint
+      );
+    } else {
+      Alert.alert('Failed');
+    }
+  }
+
+  updateForm = (value, type) => {
+    this.setState({ [type]: value });
   };
 
   _pressHandler = () => {
@@ -160,25 +168,9 @@ class CreatePin extends Component {
       unifiedErrors: false, // use unified error messages (default false)
       passcodeFallback: false, // iOS
     };
-    TouchID.authenticate('to demo this react-native component', optionalConfigObject)
+    TouchID.authenticate('Please authenticate your TouchID', optionalConfigObject)
       .then(() => {
-        const { pinCode } = this.state;
-        const { navigation } = this.props;
-        const userFirstName = navigation.state.params.firstName;
-        const userLastName = navigation.state.params.lastName;
-        const userEmailId = navigation.state.params.emailId;
-        const userPasssword = navigation.state.params.password;
-        const userPhoneNumber = navigation.state.params.phoneNumber;
-        const userFingerPrint = true;
-        this.handleUserRegister(
-          userFirstName,
-          userLastName,
-          userEmailId,
-          userPasssword,
-          userPhoneNumber,
-          pinCode,
-          userFingerPrint
-        );
+        this.onRegistrationRequest();
       })
       .catch(() => {
         Alert.alert('Authentication Failed');
@@ -197,7 +189,7 @@ class CreatePin extends Component {
   }
 
   render() {
-    const { isClicked, confirmPinCode, pinCode, isTouchId } = this.state;
+    const { isClicked, confirmPinCode, pinCode } = this.state;
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
@@ -220,17 +212,18 @@ class CreatePin extends Component {
         isBtnEnabled: confirmPinCode.length === 4,
       };
     }
-    return !isTouchId ? (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <TouchableHighlight
-          style={{ width: 200, alignSelf: 'center' }}
-          underlayColor="#ffffff"
-          onPress={this._pressHandler}
-        >
-          <Text style={{ textAlign: 'center' }}>Authenticate with Touch ID</Text>
-        </TouchableHighlight>
-      </View>
-    ) : (
+    // return !isTouchId ? (
+    //   <View style={{ flex: 1, justifyContent: 'center' }}>
+    //     <TouchableHighlight
+    //       style={{ width: 200, alignSelf: 'center' }}
+    //       underlayColor="#ffffff"
+    //       onPress={this._pressHandler}
+    //     >
+    //       <Text style={{ textAlign: 'center' }}>Authenticate with Touch ID</Text>
+    //     </TouchableHighlight>
+    //   </View>
+    // ) :
+    return (
       <View style={styles.Container}>
         <StatusBar barStyle="light-content" backgroundColor="black" />
         <TitleHeader title="CREATE PIN" />

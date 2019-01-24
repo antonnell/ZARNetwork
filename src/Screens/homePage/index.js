@@ -3,7 +3,7 @@ import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import ProfileInfo from '../../common/profileInfo';
+import ProfileInfo from '../../common/profileInfo';
 import DetailCard from '../../common/detailCard';
 import styles from './styles';
 import Wallet from './wallet';
@@ -244,7 +244,7 @@ class HomePage extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar barStyle="dark-content" />
         {/* header */}
         <TitleHeader
           title="DASHBOARD"
@@ -261,16 +261,16 @@ class HomePage extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          {/* <ProfileInfo
+          <ProfileInfo
             circularAvatarTextStyle={styles.circularAvatarTextStyle}
             profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
             subTitleText={userDetail.email}
-            titleText="Jane Smith"
+            titleText={fullName}
             circularAvatarText={userIcon}
-          /> */}
-          <View
+          />
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -285,7 +285,7 @@ class HomePage extends Component {
               <Text style={styles.profileInfoTitleStyle}>{fullName}</Text>
               <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
             </View>
-          </View>
+          </View> */}
           <View
             style={{
               marginTop: deviceHeight * 0.04,

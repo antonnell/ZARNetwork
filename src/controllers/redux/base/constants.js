@@ -5,6 +5,7 @@
 export const GET_FANTOM_BALANCE = 'GET_FANTOM_BALANCE';
 export const REGISTER = 'REGISTER';
 export const LOGIN = 'LOGIN';
+export const CLEAR_AUTH = 'CLEAR_AUTH';
 
 // For type api.
 export const SUPPORTED_ACCOUNT_TYPE = 'SUPPORTED_ACCOUNT_TYPE';

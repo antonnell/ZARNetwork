@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, _SUCCESS } from '../base/constants';
+import { REGISTER, LOGIN, _SUCCESS, CLEAR_AUTH } from '../base/constants';
 
 const sha256 = require('sha256');
 
@@ -65,6 +65,7 @@ const getFormattedAuthData = (state, action) => {
   return state;
 };
 
+const clearState = state => Object.assign({}, state, { userDetail: null });
 /**
  * @method userAuthReducer : Reducer for user authentication.
  */
@@ -76,6 +77,10 @@ const userAuthReducer = (state = defaultState, action) => {
     }
     case `${LOGIN}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(state, action);
+      return formattedData;
+    }
+    case `${CLEAR_AUTH}`: {
+      const formattedData = clearState(state);
       return formattedData;
     }
     default:

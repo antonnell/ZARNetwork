@@ -86,6 +86,8 @@ export default class GeneratePinCode extends Component {
         <View
           style={{
             width: deviceWidth * 0.8,
+            maxWidth: 300,
+
             flexDirection: 'row',
             flexWrap: 'wrap',
             alignItems: 'center',

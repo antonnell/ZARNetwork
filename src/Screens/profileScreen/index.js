@@ -8,6 +8,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TitleHeader from '../../common/TitleHeader';
 import ProfileInfo from '../../common/profileInfo';
 
+import { clearAuth } from '../../controllers/api/auth';
+
 import {
   deviceHeight,
   deviceWidth,
@@ -90,6 +92,7 @@ class UserProfile extends Component {
    */
   handleLogout() {
     const { navigation } = this.props;
+
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
@@ -98,7 +101,7 @@ class UserProfile extends Component {
         }),
       ],
     });
-
+    clearAuth();
     navigation.dispatch(resetAction);
   }
 

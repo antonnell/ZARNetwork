@@ -58,15 +58,19 @@ export default class TitleHeader extends Component {
     if (rightIconType === ImageIconType) {
       if (rightIconName !== '') {
         return (
-          <TouchableOpacity onPress={onRightBtnPress}>
-            <Image style={{ height: 20, width: 20 }} source={rightIconName} resizeMode="contain" />
+          <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
+            <Image
+              style={{ height: 20, width: 20, marginRight: 5 }}
+              source={rightIconName}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
         );
       }
     } else if (rightIconName !== '') {
       return (
         <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
-          <IconType name={rightIconName} size={22} style={{ fontWeight: 'bold', marginRight: 5 }} />
+          <IconType name={rightIconName} size={30} style={{ fontWeight: 'bold', marginRight: 5 }} />
         </TouchableOpacity>
       );
     }

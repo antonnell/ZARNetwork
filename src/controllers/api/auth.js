@@ -1,5 +1,5 @@
 import { dispatch } from '../../store';
-import { loginUser, registerUser } from '../redux/auth/action';
+import { loginUser, registerUser, clearAuthDetail } from '../redux/auth/action';
 // import { encrypt } from '../utility/encryption';
 // import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
 
@@ -57,4 +57,16 @@ export const login = payload =>
     //     }
     //   })
     //   .catch(err => reject(err));
+  });
+
+/**
+ * ******************************************************************************
+ * @method clearAuth : Method to clear auth.
+ * ******************************************************************************
+ */
+export const clearAuth = () =>
+  new Promise((resolve, reject) => {
+    dispatch(clearAuthDetail())
+      .then(result => resolve(result))
+      .catch(err => reject(err));
   });

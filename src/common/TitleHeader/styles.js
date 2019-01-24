@@ -1,7 +1,9 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import { isIPhoneX } from '../../utility';
 // Constants
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
+
 export default StyleSheet.create({
   mainContainer: {
     width: deviceWidth * 0.9,
@@ -9,7 +11,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: isIPhoneX() ? 54 : 30,
   },
 
   titleText: {
