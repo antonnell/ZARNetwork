@@ -63,8 +63,8 @@ export default StyleSheet.create({
   },
   titleCardImageStyle: {
     flex: 1,
-    height: deviceHeight * 0.04,
-    width: deviceWidth * 0.1,
+    height: 30,
+    width: 30,
   },
   titleCardTextStyle: {
     flex: 5,
@@ -111,5 +111,9 @@ export default StyleSheet.create({
     left: -(deviceWidth * 0.26),
     width: deviceWidth * 0.78,
     maxHeight: deviceHeight * 0.3,
+  },
+  dateTimeviewStyle: {
+    width: deviceWidth * 0.66,
+    alignSelf: 'center',
   },
 });

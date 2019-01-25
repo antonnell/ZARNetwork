@@ -260,3 +260,13 @@ export function isIPhoneX() {
   }
   return false;
 }
+
+export function formatDate(date) {
+  const formattedDate = Moment(date).format('DD/MM/YYYY');
+  return formattedDate;
+}
+
+export function formatTime(time) {
+  const formattedTime = Moment(time).format('hh:mm:ss a');
+  return formattedTime;
+}

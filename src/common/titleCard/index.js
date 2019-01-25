@@ -16,18 +16,19 @@ export default class TitleCard extends Component {
       onPress,
     } = this.props;
     return (
-      <View style={titleCardMainViewStyle}>
+      <TouchableOpacity style={titleCardMainViewStyle} onPress={onPress}>
         <Image source={icon} style={titleCardImageStyle} resizeMode="contain" />
+
         <Text style={titleCardTextStyle}>{text}</Text>
-        <TouchableOpacity onPress={onPress}>
+        <View>
           <MaterialIcons
             color="#fff"
             size={24}
             style={titleMaterialIconStyle}
             name="keyboard-arrow-right"
           />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }

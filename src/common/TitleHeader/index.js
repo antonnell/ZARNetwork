@@ -31,15 +31,15 @@ export default class TitleHeader extends Component {
     if (leftIconType === ImageIconType) {
       if (iconName !== '' && isBackArrow) {
         return (
-          <TouchableOpacity onPress={onBtnPress}>
-            <Image style={{ height: 20, width: 20 }} source={iconName} resizeMode="contain" />
+          <TouchableOpacity onPress={onBtnPress} style={styles.leftIconViewStyle}>
+            <Image style={styles.imgIconStyle} source={iconName} resizeMode="contain" />
           </TouchableOpacity>
         );
       }
     } else if (iconName !== '' && isBackArrow) {
       return (
-        <TouchableOpacity onPress={onBtnPress}>
-          <IconType name={iconName} size={24} style={{ fontWeight: 'bold' }} />
+        <TouchableOpacity onPress={onBtnPress} style={styles.leftIconViewStyle}>
+          <IconType name={iconName} size={35} style={styles.iconStyle} />
         </TouchableOpacity>
       );
     }
@@ -58,19 +58,15 @@ export default class TitleHeader extends Component {
     if (rightIconType === ImageIconType) {
       if (rightIconName !== '') {
         return (
-          <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
-            <Image
-              style={{ height: 20, width: 20, marginRight: 5 }}
-              source={rightIconName}
-              resizeMode="contain"
-            />
+          <TouchableOpacity onPress={onRightBtnPress} style={styles.rightIconViewStyle}>
+            <Image style={styles.imgIconStyle} source={rightIconName} resizeMode="contain" />
           </TouchableOpacity>
         );
       }
     } else if (rightIconName !== '') {
       return (
-        <TouchableOpacity onPress={onRightBtnPress} style={{ alignItems: 'flex-end' }}>
-          <IconType name={rightIconName} size={30} style={{ fontWeight: 'bold', marginRight: 5 }} />
+        <TouchableOpacity onPress={onRightBtnPress} style={styles.rightIconViewStyle}>
+          <IconType name={rightIconName} size={35} style={styles.iconStyle} />
         </TouchableOpacity>
       );
     }
@@ -90,11 +86,11 @@ export default class TitleHeader extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <View style={{ flex: 1 }}>{this.renderLeftIcon()}</View>
-        <View style={{ flex: 6 }}>
+        <View style={styles.iconRenderViewStyle}>{this.renderLeftIcon()}</View>
+        <View style={styles.textViewStyle}>
           <Text style={titleStyling}>{title}</Text>
         </View>
-        <View style={{ flex: 1 }}>{this.renderRightIcon()}</View>
+        <View style={styles.iconRenderViewStyle}>{this.renderRightIcon()}</View>
       </View>
     );
   }

@@ -89,21 +89,6 @@ class BeneficiaryDetails extends Component {
     return valid;
   }
 
-  // checkEmptyFields(type) {
-  //   const { name, accountNumber } = this.state;
-  //   if (type === 'name') {
-  //     Alert.alert('Error', 'Enter name!');
-  //   } else if (type === 'account') {
-  //     if (name !== '') {
-  //       Alert.alert('Error', 'Enter account number!');
-  //     }
-  //   } else if (type === 'reference') {
-  //     if (accountNumber !== '') {
-  //       Alert.alert('Error', 'Enter reference!');
-  //     }
-  //   }
-  // }
-
   handleGoBack() {
     const { navigation } = this.props;
     if (navigation) {

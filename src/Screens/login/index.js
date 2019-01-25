@@ -53,19 +53,6 @@ class Login extends Component {
     return valid;
   }
 
-  // checkEmptyFields(type) {
-  // console.log('checkEmptyFields type : ', type);
-  // const { email } = this.state;
-  // if (type === 'email') {
-  //   Alert.alert('Error', 'Enter email!');
-  // } else
-  // if (type === 'password') {
-  //   if (email !== '' && isEmailValid(email)) {
-  //     Alert.alert('Error', 'Enter password!');
-  //   }
-  // }
-  // }
-
   /**
    * ******************************************************************************
    * @method handleUserLogin : To perform action for user login.

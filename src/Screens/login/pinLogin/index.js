@@ -63,6 +63,10 @@ class LoginWithPin extends Component {
           email,
           pin: pinCode,
         };
+        this.setState({
+          isLoading: true,
+        });
+
         login(payload)
           .then(res => {
             this.setState({
@@ -111,6 +115,9 @@ class LoginWithPin extends Component {
     };
     TouchID.authenticate(`Please authenticate using your  ${biometryType}`, optionalConfigObject)
       .then(() => {
+        // this.state({
+        //   isTouchId: false,
+        // });
         navigation.navigate('Home');
       })
       .catch(error => {

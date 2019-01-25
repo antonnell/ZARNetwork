@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Alert, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -16,7 +17,14 @@ import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
 import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
-import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
+import {
+  getWalletType,
+  getAccountIcon,
+  getFullName,
+  formatDate,
+  formatTime,
+} from '../../../utility';
+import DateTimePickerField from '../../../common/DateTimePickerField';
 
 // constants
 import {
@@ -69,7 +77,7 @@ class PayBeneficiary extends Component {
     this.state = {
       number: '',
       reference,
-      normalPaymentToggle: false,
+      normalPaymentToggle: true,
       futurePaymentToggle: false,
       isBackArrowPresent,
       openWalletList: false,
@@ -77,12 +85,22 @@ class PayBeneficiary extends Component {
       accId,
       walletType,
       balance,
+      isTimePickerVisible: false,
+      isDatePickerVisible: false,
+      date: 'Select date',
+      time: 'Select time',
     };
     this.updateForm = this.updateForm.bind(this);
     this.handlePayNotification = this.handlePayNotification.bind(this);
     this.handleWalletList = this.handleWalletList.bind(this);
     this.toggleWalletList = this.toggleWalletList.bind(this);
     this.validateFields = this.validateFields.bind(this);
+    this.showDatePicker = this.showDatePicker.bind(this);
+    this.handleDatePicked = this.handleDatePicked.bind(this);
+    this.hideDatePicker = this.hideDatePicker.bind(this);
+    this.showTimePicker = this.showTimePicker.bind(this);
+    this.handleTimePicked = this.handleTimePicked.bind(this);
+    this.hideTimePicker = this.hideTimePicker.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -100,45 +118,54 @@ class PayBeneficiary extends Component {
     });
   }
 
-  updateToggleValue(type) {
-    const { normalPaymentToggle, futurePaymentToggle } = this.state;
-    if (type === 'normalPayment') {
-      this.setState({ normalPaymentToggle: !normalPaymentToggle });
-    } else if (type === 'futurePayment') {
-      this.setState({ futurePaymentToggle: !futurePaymentToggle });
+  showDatePicker = () => {
+    const { futurePaymentToggle } = this.state;
+    if (futurePaymentToggle) {
+      this.setState({ isDatePickerVisible: true });
     }
-  }
+  };
 
-  updateForm(value, type) {
-    this.setState({ [type]: value });
-  }
+  hideDatePicker = () => this.setState({ isDatePickerVisible: false });
 
-  handlePayNotification() {
-    const isBackArrow = true;
-    const { navigation } = this.props;
-    if (navigation) {
-      navigation.navigate('PaymentNotification', { isBackArrow });
+  handleDatePicked = date => {
+    this.setState({
+      date: formatDate(date),
+    });
+    this.hideDatePicker();
+  };
+
+  showTimePicker = () => {
+    const { futurePaymentToggle } = this.state;
+    if (futurePaymentToggle) {
+      this.setState({ isTimePickerVisible: true });
     }
-  }
+  };
 
-  handleWalletList(item) {
-    let walletType = '';
+  hideTimePicker = () => this.setState({ isTimePickerVisible: false });
+
+  handleTimePicked = time => {
+    this.setState({
+      time: formatTime(time),
+    });
+
+    this.hideTimePicker();
+  };
+
+  /**
+   * @method handleCloseDropdown : To close wallet list dropdown on clicking outside dropdown.
+   */
+  handleCloseDropdown() {
     const { openWalletList } = this.state;
-    const { accountTypeList } = this.props;
+    if (openWalletList) {
+      this.setState({ openWalletList: false });
+    }
+  }
+
+  toggleWalletList() {
+    const { openWalletList } = this.state;
     this.setState({
       openWalletList: !openWalletList,
     });
-
-    walletType = getWalletType(accountTypeList, item);
-
-    if (item && item.description) {
-      this.setState({
-        selectedWallet: item.description,
-        accId: item.uuid,
-        balance: item.balance,
-        walletType,
-      });
-    }
   }
 
   validateFields(type) {
@@ -163,29 +190,57 @@ class PayBeneficiary extends Component {
     return valid;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  // checkEmptyFields(type) {
-  // const { number , reference} = this.state;
-  // if (type === 'number') {
-  //   Alert.alert('Error', 'Enter amount!');
-  // }
-  //  else if (type === 'reference') {
-  //   Alert.alert('Error', 'Enter reference!');
-  // }
-  // }
-
-  toggleWalletList() {
+  handleWalletList(item) {
+    let walletType = '';
     const { openWalletList } = this.state;
+    const { accountTypeList } = this.props;
     this.setState({
       openWalletList: !openWalletList,
     });
+
+    walletType = getWalletType(accountTypeList, item);
+
+    if (item && item.description) {
+      this.setState({
+        selectedWallet: item.description,
+        accId: item.uuid,
+        balance: item.balance,
+        walletType,
+      });
+    }
   }
 
-  /**
-   * @method handleCloseDropdown : To close wallet list dropdown on clicking outside dropdown.
-   */
-  handleCloseDropdown() {
-    this.setState({ openWalletList: false });
+  handlePayNotification() {
+    const isBackArrow = true;
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('PaymentNotification', { isBackArrow });
+    }
+  }
+
+  updateForm(value, type) {
+    this.setState({ [type]: value });
+  }
+
+  updateToggleValue() {
+    const { normalPaymentToggle, futurePaymentToggle } = this.state;
+    this.setState({
+      normalPaymentToggle: !normalPaymentToggle,
+      futurePaymentToggle: !futurePaymentToggle,
+    });
+  }
+
+  renderDateTimeView() {
+    const { futurePaymentToggle, date, time } = this.state;
+    if (futurePaymentToggle) {
+      return (
+        <View style={styles.dateTimeviewStyle}>
+          <DateTimePickerField callMethod={this.showDatePicker} text={date} eventType="date" />
+          <DateTimePickerField callMethod={this.showTimePicker} text={time} eventType="time" />
+        </View>
+      );
+    }
+    return null;
   }
 
   render() {
@@ -227,6 +282,8 @@ class PayBeneficiary extends Component {
       selectedWallet,
       balance,
       walletType,
+      isDatePickerVisible,
+      isTimePickerVisible,
     } = this.state;
     let isClickable = false;
     if (accId !== '' && number !== '' && reference !== '') {
@@ -249,7 +306,6 @@ class PayBeneficiary extends Component {
           isBackArrow={isBackArrowPresent}
           onBtnPress={() => navigation.goBack()}
         />
-        {/* header */}
         <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
@@ -274,7 +330,6 @@ class PayBeneficiary extends Component {
               titleCardImageStyle={styles.titleCardImageStyle}
               titleCardTextStyle={styles.titleCardTextStyle}
               titleMaterialIconStyle={styles.titleMaterialIconStyle}
-              // text="ETH Wallet"
               text={selectedWallet}
               onPress={this.toggleWalletList}
             />
@@ -335,14 +390,14 @@ class PayBeneficiary extends Component {
             text="Payment Notification: none"
             onPress={this.handlePayNotification}
           />
-          {/* Toggle container */}
+
           <View style={styles.toggleContainerStyle}>
             <ToggleCard
               textVal="Normal Payment"
               textStyle={styles.toggleTextStyle}
               toggleState={normalPaymentToggle}
               updateToggleClick={() => {
-                this.updateToggleValue('normalPayment');
+                this.updateToggleValue();
               }}
             />
             <View style={styles.separatorStyle} />
@@ -351,8 +406,23 @@ class PayBeneficiary extends Component {
               textStyle={styles.toggleTextStyle}
               toggleState={futurePaymentToggle}
               updateToggleClick={() => {
-                this.updateToggleValue('futurePayment');
+                this.updateToggleValue();
               }}
+            />
+            {this.renderDateTimeView()}
+            <DateTimePicker
+              isVisible={isDatePickerVisible}
+              onConfirm={this.handleDatePicked}
+              mode="date"
+              titleIOS="Select date"
+              onCancel={this.hideDatePicker}
+            />
+            <DateTimePicker
+              isVisible={isTimePickerVisible}
+              onConfirm={this.handleTimePicked}
+              mode="time"
+              titleIOS="Select time"
+              onCancel={this.hideTimePicker}
             />
           </View>
           <View style={{ marginTop: deviceHeight * 0.075 }}>
