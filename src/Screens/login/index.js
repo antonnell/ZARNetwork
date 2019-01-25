@@ -145,12 +145,8 @@ class Login extends Component {
   }
 
   render() {
-    const {
-      //  authDetail, errDetail,
-      navigation,
-    } = this.props;
-    // console.log('authDetail in props : ', authDetail);
-    // console.log('errDetail in props : ', errDetail);
+    const { navigation } = this.props;
+
     const { email, password } = this.state;
 
     let isClickable = false;
@@ -242,19 +238,11 @@ class Login extends Component {
   }
 }
 Login.defaultProps = {
-  // authDetail: null,
-  //  errDetail: null,
   navigation: null,
 };
 
 Login.propTypes = {
-  // authDetail: PropTypes.objectOf(PropTypes.any),
-  //  errDetail: PropTypes.objectOf(PropTypes.any),
   navigation: PropTypes.objectOf(PropTypes.any),
 };
-// const mapStateToProps = state => ({
-//   // authDetail: state.userAuthReducer.userDetail,
-//   // errDetail: state.errorHandlerReducer,
-// });
+
 export default Login;
-// export default connect(mapStateToProps)(Login);

@@ -1,38 +1,28 @@
-/* eslint-disable no-console */
 import React, { Component } from 'react';
-import {
-  Alert,
-  View,
-  Text,
-  StatusBar,
-  // TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { Alert, View, Text, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
-import DesignButton from '../../common/Button';
-import TitleHeader from '../../common/TitleHeader';
+import { connect } from 'react-redux';
+import DesignButton from '../../../common/Button';
+import TitleHeader from '../../../common/TitleHeader';
 import styles from './styles';
-import GeneratePinCode from '../../common/PinCode';
-import { register } from '../../controllers/api/auth';
-import { checkPinLength } from '../../utility/index';
-import Loader from '../../common/Loader';
-import { deviceHeight } from '../../common/constants';
+import GeneratePinCode from '../../../common/PinCode';
+import { login } from '../../../controllers/api/auth';
+import { checkPinLength } from '../../../utility/index';
+import Loader from '../../../common/Loader';
+import { deviceHeight } from '../../../common/constants';
 
-class CreatePin extends Component {
+class LoginWithPin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isTouchId: false,
       biometryType: '',
       pinCode: '',
-      confirmPinCode: '',
       isClicked: false,
-      //  userFingerPrint:false,
     };
-    this.handleUserRegister = this.handleUserRegister.bind(this);
+    this.loginBtnClicked = this.loginBtnClicked.bind(this);
   }
 
   componentDidMount() {
@@ -50,55 +40,36 @@ class CreatePin extends Component {
           });
         }
       })
-      .catch(err => {
-        console.log('TouchID.isSupported err is', err);
-      });
+      .catch(() => {});
   }
 
   /**
    * ******************************************************************************
-   * @method handleUserRegister : To perform action register user.
+   * @method loginBtnClicked : To perform action login user.
    * ******************************************************************************
-   * @method register : To call register api to register user.
-   * @param payload : Payload for register .
+   * @method login : To call Login api to login user.
+   * @param payload : Payload for login .
    * ******************************************************************************
    */
-  // eslint-disable-next-line react/sort-comp
-  handleUserRegister(firstname, surname, email, password, mobileNumber, pin, fingerPrint) {
-    const { navigation } = this.props;
 
-    if (
-      firstname &&
-      firstname !== '' &&
-      surname &&
-      surname !== '' &&
-      email &&
-      email !== '' &&
-      password &&
-      password !== '' &&
-      mobileNumber &&
-      mobileNumber !== ''
-    ) {
-      const payload = {
-        firstname,
-        surname,
-        email,
-        password,
-        pin,
-        fingerprint: fingerPrint,
-        mobile_number: mobileNumber,
-      };
-      this.setState({
-        isLoading: true,
-      });
-      if (register) {
-        register(payload)
+  loginBtnClicked = () => {
+    const { pinCode } = this.state;
+    const { authDetail, navigation } = this.props;
+
+    if (authDetail && authDetail !== null) {
+      const { email } = authDetail;
+      if (email && email !== '' && pinCode && pinCode !== '') {
+        const payload = {
+          email,
+          pin: pinCode,
+        };
+        login(payload)
           .then(res => {
             this.setState({
               isLoading: false,
             });
-            if (res.payload && res.payload.data && res.payload.data.status === 200) {
-              navigation.navigate('RegistrationSuccess');
+            if (res && res.payload && res.payload.status === 200) {
+              navigation.navigate('Home');
             } else if (
               res &&
               res.error &&
@@ -107,7 +78,7 @@ class CreatePin extends Component {
               res.error.response.data.result
             ) {
               const { result } = res.error.response.data;
-              Alert.alert('Error', result);
+              Alert.alert('Authentication failed', result);
             }
           })
           .catch(error => {
@@ -118,50 +89,7 @@ class CreatePin extends Component {
           });
       }
     }
-  }
-
-  nextBtnClicked = (event, pinCodeObj) => {
-    const { pinCode, confirmPinCode } = this.state;
-    event.preventDefault();
-    const { isTouchId } = this.state;
-    if (pinCodeObj.btnText === 'Next') {
-      this.setState({
-        isClicked: true,
-      });
-    } else if (
-      pinCodeObj.btnText === 'Done' &&
-      pinCode === confirmPinCode &&
-      pinCode.length === confirmPinCode.length
-    ) {
-      if (isTouchId) {
-        this._pressHandler();
-      } else {
-        this.onRegistrationRequest('');
-      }
-    } else {
-      Alert.alert('Alert', ' 4 digit PIN you have entered do not match.');
-    }
   };
-
-  onRegistrationRequest(userFingerPrint) {
-    const { pinCode } = this.state;
-    const { navigation } = this.props;
-    const userFirstName = navigation.state.params.firstName;
-    const userLastName = navigation.state.params.lastName;
-    const userEmailId = navigation.state.params.emailId;
-    const userPasssword = navigation.state.params.password;
-    const userPhoneNumber = navigation.state.params.phoneNumber;
-
-    this.handleUserRegister(
-      userFirstName,
-      userLastName,
-      userEmailId,
-      userPasssword,
-      userPhoneNumber,
-      pinCode,
-      userFingerPrint
-    );
-  }
 
   updateForm = (value, type) => {
     this.setState({ [type]: value });
@@ -169,6 +97,7 @@ class CreatePin extends Component {
 
   _pressHandler = () => {
     const { biometryType } = this.state;
+    const { navigation } = this.props;
     const optionalConfigObject = {
       title: 'Authentication Required', // Android
       imageColor: '#e00606', // Android
@@ -182,7 +111,7 @@ class CreatePin extends Component {
     };
     TouchID.authenticate(`Please authenticate using your  ${biometryType}`, optionalConfigObject)
       .then(() => {
-        this.onRegistrationRequest(true);
+        navigation.navigate('Home');
       })
       .catch(() => {
         Alert.alert('Authentication Failed');
@@ -200,35 +129,30 @@ class CreatePin extends Component {
     return null;
   }
 
-  renderCreatePin() {
-    const { isClicked, confirmPinCode, pinCode } = this.state;
+  renderPinCodeView() {
+    const { isClicked, pinCode, isTouchId } = this.state;
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
-    if (!isClicked && confirmPinCode === '') {
-      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
+    if (!isClicked) {
+      colorData = checkPinLength(isClicked, '', pinCode);
       pinCodeObj = {
-        title: 'Enter a 4 digit PIN to login with',
-        btnText: 'Next',
+        title: 'Enter your 4 digit PIN ',
+        btnText: 'Log In',
         type: 'pinCode',
         text: pinCode,
         isBtnEnabled: pinCode.length === 4,
       };
-    } else {
-      colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
-      pinCodeObj = {
-        title: 'Confirm your 4 digit PIN ',
-        btnText: 'Done',
-        type: 'confirmPinCode',
-        text: confirmPinCode,
-        isBtnEnabled: confirmPinCode.length === 4,
-      };
+    }
+
+    if (isTouchId) {
+      this._pressHandler();
     }
 
     return (
       <View style={styles.Container}>
         <StatusBar barStyle="dark-content" />
-        <TitleHeader title="CREATE PIN" />
+        <TitleHeader title="SIGN IN" />
 
         <ScrollView
           style={styles.dialerView}
@@ -244,13 +168,14 @@ class CreatePin extends Component {
               updateForm={this.updateForm}
               pinCodeObj={pinCodeObj}
               colorData={colorData}
+              isLogin
             />
           </View>
           <View style={styles.loginButtonView}>
             <DesignButton
               name={pinCodeObj.btnText}
               isClickable={pinCodeObj.isBtnEnabled}
-              callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
+              callMethod={this.loginBtnClicked}
             />
           </View>
           <TouchableOpacity
@@ -268,14 +193,20 @@ class CreatePin extends Component {
   }
 
   render() {
-    return this.renderCreatePin();
+    return this.renderPinCodeView();
   }
 }
-CreatePin.defaultProps = {
+LoginWithPin.defaultProps = {
   navigation: null,
+  authDetail: null,
 };
-CreatePin.propTypes = {
+LoginWithPin.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),
+  authDetail: PropTypes.objectOf(PropTypes.any),
 };
 
-export default CreatePin;
+const mapSateToProps = state => ({
+  authDetail: state.userAuthReducer.userDetail,
+});
+
+export default connect(mapSateToProps)(LoginWithPin);
