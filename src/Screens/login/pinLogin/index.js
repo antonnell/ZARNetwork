@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import { Alert, View, Text, StatusBar, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
@@ -105,7 +105,7 @@ class LoginWithPin extends Component {
       sensorDescription: 'Touch sensor', // Android
       sensorErrorDescription: 'Failed', // Android
       cancelText: 'Cancel', // Android
-      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+      fallbackLabel: '', // iOS (if empty, then label is hidden)
       unifiedErrors: false, // use unified error messages (default false)
       passcodeFallback: false, // iOS
     };
@@ -113,8 +113,31 @@ class LoginWithPin extends Component {
       .then(() => {
         navigation.navigate('Home');
       })
-      .catch(() => {
-        Alert.alert('Authentication Failed');
+      .catch(error => {
+        if (error) {
+          if (
+            Platform.OS === 'ios' &&
+            error.details &&
+            error.details.name &&
+            error.details.name === 'LAErrorUserCancel'
+          ) {
+            this.setState({
+              isTouchId: false,
+              biometryType: '',
+            });
+          } else if (
+            Platform.OS === 'android' &&
+            error.code &&
+            error.code === 'AUTHENTICATION_CANCELED'
+          ) {
+            this.setState({
+              isTouchId: false,
+              biometryType: '',
+            });
+          } else {
+            Alert.alert('Authentication Failed');
+          }
+        }
       });
   };
 
