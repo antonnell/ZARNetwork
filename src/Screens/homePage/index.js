@@ -225,6 +225,7 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+
     const { accountToggle } = this.state;
     const userIcon = getAccountIcon(userDetail);
     const fullName = getFullName(userDetail);

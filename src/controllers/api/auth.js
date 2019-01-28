@@ -1,5 +1,11 @@
 import { dispatch } from '../../store';
-import { loginUser, registerUser, clearAuthDetail, verifyEmailDetail } from '../redux/auth/action';
+import {
+  loginUser,
+  registerUser,
+  clearAuthDetail,
+  verifyEmailDetail,
+  updateUserProfileDetail,
+} from '../redux/auth/action';
 // import { encrypt } from '../utility/encryption';
 // import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
 
@@ -80,6 +86,23 @@ export const clearAuth = () =>
 export const verifyUserEmail = payload =>
   new Promise((resolve, reject) => {
     dispatch(verifyEmailDetail(payload))
+      .then(result => resolve(result))
+      .catch(err => reject(err));
+  });
+
+/**
+ * ******************************************************************************
+ * @method updateUserProfile : Method to upadte user's profile.
+ * @param {object} payload : Contains following : -->
+ * -> firstname: string
+ * -> surname: string
+ * -> email: string
+ * -> mobile_number: string
+ * ******************************************************************************
+ */
+export const updateUserProfile = payload =>
+  new Promise((resolve, reject) => {
+    dispatch(updateUserProfileDetail(payload))
       .then(result => resolve(result))
       .catch(err => reject(err));
   });

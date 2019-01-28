@@ -55,3 +55,19 @@ export const verifyEmailDetail = data =>
       },
     },
   });
+
+/**
+ * @method updateUserProfileDetail : Action for updation of user's profile.
+ */
+export const updateUserProfileDetail = data =>
+  action({
+    type: actions.UPDATE_USER_PROFILE,
+    payload: {
+      request: {
+        url: actions.updateUserProfileUrl,
+        method: 'PUT',
+        data,
+        isAuthorised: true,
+      },
+    },
+  });

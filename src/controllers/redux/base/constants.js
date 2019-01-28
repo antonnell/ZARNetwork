@@ -7,6 +7,7 @@ export const REGISTER = 'REGISTER';
 export const LOGIN = 'LOGIN';
 export const CLEAR_AUTH = 'CLEAR_AUTH';
 export const VERIFY_EMAIL_AUTH = 'VERIFY_EMAIL_AUTH';
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
 // For type api.
 export const SUPPORTED_ACCOUNT_TYPE = 'SUPPORTED_ACCOUNT_TYPE';
@@ -88,3 +89,5 @@ export const validateOtpUrl = '/v1/validateOtp';
 export const forgotPasswordUrl = '/v1/updatePassword';
 
 export const verifyEmailUrl = '/v1/validateEmail';
+
+export const updateUserProfileUrl = '/v1/users';
