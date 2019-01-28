@@ -9,7 +9,8 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
-
+import { verifyUserEmail } from '../../controllers/api/auth';
+import Loader from '../../common/Loader';
 import {
   deviceWidth,
   deviceHeight,
@@ -33,6 +34,7 @@ export default class Register extends Component {
       moreThanOneCapital: false,
       moreThanOneLower: false,
       moreThanOneNumber: false,
+      isLoading: false,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
@@ -94,29 +96,6 @@ export default class Register extends Component {
     return valid;
   }
 
-  // checkEmptyFields(type) {
-  //   const { firstName, lastName, email, password } = this.state;
-  //   if (type === 'firstname') {
-  //     Alert.alert('Error', 'Enter first name!');
-  //   } else if (type === 'lastname') {
-  //     if (firstName !== '') {
-  //       Alert.alert('Error', 'Enter last name!');
-  //     }
-  //   } else if (type === 'email') {
-  //     if (lastName !== '') {
-  //       Alert.alert('Error', 'Enter email!');
-  //     }
-  //   } else if (type === 'password') {
-  //     if (email !== '' && isEmailValid(email)) {
-  //       Alert.alert('Error', 'Enter password!');
-  //     }
-  //   } else if (type === 'confirmPassword') {
-  //     if (password !== '') {
-  //       Alert.alert('Error', 'Enter confirm password!');
-  //     }
-  //   }
-  // }
-
   handleGoBack() {
     const { navigation } = this.props;
     if (navigation) {
@@ -135,7 +114,55 @@ export default class Register extends Component {
       Alert.alert('Invalid Password', invalidConfirmPassword);
       return;
     }
-    navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
+    this.setState({
+      isLoading: true,
+    });
+    const payload = {
+      email,
+    };
+    verifyUserEmail(payload)
+      .then(response => {
+        this.setState({
+          isLoading: false,
+        });
+
+        if (
+          response.payload &&
+          response.payload.data &&
+          response.payload.data.status &&
+          response.payload.data.status === 200
+        ) {
+          Alert.alert('Error', response.payload.data.result);
+          return false;
+        }
+        if (
+          response.error &&
+          response.error.response &&
+          response.error.response.data &&
+          response.error.response.data.status &&
+          response.error.response.data.status === 404
+        ) {
+          navigation.navigate('Phone', { firstName, lastName, emailId: email, password });
+          return true;
+        }
+        return true;
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  }
+
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
   }
 
   render() {
@@ -151,6 +178,7 @@ export default class Register extends Component {
       moreThanOneCapital,
       moreThanOneLower,
       moreThanOneNumber,
+      isLoading,
     } = this.state;
     if (
       firstName !== '' &&
@@ -161,7 +189,8 @@ export default class Register extends Component {
       eightPlusCharacter &&
       moreThanOneCapital &&
       moreThanOneLower &&
-      moreThanOneNumber
+      moreThanOneNumber &&
+      !isLoading
     ) {
       isNextBtnClickable = true;
     }
@@ -293,7 +322,7 @@ export default class Register extends Component {
               <Text style={styles.textStyle}> Sign In</Text>
             </TouchableOpacity>
           </View>
-
+          {this.renderLoader()}
           <View style={{ height: deviceHeight * 0.05 }} />
         </KeyboardAwareScrollView>
       </View>

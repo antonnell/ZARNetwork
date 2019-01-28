@@ -40,3 +40,18 @@ export const clearAuthDetail = () =>
   action({
     type: actions.CLEAR_AUTH,
   });
+
+/**
+ * @method verifyEmailDetail : Action for verify user email.
+ */
+export const verifyEmailDetail = data =>
+  action({
+    type: actions.VERIFY_EMAIL_AUTH,
+    payload: {
+      request: {
+        url: actions.verifyEmailUrl,
+        method: 'POST',
+        data,
+      },
+    },
+  });
