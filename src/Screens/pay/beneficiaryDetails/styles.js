@@ -60,6 +60,7 @@ export default StyleSheet.create({
   rightTextValueStyle: {
     color: 'rgb(0, 177, 251)',
     fontSize: deviceWidth < 375 ? 12 : 14,
+    fontFamily: 'Roboto-Regular',
   },
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
@@ -82,6 +83,7 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginLeft: 14,
+    fontFamily: 'Roboto-Regular',
   },
   listStyling: {
     top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,

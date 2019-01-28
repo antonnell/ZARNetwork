@@ -12,7 +12,7 @@ export default StyleSheet.create({
     borderWidth: 2,
     marginBottom: 8,
   },
-  textStyle: { color: '#8b8b8b', marginLeft: 8 },
+  textStyle: { color: '#8b8b8b', marginLeft: 8, fontFamily: 'Roboto-Regular' },
   imgViewStyle: { flex: 1, alignItems: 'flex-end', marginRight: 8 },
   imgStyle: { height: 20, width: 20 },
 });

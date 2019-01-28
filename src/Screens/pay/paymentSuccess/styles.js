@@ -16,11 +16,13 @@ export default StyleSheet.create({
     fontSize: 24,
     color: 'rgb(0,177,251)',
     fontWeight: 'bold',
+    fontFamily: 'Roboto-Medium',
   },
   accountTextStyle: {
     fontSize: 15,
     paddingLeft: 26,
+    fontFamily: 'Roboto-Regular',
   },
   imageStyle: { width: 100, height: 100 },
-  textStyle: { fontSize: 15 },
+  textStyle: { fontSize: 15, fontFamily: 'Roboto-Regular' },
 });

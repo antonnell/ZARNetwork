@@ -59,6 +59,7 @@ export default class OtpVerification extends Component {
             numberOfInputs={6}
             keyboardType="numeric"
             inputContainerStyles={{
+              fontFamily: 'Roboto-Regular',
               backgroundColor: '#fff',
               margin: 7,
               height: 40,

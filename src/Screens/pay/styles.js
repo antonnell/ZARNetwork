@@ -23,6 +23,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: 'white',
     marginLeft: deviceHeight * 0.01,
+    fontFamily: 'Roboto-Regular',
   },
   seperaterStyle: {
     backgroundColor: 'white',
@@ -50,6 +51,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'rgb(3,3,3)',
     fontWeight: '600',
+    fontFamily: 'Roboto-Regular',
   },
   recentCardContainerstyle: {
     flexDirection: 'row',
@@ -68,13 +70,29 @@ export default StyleSheet.create({
     borderTopLeftRadius: 5,
     justifyContent: 'center',
   },
-  recentCardHeaderTextStyle: { color: 'white', textAlign: 'center', fontSize: 20 },
+  recentCardHeaderTextStyle: {
+    fontFamily: 'Roboto-Light',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+  },
   recentCardDetailViewStyle: {
     flex: 1,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  recentCardTextOnestyle: { color: 'black', textAlign: 'center', fontSize: 18, fontWeight: 'bold' },
-  recentCardTextTwoStyle: { color: 'black', textAlign: 'center', fontSize: 14 },
+  recentCardTextOnestyle: {
+    fontFamily: 'Roboto-Regular',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  recentCardTextTwoStyle: {
+    fontFamily: 'Roboto-Light',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 14,
+  },
 });

@@ -9,6 +9,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   textStyle: {
+    fontFamily: 'Roboto-Regular',
     color: 'rgb(0, 169, 252)',
     fontWeight: '600',
     fontSize: 15,

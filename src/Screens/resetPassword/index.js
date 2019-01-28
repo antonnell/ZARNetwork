@@ -9,7 +9,7 @@ import TitleHeader from '../../common/TitleHeader';
 import FantomPayLogo from '../../images/FantomPay.png';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
-import { deviceHeight, deviceWidth, invalid, valid, invalidEmail } from '../../common/constants';
+import { invalid, valid, invalidEmail } from '../../common/constants';
 
 import PhoneVerify from '../phoneVerify';
 import VerifyOTP from './VerifyOTP';
@@ -30,26 +30,21 @@ class ResetPassword extends Component {
     this.updateForm = this.updateForm.bind(this);
     this.handleResetPassword = this.handleResetPassword.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
+    this.handleGoBackFromVerifyOTP = this.handleGoBackFromVerifyOTP.bind(this);
   }
 
   updateForm(value, type) {
     this.setState({ [type]: value });
   }
 
-  // handleResetPassword(number) {
-  //   this.phoneNumber = number;
-  //   this.updateInfo();
-  // }
-
+  /**
+   * ******************************************************************************
+   * @method handleResetPassword : To perform action for phone number verification.
+   * ******************************************************************************
+   */
   handleResetPassword(number, validNumber) {
     this.phoneNumber = number;
     this.validPhone = validNumber;
-    // if (i === 0 && validNumber) {
-    //   i += 1;
-    //   this.setState({
-    //     clickable: validNumber,
-    //   });
-    // }
   }
 
   sendVerificationOTP() {
@@ -94,35 +89,6 @@ class ResetPassword extends Component {
       Alert.alert('Please enter a valid number');
     }
   }
-
-  /**
-   * ******************************************************************************
-   * @method handleResetPassword : To perform action for email verification.
-   * ******************************************************************************
-   */
-  // handleResetPassword() {
-  //   const { email } = this.state;
-  //   const { navigation } = this.props;
-
-  //   if (email && email !== '') {
-  //     if (isEmailValid(email) === false) {
-  //       Alert.alert('Invalid email', invalidEmail);
-  //       return;
-  //     }
-  //     this.setState({
-  //       isLoading: true,
-  //     });
-  //     setTimeout(() => {
-  //       this.setState({
-  //         isLoading: false,
-  //       });
-  //       Alert.alert('Information', 'Check your email box to confirm reset password.');
-  //       if (navigation) {
-  //         navigation.navigate('UpdatePassword');
-  //       }
-  //     }, 1000);
-  //   }
-  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -185,6 +151,12 @@ class ResetPassword extends Component {
       });
   }
 
+  handleGoBackFromVerifyOTP() {
+    this.setState({
+      otpSent: false,
+    });
+  }
+
   renderLoader() {
     const { isLoading } = this.state;
     if (isLoading) {
@@ -196,13 +168,10 @@ class ResetPassword extends Component {
   render() {
     const { otpSent, isResendDisable } = this.state;
     const { navigation } = this.props;
-    // let isClickable = false;
-    // if (this.phoneNumber && this.phoneNumber.length > 3) {
-    //   isClickable = true;
-    // }
+
     if (otpSent) {
       return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.verfiyOTPContainerStyle}>
           <VerifyOTP
             phoneNumber={this.phoneNumber}
             // resendOTP={this.phoneNumber}
@@ -211,6 +180,7 @@ class ResetPassword extends Component {
             isResendDisable={isResendDisable}
             confirmCode={() => this.confirmCode()}
             resendOTP={() => this.sendVerificationOTP()}
+            handleGoBack={this.handleGoBackFromVerifyOTP}
           />
         </View>
       );
@@ -225,10 +195,7 @@ class ResetPassword extends Component {
           onBtnPress={this.handleGoBack}
         />
         <KeyboardAwareScrollView
-          style={{
-            height: deviceHeight,
-            width: deviceWidth,
-          }}
+          style={styles.verfiyOTPContainerStyle}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
@@ -261,7 +228,7 @@ class ResetPassword extends Component {
             />
           </View>
 
-          <View style={{ marginTop: deviceHeight * 0.08 }}>
+          <View style={styles.resetButtonViewStyle}>
             <DesignButton
               name="RESET PASSWORD"
               callMethod={() => this.sendVerificationOTP()}

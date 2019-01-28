@@ -35,6 +35,7 @@ export default StyleSheet.create({
     width: deviceWidth * 0.8,
   },
   textStyle: {
+    fontFamily: 'Roboto-Regular',
     color: 'rgb(0, 169, 252)',
     fontWeight: '600',
     fontSize: deviceWidth < 375 ? 14 : 16,

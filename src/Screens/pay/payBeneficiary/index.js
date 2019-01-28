@@ -364,7 +364,13 @@ class PayBeneficiary extends Component {
               validateFields={this.validateFields}
             />
             <View>
-              <Text style={{ color: 'rgb(0, 177, 251)', textAlign: 'right' }}>
+              <Text
+                style={{
+                  color: 'rgb(0, 177, 251)',
+                  textAlign: 'right',
+                  fontFamily: 'Roboto-Regular',
+                }}
+              >
                 {walletType} {balance} available
               </Text>
             </View>

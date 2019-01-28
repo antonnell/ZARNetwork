@@ -89,7 +89,14 @@ export default class GeneratePinCode extends Component {
     }
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 15,
+            marginBottom: 15,
+            fontFamily: 'Roboto-Light',
+          }}
+        >
           {pinCodeObj.title}
         </Text>
         <View

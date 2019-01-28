@@ -21,7 +21,12 @@ export default StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 4,
   },
-  emptyDetilTextStyle: { color: 'white', fontWeight: 'bold', fontSize: 15 },
+  emptyDetilTextStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+    fontFamily: 'Roboto-Regular',
+  },
   loaderStyle: {
     height: deviceHeight * 0.5,
     width: deviceWidth,

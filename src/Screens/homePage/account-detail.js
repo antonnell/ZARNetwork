@@ -8,8 +8,8 @@ import { deviceHeight, deviceWidth } from '../../common/constants';
 export default class AccountDetail extends Component {
   renderDetail = (heading, desc, itemStyle) => (
     <View style={[itemStyle, { flexDirection: 'row', padding: 5 }]}>
-      <Text style={{ flex: 1 }}>{heading}:</Text>
-      <Text style={{ flex: 2, paddingLeft: 10 }}>{desc}</Text>
+      <Text style={{ flex: 1, fontFamily: 'Roboto-Medium' }}>{heading}:</Text>
+      <Text style={{ flex: 2, paddingLeft: 10, fontFamily: 'Roboto-Regular' }}>{desc}</Text>
     </View>
   );
 

@@ -42,13 +42,16 @@ export default StyleSheet.create({
     position: 'absolute',
     color: 'white',
     fontSize: 20,
+    fontFamily: 'Roboto-Light',
   },
   profileInfoTitleStyle: {
     fontSize: 17,
     alignSelf: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   profileInfoSubTitleStyle: {
     fontSize: 15,
+    fontFamily: 'Roboto-Regular',
   },
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
@@ -71,6 +74,7 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginLeft: 14,
+    fontFamily: 'Roboto-Regular',
   },
   notificationImageStyle: {
     height: deviceHeight * 0.03,
@@ -80,6 +84,7 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 15,
     marginLeft: 8,
+    fontFamily: 'Roboto-Regular',
   },
   notificationMaterialIconStyle: {
     marginLeft: deviceHeight * 0.04,
@@ -99,6 +104,7 @@ export default StyleSheet.create({
   toggleTextStyle: {
     fontSize: 14,
     color: 'rgba(3,3,3,0.9)',
+    fontFamily: 'Roboto-Regular',
   },
   separatorStyle: {
     height: 1,
