@@ -1,7 +1,7 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { deviceWidth, deviceHeight } from '../../common/constants';
+
 export default StyleSheet.create({
   Container: {
     flex: 1,
@@ -51,4 +51,30 @@ export default StyleSheet.create({
     color: 'rgb(3,3,3)',
     fontWeight: '600',
   },
+  recentCardContainerstyle: {
+    flexDirection: 'row',
+    width: deviceWidth * 0.9,
+    backgroundColor: '#f4f4f4',
+    alignSelf: 'center',
+    height: deviceHeight * 0.1,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  recentCardHeaderStyle: {
+    backgroundColor: '#00b1fb',
+    width: deviceWidth * 0.2,
+    height: deviceHeight * 0.1,
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5,
+    justifyContent: 'center',
+  },
+  recentCardHeaderTextStyle: { color: 'white', textAlign: 'center', fontSize: 20 },
+  recentCardDetailViewStyle: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recentCardTextOnestyle: { color: 'black', textAlign: 'center', fontSize: 18, fontWeight: 'bold' },
+  recentCardTextTwoStyle: { color: 'black', textAlign: 'center', fontSize: 14 },
 });
