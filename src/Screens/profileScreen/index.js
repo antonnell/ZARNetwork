@@ -198,9 +198,8 @@ class UserProfile extends Component {
   }
 
   renderProfileInfo() {
-    const { email } = this.state;
     const { userDetail } = this.props;
-
+    const { email } = userDetail;
     const userIcon = getAccountIcon(userDetail);
     let subtitleText = '';
     const titleText = getFullName(userDetail);
