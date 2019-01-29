@@ -4,7 +4,7 @@ import {
   Alert,
   View,
   Text,
-  StatusBar,
+
   // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
@@ -20,6 +20,7 @@ import { register } from '../../controllers/api/auth';
 import { checkPinLength } from '../../utility/index';
 import Loader from '../../common/Loader';
 import { deviceHeight } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 class CreatePin extends Component {
   constructor(props) {
@@ -227,7 +228,7 @@ class CreatePin extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
         <TitleHeader title="CREATE PIN" />
 
         <ScrollView

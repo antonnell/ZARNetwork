@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import TitleHeader from '../../common/TitleHeader';
 import ProfileInfo from '../../common/profileInfo';
-
+import StatusBar from '../../common/StatusBar';
 import { clearAuth, updateUserProfile } from '../../controllers/api/auth';
 
 import {
@@ -244,7 +244,7 @@ class UserProfile extends Component {
     const rightIconType = !isEditable ? ImageIconType : MaterialIconsType;
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="VIEW PROFILE"

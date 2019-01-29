@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
-import { View, StyleSheet, StatusBar, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import Web3 from 'web3';
 
 import QRCodeScanner from './index';
 import TitleHeader from '../TitleHeader';
+import StatusBar from '../StatusBar';
 
 const styles = StyleSheet.create({
   centerText: {
@@ -65,7 +66,7 @@ export default class ScanScreen extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.mainContainerStyle}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
 
         <TitleHeader
           iconName="keyboard-arrow-left"

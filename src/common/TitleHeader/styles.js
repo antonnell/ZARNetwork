@@ -1,8 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { isIPhoneX } from '../../utility';
 // Constants
 import { deviceWidth, deviceHeight } from '../constants';
 
+let marginTop = 10;
+if (Platform.OS === 'ios') {
+  marginTop = isIPhoneX() ? 54 : 30;
+} else if (Platform.OS === 'android') {
+  marginTop = 10;
+}
 export default StyleSheet.create({
   mainContainer: {
     width: deviceWidth,
@@ -11,7 +17,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    marginTop: isIPhoneX() ? 54 : 30,
+    marginTop,
   },
 
   titleText: {

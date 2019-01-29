@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -15,6 +15,7 @@ import { setNewRequest } from '../../../controllers/api/paymentRequest';
 import { getAccountIcon, getFullName } from '../../../utility';
 import Loader from '../../../common/Loader';
 import { deviceHeight, deviceWidth } from '../../../common/constants';
+import StatusBar from '../../../common/StatusBar';
 
 class ConfirmPayment extends Component {
   constructor(props) {
@@ -155,7 +156,7 @@ class ConfirmPayment extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         {/* header */}
         <TitleHeader
           iconName="keyboard-arrow-left"

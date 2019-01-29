@@ -1,7 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text } from 'react-native';
 import { deviceWidth, deviceHeight } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 export default class SecondScreen extends React.PureComponent {
   render() {
@@ -11,7 +12,7 @@ export default class SecondScreen extends React.PureComponent {
           alignItems: 'center',
         }}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <View style={{ marginTop: deviceHeight * 0.4 }}>
           <Text
             style={{

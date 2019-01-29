@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Alert } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -20,6 +20,7 @@ import {
 import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
 import { forgotPasswordApi } from '../../../controllers/api/forgotPassword';
+import StatusBar from '../../../common/StatusBar';
 
 class UpdatePassword extends Component {
   constructor(props) {
@@ -150,7 +151,7 @@ class UpdatePassword extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           // title="RESET PASSWORD"
           isBackArrow

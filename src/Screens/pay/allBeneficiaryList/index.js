@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import styles from './styles';
 import RecentCard from '../recentCard';
 import TitleHeader from '../../../common/TitleHeader';
 import { getFirstCharOfString } from '../../../utility/index';
+import StatusBar from '../../../common/StatusBar';
 
 class ViewBeneficiaryList extends Component {
   constructor(props) {
@@ -82,7 +83,7 @@ class ViewBeneficiaryList extends Component {
     const { isBackArrowPresent } = this.state;
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           onBtnPress={() => navigation.goBack()}

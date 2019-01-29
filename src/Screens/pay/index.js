@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -12,6 +12,7 @@ import { getBeneficiaryDetail } from '../../controllers/api/beneficiary';
 import { getTransactionDetail } from '../../controllers/api/transactions';
 import TransactionHistory from './transactionHistory';
 import { noWalletAccount } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 class Pay extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class Pay extends Component {
     const { isBackArrowPresent, isLoading } = this.state;
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           onBtnPress={() => navigation.goBack()}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -20,6 +20,7 @@ import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
 import { EvilIconsType, deviceHeight, deviceWidth } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 class HomePage extends Component {
   constructor(props) {
@@ -243,7 +244,7 @@ class HomePage extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
         {/* header */}
         <TitleHeader
           title="DASHBOARD"

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
 import { deviceHeight, deviceWidth } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 export default class AccountDetail extends Component {
   renderDetail = (heading, desc, itemStyle) => (
@@ -25,7 +26,7 @@ export default class AccountDetail extends Component {
     const modified = account.modified !== null ? account.modified : '-';
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           title="ACCOUNT DETAIL"
           isBackArrow={isBackArrow}

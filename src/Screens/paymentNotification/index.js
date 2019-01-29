@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // Library
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 import TitleText from '../../common/TitleText';
 import ToggleCard from '../../common/ToggleCard';
-
+import StatusBar from '../../common/StatusBar';
 // constants
 import { deviceHeight } from '../../common/constants';
 
@@ -87,7 +87,7 @@ class PaymentNotification extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="PAYMENT NOTIFICATION"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, StatusBar, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import { Alert, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ import { login } from '../../../controllers/api/auth';
 import { checkPinLength } from '../../../utility/index';
 import Loader from '../../../common/Loader';
 import { deviceHeight } from '../../../common/constants';
+import StatusBar from '../../../common/StatusBar';
 
 class LoginWithPin extends Component {
   constructor(props) {
@@ -181,7 +182,7 @@ class LoginWithPin extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
         <TitleHeader title="SIGN IN" />
 
         <ScrollView

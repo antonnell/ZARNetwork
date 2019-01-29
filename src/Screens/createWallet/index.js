@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ import {
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import { isValidName } from '../../utility/index';
-
+import StatusBar from '../../common/StatusBar';
 /**
  * @class CreateWallet : Component to render create account screen.
  */
@@ -176,7 +176,7 @@ class CreateWallet extends Component {
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
 
         <TitleHeader
           iconName="keyboard-arrow-left"

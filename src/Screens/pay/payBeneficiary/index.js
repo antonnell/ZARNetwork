@@ -1,6 +1,6 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import PropTypes from 'prop-types';
@@ -25,7 +25,7 @@ import {
   formatTime,
 } from '../../../utility';
 import DateTimePickerField from '../../../common/DateTimePickerField';
-
+import StatusBar from '../../../common/StatusBar';
 // constants
 import {
   WALLET_LIST,
@@ -299,7 +299,7 @@ class PayBeneficiary extends Component {
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="PAY BENEFICIARY"

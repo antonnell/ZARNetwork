@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Alert } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -15,7 +15,7 @@ import PhoneVerify from '../phoneVerify';
 import VerifyOTP from './VerifyOTP';
 
 import { sendOtpApi, validateOtpApi } from '../../controllers/api/otp';
-
+import StatusBar from '../../common/StatusBar';
 // const i = 0;
 class ResetPassword extends Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class ResetPassword extends Component {
           });
       }
     } else {
-      Alert.alert('Please enter a valid number');
+      Alert.alert('Invalid mobile number', 'Please enter a valid number');
     }
   }
 
@@ -187,7 +187,7 @@ class ResetPassword extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           // title="RESET PASSWORD"
           isBackArrow

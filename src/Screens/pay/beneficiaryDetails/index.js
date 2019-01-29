@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Web3 from 'web3';
@@ -25,6 +25,7 @@ import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
 import Loader from '../../../common/Loader';
 import { isValidName } from '../../../utility/index';
+import StatusBar from '../../../common/StatusBar';
 
 class BeneficiaryDetails extends Component {
   constructor(props) {
@@ -237,7 +238,7 @@ class BeneficiaryDetails extends Component {
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
 
         <TitleHeader
           iconName="keyboard-arrow-left"
