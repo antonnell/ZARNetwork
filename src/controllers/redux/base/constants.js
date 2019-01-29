@@ -51,6 +51,10 @@ export const SENDOTP = 'SENDOTP';
 export const VALIDATEOTP = 'VALIDATEOTP';
 export const FORGOTPASSWORD = 'FORGOTPASSWORD';
 
+// For Notification channel api
+export const NOTIFICATION_CHANNEL = 'NOTIFICATION_CHANNEL';
+export const NOTIFICATION_CHANNEL_BY_ID = 'NOTIFICATION_CHANNEL_BY_ID';
+
 /**
  * Types for encryption :-
  */
@@ -91,3 +95,5 @@ export const forgotPasswordUrl = '/v1/updatePassword';
 export const verifyEmailUrl = '/v1/validateEmail';
 
 export const updateUserProfileUrl = '/v1/users';
+
+export const notificationChannelUrl = '/v1/notificationChannels';

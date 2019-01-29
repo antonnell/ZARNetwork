@@ -89,6 +89,16 @@ class PayBeneficiary extends Component {
       isDatePickerVisible: false,
       date: 'Select date',
       time: 'Select time',
+      beneficiaryNotification: {
+        email: false,
+        none: true,
+        sms: false,
+      },
+      myNotification: {
+        email: false,
+        none: true,
+        sms: false,
+      },
     };
     this.updateForm = this.updateForm.bind(this);
     this.handlePayNotification = this.handlePayNotification.bind(this);
@@ -101,6 +111,7 @@ class PayBeneficiary extends Component {
     this.showTimePicker = this.showTimePicker.bind(this);
     this.handleTimePicked = this.handleTimePicked.bind(this);
     this.hideTimePicker = this.hideTimePicker.bind(this);
+    this.updateNotification = this.updateNotification.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -212,9 +223,15 @@ class PayBeneficiary extends Component {
 
   handlePayNotification() {
     const isBackArrow = true;
+    const { beneficiaryNotification, myNotification } = this.state;
     const { navigation } = this.props;
     if (navigation) {
-      navigation.navigate('PaymentNotification', { isBackArrow });
+      navigation.navigate('PaymentNotification', {
+        isBackArrow,
+        updateNotification: this.updateNotification,
+        beneficiaryNotification,
+        myNotification,
+      });
     }
   }
 
@@ -227,6 +244,16 @@ class PayBeneficiary extends Component {
     this.setState({
       normalPaymentToggle: !normalPaymentToggle,
       futurePaymentToggle: !futurePaymentToggle,
+    });
+  }
+
+  /**
+   * @method updateNotification : To update state of notifications
+   */
+  updateNotification(myNotification, beneficiaryNotification) {
+    this.setState({
+      myNotification,
+      beneficiaryNotification,
     });
   }
 

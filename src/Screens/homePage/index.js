@@ -11,6 +11,7 @@ import Wallet from './wallet';
 import { getAccountType } from '../../controllers/api/accountType';
 import { getWalletDetail } from '../../controllers/api/userWallet';
 import { getAccountIcon, getFullName } from '../../utility/index';
+import { getNotificationChannel } from '../../controllers/api/notificationChannel';
 
 import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
@@ -39,6 +40,15 @@ class HomePage extends Component {
     if (getAccountType) {
       getAccountType();
     }
+    if (getNotificationChannel) {
+      getNotificationChannel();
+    }
+    // if (getNotificationChannel) {
+    //   const payload = {
+    //     uuid: 'f7f68d07-0351-69b9-1d88-8161bcf3a441',
+    //   };
+    //   getNotificationChannel(payload);
+    // }
     if (getWalletDetail) {
       this.setState({
         isLoading: true,
@@ -226,6 +236,10 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+    let emailAddress = '';
+    if (userDetail) {
+      emailAddress = userDetail.email;
+    }
 
     const { accountToggle } = this.state;
     const userIcon = getAccountIcon(userDetail);
@@ -263,7 +277,7 @@ class HomePage extends Component {
             profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
-            subTitleText={userDetail.email}
+            subTitleText={emailAddress}
             titleText={fullName}
             circularAvatarText={userIcon}
           />
