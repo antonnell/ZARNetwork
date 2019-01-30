@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -11,6 +11,7 @@ import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
 import { verifyUserEmail } from '../../controllers/api/auth';
 import Loader from '../../common/Loader';
+import StatusBar from '../../common/StatusBar';
 import {
   deviceWidth,
   deviceHeight,
@@ -104,6 +105,7 @@ export default class Register extends Component {
   }
 
   nextBtnPressed() {
+    console.log(' click next');
     const { navigation } = this.props;
     const { email, password, firstName, confirmPassword, lastName } = this.state;
     if (isEmailValid(email) === false) {
@@ -125,6 +127,7 @@ export default class Register extends Component {
         this.setState({
           isLoading: false,
         });
+        console.log(' click next', response);
 
         if (
           response.payload &&
@@ -197,7 +200,7 @@ export default class Register extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         {/* header */}
 
         <TitleHeader

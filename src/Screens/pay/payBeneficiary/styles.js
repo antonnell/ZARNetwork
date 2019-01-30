@@ -86,9 +86,7 @@ export default StyleSheet.create({
     marginLeft: 8,
     fontFamily: 'Roboto-Regular',
   },
-  notificationMaterialIconStyle: {
-    marginLeft: deviceHeight * 0.04,
-  },
+  notificationMaterialIconStyle: {},
   toggleContainerStyle: {
     marginTop: deviceHeight * 0.05,
     backgroundColor: 'rgb(244,244,244)',

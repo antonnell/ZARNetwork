@@ -76,7 +76,10 @@ class PaymentNotification extends Component {
    */
   updateToggleValue(value, type, key) {
     const { state } = this;
+
     const categoeyType = state[type];
+
+    const { none } = categoeyType;
     let status = {};
     if (key === 'none' && value === false) {
       status = {
@@ -90,7 +93,7 @@ class PaymentNotification extends Component {
         email: false,
         sms: false,
       };
-    } else {
+    } else if (none === false) {
       status = {
         [key]: value,
       };
@@ -107,9 +110,19 @@ class PaymentNotification extends Component {
   }
 
   toggleContainer(text, status, categoryType, key) {
+    const { state } = this;
+
+    const categoryTypeObj = state[categoryType];
+
+    let disable = false;
+    if (categoryTypeObj.none === true && (text === 'Email' || text === 'SMS')) {
+      disable = true;
+    }
+
     return (
       <ToggleCard
         textVal={text}
+        disable={disable}
         textStyle={styles.toggleTextStyle}
         toggleState={status}
         updateToggleClick={e => {

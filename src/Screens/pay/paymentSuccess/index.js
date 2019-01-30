@@ -1,41 +1,65 @@
+/* eslint-disable prefer-destructuring */
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import success from '../../../images/success.png';
 import DesignButton from '../../../common/Button';
 
 import styles from './styles';
 
-import { deviceHeight } from '../../../common/constants';
-
 export default class PaymentSuccess extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      walletType: '',
+      amount: '',
+      beneficiaryName: '',
+      accountNumber: '',
+    };
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      // this.props.navigation.navigate('')
-    }, 3000);
+    const { navigation } = this.props;
+    const walletType = navigation.state.params.data.walletType;
+    const amount = navigation.state.params.data.amount;
+    const beneficiaryName = navigation.state.params.data.beneficiaryName;
+    const accountNumber = navigation.state.params.data.accountNumber;
+    this.setState({
+      walletType,
+      amount,
+      beneficiaryName,
+      accountNumber,
+    });
   }
 
   render() {
+    const { navigation } = this.props;
+    const { walletType, amount, beneficiaryName, accountNumber } = this.state;
     return (
       <View style={styles.Container}>
         <Image source={success} style={styles.imageStyle} resizeMode="cover" />
         <Text style={styles.registrationText}>Payment Success!</Text>
-        <View style={{ marginTop: deviceHeight * 0.04 }}>
-          <Text style={styles.textStyle}>ETH 1.0897 paid to Jacob E. Miller</Text>
-          <Text style={styles.accountTextStyle}>Account: 4356879809079</Text>
+        <View style={styles.viewStyle}>
+          <Text style={styles.textStyle}>
+            {walletType} {amount} paid to {beneficiaryName}
+          </Text>
+          <Text style={styles.accountTextStyle}>Account {accountNumber}</Text>
         </View>
-        <View style={{ marginTop: deviceHeight * 0.2 }}>
+        <View style={styles.buttonViewStyle}>
           <DesignButton
             name="Done"
-            // callMethod={() => this.nextBtnPressed()}
-            isClickable={false}
+            callMethod={() => navigation.navigate('PayBeneficiary')}
+            isClickable
           />
         </View>
       </View>
     );
   }
 }
+PaymentSuccess.defaultProps = {
+  navigation: null,
+};
+
+PaymentSuccess.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any),
+};

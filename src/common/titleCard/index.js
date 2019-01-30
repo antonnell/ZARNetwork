@@ -14,21 +14,34 @@ export default class TitleCard extends Component {
       titleCardTextStyle,
       titleMaterialIconStyle,
       onPress,
+      type,
+      childViewStyle,
     } = this.props;
+    let ParentView = View;
+    let ChildView = TouchableOpacity;
+    let parentViewOnPress = () => {};
+    let childViewOnPress = onPress;
+    if (type === 'tab') {
+      ParentView = TouchableOpacity;
+      ChildView = View;
+      parentViewOnPress = onPress;
+      childViewOnPress = () => {};
+    }
+
     return (
-      <TouchableOpacity style={titleCardMainViewStyle} onPress={onPress}>
+      <ParentView style={titleCardMainViewStyle} onPress={parentViewOnPress}>
         <Image source={icon} style={titleCardImageStyle} resizeMode="contain" />
 
         <Text style={titleCardTextStyle}>{text}</Text>
-        <View>
+        <ChildView style={childViewStyle} onPress={childViewOnPress}>
           <MaterialIcons
             color="#fff"
             size={24}
             style={titleMaterialIconStyle}
             name="keyboard-arrow-right"
           />
-        </View>
-      </TouchableOpacity>
+        </ChildView>
+      </ParentView>
     );
   }
 }
@@ -40,6 +53,11 @@ TitleCard.defaultProps = {
   titleCardTextStyle: null,
   titleMaterialIconStyle: null,
   onPress: () => {},
+  type: 'list',
+  childViewStyle: {
+    width: 40,
+    alignItems: 'center',
+  },
 };
 
 TitleCard.propTypes = {
@@ -50,4 +68,6 @@ TitleCard.propTypes = {
   titleCardTextStyle: PropTypes.objectOf(PropTypes.any),
   titleMaterialIconStyle: PropTypes.objectOf(PropTypes.any),
   onPress: PropTypes.func,
+  type: PropTypes.string,
+  childViewStyle: PropTypes.objectOf(PropTypes.any),
 };

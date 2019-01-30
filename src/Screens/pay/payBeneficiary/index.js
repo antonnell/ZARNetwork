@@ -99,6 +99,10 @@ class PayBeneficiary extends Component {
         none: true,
         sms: false,
       },
+      myNotificationText: 'none',
+      beneficiaryNotificationText: 'none',
+      myNotifyArray: [],
+      benefNotifyArray: [],
     };
     this.updateForm = this.updateForm.bind(this);
     this.handlePayNotification = this.handlePayNotification.bind(this);
@@ -116,7 +120,17 @@ class PayBeneficiary extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   onPayBtnClick() {
-    const { accId, number, reference, walletType, selectedWallet } = this.state;
+    const {
+      accId,
+      number,
+      reference,
+      walletType,
+      selectedWallet,
+      myNotifyArray,
+      benefNotifyArray,
+      beneficiaryNotificationText,
+      myNotificationText,
+    } = this.state;
     const { navigation } = this.props;
 
     navigation.navigate('ConfirmPayment', {
@@ -126,7 +140,64 @@ class PayBeneficiary extends Component {
       walletType,
       selectedWallet,
       beneficiary_uuid: navigation.state.params.selectedBeneficiary.uuid,
+      beneficiaryName: navigation.state.params.selectedBeneficiary.name,
+      accountNumber: navigation.state.params.selectedBeneficiary.number,
+      own_notifications: myNotifyArray,
+      beneficiary_notifications: benefNotifyArray,
+      notificationTypeText: `Beneficiary : ${beneficiaryNotificationText} , My :  ${myNotificationText}`,
     });
+  }
+
+  /**
+   * @method setNotificationText : To set type of notification enabled for particuler category
+   * @param {*} notificationCategoryType : Notification category object
+   */
+  // eslint-disable-next-line class-methods-use-this
+  setNotificationText(notificationCategoryType) {
+    const { notificationChannelList } = this.props;
+    console.log('notificationChannelList : ', notificationChannelList);
+
+    let text = 'none';
+    const channelList = [];
+    if (notificationCategoryType && notificationCategoryType !== null) {
+      const { none, email, sms } = notificationCategoryType;
+      if (none === false) {
+        if (email === true && sms === true) {
+          text = 'all';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'Email' || channel.description === 'SMS') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else if (sms === true) {
+          text = 'SMS';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'SMS') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else if (email === true) {
+          text = 'Email';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'Email') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else {
+          text = 'none';
+        }
+      }
+    }
+
+    const notificationData = {
+      text,
+      channelList,
+    };
+
+    return notificationData;
   }
 
   showDatePicker = () => {
@@ -251,9 +322,21 @@ class PayBeneficiary extends Component {
    * @method updateNotification : To update state of notifications
    */
   updateNotification(myNotification, beneficiaryNotification) {
+    const myNotifyData = this.setNotificationText(myNotification);
+    const myNotificationText = myNotifyData.text;
+    const myNotifyArray = myNotifyData.channelList;
+
+    const beneficiaryNotifyData = this.setNotificationText(beneficiaryNotification);
+    const beneficiaryNotificationText = beneficiaryNotifyData.text;
+    const benefNotifyArray = beneficiaryNotifyData.channelList;
+
     this.setState({
       myNotification,
       beneficiaryNotification,
+      myNotificationText,
+      beneficiaryNotificationText,
+      myNotifyArray,
+      benefNotifyArray,
     });
   }
 
@@ -272,7 +355,6 @@ class PayBeneficiary extends Component {
 
   render() {
     const { navigation, userWalletDetail, userDetail } = this.props;
-
     const userIcon = getAccountIcon(userDetail);
     const fullName = getFullName(userDetail);
     let subtitleText = '';
@@ -311,6 +393,8 @@ class PayBeneficiary extends Component {
       walletType,
       isDatePickerVisible,
       isTimePickerVisible,
+      myNotificationText,
+      beneficiaryNotificationText,
     } = this.state;
     let isClickable = false;
     if (accId !== '' && number !== '' && reference !== '') {
@@ -406,6 +490,7 @@ class PayBeneficiary extends Component {
               inputType="text"
               valueType="text"
               placeholder="Reference"
+              editable={false}
               autoCorrect={false}
               value={reference}
               updateForm={this.updateForm}
@@ -420,8 +505,9 @@ class PayBeneficiary extends Component {
             titleCardImageStyle={styles.notificationImageStyle}
             titleCardTextStyle={styles.notificationTextStyle}
             titleMaterialIconStyle={styles.notificationMaterialIconStyle}
-            text="Payment Notification: none"
+            text={`Payment Notification: ${beneficiaryNotificationText} , ${myNotificationText}`}
             onPress={this.handlePayNotification}
+            type="tab"
           />
 
           <View style={styles.toggleContainerStyle}>
@@ -479,6 +565,7 @@ PayBeneficiary.defaultProps = {
   navigation: null,
   userWalletDetail: [],
   accountTypeList: [],
+  notificationChannelList: [],
 };
 
 PayBeneficiary.propTypes = {
@@ -486,12 +573,14 @@ PayBeneficiary.propTypes = {
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
   accountTypeList: PropTypes.arrayOf(PropTypes.any),
   userDetail: PropTypes.objectOf(PropTypes.any),
+  notificationChannelList: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   userWalletDetail: state.userWalletReducer.wallets,
   accountTypeList: state.supportedAccTypeReducer.types,
   userDetail: state.userAuthReducer.userDetail,
+  notificationChannelList: state.notificationChannelReducer.notificationChannelList,
 });
 
 export default connect(mapStateToProps)(PayBeneficiary);
