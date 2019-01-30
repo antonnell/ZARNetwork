@@ -62,6 +62,7 @@ export default class GeneratePinCode extends Component {
     if (totalNumber) {
       return totalNumber.map(btn => (
         <TouchableOpacity
+          key={btn}
           style={{
             backgroundColor: 'rgb(0,177,251)',
             width: 50,

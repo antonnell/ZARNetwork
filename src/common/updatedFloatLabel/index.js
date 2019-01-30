@@ -125,6 +125,11 @@ class FloatLabelTextField extends Component {
     // }
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      text: newProps.value,
+    });
+  }
   onChangeTextHandler(value, type) {
     const { updateForm } = this.props;
     if (type !== '' && updateForm) {
@@ -242,7 +247,6 @@ class FloatLabelTextField extends Component {
 
   renderInputField() {
     const { text, passwordIcon, showPassword } = this.state;
-
     const {
       placeholder,
       autoCorrect,

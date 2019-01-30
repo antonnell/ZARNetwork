@@ -16,6 +16,8 @@ export default class TitleCard extends Component {
       onPress,
       type,
       childViewStyle,
+      rightIcon,
+      disable,
     } = this.props;
     let ParentView = View;
     let ChildView = TouchableOpacity;
@@ -33,14 +35,11 @@ export default class TitleCard extends Component {
         <Image source={icon} style={titleCardImageStyle} resizeMode="contain" />
 
         <Text style={titleCardTextStyle}>{text}</Text>
-        <ChildView style={childViewStyle} onPress={childViewOnPress}>
-          <MaterialIcons
-            color="#fff"
-            size={24}
-            style={titleMaterialIconStyle}
-            name="keyboard-arrow-right"
-          />
-        </ChildView>
+        {!disable && (
+          <ChildView style={childViewStyle} onPress={childViewOnPress}>
+            <MaterialIcons color="#fff" size={24} style={titleMaterialIconStyle} name={rightIcon} />
+          </ChildView>
+        )}
       </ParentView>
     );
   }
@@ -58,6 +57,8 @@ TitleCard.defaultProps = {
     width: 40,
     alignItems: 'center',
   },
+  rightIcon: 'keyboard-arrow-right',
+  disable: false,
 };
 
 TitleCard.propTypes = {
@@ -70,4 +71,6 @@ TitleCard.propTypes = {
   onPress: PropTypes.func,
   type: PropTypes.string,
   childViewStyle: PropTypes.objectOf(PropTypes.any),
+  rightIcon: PropTypes.string,
+  disable: PropTypes.bool,
 };

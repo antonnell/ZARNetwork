@@ -110,12 +110,7 @@ export default StyleSheet.create({
     width: deviceWidth * 0.75,
     alignSelf: 'center',
   },
-  listStyling: {
-    top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
-    left: -(deviceWidth * 0.26),
-    width: deviceWidth * 0.78,
-    maxHeight: deviceHeight * 0.3,
-  },
+
   dateTimeviewStyle: {
     width: deviceWidth * 0.66,
     alignSelf: 'center',

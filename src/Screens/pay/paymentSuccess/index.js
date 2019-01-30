@@ -15,7 +15,9 @@ export default class PaymentSuccess extends Component {
       amount: '',
       beneficiaryName: '',
       accountNumber: '',
+      resetState: () => {},
     };
+    this.handleDone = this.handleDone.bind(this);
   }
 
   componentDidMount() {
@@ -24,16 +26,26 @@ export default class PaymentSuccess extends Component {
     const amount = navigation.state.params.data.amount;
     const beneficiaryName = navigation.state.params.data.beneficiaryName;
     const accountNumber = navigation.state.params.data.accountNumber;
+    const resetState = navigation.state.params.data.resetState;
     this.setState({
       walletType,
       amount,
       beneficiaryName,
       accountNumber,
+      resetState,
     });
   }
 
-  render() {
+  handleDone() {
+    const { resetState } = this.state;
     const { navigation } = this.props;
+    resetState();
+    if (navigation) {
+      navigation.navigate('PayBeneficiary');
+    }
+  }
+
+  render() {
     const { walletType, amount, beneficiaryName, accountNumber } = this.state;
     return (
       <View style={styles.Container}>
@@ -46,11 +58,7 @@ export default class PaymentSuccess extends Component {
           <Text style={styles.accountTextStyle}>Account {accountNumber}</Text>
         </View>
         <View style={styles.buttonViewStyle}>
-          <DesignButton
-            name="Done"
-            callMethod={() => navigation.navigate('PayBeneficiary')}
-            isClickable
-          />
+          <DesignButton name="Done" callMethod={this.handleDone} isClickable />
         </View>
       </View>
     );
