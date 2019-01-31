@@ -250,12 +250,14 @@ class BeneficiaryDetails extends Component {
     }
     const { userWalletDetail } = this.props;
     const isShowRightText = true;
-    let ParentView = View;
+
+    let rightIcon = 'keyboard-arrow-right';
     if (openWalletList) {
-      ParentView = TouchableOpacity;
+      rightIcon = 'keyboard-arrow-down';
     }
+
     return (
-      <ParentView
+      <TouchableOpacity
         style={styles.Container}
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
@@ -290,7 +292,7 @@ class BeneficiaryDetails extends Component {
               // text="Account Type"
               text={selectedWallet}
               onPress={this.toggleWalletList}
-              rightIcon="keyboard-arrow-right"
+              rightIcon={rightIcon}
             />
             {openWalletList && (
               <ListCard
@@ -362,9 +364,9 @@ class BeneficiaryDetails extends Component {
               isClickable={isClickable}
             />
           </View>
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
-      </ParentView>
+        {this.renderLoader()}
+      </TouchableOpacity>
     );
   }
 }

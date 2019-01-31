@@ -18,6 +18,7 @@ const style = {
     width: deviceWidth,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(100, 100, 100, 0.3)',
   },
 };
 

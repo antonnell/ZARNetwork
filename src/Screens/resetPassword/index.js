@@ -235,9 +235,8 @@ class ResetPassword extends Component {
               isClickable
             />
           </View>
-
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </View>
     );
   }

@@ -1,7 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight, deviceWidth } from '../../../common/constants';
+
+let titleCardFontSize = 15;
+if (deviceWidth <= 375) {
+  titleCardFontSize = 13;
+}
 export default StyleSheet.create({
   Container: {
     flex: 1,
@@ -56,6 +60,7 @@ export default StyleSheet.create({
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
+    height: 50,
     padding: 15,
     backgroundColor: 'rgb(0, 177, 251)',
     alignSelf: 'center',
@@ -65,8 +70,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleCardImageStyle: {
-    flex: 1,
-    height: 30,
+    height: 25,
     width: 30,
   },
   titleCardTextStyle: {
@@ -77,12 +81,12 @@ export default StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   notificationImageStyle: {
-    height: deviceHeight * 0.03,
-    width: deviceWidth * 0.1,
+    height: 25,
+    width: 30,
   },
   notificationTextStyle: {
     color: 'white',
-    fontSize: 15,
+    fontSize: titleCardFontSize,
     marginLeft: 8,
     fontFamily: 'Roboto-Regular',
   },

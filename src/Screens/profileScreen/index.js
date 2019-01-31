@@ -311,9 +311,8 @@ class UserProfile extends Component {
             />
           </View>
           {this.renderButtonView()}
-
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </View>
     );
   }

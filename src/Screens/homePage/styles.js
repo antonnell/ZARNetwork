@@ -133,7 +133,6 @@ export default StyleSheet.create({
     // height: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
     borderRadius: 5,
-
     alignSelf: 'center',
     paddingLeft: 10,
     marginBottom: 20,
@@ -141,7 +140,7 @@ export default StyleSheet.create({
     shadowOpacity: 1,
     shadowOffset: { width: 0, height: 3.7 },
     shadowRadius: 5.3,
-    shadowColor: 'rgba(127, 127, 127, 0.15)',
+    shadowColor: 'rgba(127, 127, 127,0.15)',
     elevation: 4,
   },
   accountCardrightBottomTextStyle: {

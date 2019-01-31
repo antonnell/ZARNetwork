@@ -170,6 +170,11 @@ class CreateWallet extends Component {
     if (name !== '' && typeUuid !== '') {
       isClickable = true;
     }
+    let arrowIconStyle = { transform: [{ rotate: '0deg' }] };
+
+    if (openAccountList) {
+      arrowIconStyle = { transform: [{ rotate: '180deg' }] };
+    }
     return (
       <TouchableOpacity
         style={styles.Container}
@@ -212,7 +217,11 @@ class CreateWallet extends Component {
                 style={styles.accDropdownViewStyle}
                 onPress={this.toggleAccountTypeList}
               >
-                <MaterialIcons name="arrow-drop-down" size={24} style={styles.dropdownIconStyle} />
+                <MaterialIcons
+                  name="arrow-drop-down"
+                  size={24}
+                  style={[styles.dropdownIconStyle, arrowIconStyle]}
+                />
               </TouchableOpacity>
               {openAccountList && (
                 <ListCard
@@ -246,8 +255,8 @@ class CreateWallet extends Component {
               />
             </View>
           </View>
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </TouchableOpacity>
     );
   }

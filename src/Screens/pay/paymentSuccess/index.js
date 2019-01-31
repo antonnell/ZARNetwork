@@ -55,7 +55,8 @@ export default class PaymentSuccess extends Component {
           <Text style={styles.textStyle}>
             {walletType} {amount} paid to {beneficiaryName}
           </Text>
-          <Text style={styles.accountTextStyle}>Account {accountNumber}</Text>
+          <Text style={styles.accountTextStyle}>Account</Text>
+          <Text style={styles.accountTextStyle}>{accountNumber}</Text>
         </View>
         <View style={styles.buttonViewStyle}>
           <DesignButton name="Done" callMethod={this.handleDone} isClickable />

@@ -39,6 +39,9 @@ export const loginUser = data =>
 export const clearAuthDetail = () =>
   action({
     type: actions.CLEAR_AUTH,
+    payload: {
+      request: {},
+    },
   });
 
 /**

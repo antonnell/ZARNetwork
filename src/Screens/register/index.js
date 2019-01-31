@@ -325,9 +325,10 @@ export default class Register extends Component {
               <Text style={styles.textStyle}> Sign In</Text>
             </TouchableOpacity>
           </View>
-          {this.renderLoader()}
+
           <View style={{ height: deviceHeight * 0.05 }} />
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </View>
     );
   }
