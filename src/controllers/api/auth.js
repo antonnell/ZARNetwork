@@ -1,5 +1,11 @@
 import { dispatch } from '../../store';
-import { loginUser, registerUser } from '../redux/auth/action';
+import {
+  loginUser,
+  registerUser,
+  clearAuthDetail,
+  verifyEmailDetail,
+  updateUserProfileDetail,
+} from '../redux/auth/action';
 // import { encrypt } from '../utility/encryption';
 // import { LOGIN_TYPE, REGISTER_TYPE } from '../redux/base/constants';
 
@@ -57,4 +63,46 @@ export const login = payload =>
     //     }
     //   })
     //   .catch(err => reject(err));
+  });
+
+/**
+ * ******************************************************************************
+ * @method clearAuth : Method to clear auth.
+ * ******************************************************************************
+ */
+export const clearAuth = () =>
+  new Promise((resolve, reject) => {
+    dispatch(clearAuthDetail())
+      .then(result => resolve(result))
+      .catch(err => reject(err));
+  });
+
+/**
+ * ******************************************************************************
+ * @method verifyUserEmail : Method to verify user's email address.
+ * @param {object} payload : email address to be verified.
+ * ******************************************************************************
+ */
+export const verifyUserEmail = payload =>
+  new Promise((resolve, reject) => {
+    dispatch(verifyEmailDetail(payload))
+      .then(result => resolve(result))
+      .catch(err => reject(err));
+  });
+
+/**
+ * ******************************************************************************
+ * @method updateUserProfile : Method to upadte user's profile.
+ * @param {object} payload : Contains following : -->
+ * -> firstname: string
+ * -> surname: string
+ * -> email: string
+ * -> mobile_number: string
+ * ******************************************************************************
+ */
+export const updateUserProfile = payload =>
+  new Promise((resolve, reject) => {
+    dispatch(updateUserProfileDetail(payload))
+      .then(result => resolve(result))
+      .catch(err => reject(err));
   });

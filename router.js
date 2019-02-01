@@ -23,6 +23,7 @@ import TermsConditions from './src/Screens/termsConditions';
 import ProfileScreen from './src/Screens/profileScreen';
 import ResetPassword from './src/Screens/resetPassword';
 import UpdatePassword from './src/Screens/resetPassword/updatePassword';
+import LoginWithPin from './src/Screens/login/pinLogin';
 
 const Routing = createStackNavigator(
   {
@@ -103,6 +104,12 @@ const Routing = createStackNavigator(
     },
     UpdatePassword: {
       screen: UpdatePassword,
+    },
+    LoginWithPin: {
+      screen: LoginWithPin,
+      navigationOptions: {
+        gesturesEnabled: false,
+      },
     },
   },
   {

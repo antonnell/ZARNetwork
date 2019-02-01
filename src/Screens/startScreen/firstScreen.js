@@ -1,9 +1,10 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { View, Text, StatusBar, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import styles from './styles';
 import StartScreenIcon from '../../images/startScreenIcon.png';
 import { deviceWidth, deviceHeight } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 export default class FirstScreen extends React.PureComponent {
   render() {
@@ -14,7 +15,7 @@ export default class FirstScreen extends React.PureComponent {
           backgroundColor: 'white',
         }}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
         <View style={{ marginTop: deviceHeight * 0.04 }}>
           <Text

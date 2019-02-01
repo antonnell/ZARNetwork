@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DesignButton from '../../common/Button';
 import styles from './styles';
-
+import StatusBar from '../../common/StatusBar';
 import { deviceWidth, deviceHeight } from '../../common/constants';
 
 this.flagValue = '';
@@ -65,7 +65,7 @@ export default class GenerateOTP extends Component {
     if (!navigationFrom) {
       return (
         <View style={styles.Container}>
-          <StatusBar backgroundColor="black" />
+          <StatusBar />
           <View
             style={{
               width: deviceWidth,

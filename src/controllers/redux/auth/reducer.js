@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, _SUCCESS } from '../base/constants';
+import { REGISTER, LOGIN, _SUCCESS, CLEAR_AUTH, UPDATE_USER_PROFILE } from '../base/constants';
 
 const sha256 = require('sha256');
 
@@ -65,6 +65,26 @@ const getFormattedAuthData = (state, action) => {
   return state;
 };
 
+const clearState = state => Object.assign({}, state, { userDetail: null });
+
+const updateAuthState = (state, action) => {
+  if (action && action.payload && action.payload.config && action.payload.config.data) {
+    const data = JSON.parse(action.payload.config.data);
+
+    const { firstname, email, surname } = data;
+    const updatedState = {
+      ...state.userDetail,
+      firstname,
+      surname,
+      email,
+    };
+
+    return Object.assign({}, state, {
+      userDetail: updatedState,
+    });
+  }
+  return state;
+};
 /**
  * @method userAuthReducer : Reducer for user authentication.
  */
@@ -76,6 +96,15 @@ const userAuthReducer = (state = defaultState, action) => {
     }
     case `${LOGIN}${_SUCCESS}`: {
       const formattedData = getFormattedAuthData(state, action);
+      return formattedData;
+    }
+    case `${CLEAR_AUTH}`: {
+      const formattedData = clearState(state);
+      return formattedData;
+    }
+
+    case `${UPDATE_USER_PROFILE}${_SUCCESS}`: {
+      const formattedData = updateAuthState(state, action);
       return formattedData;
     }
     default:

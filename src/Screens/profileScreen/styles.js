@@ -63,8 +63,8 @@ export default StyleSheet.create({
   },
   titleCardImageStyle: {
     flex: 1,
-    height: deviceHeight * 0.04,
-    width: deviceWidth * 0.1,
+    height: 30,
+    width: 30,
   },
   titleCardTextStyle: {
     flex: 5,

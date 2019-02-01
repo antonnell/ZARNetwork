@@ -1,7 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { deviceHeight, deviceWidth } from '../../../common/constants';
+
+let titleCardFontSize = 15;
+if (deviceWidth <= 375) {
+  titleCardFontSize = 13;
+}
 export default StyleSheet.create({
   Container: {
     flex: 1,
@@ -42,17 +46,21 @@ export default StyleSheet.create({
     position: 'absolute',
     color: 'white',
     fontSize: 20,
+    fontFamily: 'Roboto-Light',
   },
   profileInfoTitleStyle: {
     fontSize: 17,
     alignSelf: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   profileInfoSubTitleStyle: {
     fontSize: 15,
+    fontFamily: 'Roboto-Regular',
   },
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
+    height: 50,
     padding: 15,
     backgroundColor: 'rgb(0, 177, 251)',
     alignSelf: 'center',
@@ -62,28 +70,27 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleCardImageStyle: {
-    flex: 1,
-    height: deviceHeight * 0.04,
-    width: deviceWidth * 0.1,
+    height: 25,
+    width: 30,
   },
   titleCardTextStyle: {
     flex: 5,
     color: 'white',
     fontSize: 16,
     marginLeft: 14,
+    fontFamily: 'Roboto-Regular',
   },
   notificationImageStyle: {
-    height: deviceHeight * 0.03,
-    width: deviceWidth * 0.1,
+    height: 25,
+    width: 30,
   },
   notificationTextStyle: {
     color: 'white',
-    fontSize: 15,
+    fontSize: titleCardFontSize,
     marginLeft: 8,
+    fontFamily: 'Roboto-Regular',
   },
-  notificationMaterialIconStyle: {
-    marginLeft: deviceHeight * 0.04,
-  },
+  notificationMaterialIconStyle: {},
   toggleContainerStyle: {
     marginTop: deviceHeight * 0.05,
     backgroundColor: 'rgb(244,244,244)',
@@ -99,6 +106,7 @@ export default StyleSheet.create({
   toggleTextStyle: {
     fontSize: 14,
     color: 'rgba(3,3,3,0.9)',
+    fontFamily: 'Roboto-Regular',
   },
   separatorStyle: {
     height: 1,
@@ -106,10 +114,9 @@ export default StyleSheet.create({
     width: deviceWidth * 0.75,
     alignSelf: 'center',
   },
-  listStyling: {
-    top: deviceHeight < 675 ? deviceHeight * 0.195 : deviceHeight * 0.185,
-    left: -(deviceWidth * 0.26),
-    width: deviceWidth * 0.78,
-    maxHeight: deviceHeight * 0.3,
+
+  dateTimeviewStyle: {
+    width: deviceWidth * 0.66,
+    alignSelf: 'center',
   },
 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, WebView, StatusBar, ActivityIndicator } from 'react-native';
+import { View, WebView, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
-
+import StatusBar from '../../common/StatusBar';
 import TitleHeader from '../../common/TitleHeader';
 
 import styles from './styles';
@@ -31,7 +31,7 @@ export default class TermsConditions extends Component {
     const { visible } = this.state;
     return (
       <View style={styles.mainContainerStyle}>
-        <StatusBar barStyle="light-content" />
+        <StatusBar />
 
         <TitleHeader
           title="TERMS OF SERVICE"

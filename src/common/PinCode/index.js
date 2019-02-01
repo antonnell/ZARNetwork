@@ -14,6 +14,7 @@ export default class GeneratePinCode extends Component {
       pinCode: '',
       confirmPincode: '',
     };
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   removePin = (event, type) => {
@@ -36,6 +37,24 @@ export default class GeneratePinCode extends Component {
       updateForm(value, type);
     }
   }
+  handleLogin() {
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('Login');
+    }
+  }
+
+  renderForgotPin() {
+    const { isLogin } = this.props;
+    if (isLogin) {
+      return (
+        <TouchableOpacity onPress={this.handleLogin}>
+          <Text style={{ width: 50 }}>Forgot Pin?</Text>
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
 
   renderButtons = () => {
     const { pinCodeObj } = this.props;
@@ -43,6 +62,7 @@ export default class GeneratePinCode extends Component {
     if (totalNumber) {
       return totalNumber.map(btn => (
         <TouchableOpacity
+          key={btn}
           style={{
             backgroundColor: 'rgb(0,177,251)',
             width: 50,
@@ -63,9 +83,21 @@ export default class GeneratePinCode extends Component {
 
   render() {
     const { pinCodeObj, colorData } = this.props;
+    const { isLogin } = this.props;
+    let justifiyContentStyle = 'flex-end';
+    if (isLogin) {
+      justifiyContentStyle = 'space-between';
+    }
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }}>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 15,
+            marginBottom: 15,
+            fontFamily: 'Roboto-Light',
+          }}
+        >
           {pinCodeObj.title}
         </Text>
         <View
@@ -86,6 +118,8 @@ export default class GeneratePinCode extends Component {
         <View
           style={{
             width: deviceWidth * 0.8,
+            maxWidth: 300,
+
             flexDirection: 'row',
             flexWrap: 'wrap',
             alignItems: 'center',
@@ -96,20 +130,19 @@ export default class GeneratePinCode extends Component {
         >
           {this.renderButtons()}
           <View
+            pointerEvents="box-none"
             style={{
               position: 'absolute',
               flexDirection: 'row',
               width: deviceWidth * 0.6,
               paddingLeft: 0,
-              justifyContent: 'space-between',
+              justifyContent: justifiyContentStyle,
               bottom: 20,
               paddingRight: 0,
-              alignItems: 'center',
+              alignItems: 'flex-end',
             }}
           >
-            <TouchableOpacity>
-              <Text style={{ width: 50 }}>Forgot Pin?</Text>
-            </TouchableOpacity>
+            {this.renderForgotPin()}
             <TouchableOpacity
               style={{ alignItems: 'center' }}
               onPress={event => this.removePin(event, pinCodeObj.type)}

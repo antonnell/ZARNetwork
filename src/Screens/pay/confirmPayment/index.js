@@ -1,6 +1,9 @@
+/* eslint-disable radix */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -15,6 +18,7 @@ import { setNewRequest } from '../../../controllers/api/paymentRequest';
 import { getAccountIcon, getFullName } from '../../../utility';
 import Loader from '../../../common/Loader';
 import { deviceHeight, deviceWidth } from '../../../common/constants';
+import StatusBar from '../../../common/StatusBar';
 
 class ConfirmPayment extends Component {
   constructor(props) {
@@ -24,29 +28,31 @@ class ConfirmPayment extends Component {
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   onPayBtnPress() {
-    Alert.alert(
-      'Payment Confirmation!',
-      'Are you sure  you want to pay?',
-      [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        {
-          text: 'OK',
-          onPress: () => this.onClickConfiramtion(),
-        },
-      ],
-      { cancelable: false }
-    );
+    // Alert.alert(
+    //   'Payment Confirmation!',
+    //   'Are you sure  you want to pay?',
+    //   [
+    //     { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+    //     {
+    //       text: 'OK',
+    //       onPress: () => this.onClickConfiramtion(),
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
+
+    this.onClickConfiramtion();
   }
 
   onClickConfiramtion = () => {
-    /*eslint-disable*/
     const { navigation } = this.props;
     const account_uuid = navigation.state.params.accountId;
     const value = parseInt(navigation.state.params.amount);
     const beneficiary_uuid = navigation.state.params.beneficiary_uuid;
     const reference = navigation.state.params.reference;
+    const own_notifications = navigation.state.params.own_notifications;
+    const beneficiary_notifications = navigation.state.params.beneficiary_notifications;
     if (
       (account_uuid &&
         account_uuid !== '' &&
@@ -58,9 +64,11 @@ class ConfirmPayment extends Component {
     ) {
       const payload = {
         account_uuid,
-        value,
+        value: value.toString(),
         beneficiary_uuid,
         my_reference: reference,
+        beneficiary_notifications,
+        own_notifications,
       };
       this.setState({
         isLoading: true,
@@ -72,7 +80,9 @@ class ConfirmPayment extends Component {
               isLoading: false,
             });
             if (res.payload && res.payload.data && res.payload.data.status === 200) {
-              navigation.navigate('PaymentSuccess', { params: navigation.state.params });
+              navigation.navigate('PaymentSuccess', {
+                data: navigation.state.params,
+              });
             } else if (
               res &&
               res.error &&
@@ -94,6 +104,7 @@ class ConfirmPayment extends Component {
     }
     // navigation.navigate('PaymentSuccess', { params: navigation.state.params});
   };
+
   renderLoader() {
     const { isLoading } = this.state;
     if (isLoading) {
@@ -109,24 +120,30 @@ class ConfirmPayment extends Component {
     const isSubTitle = true;
 
     let referenceVal = '';
-
+    let notificationTypeText = '';
     let selectedWalletVal = '';
     if (navigation && navigation.state && navigation.state.params) {
+      const paramsData = navigation.state.params;
+      const reference = paramsData.reference;
+      if (reference && reference !== '' && reference !== undefined && reference !== null) {
+        referenceVal = reference;
+      }
+      const selectedWallet = paramsData.selectedWallet;
       if (
-        navigation.state.params.reference &&
-        navigation.state.params.reference !== '' &&
-        navigation.state.params.reference !== undefined &&
-        navigation.state.params.reference !== null
+        selectedWallet &&
+        selectedWallet !== '' &&
+        selectedWallet !== undefined &&
+        selectedWallet !== null
       ) {
-        referenceVal = navigation.state.params.reference;
+        selectedWalletVal = selectedWallet;
       }
       if (
-        navigation.state.params.selectedWallet &&
-        navigation.state.params.selectedWallet !== '' &&
-        navigation.state.params.selectedWallet !== undefined &&
-        navigation.state.params.selectedWallet !== null
+        paramsData.notificationTypeText &&
+        paramsData.notificationTypeText !== '' &&
+        paramsData.notificationTypeText !== undefined &&
+        paramsData.notificationTypeText !== null
       ) {
-        selectedWalletVal = navigation.state.params.selectedWallet;
+        notificationTypeText = paramsData.notificationTypeText;
       }
     }
 
@@ -155,7 +172,7 @@ class ConfirmPayment extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         {/* header */}
         <TitleHeader
           iconName="keyboard-arrow-left"
@@ -182,7 +199,6 @@ class ConfirmPayment extends Component {
             circularAvatarText={userIcon}
           />
           <DetailCard
-            // account={userWalletDetail[index]} walletType={walletType}
             topTitleText="Amount"
             bottomTitleText="ETH 1.0897"
             topSubTitleText=""
@@ -205,8 +221,12 @@ class ConfirmPayment extends Component {
             <Card navigation={navigation} title="Account" subtitle={selectedWalletVal} />
             <View style={styles.seperaterStyle} />
             <Card navigation={navigation} title="Reference" subtitle={referenceVal} />
-            {/* <View style={styles.seperaterStyle} />
-            <Card navigation={navigation} title="Notification Type" subtitle="None" /> */}
+            <View style={styles.seperaterStyle} />
+            <Card
+              navigation={navigation}
+              title="Notification Type"
+              subtitle={notificationTypeText}
+            />
           </View>
           <View style={{ marginTop: deviceHeight * 0.05 }}>
             <DesignButton name="PAY" isClickable callMethod={() => this.onPayBtnPress()} />
@@ -220,11 +240,12 @@ class ConfirmPayment extends Component {
 
 ConfirmPayment.defaultProps = {
   userDetail: null,
+  navigation: null,
 };
 
 ConfirmPayment.propTypes = {
   userDetail: PropTypes.objectOf(PropTypes.any),
-  navigation: PropTypes.object,
+  navigation: PropTypes.objectOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({

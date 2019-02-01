@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
-
+import { View, Text } from 'react-native';
+import StatusBar from '../../common/StatusBar';
 import { deviceHeight, deviceWidth } from '../../common/constants';
 
 export default class ThirdScreen extends React.PureComponent {
@@ -12,7 +12,7 @@ export default class ThirdScreen extends React.PureComponent {
           alignItems: 'center',
         }}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <View style={{ marginTop: deviceHeight * 0.4 }}>
           <Text
             style={{

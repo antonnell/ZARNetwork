@@ -1,7 +1,7 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
+import { deviceWidth, deviceHeight } from '../../common/constants';
+
 export default StyleSheet.create({
   Container: {
     flex: 1,
@@ -23,6 +23,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: 'white',
     marginLeft: deviceHeight * 0.01,
+    fontFamily: 'Roboto-Regular',
   },
   seperaterStyle: {
     backgroundColor: 'white',
@@ -50,5 +51,48 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'rgb(3,3,3)',
     fontWeight: '600',
+    fontFamily: 'Roboto-Regular',
+  },
+  recentCardContainerstyle: {
+    flexDirection: 'row',
+    width: deviceWidth * 0.9,
+    backgroundColor: '#f4f4f4',
+    alignSelf: 'center',
+    height: deviceHeight * 0.1,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  recentCardHeaderStyle: {
+    backgroundColor: '#00b1fb',
+    width: deviceWidth * 0.2,
+    height: deviceHeight * 0.1,
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5,
+    justifyContent: 'center',
+  },
+  recentCardHeaderTextStyle: {
+    fontFamily: 'Roboto-Light',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  recentCardDetailViewStyle: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  recentCardTextOnestyle: {
+    fontFamily: 'Roboto-Regular',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  recentCardTextTwoStyle: {
+    fontFamily: 'Roboto-Light',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 14,
   },
 });

@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StatusBar, Dimensions, Image, Text } from 'react-native';
+import { View, Dimensions, Image, Text } from 'react-native';
 // import Swiper from 'react-native-swiper';
 import StartScreenIcon from '../../images/startScreenIcon.png';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
+import StatusBar from '../../common/StatusBar';
 // import FirstScreen from './firstScreen';
 // import SecondScreen from './secondScreen';
 // import ThirdScreen from './thirdScreen';
@@ -62,7 +63,7 @@ export default class StartScreen extends React.Component {
           backgroundColor: 'white',
         }}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
         <View style={{ marginTop: deviceHeight * 0.04 }}>
           <Text

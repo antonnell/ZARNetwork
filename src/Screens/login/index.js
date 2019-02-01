@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -14,6 +14,7 @@ import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
 import { deviceWidth, deviceHeight, invalid, valid, invalidEmail } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 /**
  * Component to call login api.
  */
@@ -52,19 +53,6 @@ class Login extends Component {
     }
     return valid;
   }
-
-  // checkEmptyFields(type) {
-  // console.log('checkEmptyFields type : ', type);
-  // const { email } = this.state;
-  // if (type === 'email') {
-  //   Alert.alert('Error', 'Enter email!');
-  // } else
-  // if (type === 'password') {
-  //   if (email !== '' && isEmailValid(email)) {
-  //     Alert.alert('Error', 'Enter password!');
-  //   }
-  // }
-  // }
 
   /**
    * ******************************************************************************
@@ -145,12 +133,8 @@ class Login extends Component {
   }
 
   render() {
-    const {
-      //  authDetail, errDetail,
-      navigation,
-    } = this.props;
-    // console.log('authDetail in props : ', authDetail);
-    // console.log('errDetail in props : ', errDetail);
+    const { navigation } = this.props;
+
     const { email, password } = this.state;
 
     let isClickable = false;
@@ -159,7 +143,7 @@ class Login extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           title="SIGN IN"
           isBackArrow
@@ -242,19 +226,11 @@ class Login extends Component {
   }
 }
 Login.defaultProps = {
-  // authDetail: null,
-  //  errDetail: null,
   navigation: null,
 };
 
 Login.propTypes = {
-  // authDetail: PropTypes.objectOf(PropTypes.any),
-  //  errDetail: PropTypes.objectOf(PropTypes.any),
   navigation: PropTypes.objectOf(PropTypes.any),
 };
-// const mapStateToProps = state => ({
-//   // authDetail: state.userAuthReducer.userDetail,
-//   // errDetail: state.errorHandlerReducer,
-// });
+
 export default Login;
-// export default connect(mapStateToProps)(Login);

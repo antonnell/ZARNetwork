@@ -20,7 +20,12 @@ export default StyleSheet.create({
     width: deviceWidth * 0.8,
     alignItems: 'center',
   },
-  mainTextStyle: { fontSize: 16, fontWeight: 'bold', color: 'rgb(0,177,251)' },
+  mainTextStyle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'rgb(0,177,251)',
+    fontFamily: 'Roboto-Regular',
+  },
   subTextViewStyle: {
     marginTop: 10,
     width: deviceWidth * 0.8,

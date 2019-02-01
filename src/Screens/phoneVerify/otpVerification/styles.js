@@ -15,6 +15,7 @@ export default StyleSheet.create({
     marginLeft: deviceWidth * 0.25,
   },
   descriptionText: {
+    fontFamily: 'Roboto-Regular',
     marginTop: deviceHeight * 0.1,
     color: '#000',
     fontSize: 16,
@@ -24,6 +25,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   resenOtpTextStyle: {
+    fontFamily: 'Roboto-Medium',
     fontSize: 16,
     fontWeight: '400',
     color: 'rgba(0, 0, 0, 0.5)',

@@ -9,6 +9,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   infoTextStyle: {
+    fontFamily: 'Roboto-Regular',
     color: 'rgb(0, 0, 0)',
     fontWeight: 'normal',
     fontSize: 15,
@@ -26,6 +27,7 @@ export default StyleSheet.create({
     marginLeft: deviceWidth * 0.25,
   },
   phoneInputStyle: {
+    fontFamily: 'Roboto-Light',
     borderWidth: 1,
     borderRadius: 5,
     padding: 6,

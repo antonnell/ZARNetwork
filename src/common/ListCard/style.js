@@ -1,13 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 // Constants
-const deviceWidth = Dimensions.get('window').width;
+import { deviceWidth } from '../constants';
+
 export default StyleSheet.create({
   listContainerStyle: {
     backgroundColor: '#fff',
     marginLeft: deviceWidth * 0.27,
     position: 'absolute',
     opacity: 1,
-    top: 38,
+    top: 40,
     width: deviceWidth * 0.7,
     shadowColor: 'blue',
     shadowOffset: { width: 0, height: 2 },

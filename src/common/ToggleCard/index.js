@@ -6,7 +6,15 @@ import styles from './styles';
 
 export default class ToggleCard extends PureComponent {
   render() {
-    const { textVal, textStyle, containerStyle, toggleState, updateToggleClick } = this.props;
+    const {
+      textVal,
+      textStyle,
+      containerStyle,
+      toggleState,
+      updateToggleClick,
+      disable,
+    } = this.props;
+
     let mainView = styles.mainContainer;
     let textStyleVal = styles.textStyle;
     if (containerStyle && containerStyle !== null) {
@@ -19,7 +27,11 @@ export default class ToggleCard extends PureComponent {
     return (
       <View style={mainView}>
         <Text style={textStyleVal}>{textVal}</Text>
-        <ToggleButton defaultValue={toggleState} onChangeValue={updateToggleClick} />
+        <ToggleButton
+          defaultValue={toggleState}
+          onChangeValue={updateToggleClick}
+          disable={disable}
+        />
       </View>
     );
   }
@@ -30,6 +42,7 @@ ToggleCard.defaultProps = {
   containerStyle: null,
   toggleState: false,
   updateToggleClick: () => {},
+  disable: false,
 };
 ToggleCard.propTypes = {
   textVal: PropTypes.string,
@@ -37,4 +50,5 @@ ToggleCard.propTypes = {
   containerStyle: PropTypes.objectOf(PropTypes.any),
   toggleState: PropTypes.bool,
   updateToggleClick: PropTypes.func,
+  disable: PropTypes.bool,
 };
