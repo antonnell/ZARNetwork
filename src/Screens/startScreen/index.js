@@ -29,7 +29,7 @@ export default class StartScreen extends React.Component {
     const ActiveDot = (
       <View
         style={{
-          backgroundColor: 'rgba(0, 177, 251, 1)',
+          backgroundColor: 'rgba(0, 177, 255, 1)',
           width: 8,
           height: 8,
           borderRadius: 4,
@@ -43,7 +43,7 @@ export default class StartScreen extends React.Component {
     const inActiveDot = (
       <View
         style={{
-          backgroundColor: 'rgba(0, 177, 251, 0.3)',
+          backgroundColor: 'rgba(0, 177, 255, 0.3)',
           width: 8,
           height: 8,
           borderRadius: 4,
@@ -64,33 +64,40 @@ export default class StartScreen extends React.Component {
       >
         <StatusBar backgroundColor="black" />
         <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
-        <View style={{ marginTop: deviceHeight * 0.04 }}>
+        <View style={{ marginTop: deviceHeight * 0.12 }}>
           <Text
             style={{
               textAlign: 'center',
               width: deviceWidth * 0.68,
-              fontSize: 16,
+              fontSize: 24,
+              fontWeight: '600'
             }}
           >
             Real-time transactions with near zero transaction costs
           </Text>
         </View>
-        <View style={{ marginTop: deviceHeight * 0.3, bottom: 25 }}>
-          <View style={{ marginTop: deviceHeight * 0.01 }}>
-            <DesignButton
-              name="SIGN IN"
-              isClickable
-              btnTextColor={styles.loginBtnTextColor}
-              callMethod={this.onLoginBtnClick}
-            />
-          </View>
-          <View style={{ marginTop: deviceHeight * 0.02 }}>
+        <View style={{ marginTop: deviceHeight * 0.20, bottom: 25 }}>
+          <View
+            style={{
+              borderBottomColor: 'lightgray',
+              borderBottomWidth: 1,
+            }}
+          />
+          <View style={{ marginTop: deviceHeight * 0.04 }}>
             <DesignButton
               btnTextColor={styles.btnTextColor}
-              name="REGISTER"
+              name="Register"
               isClickable
               callMethod={this.onRegisterBtnClick}
               btnMainStyle={styles.registerBtnStyle}
+            />
+          </View>
+          <View style={{ marginTop: deviceHeight * 0.03 }}>
+            <DesignButton
+              name="Log in"
+              isClickable
+              btnTextColor={styles.loginBtnTextColor}
+              callMethod={this.onLoginBtnClick}
             />
           </View>
         </View>

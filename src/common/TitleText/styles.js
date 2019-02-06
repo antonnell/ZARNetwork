@@ -14,7 +14,7 @@ export default StyleSheet.create({
     width: deviceWidth * 0.8,
     textAlign: 'center',
     fontSize: 18,
-    color: 'rgb(0,177,251)',
+    color: 'rgb(0, 177, 255)',
     fontWeight: '600',
   },
 });

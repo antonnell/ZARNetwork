@@ -14,6 +14,7 @@ import { getAccountIcon, getFullName } from '../../utility/index';
 
 import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
+import exchangeIcon from '../../images/ExchangeWhite.png';
 import receiveIcon from '../../images/receiveIcon.png';
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
@@ -236,9 +237,6 @@ class HomePage extends Component {
     if (accountToggle) {
       setScrollViewStyle = {
         ...styles.renderCardContainer,
-        // height: deviceHeight * 0.4
-        //  marginTop: deviceHeight * 0.03,
-        height: deviceHeight * 0.5,
       };
     }
 
@@ -247,7 +245,7 @@ class HomePage extends Component {
         <StatusBar backgroundColor="black" />
         {/* header */}
         <TitleHeader
-          title="DASHBOARD"
+          title=""
           rightIconName="user"
           onRightBtnPress={this.handleOpenProfileScreen}
           rightIconType={EvilIconsType}
@@ -274,8 +272,10 @@ class HomePage extends Component {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              width: deviceWidth * 0.8,
+              justifyContent: 'flex-start',
+              width: deviceWidth * 1,
+              marginLeft: 30,
+              marginBottom: 35,
             }}
           >
             <View style={styles.profileInfoMainViewStyle}>
@@ -286,29 +286,32 @@ class HomePage extends Component {
               <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
             </View>
           </View>
-          <View
+          <ScrollView
             style={{
               marginTop: deviceHeight * 0.04,
-              flexDirection: 'row',
-              width: deviceWidth * 0.78,
+              flex: 1,
+              width: deviceWidth,
             }}
+            horizontal
+            showsHorizontalScrollIndicator={false}
           >
-            <Wallet text="Pay" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
-            <Wallet text="Request" icon={receiveIcon} handleWallet={this.renderReceive} />
+            <Wallet text="Pay" icon={receiveIcon} handleWallet={this.renderPaySomeone} />
+            <Wallet text="Transfer" icon={exchangeIcon} handleWallet={this.renderReceive} />
+            <Wallet text="Request" icon={paySomeoneIcon} handleWallet={this.renderReceive} />
             <Wallet
               text="Add Account"
               handleWallet={this.renderCreateAccount}
               icon={addAccountIcon}
             />
-          </View>
+          </ScrollView>
           <View
             style={{
-              marginTop: deviceHeight * 0.1,
+              marginTop: deviceHeight * 0.05,
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <View style={{ width: deviceWidth * 0.85, alignSelf: 'center' }}>
-                <Text style={{ fontSize: 16 }}>Accounts</Text>
+              <View style={{ width: deviceWidth * 0.8, alignSelf: 'center' }}>
+                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 15 }}>Accounts</Text>
               </View>
               <ToggleButton
                 defaultValue={accountToggle}
@@ -319,7 +322,6 @@ class HomePage extends Component {
             </View>
             <View style={setScrollViewStyle}>{this.renderCards()}</View>
           </View>
-          <View style={{ height: deviceHeight * 0.05 }} />
         </ScrollView>
       </View>
     );

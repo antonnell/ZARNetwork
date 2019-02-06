@@ -48,7 +48,7 @@ export default class TermsConditions extends Component {
 
         {visible && (
           <View style={styles.spinnerStyle}>
-            <ActivityIndicator size="large" color="rgb(0,177,251)" />
+            <ActivityIndicator size="large" color="rgb(0, 177, 255)" />
           </View>
         )}
       </View>

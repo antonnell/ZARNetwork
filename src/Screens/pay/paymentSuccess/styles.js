@@ -14,7 +14,7 @@ export default StyleSheet.create({
     width: deviceWidth * 0.5,
     textAlign: 'center',
     fontSize: 24,
-    color: 'rgb(0,177,251)',
+    color: 'rgb(0, 177, 255)',
     fontWeight: 'bold',
   },
   accountTextStyle: {

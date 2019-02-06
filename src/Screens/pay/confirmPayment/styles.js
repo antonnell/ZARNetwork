@@ -53,7 +53,7 @@ export default StyleSheet.create({
     color: '#030303',
   },
   detailCardMainViewStyle: {
-    backgroundColor: 'rgb(0,177,251)',
+    backgroundColor: 'rgb(0, 177, 255)',
     height: deviceHeight * 0.15,
     width: deviceWidth * 0.8,
     borderRadius: 5,
@@ -103,7 +103,7 @@ export default StyleSheet.create({
     // alignSelf: 'center',
   },
   cardTitleStyle: { fontSize: 14, color: 'rgba(3, 3, 3, 0.9)' },
-  cardsubtitleStyle: { fontSize: 12, color: 'rgba(0, 177, 251, 0.9)' },
+  cardsubtitleStyle: { fontSize: 12, color: 'rgba(0, 177, 255, 0.9)' },
   seperaterStyle: {
     backgroundColor: '#000000',
     width: deviceWidth * 0.6,

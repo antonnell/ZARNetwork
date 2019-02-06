@@ -33,8 +33,16 @@ export default {
     justifyContent: 'center',
     position: 'relative',
     opacity: 0.8,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgb(92,92,92)',
+    borderBottomWidth: 1.5,
+    borderBottomColor: 'lightgray',
+  },
+  focusedContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    position: 'relative',
+    opacity: 0.8,
+    borderBottomWidth: 2,
+    borderBottomColor: '#00B1FF',
   },
   withBorder: {
     borderColor: '#C8C7CC',

@@ -35,7 +35,7 @@ export default class Card extends Component {
         </View>
 
         <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>
-          <MaterialIcons color="#fff" size={24} name="keyboard-arrow-right" />
+          <MaterialIcons color="#000" size={24} name="keyboard-arrow-right" />
         </TouchableOpacity>
       </View>
     );

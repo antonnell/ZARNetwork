@@ -10,8 +10,8 @@ export default StyleSheet.create({
   },
   loginBtn: {
     backgroundColor: 'rgb(0, 169, 252)',
-    width: deviceWidth * 0.76,
-    height: deviceHeight * 0.07,
+    width: deviceWidth * 0.9,
+    height: deviceHeight * 0.08,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -19,7 +19,7 @@ export default StyleSheet.create({
   loginBtnText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Roboto-Medium',
   },
 });

@@ -11,7 +11,7 @@ export default class Card extends Component {
     return (
       <View
         style={{
-          backgroundColor: 'rgb(0,177,251)',
+          backgroundColor: 'rgb(0, 177, 255)',
           height: deviceHeight * 0.3,
           width: deviceWidth * 0.7,
           borderRadius: 5,

@@ -14,9 +14,8 @@ export default StyleSheet.create({
 
   titleText: {
     // width: deviceWidth * 0.8,
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: deviceHeight < 675 ? 16 : 18,
-    color: 'rgb(0,177,251)',
     fontWeight: '600',
     fontFamily: 'Roboto-Medium',
   },

@@ -64,8 +64,8 @@ export default class OtpVerification extends Component {
               height: 40,
             }}
             inputStyles={{ color: '#000', width: 30, fontSize: 14 }}
-            focusedBorderColor="rgb(0,177,251)"
-            unFocusedBorderColor="rgb(0,177,251)"
+            focusedBorderColor="rgb(0, 177, 255)"
+            unFocusedBorderColor="rgb(0, 177, 255)"
           />
         </View>
         <View style={{ marginTop: 20, alignItems: 'center' }}>

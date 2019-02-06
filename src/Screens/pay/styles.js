@@ -12,16 +12,13 @@ export default StyleSheet.create({
     padding: 5,
   },
   cardStyle: {
-    backgroundColor: 'rgb(0, 169, 252)',
     width: deviceWidth * 0.9,
     marginTop: deviceHeight * 0.04,
-    borderRadius: 5,
     alignSelf: 'center',
     alignItems: 'center',
   },
   cardTextStyle: {
     fontSize: 20,
-    color: 'white',
     marginLeft: deviceHeight * 0.01,
   },
   seperaterStyle: {
@@ -38,7 +35,7 @@ export default StyleSheet.create({
   },
   rightTextStyle: { position: 'absolute', right: 12, alignSelf: 'center' },
   rightTextValueStyle: {
-    color: 'rgb(0, 177, 251)',
+    color: 'rgb(0, 177, 255)',
     fontSize: 15,
   },
   mainStyle: {

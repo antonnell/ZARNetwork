@@ -9,24 +9,19 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   imageStyle: {
-    marginTop: deviceHeight * 0.2,
+    marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.5,
-    height: deviceHeight * 0.18,
+    height: deviceHeight * 0.2,
   },
   registerBtnStyle: {
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'rgb(0,177,251)',
+    borderWidth: 2,
+    borderColor: 'rgb(0, 177, 255)',
   },
   btnTextColor: {
-    color: 'rgb(0,177,251)',
-    fontSize: 14,
-    fontWeight: '600',
+    color: 'rgb(0, 177, 255)',
   },
-  loginBtnTextColor: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
+  loginBtnTextColor: {},
   wrapper: {},
   slide2: {
     flex: 1,

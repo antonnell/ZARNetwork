@@ -389,7 +389,6 @@ class FloatLabelTextField extends Component {
                   {...this.props}
                   ref="input"
                   autoCorrect={autoCorrect}
-                  autoCapitalize="none"
                   underlineColorAndroid="transparent"
                   style={[
                     styles.valueText,

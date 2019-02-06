@@ -16,6 +16,7 @@
         "extensions": [".js", ".jsx"]
       }
     ],
+    "linebreak-style": 0,
     "prettier/prettier": [
       "error",
       {

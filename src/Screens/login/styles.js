@@ -18,8 +18,6 @@ export default StyleSheet.create({
   },
   loginBtnText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
   },
   fantomPayLogoContainer: {
     marginTop: deviceHeight * 0.1,
@@ -32,24 +30,21 @@ export default StyleSheet.create({
   },
   signInTextStyle: {
     color: 'rgb(0, 0, 0)',
-    fontWeight: 'normal',
-    fontSize: 15,
   },
   emailTextFieldStyle: {
     marginTop: deviceHeight * 0.1,
-    width: deviceWidth * 0.8,
+    width: deviceWidth * 0.9,
   },
   passwordTextFieldStyle: {
     marginTop: deviceHeight * 0.01,
-    width: deviceWidth * 0.8,
+    width: deviceWidth * 0.9,
   },
   textStyle: {
-    color: 'rgb(0, 169, 252)',
-    fontWeight: '600',
+    color: 'lightgray',
     fontSize: deviceWidth < 375 ? 14 : 16,
   },
   bottomTextStyle: {
-    color: 'rgb(0, 0, 0)',
+    color: 'lightgray',
     fontWeight: 'normal',
     fontSize: deviceWidth < 375 ? 14 : 16,
   },

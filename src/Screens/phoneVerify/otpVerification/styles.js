@@ -9,7 +9,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   titleText: {
-    color: 'rgb(0,177,251)',
+    color: 'rgb(0, 177, 255)',
     fontWeight: 'bold',
     fontSize: 18,
     marginLeft: deviceWidth * 0.25,

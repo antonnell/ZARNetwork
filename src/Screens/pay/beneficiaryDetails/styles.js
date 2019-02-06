@@ -58,14 +58,14 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   rightTextValueStyle: {
-    color: 'rgb(0, 177, 251)',
+    color: 'rgb(0, 177, 255)',
     fontSize: deviceWidth < 375 ? 12 : 14,
   },
   titleCardMainViewStyle: {
     marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
     padding: 15,
-    backgroundColor: 'rgb(0, 177, 251)',
+    backgroundColor: 'rgb(0, 177, 255)',
     alignSelf: 'center',
     borderRadius: 5,
     flexDirection: 'row',

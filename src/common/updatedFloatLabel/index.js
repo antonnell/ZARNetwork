@@ -115,6 +115,7 @@ class FloatLabelTextField extends Component {
     this.checkType = this.checkType.bind(this);
     this.errorDisplay = this.errorDisplay.bind(this);
     this.iconDisplay = this.iconDisplay.bind(this);
+    this.input = React.createRef()
   }
 
   onEndEditing(value, type) {
@@ -135,6 +136,11 @@ class FloatLabelTextField extends Component {
       });
     }
   }
+
+  focus() {
+    this.input.current.focus()
+  }
+
 
   setFocus() {
     this.setState({
@@ -194,6 +200,15 @@ class FloatLabelTextField extends Component {
       if (labelColor) return styles.focused;
     } else {
       return styles.focused;
+    }
+  }
+
+  fieldStyle() {
+    const { focused } = this.state;
+    if (focused) {
+      return styles.focusedContainer;
+    } else {
+      return styles.fieldContainer;
     }
   }
 
@@ -266,7 +281,7 @@ class FloatLabelTextField extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.viewContainer}>
-          <View style={[styles.fieldContainer, this.withBorder()]}>
+          <View style={[this.fieldStyle(), this.withBorder()]}>
             <FloatingLabel visible={text}>
               <Text style={[styles.fieldLabel, this.labelStyle()]}>
                 {this.placeholderValue(placeholder)}
@@ -278,10 +293,9 @@ class FloatLabelTextField extends Component {
 
                 <TextInput
                   {...this.props}
-                  ref="input"
+                  ref={this.input}
                   editable={editable}
                   autoCorrect={autoCorrect}
-                  autoCapitalize="none"
                   underlineColorAndroid="transparent"
                   style={[
                     styles.valueText,

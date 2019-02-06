@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -9,7 +9,6 @@ import styles from './styles';
 import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 // import SignIn from '../../images/SignIn.png';
-import FantomPayLogo from '../../images/FantomPay.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
@@ -31,6 +30,8 @@ class Login extends Component {
     this.handleUserLogin = this.handleUserLogin.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
+    this.inputEmail = React.createRef();
+    this.inputPassword = React.createRef();
   }
 
   updateForm(value, type) {
@@ -161,11 +162,12 @@ class Login extends Component {
       <View style={styles.Container}>
         <StatusBar backgroundColor="black" />
         <TitleHeader
-          title="SIGN IN"
+          title="Log in"
           isBackArrow
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
         />
+
         <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
@@ -174,16 +176,17 @@ class Login extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <View style={styles.fantomPayLogoContainer}>
-            <Image
-              source={FantomPayLogo}
-              style={styles.fantomPayLogoImageStyle}
-              resizeMode="contain"
-            />
-          </View>
           {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
           <Text style={styles.signInTextStyle}>Sign in to continue</Text>
         </View> */}
+          <View
+            style={{
+              width: deviceWidth * 0.9,
+              marginTop: deviceHeight * 0.02,
+              borderBottomColor: 'lightgray',
+              borderBottomWidth: 2,
+            }}
+          />
 
           <View style={styles.emailTextFieldStyle}>
             <FloatLabelTextField
@@ -195,11 +198,13 @@ class Login extends Component {
               value={email}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
-              textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              autoFocus
+              ref={this.inputEmail}
+              onSubmitEditing={() => this.inputPassword.current.focus()}
+              blurOnSubmit={false}
             />
           </View>
-
           <View style={styles.passwordTextFieldStyle}>
             <FloatLabelTextField
               type="password"
@@ -210,8 +215,10 @@ class Login extends Component {
               value={password}
               updateForm={this.updateForm}
               inputBackgroundColor="#fff"
-              textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              ref={this.inputPassword}
+              onSubmitEditing={() => this.handleUserLogin()}
+              blurOnSubmit={false}
             />
           </View>
 

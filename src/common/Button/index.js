@@ -19,7 +19,8 @@ export default class DesignButton extends React.PureComponent {
     if (!isClickable) {
       setButtonStyle = {
         ...styles.loginBtn,
-        backgroundColor: '#70c5ef',
+        backgroundColor: 'lightgray',
+        color: 'black',
       };
     }
 

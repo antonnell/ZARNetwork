@@ -28,7 +28,7 @@ export default class Loading extends PureComponent {
   render() {
     // eslint-disable-next-line no-unused-vars
     const { loaderStyle, loaderColor, isLoading, containerStyle } = this.props;
-    const activityIndicatorColor = loaderColor || 'rgb(0,177,251)';
+    const activityIndicatorColor = loaderColor || 'rgb(0, 177, 255)';
     // const marginStyle = loaderStyle ? deviceHeight * loaderStyle - 40 : deviceHeight * 0.5 - 40;
     if (isLoading === false) {
       return null;

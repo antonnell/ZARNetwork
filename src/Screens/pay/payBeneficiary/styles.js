@@ -29,7 +29,7 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   profileInfoMainViewStyle: {
-    backgroundColor: 'rgb(0, 177, 251)',
+    backgroundColor: 'rgb(0, 177, 255)',
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     marginTop: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
     padding: 15,
-    backgroundColor: 'rgb(0, 177, 251)',
+    backgroundColor: 'rgb(0, 177, 255)',
     alignSelf: 'center',
     borderRadius: 5,
     flexDirection: 'row',
