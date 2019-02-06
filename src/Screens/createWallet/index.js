@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ import {
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import { isValidName } from '../../utility/index';
-
+import StatusBar from '../../common/StatusBar';
 /**
  * @class CreateWallet : Component to render create account screen.
  */
@@ -170,13 +170,18 @@ class CreateWallet extends Component {
     if (name !== '' && typeUuid !== '') {
       isClickable = true;
     }
+    let arrowIconStyle = { transform: [{ rotate: '0deg' }] };
+
+    if (openAccountList) {
+      arrowIconStyle = { transform: [{ rotate: '180deg' }] };
+    }
     return (
       <TouchableOpacity
         style={styles.Container}
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
 
         <TitleHeader
           iconName="keyboard-arrow-left"
@@ -212,7 +217,11 @@ class CreateWallet extends Component {
                 style={styles.accDropdownViewStyle}
                 onPress={this.toggleAccountTypeList}
               >
-                <MaterialIcons name="arrow-drop-down" size={24} style={styles.dropdownIconStyle} />
+                <MaterialIcons
+                  name="arrow-drop-down"
+                  size={24}
+                  style={[styles.dropdownIconStyle, arrowIconStyle]}
+                />
               </TouchableOpacity>
               {openAccountList && (
                 <ListCard
@@ -246,8 +255,8 @@ class CreateWallet extends Component {
               />
             </View>
           </View>
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </TouchableOpacity>
     );
   }

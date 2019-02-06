@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Alert, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Alert, ScrollView, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -12,7 +11,8 @@ import { getBeneficiaryDetail } from '../../controllers/api/beneficiary';
 import { getTransactionDetail } from '../../controllers/api/transactions';
 import RecentCard from './recentCard';
 import { noWalletAccount } from '../../common/constants';
-import { getFirstCharOfString } from '../../utility/index';
+import StatusBar from '../../common/StatusBar';
+import { getFirstCharOfString } from '../../../utility/index';
 
 class Pay extends Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class Pay extends Component {
     const { isBackArrowPresent } = this.state;
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           onBtnPress={() => navigation.goBack()}

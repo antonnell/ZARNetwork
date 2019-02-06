@@ -1,5 +1,5 @@
 import Moment from 'moment';
-import { BENEFICIARY_TYPE_LIST, WALLET_LIST } from '../common/constants';
+import { BENEFICIARY_TYPE_LIST, WALLET_LIST, deviceHeight, deviceWidth } from '../common/constants';
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   const colorData = {
@@ -82,19 +82,41 @@ export function getFirstCharOfString(str) {
 /**
  *
  * @param {Array} accountTypeList : List of supported account types.
- * @param {object} account : User's wallet account.
+ * @param {object} typeUuid : User wallet account's type.
  */
-export function getWalletType(accountTypeList, account) {
+export function getWalletType(accountTypeList, typeUuid) {
   let walletType = '';
   if (accountTypeList && accountTypeList.length > 0) {
     const accTypeLen = accountTypeList.length;
     for (let i = 0; i < accTypeLen; i += 1) {
-      if (accountTypeList[i].uuid === account.type_uuid) {
+      if (accountTypeList[i].uuid === typeUuid) {
         walletType = accountTypeList[i].symbol ? accountTypeList[i].symbol : '-';
       }
     }
   }
   return walletType;
+}
+
+/**
+ *
+ * @param {Array} userWalletDetail : List of user wallet accounts.
+ * @param {object} accountId : User wallet account's id.
+ */
+export function getWalletDetail(userWalletDetail, accountId) {
+  let name = '';
+  let balance = '';
+  let type = '';
+  if (userWalletDetail && userWalletDetail.length > 0) {
+    const accTypeLen = userWalletDetail.length;
+    for (let i = 0; i < accTypeLen; i += 1) {
+      if (userWalletDetail[i].uuid === accountId) {
+        name = userWalletDetail[i].description ? userWalletDetail[i].description : '--';
+        balance = userWalletDetail[i].balance ? userWalletDetail[i].balance : '--';
+        type = userWalletDetail[i].type_uuid ? userWalletDetail[i].type_uuid : '--';
+      }
+    }
+  }
+  return { name, balance, type };
 }
 
 /**
@@ -220,6 +242,14 @@ export function getAccountIcon(userDetail) {
   return userIcon;
 }
 
+export function titleCase(str) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 /**
  * @method getFullName : To get full name of user.
  * @param {object} userDetail : Object of user's detail.
@@ -242,6 +272,23 @@ export function getFullName(userDetail) {
       }
     }
   }
-
+  fullName = titleCase(fullName);
   return fullName;
+}
+
+export function isIPhoneX() {
+  if (deviceHeight === 812 && deviceWidth === 375) {
+    return true;
+  }
+  return false;
+}
+
+export function formatDate(date) {
+  const formattedDate = Moment(date).format('DD/MM/YYYY');
+  return formattedDate;
+}
+
+export function formatTime(time) {
+  const formattedTime = Moment(time).format('hh:mm:ss a');
+  return formattedTime;
 }

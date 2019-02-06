@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-// import styles from './styles';
-
-import { deviceWidth, deviceHeight } from '../../common/constants';
+import styles from './styles';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class RecentCard extends Component {
@@ -11,43 +9,15 @@ export default class RecentCard extends Component {
     const { header, title, subtitle, onPress, beneficiary } = this.props;
     return (
       <TouchableOpacity
-        style={{
-          width: deviceWidth * 0.9,
-          // alignItems: 'center',
-          backgroundColor: '#f4f4f4',
-          alignSelf: 'center',
-          height: deviceHeight * 0.1,
-          borderRadius: 5,
-          marginTop: 10,
-        }}
+        style={styles.recentCardContainerstyle}
         onPress={() => onPress(beneficiary)}
       >
-        <View
-          style={{
-            backgroundColor: '#00b1fb',
-            width: deviceWidth * 0.2,
-            height: deviceHeight * 0.1,
-            borderBottomLeftRadius: 5,
-            borderTopLeftRadius: 5,
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>{header}</Text>
+        <View style={styles.recentCardHeaderStyle}>
+          <Text style={styles.recentCardHeaderTextStyle}>{header}</Text>
         </View>
-        <View
-          style={{
-            position: 'absolute',
-            // right: 10,
-            padding: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: deviceWidth * 0.25,
-          }}
-        >
-          <Text style={{ color: 'black', textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
-            {title}
-          </Text>
-          <Text style={{ color: 'black', textAlign: 'center', fontSize: 14 }}>{subtitle}</Text>
+        <View style={styles.recentCardDetailViewStyle}>
+          <Text style={styles.recentCardTextOnestyle}>{title}</Text>
+          <Text style={styles.recentCardTextTwoStyle}>{subtitle}</Text>
         </View>
       </TouchableOpacity>
     );

@@ -32,3 +32,45 @@ export const loginUser = data =>
       },
     },
   });
+
+/**
+ * @method clearAuthDetail : Action for clear state of auth reducer.
+ */
+export const clearAuthDetail = () =>
+  action({
+    type: actions.CLEAR_AUTH,
+    payload: {
+      request: {},
+    },
+  });
+
+/**
+ * @method verifyEmailDetail : Action for verify user email.
+ */
+export const verifyEmailDetail = data =>
+  action({
+    type: actions.VERIFY_EMAIL_AUTH,
+    payload: {
+      request: {
+        url: actions.verifyEmailUrl,
+        method: 'POST',
+        data,
+      },
+    },
+  });
+
+/**
+ * @method updateUserProfileDetail : Action for updation of user's profile.
+ */
+export const updateUserProfileDetail = data =>
+  action({
+    type: actions.UPDATE_USER_PROFILE,
+    payload: {
+      request: {
+        url: actions.updateUserProfileUrl,
+        method: 'PUT',
+        data,
+        isAuthorised: true,
+      },
+    },
+  });

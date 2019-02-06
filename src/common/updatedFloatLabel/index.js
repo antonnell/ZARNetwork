@@ -102,10 +102,10 @@ class TextFieldHolder extends Component {
 class FloatLabelTextField extends Component {
   constructor(props) {
     super(props);
-
+    const { value } = this.props;
     this.state = {
       focused: false,
-      text: '',
+      text: value,
       showPassword: false,
       passwordIcon: 'lock-outline', // "visibility-off",
       error: '',
@@ -126,6 +126,11 @@ class FloatLabelTextField extends Component {
     // }
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      text: newProps.value,
+    });
+  }
   onChangeTextHandler(value, type) {
     const { updateForm } = this.props;
     if (type !== '' && updateForm) {

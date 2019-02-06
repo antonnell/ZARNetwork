@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Web3 from 'web3';
@@ -25,6 +25,7 @@ import styles from './styles';
 import { setNewBeneficiary } from '../../../controllers/api/beneficiary';
 import Loader from '../../../common/Loader';
 import { isValidName } from '../../../utility/index';
+import StatusBar from '../../../common/StatusBar';
 
 class BeneficiaryDetails extends Component {
   constructor(props) {
@@ -35,21 +36,15 @@ class BeneficiaryDetails extends Component {
       isBackArrowPresent = navigation.state.params.isBackArrow;
     }
 
-    let selectedWallet = '';
-    let accId = '';
-    const { userWalletDetail } = this.props;
-    if (userWalletDetail && userWalletDetail.length > 0) {
-      selectedWallet = userWalletDetail[0].description;
-      accId = userWalletDetail[0].uuid;
-    }
+    const initialState = this.setInitialState();
 
     this.state = {
-      name: '',
-      accountNumber: '',
-      reference: '',
-      selectedWallet,
+      name: initialState.name,
+      accountNumber: initialState.accountNumber,
+      reference: initialState.reference,
+      selectedWallet: initialState.selectedWallet,
       openWalletList: false,
-      accId,
+      accId: initialState.accId,
       isBackArrowPresent,
       isLoading: false,
     };
@@ -59,6 +54,7 @@ class BeneficiaryDetails extends Component {
     this.toggleWalletList = this.toggleWalletList.bind(this);
     this.handleAddBeneficiary = this.handleAddBeneficiary.bind(this);
     this.openScanner = this.openScanner.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   /**
@@ -68,6 +64,20 @@ class BeneficiaryDetails extends Component {
   onScanSuccess(address) {
     this.setState({
       accountNumber: address,
+    });
+  }
+
+  /**
+   * @method resetState : To handle reset state of component on goBack from pay beneficiary screen.
+   */
+  resetState() {
+    const initialState = this.setInitialState();
+    this.setState({
+      name: initialState.name,
+      accountNumber: initialState.accountNumber,
+      reference: initialState.reference,
+      selectedWallet: initialState.selectedWallet,
+      accId: initialState.accId,
     });
   }
 
@@ -88,21 +98,6 @@ class BeneficiaryDetails extends Component {
     }
     return valid;
   }
-
-  // checkEmptyFields(type) {
-  //   const { name, accountNumber } = this.state;
-  //   if (type === 'name') {
-  //     Alert.alert('Error', 'Enter name!');
-  //   } else if (type === 'account') {
-  //     if (name !== '') {
-  //       Alert.alert('Error', 'Enter account number!');
-  //     }
-  //   } else if (type === 'reference') {
-  //     if (accountNumber !== '') {
-  //       Alert.alert('Error', 'Enter reference!');
-  //     }
-  //   }
-  // }
 
   handleGoBack() {
     const { navigation } = this.props;
@@ -159,12 +154,11 @@ class BeneficiaryDetails extends Component {
             if (res && res.payload && res.payload.data && res.payload.data.status === 200) {
               const len = beneficiaries.length;
               if (beneficiaries && len > 0) {
-                const beneficiaryReference = beneficiaries[len - 1].their_reference;
-                const selectedBeneficiary = beneficiaries[len - 1];
+                const selectedBeneficiary = res.payload.data.result;
                 navigation.navigate('PayBeneficiary', {
-                  beneficiaryReference,
                   isBackArrow: true,
                   selectedBeneficiary,
+                  resetState: this.resetState,
                 });
               }
             } else if (
@@ -215,6 +209,20 @@ class BeneficiaryDetails extends Component {
     }
   }
 
+  setInitialState() {
+    let selectedWallet = '';
+    let accId = '';
+    const name = '';
+    const accountNumber = '';
+    const reference = '';
+    const { userWalletDetail } = this.props;
+    if (userWalletDetail && userWalletDetail.length > 0) {
+      selectedWallet = userWalletDetail[0].description;
+      accId = userWalletDetail[0].uuid;
+    }
+    return { selectedWallet, accId, name, accountNumber, reference };
+  }
+
   /**
    * @method renderLoader : To display loader indicator.
    */
@@ -242,17 +250,19 @@ class BeneficiaryDetails extends Component {
     }
     const { userWalletDetail } = this.props;
     const isShowRightText = true;
-    let ParentView = View;
+
+    let rightIcon = 'keyboard-arrow-right';
     if (openWalletList) {
-      ParentView = TouchableOpacity;
+      rightIcon = 'keyboard-arrow-down';
     }
+
     return (
-      <ParentView
+      <TouchableOpacity
         style={styles.Container}
         onPress={() => this.handleCloseDropdown()}
         activeOpacity={1}
       >
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
 
         <TitleHeader
           iconName="keyboard-arrow-left"
@@ -282,6 +292,7 @@ class BeneficiaryDetails extends Component {
               // text="Account Type"
               text={selectedWallet}
               onPress={this.toggleWalletList}
+              rightIcon={rightIcon}
             />
             {openWalletList && (
               <ListCard
@@ -353,9 +364,9 @@ class BeneficiaryDetails extends Component {
               isClickable={isClickable}
             />
           </View>
-          {this.renderLoader()}
         </KeyboardAwareScrollView>
-      </ParentView>
+        {this.renderLoader()}
+      </TouchableOpacity>
     );
   }
 }

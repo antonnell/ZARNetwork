@@ -29,6 +29,7 @@ const persistConfig = {
     'supportedAccTypeReducer',
     'userBeneficiaryReducer',
     'userTransactionReducer',
+    'notificationChannelReducer',
   ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

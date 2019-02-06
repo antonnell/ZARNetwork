@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import TitleHeader from '../../common/TitleHeader';
 import ProfileInfo from '../../common/profileInfo';
+import StatusBar from '../../common/StatusBar';
+import { clearAuth, updateUserProfile } from '../../controllers/api/auth';
 
 import {
   deviceHeight,
@@ -21,6 +23,7 @@ import FloatLabelTextField from '../../common/updatedFloatLabel';
 import DesignButton from '../../common/Button';
 import editIcon from '../../images/Edit.png';
 import styles from './styles';
+import Loader from '../../common/Loader';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -31,8 +34,10 @@ class UserProfile extends Component {
       firstName: userDetail.firstname,
       lastName: userDetail.surname,
       email: userDetail.email,
+      mobileNumber: userDetail.mobile_number,
       isBackArrowPresent: true,
       isEditable: false,
+      isLoading: false,
     };
 
     this.updateForm = this.updateForm.bind(this);
@@ -41,6 +46,7 @@ class UserProfile extends Component {
     this.editData = this.editData.bind(this);
     this.handleGoBack = this.handleGoBack.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleUpdateUserProfile = this.handleUpdateUserProfile.bind(this);
   }
 
   updateForm(value, type) {
@@ -90,6 +96,7 @@ class UserProfile extends Component {
    */
   handleLogout() {
     const { navigation } = this.props;
+
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
@@ -98,21 +105,101 @@ class UserProfile extends Component {
         }),
       ],
     });
-
+    clearAuth();
     navigation.dispatch(resetAction);
+  }
+
+  handleUpdateUserProfile() {
+    const { email, firstName, lastName, mobileNumber } = this.state;
+    this.setState({
+      isLoading: true,
+    });
+    const payload = {
+      email,
+      firstname: firstName,
+      surname: lastName,
+      mobile_number: mobileNumber,
+    };
+    updateUserProfile(payload)
+      .then(response => {
+        this.setState({
+          isLoading: false,
+        });
+        if (response.payload && response.payload.data && response.payload.data.status) {
+          this.setState({
+            isEditable: false,
+          });
+          Alert.alert('Updation', "User's profile updated successfully");
+        }
+
+        if (
+          response.error &&
+          response.error.response &&
+          response.error.response.data &&
+          response.error.response.data.status
+        ) {
+          Alert.alert('Error', response.error.response.data.result);
+        }
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
   }
 
   editData() {
     const { isEditable } = this.state;
+    const rightIcon = !isEditable ? editIcon : 'cancel';
+
+    const { userDetail } = this.props;
+
+    if (rightIcon === 'cancel') {
+      this.setState({
+        email: userDetail.email,
+        firstName: userDetail.firstname,
+        lastName: userDetail.surname,
+      });
+    }
+
     this.setState({
       isEditable: !isEditable,
     });
   }
 
-  renderProfileInfo() {
-    const { email } = this.state;
-    const { userDetail } = this.props;
+  renderButtonView() {
+    const { isEditable, email, firstName, lastName } = this.state;
+    let isClickable = true;
+    if (isEditable && (email === '' || firstName === '' || lastName === '')) {
+      isClickable = false;
+    }
 
+    let buttonProps = {
+      name: 'LOGOUT',
+      callMethod: this.handleLogout,
+      isClickable,
+    };
+    if (isEditable) {
+      buttonProps = {
+        name: 'SAVE',
+        callMethod: this.handleUpdateUserProfile,
+        isClickable,
+      };
+    }
+    return (
+      <View style={{ marginTop: deviceHeight * 0.08 }}>
+        <DesignButton
+          name={buttonProps.name}
+          callMethod={buttonProps.callMethod}
+          isClickable={buttonProps.isClickable}
+        />
+      </View>
+    );
+  }
+
+  renderProfileInfo() {
+    const { userDetail } = this.props;
+    const { email } = userDetail;
     const userIcon = getAccountIcon(userDetail);
     let subtitleText = '';
     const titleText = getFullName(userDetail);
@@ -138,6 +225,17 @@ class UserProfile extends Component {
     );
   }
 
+  /**
+   * @method renderLoader : To display loader indicator.
+   */
+  renderLoader() {
+    const { isLoading } = this.state;
+    if (isLoading) {
+      return <Loader isLoading={isLoading} loaderStyle={0.25} />;
+    }
+    return null;
+  }
+
   render() {
     const { isBackArrowPresent, firstName, lastName, email, isEditable } = this.state;
     const editable = !!isEditable;
@@ -145,7 +243,7 @@ class UserProfile extends Component {
     const rightIconType = !isEditable ? ImageIconType : MaterialIconsType;
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="VIEW PROFILE"
@@ -183,7 +281,6 @@ class UserProfile extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
 
             <FloatLabelTextField
@@ -198,7 +295,6 @@ class UserProfile extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
             <FloatLabelTextField
               type="email"
@@ -212,17 +308,11 @@ class UserProfile extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
-              checkEmptyFields={type => this.checkEmptyFields(type)}
             />
           </View>
-          <View style={{ marginTop: deviceHeight * 0.08 }}>
-            {!isEditable ? (
-              <DesignButton name="LOGOUT" callMethod={this.handleLogout} isClickable />
-            ) : (
-              <DesignButton name="SAVE" callMethod={this.handleLogout} isClickable />
-            )}
-          </View>
+          {this.renderButtonView()}
         </KeyboardAwareScrollView>
+        {this.renderLoader()}
       </View>
     );
   }

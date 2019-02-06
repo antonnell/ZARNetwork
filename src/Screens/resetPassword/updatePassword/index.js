@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, Alert } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -20,6 +20,7 @@ import {
 import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
 import { forgotPasswordApi } from '../../../controllers/api/forgotPassword';
+import StatusBar from '../../../common/StatusBar';
 
 class UpdatePassword extends Component {
   constructor(props) {
@@ -56,21 +57,6 @@ class UpdatePassword extends Component {
    * ******************************************************************************
    */
   handleResetPassword() {
-    // const { oldPassword, password, confirmPassword } = this.state;
-    // // oldPassword &&
-    // // oldPassword !== '' &&
-    // if (password && password !== '' && confirmPassword && confirmPassword !== '') {
-    //   this.setState({
-    //     isLoading: true,
-    //   });
-    //   setTimeout(() => {
-    //     this.setState({
-    //       isLoading: false,
-    //     });
-    //     Alert.alert('Information', 'Password updated.');
-    //   }, 1000);
-    // }
-
     const { navigation } = this.props;
     const { confirmPassword } = this.state;
     const payload = {
@@ -140,24 +126,6 @@ class UpdatePassword extends Component {
   }
 
   /**
-   * @method checkEmptyFields : To validate text input fields.
-   */
-  // checkEmptyFields(type) {
-  //   const { oldPassword, password } = this.state;
-  //   if (type === 'oldpassword') {
-  //     Alert.alert('Error', 'Enter old password!');
-  //   } else if (type === 'password') {
-  //     if (oldPassword !== '') {
-  //       Alert.alert('Error', 'Enter password!');
-  //     }
-  //   } else if (type === 'confirmPassword') {
-  //     if (password !== '') {
-  //       Alert.alert('Error', 'Enter confirm password!');
-  //     }
-  //   }
-  // }
-
-  /**
    * @method renderLoader : To display loader indicator.
    */
   renderLoader() {
@@ -170,7 +138,6 @@ class UpdatePassword extends Component {
 
   render() {
     const {
-      // oldPassword,
       password,
       confirmPassword,
       eightPlusCharacter,
@@ -184,7 +151,7 @@ class UpdatePassword extends Component {
     }
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           // title="RESET PASSWORD"
           isBackArrow
@@ -210,20 +177,7 @@ class UpdatePassword extends Component {
             <Text style={styles.mainTextStyle}>Change Password</Text>
           </View>
 
-          <View style={styles.textFieldStyle}>
-            {/* <FloatLabelTextField
-              type="oldPassword"
-              inputType="text"
-              valueType="password"
-              placeholder="Old Password"
-              autoCorrect={false}
-              value={oldPassword}
-              updateForm={this.updateForm}
-              inputBackgroundColor="#fff"
-              textFieldSize={deviceWidth * 0.73}
-              validateFields={type => this.validateFields(type)}
-            /> */}
-          </View>
+          <View style={styles.textFieldStyle} />
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
               type="password"

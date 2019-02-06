@@ -33,6 +33,7 @@ class ToggleButton extends Component {
     buttonBorderWidth: 0,
     animationTime: 150,
     padding: true,
+    disable: false,
   };
 
   constructor(props, context) {
@@ -127,6 +128,7 @@ class ToggleButton extends Component {
       buttonBorderRadius,
       buttonBorderColor,
       buttonBorderWidth,
+      disable,
     } = this.props;
 
     const backgroundColorValue = backgroundColor.interpolate({
@@ -141,9 +143,14 @@ class ToggleButton extends Component {
 
     const containerHeight = switchHeight > buttonHeight ? switchHeight : buttonHeight;
     const containerWidth = switchWidth > buttonWidth ? switchWidth : buttonWidth;
+    let onPress = this.startGroupAnimations;
+
+    if (disable) {
+      onPress = () => {};
+    }
 
     return (
-      <TouchableWithoutFeedback onPress={this.startGroupAnimations}>
+      <TouchableWithoutFeedback onPress={onPress}>
         <View
           style={[
             styles.container,
@@ -242,6 +249,7 @@ export default class QMToggleButton extends Component {
         activeButtonBackgroundColor="rgb(0,177,255)"
         inactiveButtonBackgroundColor="rgb(123,123,123)"
         onChangeValue={this.props.onChangeValue}
+        disable={this.props.disable}
       />
     );
   }
@@ -271,4 +279,5 @@ ToggleButton.propTypes = {
   buttonBorderWidth: PropTypes.number,
   animationTime: PropTypes.number,
   padding: PropTypes.bool,
+  disable: PropTypes.bool,
 };

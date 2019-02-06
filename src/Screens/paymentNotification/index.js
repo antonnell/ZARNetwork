@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // Library
 import React, { Component } from 'react';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
 import TitleText from '../../common/TitleText';
 import ToggleCard from '../../common/ToggleCard';
-
+import StatusBar from '../../common/StatusBar';
 // constants
 import { deviceHeight } from '../../common/constants';
 
@@ -22,52 +22,111 @@ class PaymentNotification extends Component {
     super(props);
     const { navigation } = this.props;
     let isBackArrowPresent = false;
-    if (navigation && navigation.state && navigation.state.params) {
-      isBackArrowPresent = navigation.state.params.isBackArrow;
-    }
-    this.state = {
-      noBeneficiaryNotification: false,
-      emailBeneficiaryNotification: false,
-      smsBeneficiaryNotification: false,
-      noMyNotification: false,
-      emailMyNotification: false,
-      smsMyNotification: false,
-      isBackArrowPresent,
+    let beneficiaryNotification = {
+      email: false,
+      none: true,
+      sms: false,
     };
+    let myNotification = {
+      email: false,
+      none: true,
+      sms: false,
+    };
+    if (navigation && navigation.state && navigation.state.params) {
+      const navigationProps = navigation.state.params;
+      isBackArrowPresent = navigationProps.isBackArrow;
+      if (navigationProps.beneficiaryNotification) {
+        // eslint-disable-next-line prefer-destructuring
+        beneficiaryNotification = navigationProps.beneficiaryNotification;
+      }
+      if (navigationProps.myNotification) {
+        // eslint-disable-next-line prefer-destructuring
+        myNotification = navigationProps.myNotification;
+      }
+    }
+
+    this.state = {
+      isBackArrowPresent,
+      myNotification,
+      beneficiaryNotification,
+    };
+    this.updateNotification = this.updateNotification.bind(this);
   }
 
-  updateToggleValue(type) {
-    const {
-      noBeneficiaryNotification,
-      emailBeneficiaryNotification,
-      smsBeneficiaryNotification,
-      noMyNotification,
-      emailMyNotification,
-      smsMyNotification,
-    } = this.state;
-    if (type === 'noBeneficiaryNotification') {
-      this.setState({ noBeneficiaryNotification: !noBeneficiaryNotification });
-    } else if (type === 'emailBeneficiaryNotification') {
-      this.setState({ emailBeneficiaryNotification: !emailBeneficiaryNotification });
-    } else if (type === 'smsBeneficiaryNotification') {
-      this.setState({ smsBeneficiaryNotification: !smsBeneficiaryNotification });
-    } else if (type === 'noMyNotification') {
-      this.setState({ noMyNotification: !noMyNotification });
-    } else if (type === 'emailMyNotification') {
-      this.setState({ emailMyNotification: !emailMyNotification });
-    } else if (type === 'smsMyNotification') {
-      this.setState({ smsMyNotification: !smsMyNotification });
+  updateNotification() {
+    const { navigation } = this.props;
+    const { myNotification, beneficiaryNotification } = this.state;
+    if (
+      navigation &&
+      navigation.state &&
+      navigation.state.params &&
+      navigation.state.params.updateNotification
+    ) {
+      const { updateNotification } = navigation.state.params;
+      updateNotification(myNotification, beneficiaryNotification);
+      navigation.goBack();
     }
   }
 
-  toggleContainer(text, status, type) {
+  /**
+   * @method updateToggleValue : To update state of notifications
+   * @param {*} type : Type of notification categoey
+   * @param {*} key : Type of notification channel
+   * @param {*} value : Status of notification channel
+   */
+  updateToggleValue(value, type, key) {
+    const { state } = this;
+
+    const categoeyType = state[type];
+
+    const { none } = categoeyType;
+    let status = {};
+    if (key === 'none' && value === false) {
+      status = {
+        [key]: value,
+        email: true,
+        sms: true,
+      };
+    } else if (key === 'none' && value === true) {
+      status = {
+        [key]: value,
+        email: false,
+        sms: false,
+      };
+    } else if (none === false) {
+      status = {
+        [key]: value,
+      };
+    }
+
+    const updatedCategoeyState = {
+      ...categoeyType,
+      ...status,
+    };
+
+    this.setState({
+      [type]: updatedCategoeyState,
+    });
+  }
+
+  toggleContainer(text, status, categoryType, key) {
+    const { state } = this;
+
+    const categoryTypeObj = state[categoryType];
+
+    let disable = false;
+    if (categoryTypeObj.none === true && (text === 'Email' || text === 'SMS')) {
+      disable = true;
+    }
+
     return (
       <ToggleCard
         textVal={text}
+        disable={disable}
         textStyle={styles.toggleTextStyle}
         toggleState={status}
-        updateToggleClick={() => {
-          this.updateToggleValue(type);
+        updateToggleClick={e => {
+          this.updateToggleValue(e, categoryType, key);
         }}
       />
     );
@@ -75,19 +134,11 @@ class PaymentNotification extends Component {
 
   render() {
     const { navigation } = this.props;
-    const {
-      noBeneficiaryNotification,
-      emailBeneficiaryNotification,
-      smsBeneficiaryNotification,
-      noMyNotification,
-      emailMyNotification,
-      smsMyNotification,
-      isBackArrowPresent,
-    } = this.state;
+    const { isBackArrowPresent, beneficiaryNotification, myNotification } = this.state;
 
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="PAYMENT NOTIFICATION"
@@ -102,15 +153,26 @@ class PaymentNotification extends Component {
             textStyle={styles.textStyle}
           />
           <View style={styles.toggleContainerStyle}>
-            {this.toggleContainer('None', noBeneficiaryNotification, 'noBeneficiaryNotification')}
+            {this.toggleContainer(
+              'None',
+              beneficiaryNotification.none,
+              'beneficiaryNotification',
+              'none'
+            )}
             <View style={styles.separatorStyle} />
             {this.toggleContainer(
               'Email',
-              emailBeneficiaryNotification,
-              'emailBeneficiaryNotification'
+              beneficiaryNotification.email,
+              'beneficiaryNotification',
+              'email'
             )}
             <View style={styles.separatorStyle} />
-            {this.toggleContainer('SMS', smsBeneficiaryNotification, 'smsBeneficiaryNotification')}
+            {this.toggleContainer(
+              'SMS',
+              beneficiaryNotification.sms,
+              'beneficiaryNotification',
+              'sms'
+            )}
           </View>
 
           {/* My Notification Toggle container */}
@@ -120,15 +182,15 @@ class PaymentNotification extends Component {
             textStyle={styles.textStyle}
           />
           <View style={styles.toggleContainerStyle}>
-            {this.toggleContainer('None', noMyNotification, 'noMyNotification')}
+            {this.toggleContainer('None', myNotification.none, 'myNotification', 'none')}
             <View style={styles.separatorStyle} />
-            {this.toggleContainer('Email', emailMyNotification, 'emailMyNotification')}
+            {this.toggleContainer('Email', myNotification.email, 'myNotification', 'email')}
             <View style={styles.separatorStyle} />
-            {this.toggleContainer('SMS', smsMyNotification, 'smsMyNotification')}
+            {this.toggleContainer('SMS', myNotification.sms, 'myNotification', 'sms')}
           </View>
 
           <View style={{ marginTop: deviceHeight * 0.08, alignSelf: 'center' }}>
-            <DesignButton name="DONE" callMethod={this.handleUserLogin} isClickable />
+            <DesignButton name="DONE" callMethod={this.updateNotification} isClickable />
           </View>
           <View style={{ height: deviceHeight * 0.1 }} />
         </ScrollView>
@@ -137,8 +199,10 @@ class PaymentNotification extends Component {
   }
 }
 
+PaymentNotification.defaultProps = {
+  navigation: null,
+};
 PaymentNotification.propTypes = {
-  // eslint-disable-next-line react/require-default-props
   navigation: PropTypes.objectOf(PropTypes.any),
 };
 

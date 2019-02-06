@@ -38,6 +38,7 @@ export default StyleSheet.create({
     marginTop: deviceHeight * 0.05,
   },
   circularAvatarTextStyle: {
+    fontFamily: 'Roboto-Light',
     textAlign: 'center',
     position: 'absolute',
     color: 'white',
@@ -47,10 +48,12 @@ export default StyleSheet.create({
     fontSize: 17,
     alignSelf: 'center',
     color: '#030303',
+    fontFamily: 'Roboto-Regular',
   },
   profileInfoSubTitleStyle: {
     fontSize: 15,
     color: '#030303',
+    fontFamily: 'Roboto-Regular',
   },
   detailCardMainViewStyle: {
     backgroundColor: 'rgb(0, 177, 255)',
@@ -71,9 +74,11 @@ export default StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   detailCardSubTitleTextStyle: {
     color: 'white',
+    fontFamily: 'Roboto-Light',
   },
   detailCardBottomViewStyle: {
     position: 'absolute',
@@ -86,6 +91,7 @@ export default StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
+    fontFamily: 'Roboto-Medium',
   },
   detailCardBottomSubTitleTextStyle: {
     color: 'white',
@@ -102,8 +108,12 @@ export default StyleSheet.create({
     borderRadius: 5,
     // alignSelf: 'center',
   },
-  cardTitleStyle: { fontSize: 14, color: 'rgba(3, 3, 3, 0.9)' },
-  cardsubtitleStyle: { fontSize: 12, color: 'rgba(0, 177, 255, 0.9)' },
+  cardTitleStyle: { fontFamily: 'Roboto-Regular', fontSize: 14, color: 'rgba(3, 3, 3, 0.9)' },
+  cardsubtitleStyle: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 12,
+    color: 'rgba(0, 177, 251, 0.9)',
+  },
   seperaterStyle: {
     backgroundColor: '#000000',
     width: deviceWidth * 0.6,

@@ -1,7 +1,8 @@
 // Library
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // Style
@@ -14,13 +15,20 @@ import FloatLabelTextField from '../../../common/updatedFloatLabel';
 import TitleHeader from '../../../common/TitleHeader';
 import TitleCard from '../../../common/titleCard';
 import ProfileInfo from '../../../common/profileInfo';
-import ListCard from '../../../common/ListCard';
+// import ListCard from '../../../common/ListCard';
 import AccountType from '../../../images/AccountType.png';
-import { getWalletType, getAccountIcon, getFullName } from '../../../utility';
-
+import {
+  getWalletType,
+  getWalletDetail,
+  getAccountIcon,
+  getFullName,
+  formatDate,
+  formatTime,
+} from '../../../utility';
+import DateTimePickerField from '../../../common/DateTimePickerField';
+import StatusBar from '../../../common/StatusBar';
 // constants
 import {
-  WALLET_LIST,
   deviceWidth,
   deviceHeight,
   invalid,
@@ -32,62 +40,96 @@ import {
 class PayBeneficiary extends Component {
   constructor(props) {
     super(props);
-    const { navigation, accountTypeList } = this.props;
+    const { navigation, accountTypeList, userWalletDetail } = this.props;
     let isBackArrowPresent = false;
     let reference = '';
     let selectedWallet = '';
     let accId = '';
     let walletType = '';
     let balance = '';
+    let accountId = '';
+    let resetState = () => {};
 
     if (navigation && navigation.state && navigation.state.params) {
       const navigationState = navigation.state.params;
       isBackArrowPresent = navigationState.isBackArrow;
-      if (navigationState.beneficiaryReference) {
-        reference = navigationState.beneficiaryReference;
-      }
-      if (navigationState.selectedAccount) {
-        selectedWallet = navigationState.selectedAccount.description;
-        accId = navigationState.selectedAccount.uuid;
-        walletType = getWalletType(accountTypeList, navigationState.selectedAccount);
+      if (navigationState.resetState) {
         // eslint-disable-next-line prefer-destructuring
-        balance = navigationState.selectedAccount.balance;
+        resetState = navigationState.resetState;
       }
       if (navigationState.selectedBeneficiary) {
-        reference = navigationState.selectedBeneficiary.their_reference;
+        const data = navigationState.selectedBeneficiary;
+        reference = data.their_reference;
+        accountId = data.account_uuid;
+
+        if (userWalletDetail && userWalletDetail.length > 0) {
+          const detail = getWalletDetail(userWalletDetail, accountId);
+          selectedWallet = detail.name;
+          accId = accountId;
+          walletType = getWalletType(accountTypeList, detail.type);
+          // eslint-disable-next-line prefer-destructuring
+          balance = detail.balance;
+        }
       }
     }
-    const { userWalletDetail } = this.props;
-    if (selectedWallet === '' && accId === '' && userWalletDetail && userWalletDetail.length > 0) {
-      selectedWallet = userWalletDetail[0].description;
-      accId = userWalletDetail[0].uuid;
-      walletType = getWalletType(accountTypeList, userWalletDetail[0]);
-      // eslint-disable-next-line prefer-destructuring
-      balance = userWalletDetail[0].balance;
-    }
-
+    const initialState = this.setInitialState();
     this.state = {
-      number: '',
+      number: initialState.number,
       reference,
-      normalPaymentToggle: false,
+      normalPaymentToggle: true,
       futurePaymentToggle: false,
       isBackArrowPresent,
-      openWalletList: false,
       selectedWallet,
       accId,
       walletType,
       balance,
+      isTimePickerVisible: false,
+      isDatePickerVisible: false,
+      date: 'Select date',
+      time: 'Select time',
+      beneficiaryNotification: {
+        email: false,
+        none: true,
+        sms: false,
+      },
+      myNotification: {
+        email: false,
+        none: true,
+        sms: false,
+      },
+      myNotificationText: 'none',
+      beneficiaryNotificationText: 'none',
+      myNotifyArray: [],
+      benefNotifyArray: [],
+      resetState,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handlePayNotification = this.handlePayNotification.bind(this);
-    this.handleWalletList = this.handleWalletList.bind(this);
-    this.toggleWalletList = this.toggleWalletList.bind(this);
     this.validateFields = this.validateFields.bind(this);
+    this.showDatePicker = this.showDatePicker.bind(this);
+    this.handleDatePicked = this.handleDatePicked.bind(this);
+    this.hideDatePicker = this.hideDatePicker.bind(this);
+    this.showTimePicker = this.showTimePicker.bind(this);
+    this.handleTimePicked = this.handleTimePicked.bind(this);
+    this.hideTimePicker = this.hideTimePicker.bind(this);
+    this.updateNotification = this.updateNotification.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
   onPayBtnClick() {
-    const { accId, number, reference, walletType, selectedWallet } = this.state;
+    const {
+      accId,
+      number,
+      reference,
+      walletType,
+      selectedWallet,
+      myNotifyArray,
+      benefNotifyArray,
+      beneficiaryNotificationText,
+      myNotificationText,
+    } = this.state;
     const { navigation } = this.props;
 
     navigation.navigate('ConfirmPayment', {
@@ -97,48 +139,110 @@ class PayBeneficiary extends Component {
       walletType,
       selectedWallet,
       beneficiary_uuid: navigation.state.params.selectedBeneficiary.uuid,
+      beneficiaryName: navigation.state.params.selectedBeneficiary.name,
+      accountNumber: navigation.state.params.selectedBeneficiary.number,
+      own_notifications: myNotifyArray,
+      beneficiary_notifications: benefNotifyArray,
+      notificationTypeText: `Beneficiary : ${beneficiaryNotificationText} , My :  ${myNotificationText}`,
+      resetState: this.resetState,
     });
   }
 
-  updateToggleValue(type) {
-    const { normalPaymentToggle, futurePaymentToggle } = this.state;
-    if (type === 'normalPayment') {
-      this.setState({ normalPaymentToggle: !normalPaymentToggle });
-    } else if (type === 'futurePayment') {
-      this.setState({ futurePaymentToggle: !futurePaymentToggle });
+  /**
+   * @method setNotificationText : To set type of notification enabled for particuler category
+   * @param {*} notificationCategoryType : Notification category object
+   */
+  // eslint-disable-next-line class-methods-use-this
+  setNotificationText(notificationCategoryType) {
+    const { notificationChannelList } = this.props;
+
+    let text = 'none';
+    const channelList = [];
+    if (notificationCategoryType && notificationCategoryType !== null) {
+      const { none, email, sms } = notificationCategoryType;
+      if (none === false) {
+        if (email === true && sms === true) {
+          text = 'all';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'Email' || channel.description === 'SMS') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else if (sms === true) {
+          text = 'SMS';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'SMS') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else if (email === true) {
+          text = 'Email';
+          notificationChannelList.map(channel => {
+            if (channel.description === 'Email') {
+              channelList.push({ notification_channel_uuid: channel.uuid });
+            }
+            return true;
+          });
+        } else {
+          text = 'none';
+        }
+      }
     }
+
+    const notificationData = {
+      text,
+      channelList,
+    };
+
+    return notificationData;
   }
 
-  updateForm(value, type) {
-    this.setState({ [type]: value });
-  }
-
-  handlePayNotification() {
-    const isBackArrow = true;
-    const { navigation } = this.props;
-    if (navigation) {
-      navigation.navigate('PaymentNotification', { isBackArrow });
+  showDatePicker = () => {
+    const { futurePaymentToggle } = this.state;
+    if (futurePaymentToggle) {
+      this.setState({ isDatePickerVisible: true });
     }
-  }
+  };
 
-  handleWalletList(item) {
-    let walletType = '';
-    const { openWalletList } = this.state;
-    const { accountTypeList } = this.props;
+  hideDatePicker = () => this.setState({ isDatePickerVisible: false });
+
+  handleDatePicked = date => {
     this.setState({
-      openWalletList: !openWalletList,
+      date: formatDate(date),
+    });
+    this.hideDatePicker();
+  };
+
+  showTimePicker = () => {
+    const { futurePaymentToggle } = this.state;
+    if (futurePaymentToggle) {
+      this.setState({ isTimePickerVisible: true });
+    }
+  };
+
+  hideTimePicker = () => this.setState({ isTimePickerVisible: false });
+
+  handleTimePicked = time => {
+    this.setState({
+      time: formatTime(time),
     });
 
-    walletType = getWalletType(accountTypeList, item);
+    this.hideTimePicker();
+  };
 
-    if (item && item.description) {
-      this.setState({
-        selectedWallet: item.description,
-        accId: item.uuid,
-        balance: item.balance,
-        walletType,
-      });
-    }
+  // eslint-disable-next-line class-methods-use-this
+  setInitialState() {
+    const number = '';
+    return { number };
+  }
+
+  resetState() {
+    const initialState = this.setInitialState();
+    this.setState({
+      number: initialState.number,
+    });
   }
 
   validateFields(type) {
@@ -163,34 +267,78 @@ class PayBeneficiary extends Component {
     return valid;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  // checkEmptyFields(type) {
-  // const { number , reference} = this.state;
-  // if (type === 'number') {
-  //   Alert.alert('Error', 'Enter amount!');
-  // }
-  //  else if (type === 'reference') {
-  //   Alert.alert('Error', 'Enter reference!');
-  // }
-  // }
+  handlePayNotification() {
+    const isBackArrow = true;
+    const { beneficiaryNotification, myNotification } = this.state;
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.navigate('PaymentNotification', {
+        isBackArrow,
+        updateNotification: this.updateNotification,
+        beneficiaryNotification,
+        myNotification,
+      });
+    }
+  }
 
-  toggleWalletList() {
-    const { openWalletList } = this.state;
+  updateForm(value, type) {
+    this.setState({ [type]: value });
+  }
+
+  updateToggleValue() {
+    const { normalPaymentToggle, futurePaymentToggle } = this.state;
     this.setState({
-      openWalletList: !openWalletList,
+      normalPaymentToggle: !normalPaymentToggle,
+      futurePaymentToggle: !futurePaymentToggle,
     });
   }
 
   /**
-   * @method handleCloseDropdown : To close wallet list dropdown on clicking outside dropdown.
+   * @method updateNotification : To update state of notifications
    */
-  handleCloseDropdown() {
-    this.setState({ openWalletList: false });
+  updateNotification(myNotification, beneficiaryNotification) {
+    const myNotifyData = this.setNotificationText(myNotification);
+    const myNotificationText = myNotifyData.text;
+    const myNotifyArray = myNotifyData.channelList;
+
+    const beneficiaryNotifyData = this.setNotificationText(beneficiaryNotification);
+    const beneficiaryNotificationText = beneficiaryNotifyData.text;
+    const benefNotifyArray = beneficiaryNotifyData.channelList;
+
+    this.setState({
+      myNotification,
+      beneficiaryNotification,
+      myNotificationText,
+      beneficiaryNotificationText,
+      myNotifyArray,
+      benefNotifyArray,
+    });
+  }
+
+  handleGoBack() {
+    const { resetState } = this.state;
+    resetState();
+    const { navigation } = this.props;
+    if (navigation) {
+      navigation.goBack();
+    }
+  }
+
+  renderDateTimeView() {
+    const { futurePaymentToggle, date, time } = this.state;
+    if (futurePaymentToggle) {
+      return (
+        <View style={styles.dateTimeviewStyle}>
+          <DateTimePickerField callMethod={this.showDatePicker} text={date} eventType="date" />
+          <DateTimePickerField callMethod={this.showTimePicker} text={time} eventType="time" />
+        </View>
+      );
+    }
+    return null;
   }
 
   render() {
-    const { navigation, userWalletDetail, userDetail } = this.props;
-
+    const { userDetail } = this.props;
     const userIcon = getAccountIcon(userDetail);
     const fullName = getFullName(userDetail);
     let subtitleText = '';
@@ -222,34 +370,30 @@ class PayBeneficiary extends Component {
       normalPaymentToggle,
       futurePaymentToggle,
       isBackArrowPresent,
-      openWalletList,
+
       accId,
       selectedWallet,
       balance,
       walletType,
+      isDatePickerVisible,
+      isTimePickerVisible,
+      myNotificationText,
+      beneficiaryNotificationText,
     } = this.state;
     let isClickable = false;
     if (accId !== '' && number !== '' && reference !== '') {
       isClickable = true;
     }
-    let ParentView = View;
-    if (openWalletList) {
-      ParentView = TouchableOpacity;
-    }
+
     return (
-      <ParentView
-        style={styles.Container}
-        onPress={() => this.handleCloseDropdown()}
-        activeOpacity={1}
-      >
-        <StatusBar backgroundColor="black" />
+      <View style={styles.Container}>
+        <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
           title="PAY BENEFICIARY"
           isBackArrow={isBackArrowPresent}
-          onBtnPress={() => navigation.goBack()}
+          onBtnPress={this.handleGoBack}
         />
-        {/* header */}
         <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
@@ -267,26 +411,16 @@ class PayBeneficiary extends Component {
             titleText={fullName}
             circularAvatarText={userIcon}
           />
-          <View style={{ zIndex: openWalletList ? 99 : 0 }}>
+          <View style={{ zIndex: 0 }}>
             <TitleCard
               icon={AccountType}
               titleCardMainViewStyle={styles.titleCardMainViewStyle}
               titleCardImageStyle={styles.titleCardImageStyle}
               titleCardTextStyle={styles.titleCardTextStyle}
               titleMaterialIconStyle={styles.titleMaterialIconStyle}
-              // text="ETH Wallet"
               text={selectedWallet}
-              onPress={this.toggleWalletList}
+              disable
             />
-            {openWalletList && (
-              <ListCard
-                selectedType={accId}
-                data={userWalletDetail}
-                handleList={item => this.handleWalletList(item)}
-                type={WALLET_LIST}
-                listStyle={styles.listStyling}
-              />
-            )}
           </View>
 
           <View
@@ -309,7 +443,13 @@ class PayBeneficiary extends Component {
               validateFields={this.validateFields}
             />
             <View>
-              <Text style={{ color: 'rgb(0, 177, 255)', textAlign: 'right' }}>
+              <Text
+                style={{
+                  color: 'rgb(0, 177, 251)',
+                  textAlign: 'right',
+                  fontFamily: 'Roboto-Regular',
+                }}
+              >
                 {walletType} {balance} available
               </Text>
             </View>
@@ -318,6 +458,7 @@ class PayBeneficiary extends Component {
               inputType="text"
               valueType="text"
               placeholder="Reference"
+              editable={false}
               autoCorrect={false}
               value={reference}
               updateForm={this.updateForm}
@@ -332,17 +473,19 @@ class PayBeneficiary extends Component {
             titleCardImageStyle={styles.notificationImageStyle}
             titleCardTextStyle={styles.notificationTextStyle}
             titleMaterialIconStyle={styles.notificationMaterialIconStyle}
-            text="Payment Notification: none"
+            text={`Payment Notification: ${beneficiaryNotificationText} , ${myNotificationText}`}
             onPress={this.handlePayNotification}
+            type="tab"
+            rightIcon="keyboard-arrow-right"
           />
-          {/* Toggle container */}
+
           <View style={styles.toggleContainerStyle}>
             <ToggleCard
               textVal="Normal Payment"
               textStyle={styles.toggleTextStyle}
               toggleState={normalPaymentToggle}
               updateToggleClick={() => {
-                this.updateToggleValue('normalPayment');
+                this.updateToggleValue();
               }}
             />
             <View style={styles.separatorStyle} />
@@ -351,8 +494,23 @@ class PayBeneficiary extends Component {
               textStyle={styles.toggleTextStyle}
               toggleState={futurePaymentToggle}
               updateToggleClick={() => {
-                this.updateToggleValue('futurePayment');
+                this.updateToggleValue();
               }}
+            />
+            {this.renderDateTimeView()}
+            <DateTimePicker
+              isVisible={isDatePickerVisible}
+              onConfirm={this.handleDatePicked}
+              mode="date"
+              titleIOS="Select date"
+              onCancel={this.hideDatePicker}
+            />
+            <DateTimePicker
+              isVisible={isTimePickerVisible}
+              onConfirm={this.handleTimePicked}
+              mode="time"
+              titleIOS="Select time"
+              onCancel={this.hideTimePicker}
             />
           </View>
           <View style={{ marginTop: deviceHeight * 0.075 }}>
@@ -367,7 +525,7 @@ class PayBeneficiary extends Component {
 
           <View style={{ height: deviceHeight * 0.1 }} />
         </KeyboardAwareScrollView>
-      </ParentView>
+      </View>
     );
   }
 }
@@ -375,20 +533,23 @@ PayBeneficiary.defaultProps = {
   userDetail: null,
   navigation: null,
   userWalletDetail: [],
+  notificationChannelList: [],
   accountTypeList: [],
 };
 
 PayBeneficiary.propTypes = {
   navigation: PropTypes.objectOf(PropTypes.any),
   userWalletDetail: PropTypes.arrayOf(PropTypes.any),
-  accountTypeList: PropTypes.arrayOf(PropTypes.any),
   userDetail: PropTypes.objectOf(PropTypes.any),
+  notificationChannelList: PropTypes.arrayOf(PropTypes.any),
+  accountTypeList: PropTypes.arrayOf(PropTypes.any),
 };
 
 const mapStateToProps = state => ({
   userWalletDetail: state.userWalletReducer.wallets,
   accountTypeList: state.supportedAccTypeReducer.types,
   userDetail: state.userAuthReducer.userDetail,
+  notificationChannelList: state.notificationChannelReducer.notificationChannelList,
 });
 
 export default connect(mapStateToProps)(PayBeneficiary);

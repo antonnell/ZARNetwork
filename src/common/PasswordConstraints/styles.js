@@ -13,6 +13,7 @@ export default StyleSheet.create({
   spaceViewStyle: { width: deviceWidth * 0.03 },
 
   constraintsTextStyle: {
+    fontFamily: 'Roboto-Regular',
     fontSize: deviceWidth < 375 ? 12 : 14,
     color: 'rgb(3,3,3)',
     paddingLeft: 3,

@@ -11,13 +11,14 @@ export default class Card extends Component {
   render() {
     const { text, icon, onPress } = this.props;
     return (
-      <View
+      <TouchableOpacity
         style={{
           flexDirection: 'row',
-          margin: deviceWidth * 0.05,
+          padding: deviceWidth * 0.05,
           alignItems: 'center',
           width: deviceWidth * 0.78,
         }}
+        onPress={onPress}
       >
         <View style={{ flex: 1 }}>
           <Image
@@ -34,10 +35,10 @@ export default class Card extends Component {
           <Text style={styles.cardTextStyle}>{text}</Text>
         </View>
 
-        <TouchableOpacity style={{ flex: 1 }} onPress={onPress}>
-          <MaterialIcons color="#000" size={24} name="keyboard-arrow-right" />
-        </TouchableOpacity>
-      </View>
+        <View style={{ flex: 1 }}>
+          <MaterialIcons color="#fff" size={24} name="keyboard-arrow-right" />
+        </View>
+      </TouchableOpacity>
     );
   }
 }

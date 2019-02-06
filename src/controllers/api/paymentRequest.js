@@ -23,7 +23,9 @@ import {
  *  -> account_uuid {string} : uuid of wallet account.
  *  -> value {number} : amount.
  *  -> beneficiary_uuid {string} : uuid of beneficiary of wallet account.
- * -> my_reference {string}: beneficiary reference
+ *  -> my_reference {string}: beneficiary reference
+ *  -> beneficiary_notifications {Array} : List of notification_channel_uuid for beneficiary notifications
+ *  -> own_notifications {Array} : List of notification_channel_uuid for owner notifications
  * ******************************************************************************
  * @method encrypt : To encrypt the payload sent to create requests for account.
  * @param payload : Data to be encrypted.

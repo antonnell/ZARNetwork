@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    // backgroundColor: 'rgba(100, 100, 100, 0.3)',
+    backgroundColor: 'rgba(100, 100, 100, 0.3)',
     height: deviceHeight,
     width: deviceWidth,
     alignItems: 'center',

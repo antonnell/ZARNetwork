@@ -38,16 +38,19 @@ export default StyleSheet.create({
     marginTop: deviceHeight * 0.05,
   },
   circularAvatarTextStyle: {
+    fontFamily: 'Roboto-Light',
     textAlign: 'center',
     position: 'absolute',
     color: 'white',
     fontSize: 20,
   },
   profileInfoTitleStyle: {
+    fontFamily: 'Roboto-Regular',
     fontSize: 17,
     alignSelf: 'flex-start',
   },
   profileInfoSubTitleStyle: {
+    fontFamily: 'Roboto-Regular',
     fontSize: 15,
   },
   detailCardMainViewStyle: {
@@ -65,13 +68,14 @@ export default StyleSheet.create({
     borderTopRightRadius: 7,
   },
   detailCardTopTitleStyle: {
+    fontFamily: 'Roboto-Regular',
     color: 'white',
     fontSize: 20,
     fontWeight: '600',
   },
   detailCardSubTitleTextStyle: {
     color: 'white',
-    fontSize: 12,
+    fontFamily: 'Roboto-Light',
   },
   detailCardBottomViewStyle: {
     position: 'absolute',
@@ -80,13 +84,13 @@ export default StyleSheet.create({
   },
   detailCardBottomTitleTextStyle: {
     color: 'white',
-    fontWeight: '600',
-    fontSize: 20,
+    fontSize: 28,
+    fontFamily: 'Roboto-Light',
   },
   detailCardBottomSubTitleTextStyle: {
     color: 'white',
     textAlign: 'right',
-    fontSize: 12,
+    fontFamily: 'Roboto-Light',
   },
   walletOptionContainerStyle: {
     flex: 1,
@@ -103,6 +107,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   walletOptionTextStyle: {
+    fontFamily: 'Roboto-Regular',
     fontSize: deviceWidth < 375 ? 12 : 14,
     marginTop: deviceHeight * 0.02,
   },
@@ -124,7 +129,6 @@ export default StyleSheet.create({
     // height: deviceHeight * 0.1,
     width: deviceWidth * 0.8,
     borderRadius: 5,
-
     alignSelf: 'center',
     paddingLeft: 10,
     marginBottom: 20,
@@ -132,19 +136,55 @@ export default StyleSheet.create({
     shadowOpacity: 1,
     shadowOffset: { width: 0, height: 3.7 },
     shadowRadius: 5.3,
-    shadowColor: 'rgba(127, 127, 127, 0.15)',
+    shadowColor: 'rgba(127, 127, 127,0.15)',
     elevation: 4,
   },
   accountCardrightBottomTextStyle: {
     textAlign: 'right',
     right: 10,
     color: 'rgba(0,177,255,1)',
+    fontFamily: 'Roboto-Regular',
   },
   accountCardTopTitleStyle: {
     color: 'black',
     fontSize: 15,
+    fontFamily: 'Roboto-Regular',
   },
   accountCardSubTitleTextStyle: {
     color: 'black',
+    fontFamily: 'Roboto-Light',
   },
+
+  accountCardListItemOneStyle: {
+    backgroundColor: '#f2f2f2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+  },
+  accountCardListItemTwoStyle: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+  },
+  scrollViewStyle: {
+    height: deviceHeight,
+    width: deviceWidth,
+  },
+  quickMenuViewStyle: {
+    marginTop: deviceHeight * 0.04,
+    flexDirection: 'row',
+    width: deviceWidth * 0.78,
+  },
+  accountCardMainContainerStyle: {
+    marginTop: deviceHeight * 0.1,
+  },
+  accountTextViewStyle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+  accountTextSubViewStyle: { width: deviceWidth * 0.85, alignSelf: 'center' },
+  accountTextStyle: { fontSize: 16, fontFamily: 'Roboto-Medium' },
+  emptyViewStyle: { height: deviceHeight * 0.05 },
+  accCardScrollViewStyle: {
+    flex: 1,
+  },
+  accCardScrollEmptyViewStyle: { width: deviceWidth * 0.02 },
 });

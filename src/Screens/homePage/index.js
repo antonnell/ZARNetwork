@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import ProfileInfo from '../../common/profileInfo';
+import ProfileInfo from '../../common/profileInfo';
 import DetailCard from '../../common/detailCard';
 import styles from './styles';
 import Wallet from './wallet';
@@ -11,16 +11,17 @@ import Wallet from './wallet';
 import { getAccountType } from '../../controllers/api/accountType';
 import { getWalletDetail } from '../../controllers/api/userWallet';
 import { getAccountIcon, getFullName } from '../../utility/index';
+import { getNotificationChannel } from '../../controllers/api/notificationChannel';
 
 import addAccountIcon from '../../images/addAccountIcon.png';
 import paySomeoneIcon from '../../images/paySomeoneIcon.png';
-import exchangeIcon from '../../images/ExchangeWhite.png';
 import receiveIcon from '../../images/receiveIcon.png';
 import TitleHeader from '../../common/TitleHeader';
 import Loader from '../../common/Loader';
 import ToggleButton from '../../common/ToggleButton';
 import AccountCard from '../../common/accountCard';
 import { EvilIconsType, deviceHeight, deviceWidth } from '../../common/constants';
+import StatusBar from '../../common/StatusBar';
 
 class HomePage extends Component {
   constructor(props) {
@@ -39,6 +40,15 @@ class HomePage extends Component {
     if (getAccountType) {
       getAccountType();
     }
+    if (getNotificationChannel) {
+      getNotificationChannel();
+    }
+    // if (getNotificationChannel) {
+    //   const payload = {
+    //     uuid: 'f7f68d07-0351-69b9-1d88-8161bcf3a441',
+    //   };
+    //   getNotificationChannel(payload);
+    // }
     if (getWalletDetail) {
       this.setState({
         isLoading: true,
@@ -177,14 +187,12 @@ class HomePage extends Component {
     if (!isLoading) {
       return (
         <ScrollView
-          style={{
-            flex: 1,
-          }}
+          style={styles.accCardScrollViewStyle}
           horizontal={!accountToggle}
           showsHorizontalScrollIndicator={false}
         >
           {this.renderAccountCards(!accountToggle)}
-          <View style={{ width: deviceWidth * 0.02 }} />
+          <View style={styles.accCardScrollEmptyViewStyle} />
         </ScrollView>
       );
     }
@@ -228,6 +236,11 @@ class HomePage extends Component {
 
   render() {
     const { userDetail } = this.props;
+    let emailAddress = '';
+    if (userDetail) {
+      emailAddress = userDetail.email;
+    }
+
     const { accountToggle } = this.state;
     const userIcon = getAccountIcon(userDetail);
     const fullName = getFullName(userDetail);
@@ -242,7 +255,7 @@ class HomePage extends Component {
 
     return (
       <View style={styles.Container}>
-        <StatusBar backgroundColor="black" />
+        <StatusBar />
         {/* header */}
         <TitleHeader
           title=""
@@ -252,66 +265,33 @@ class HomePage extends Component {
         />
 
         <ScrollView
-          style={{
-            height: deviceHeight,
-            width: deviceWidth,
-          }}
+          style={styles.scrollViewStyle}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          {/* <ProfileInfo
+          <ProfileInfo
             circularAvatarTextStyle={styles.circularAvatarTextStyle}
             profileInfoMainViewStyle={styles.profileInfoMainViewStyle}
             profileInfoTitleStyle={styles.profileInfoTitleStyle}
             profileInfoSubTitleStyle={styles.profileInfoSubTitleStyle}
-            subTitleText={userDetail.email}
-            titleText="Jane Smith"
+            subTitleText={emailAddress}
+            titleText={fullName}
             circularAvatarText={userIcon}
-          /> */}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              width: deviceWidth * 1,
-              marginLeft: 30,
-              marginBottom: 35,
-            }}
-          >
-            <View style={styles.profileInfoMainViewStyle}>
-              <Text style={styles.circularAvatarTextStyle}>{userIcon}</Text>
-            </View>
-            <View style={{ marginTop: deviceHeight * 0.05, paddingLeft: 15 }}>
-              <Text style={styles.profileInfoTitleStyle}>{fullName}</Text>
-              <Text style={styles.profileInfoSubTitleStyle}>{userDetail.email}</Text>
-            </View>
-          </View>
-          <ScrollView
-            style={{
-              marginTop: deviceHeight * 0.04,
-              flex: 1,
-              width: deviceWidth,
-            }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            <Wallet text="Pay" icon={receiveIcon} handleWallet={this.renderPaySomeone} />
-            <Wallet text="Transfer" icon={exchangeIcon} handleWallet={this.renderReceive} />
-            <Wallet text="Request" icon={paySomeoneIcon} handleWallet={this.renderReceive} />
+          />
+
+          <View style={styles.quickMenuViewStyle}>
+            <Wallet text="Pay" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
+            <Wallet text="Request" icon={receiveIcon} handleWallet={this.renderReceive} />
             <Wallet
               text="Add Account"
               handleWallet={this.renderCreateAccount}
               icon={addAccountIcon}
             />
-          </ScrollView>
-          <View
-            style={{
-              marginTop: deviceHeight * 0.05,
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <View style={{ width: deviceWidth * 0.8, alignSelf: 'center' }}>
-                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 15 }}>Accounts</Text>
+          </View>
+          <View style={styles.accountCardMainContainerStyle}>
+            <View style={styles.accountTextViewStyle}>
+              <View style={styles.accountTextSubViewStyle}>
+                <Text style={styles.accountTextStyle}>Accounts</Text>
               </View>
               <ToggleButton
                 defaultValue={accountToggle}
@@ -322,6 +302,7 @@ class HomePage extends Component {
             </View>
             <View style={setScrollViewStyle}>{this.renderCards()}</View>
           </View>
+          <View style={styles.emptyViewStyle} />
         </ScrollView>
       </View>
     );

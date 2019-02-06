@@ -24,6 +24,7 @@ export default {
     left: 0,
   },
   fieldLabel: {
+    fontFamily: 'Roboto-Regular',
     height: 15,
     fontSize: 12,
     color: 'rgb(58, 58, 58)',
@@ -49,6 +50,7 @@ export default {
   },
   valueText: {
     height: isIOS ? 35 : 40,
+    fontFamily: 'Roboto-Regular',
     fontSize: deviceWidth < 375 ? 12 : 14,
     color: '#111111',
     backgroundColor: '#fff',

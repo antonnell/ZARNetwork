@@ -5,6 +5,9 @@
 export const GET_FANTOM_BALANCE = 'GET_FANTOM_BALANCE';
 export const REGISTER = 'REGISTER';
 export const LOGIN = 'LOGIN';
+export const CLEAR_AUTH = 'CLEAR_AUTH';
+export const VERIFY_EMAIL_AUTH = 'VERIFY_EMAIL_AUTH';
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
 // For type api.
 export const SUPPORTED_ACCOUNT_TYPE = 'SUPPORTED_ACCOUNT_TYPE';
@@ -48,6 +51,10 @@ export const SENDOTP = 'SENDOTP';
 export const VALIDATEOTP = 'VALIDATEOTP';
 export const FORGOTPASSWORD = 'FORGOTPASSWORD';
 
+// For Notification channel api
+export const NOTIFICATION_CHANNEL = 'NOTIFICATION_CHANNEL';
+export const NOTIFICATION_CHANNEL_BY_ID = 'NOTIFICATION_CHANNEL_BY_ID';
+
 /**
  * Types for encryption :-
  */
@@ -84,3 +91,9 @@ export const merchantPayRequestsUrl = '/v0/requests';
 export const sendOtpUrl = '/v1/sendOtp';
 export const validateOtpUrl = '/v1/validateOtp';
 export const forgotPasswordUrl = '/v1/updatePassword';
+
+export const verifyEmailUrl = '/v1/validateEmail';
+
+export const updateUserProfileUrl = '/v1/users';
+
+export const notificationChannelUrl = '/v1/notificationChannels';

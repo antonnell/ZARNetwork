@@ -47,6 +47,7 @@ export default StyleSheet.create({
     color: 'lightgray',
     fontWeight: 'normal',
     fontSize: deviceWidth < 375 ? 14 : 16,
+    fontFamily: 'Roboto-Regular',
   },
   bottomTextViewStyle: {
     position: 'absolute',
