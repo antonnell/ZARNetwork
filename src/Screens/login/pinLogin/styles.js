@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { deviceHeight, deviceWidth } from '../../../common/constants';
+import { deviceHeight } from '../../../common/constants';
 
 export default StyleSheet.create({
   Container: {
@@ -10,21 +10,13 @@ export default StyleSheet.create({
   },
   textStyle: {
     fontFamily: 'Roboto-Regular',
-    color: 'rgb(0, 169, 252)',
-    fontWeight: '600',
+    color: 'lightgray',
     fontSize: 15,
   },
   dialPadBackground: {
     backgroundColor: 'red',
   },
-  loginBtn: {
-    backgroundColor: 'rgb(0, 169, 252)',
-    width: deviceWidth * 0.76,
-    height: deviceHeight * 0.07,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-  },
+  loginBtn: {},
   loginBtnText: {
     color: 'white',
     fontWeight: 'bold',

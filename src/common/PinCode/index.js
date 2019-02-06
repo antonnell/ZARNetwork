@@ -49,7 +49,7 @@ export default class GeneratePinCode extends Component {
     if (isLogin) {
       return (
         <TouchableOpacity onPress={this.handleLogin}>
-          <Text style={{ width: 50 }}>Forgot Pin?</Text>
+          <Text style={{ width: 70, textAlign: 'center' }}>Forgot Passcode?</Text>
         </TouchableOpacity>
       );
     }
@@ -74,7 +74,7 @@ export default class GeneratePinCode extends Component {
           }}
           onPress={() => this.updateValue(btn, pinCodeObj.type)}
         >
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}>{btn}</Text>
+          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22 }}>{btn}</Text>
         </TouchableOpacity>
       ));
     }
@@ -110,10 +110,10 @@ export default class GeneratePinCode extends Component {
             marginLeft: deviceWidth * 0.25,
           }}
         >
-          <OcticonsIcons name="primitive-dot" size={20} color={colorData.firstDot} />
-          <OcticonsIcons name="primitive-dot" size={20} color={colorData.secondDot} />
-          <OcticonsIcons name="primitive-dot" size={20} color={colorData.thirdDot} />
-          <OcticonsIcons name="primitive-dot" size={20} color={colorData.fourthDot} />
+          <OcticonsIcons name="primitive-dot" size={40} color={colorData.firstDot} />
+          <OcticonsIcons name="primitive-dot" size={40} color={colorData.secondDot} />
+          <OcticonsIcons name="primitive-dot" size={40} color={colorData.thirdDot} />
+          <OcticonsIcons name="primitive-dot" size={40} color={colorData.fourthDot} />
         </View>
         <View
           style={{

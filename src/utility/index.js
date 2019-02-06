@@ -10,25 +10,25 @@ export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   };
   if (!isClicked && confirmPinCode === '') {
     if (pinCode.length === 1) {
-      colorData.firstDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
       colorData.secondDot = 'black';
       colorData.thirdDot = 'black';
       colorData.fourthDot = 'black';
     } else if (pinCode.length === 2) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
       colorData.thirdDot = 'black';
       colorData.fourthDot = 'black';
     } else if (pinCode.length === 3) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
-      colorData.thirdDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
+      colorData.thirdDot = 'rgb(0,177,255)';
       colorData.fourthDot = 'black';
     } else if (pinCode.length === 4) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
-      colorData.thirdDot = 'rgb(40,190,253)';
-      colorData.fourthDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
+      colorData.thirdDot = 'rgb(0,177,255)';
+      colorData.fourthDot = 'rgb(0,177,255)';
     } else {
       colorData.firstDot = 'black';
       colorData.secondDot = 'black';
@@ -38,25 +38,25 @@ export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   } else {
     // eslint-disable-next-line no-lonely-if
     if (confirmPinCode.length === 1) {
-      colorData.firstDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
       colorData.secondDot = 'black';
       colorData.thirdDot = 'black';
       colorData.fourthDot = 'black';
     } else if (confirmPinCode.length === 2) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
       colorData.thirdDot = 'black';
       colorData.fourthDot = 'black';
     } else if (confirmPinCode.length === 3) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
-      colorData.thirdDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
+      colorData.thirdDot = 'rgb(0,177,255)';
       colorData.fourthDot = 'black';
     } else if (confirmPinCode.length === 4) {
-      colorData.firstDot = 'rgb(40,190,253)';
-      colorData.secondDot = 'rgb(40,190,253)';
-      colorData.thirdDot = 'rgb(40,190,253)';
-      colorData.fourthDot = 'rgb(40,190,253)';
+      colorData.firstDot = 'rgb(0,177,255)';
+      colorData.secondDot = 'rgb(0,177,255)';
+      colorData.thirdDot = 'rgb(0,177,255)';
+      colorData.fourthDot = 'rgb(0,177,255)';
     } else {
       colorData.firstDot = 'black';
       colorData.secondDot = 'black';

@@ -84,7 +84,7 @@ export default StyleSheet.create({
   },
   detailCardBottomTitleTextStyle: {
     color: 'white',
-    fontSize: 28,
+    fontSize: 24,
     fontFamily: 'Roboto-Light',
   },
   detailCardBottomSubTitleTextStyle: {

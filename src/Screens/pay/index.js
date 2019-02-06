@@ -12,7 +12,7 @@ import { getTransactionDetail } from '../../controllers/api/transactions';
 import RecentCard from './recentCard';
 import { noWalletAccount } from '../../common/constants';
 import StatusBar from '../../common/StatusBar';
-import { getFirstCharOfString } from '../../../utility/index';
+import { getFirstCharOfString } from '../../utility/index';
 
 class Pay extends Component {
   constructor(props) {

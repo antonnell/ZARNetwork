@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Alert, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -183,16 +182,13 @@ class LoginWithPin extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar />
-        <TitleHeader title="SIGN IN" />
+        <TitleHeader title="Sign In" />
 
         <ScrollView
           style={styles.dialerView}
           contentContainerStyle={{ alignItems: 'center' }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ marginTop: deviceHeight * 0.05 }}>
-            <EvilIcons name="lock" size={48} />
-          </View>
           <View style={{ flex: 1 }}>
             <GeneratePinCode
               navigation={navigation}
