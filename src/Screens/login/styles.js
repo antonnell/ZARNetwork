@@ -19,25 +19,32 @@ export default StyleSheet.create({
   loginBtnText: {
     color: 'white',
   },
+  textBtnTextColor: {
+    color: '#212c41',
+    fontFamily: 'Montserrat-Light',
+  },
+  textBtnStyle: {
+    backgroundColor: 'white',
+  },
   fantomPayLogoContainer: {
     marginTop: deviceHeight * 0.1,
   },
-  fantomPayLogoImageStyle: {
-    height: 80,
-  },
-  signInImageStyle: {
-    height: deviceHeight * 0.06,
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
   },
   signInTextStyle: {
     color: 'rgb(0, 0, 0)',
   },
   emailTextFieldStyle: {
-    marginTop: deviceHeight * 0.1,
-    width: deviceWidth * 0.9,
+    marginTop: deviceHeight * 0.05,
+    width: deviceWidth * 0.8,
   },
   passwordTextFieldStyle: {
     marginTop: deviceHeight * 0.01,
-    width: deviceWidth * 0.9,
+    width: deviceWidth * 0.8,
   },
   textStyle: {
     color: 'lightgray',

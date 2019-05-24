@@ -3,38 +3,26 @@ import { StyleSheet, Dimensions } from 'react-native';
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
-  Container: {
+  container: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
   },
   imageStyle: {
-    marginTop: deviceHeight * 0.1,
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
     width: deviceWidth * 0.5,
     height: deviceHeight * 0.2,
   },
   registerBtnStyle: {
     backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: 'rgb(0, 177, 255)',
   },
   btnTextColor: {
-    color: 'rgb(0, 177, 255)',
+    color: '#212c41',
+    fontFamily: 'Montserrat-Light',
   },
   loginBtnTextColor: {},
   wrapper: {},
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
   text: {
     color: '#fff',
     fontSize: 30,

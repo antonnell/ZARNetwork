@@ -1,19 +1,19 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, AsyncStorage, Image } from 'react-native';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import styles from './styles';
 import DesignButton from '../../common/Button';
 import TitleHeader from '../../common/TitleHeader';
-// import SignIn from '../../images/SignIn.png';
+import StartScreenIcon from '../../images/ZARNetwork_Logo.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
 import { deviceWidth, deviceHeight, invalid, valid, invalidEmail } from '../../common/constants';
 import StatusBar from '../../common/StatusBar';
+
 /**
  * Component to call login api.
  */
@@ -23,8 +23,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'anton.nell@fantom.foundation',
+      password: '123123As',
       isLoading: false,
     };
     this.updateForm = this.updateForm.bind(this);
@@ -33,6 +33,15 @@ class Login extends Component {
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
     this.inputEmail = React.createRef();
     this.inputPassword = React.createRef();
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  async componentDidMount() {
+    const pushRequestString = await AsyncStorage.getItem('pushRequest');
+    if (pushRequestString && pushRequestString != '' && pushRequestString != null) {
+      const pushRequest = JSON.parse(pushRequestString);
+      this.setState({ pushRequest });
+    }
   }
 
   updateForm(value, type) {
@@ -71,6 +80,7 @@ class Login extends Component {
       const payload = {
         email,
         password,
+        pin: 'dummy',
       };
       this.setState({
         isLoading: true,
@@ -83,7 +93,11 @@ class Login extends Component {
               isLoading: false,
             });
             if (res && res.payload && res.payload.status === 200) {
-              navigation.navigate('Home');
+              if (this.state.pushRequest != null) {
+                navigation.navigate('Request');
+              } else {
+                navigation.navigate('Home');
+              }
             } else if (
               res &&
               res.error &&
@@ -146,7 +160,7 @@ class Login extends Component {
       <View style={styles.Container}>
         <StatusBar />
         <TitleHeader
-          title="Log in"
+          title="SIGN IN"
           isBackArrow
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
@@ -160,17 +174,7 @@ class Login extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          {/* <View style={{ marginTop: deviceHeight * 0.01 }}>
-          <Text style={styles.signInTextStyle}>Sign in to continue</Text>
-        </View> */}
-          <View
-            style={{
-              width: deviceWidth * 0.9,
-              marginTop: deviceHeight * 0.02,
-              borderBottomColor: 'lightgray',
-              borderBottomWidth: 2,
-            }}
-          />
+          <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
 
           <View style={styles.emailTextFieldStyle}>
             <FloatLabelTextField
@@ -205,28 +209,37 @@ class Login extends Component {
               blurOnSubmit={false}
             />
           </View>
-
-          <View style={{ marginTop: deviceHeight * 0.08 }}>
-            <DesignButton
-              name="Sign In"
-              callMethod={this.handleUserLogin}
-              isClickable={isClickable}
+          <View style={{ marginTop: deviceHeight * 0.02, bottom: 45, width: deviceWidth * 0.7 }}>
+            <View style={{ marginTop: deviceHeight * 0.08, marginBottom: deviceHeight * 0.03 }}>
+              <DesignButton name="GO" callMethod={this.handleUserLogin} isClickable={isClickable} />
+            </View>
+            <View
+              style={{
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+              }}
             />
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+                marginTop: deviceHeight * 0.02,
+              }}
+            >
+              Forgot your password?
+            </Text>
+            <View style={{ marginTop: deviceHeight * 0.04 }}>
+              <DesignButton
+                btnTextColor={styles.textBtnTextColor}
+                name="REQUEST RESET"
+                isClickable
+                callMethod={this.handleForgotPassword}
+                btnMainStyle={styles.textBtnStyle}
+              />
+            </View>
           </View>
-          <TouchableOpacity
-            style={{ marginTop: deviceHeight * 0.03 }}
-            onPress={this.handleForgotPassword}
-          >
-            <Text style={styles.textStyle}>Forgot Password</Text>
-          </TouchableOpacity>
         </KeyboardAwareScrollView>
-        <TouchableOpacity
-          style={styles.bottomTextViewStyle}
-          onPress={() => navigation.navigate('Register')}
-        >
-          <Text style={styles.bottomTextStyle}>Sign Up for an account</Text>
-        </TouchableOpacity>
-
         {this.renderLoader()}
       </View>
     );

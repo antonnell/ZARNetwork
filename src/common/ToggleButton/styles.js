@@ -23,7 +23,7 @@ export default StyleSheet.create({
   activeShadow: {
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#00BCD4',
+    borderColor: '#212C41',
     overflow: 'hidden',
   },
   inactiveShadow: {

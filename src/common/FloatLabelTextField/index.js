@@ -13,13 +13,6 @@ import {
 } from 'react-native';
 import Web3 from 'web3';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Reference from '../../images/Reference.png';
-import Email from '../../images/Email.png';
-import Password from '../../images/Password.png';
-import Mobile from '../../images/Mobile.png';
-import AccountNumber from '../../images/AccountNumber.png';
-import Wallet from '../../images/wallet.png';
-import ProfileImg from '../../images/ProfileImg.png';
 import { isEmailValid } from '../../utility/index';
 // Styling
 import styles from './styles';
@@ -119,7 +112,6 @@ class FloatLabelTextField extends Component {
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
     this.checkType = this.checkType.bind(this);
     this.errorDisplay = this.errorDisplay.bind(this);
-    this.iconDisplay = this.iconDisplay.bind(this);
   }
 
   onEndEditing(value, type) {
@@ -383,8 +375,6 @@ class FloatLabelTextField extends Component {
             </FloatingLabel>
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
-
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -440,8 +430,6 @@ class FloatLabelTextField extends Component {
             </FloatingLabel>
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
-
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -475,105 +463,6 @@ class FloatLabelTextField extends Component {
     );
   }
 
-  iconDisplay() {
-    const { type, imageType } = this.props;
-    if (type && type !== '' && type !== undefined) {
-      if (type === 'email') {
-        return (
-          <View>
-            <Image
-              source={Email}
-              style={{
-                height: deviceHeight * 0.02,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'username') {
-        return (
-          <View>
-            <MaterialCommunityIcons
-              name="person-outline"
-              size={20}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-            />
-          </View>
-        );
-      }
-      if (type === 'name') {
-        return (
-          <View>
-            <Image
-              source={ProfileImg}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'password' || type === 'confirmPassword') {
-        return (
-          <View>
-            <Image
-              source={Password}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'number') {
-        let imgName = Mobile;
-        let imgStyle = {
-          height: deviceHeight * 0.03,
-          width: deviceWidth * 0.1,
-        };
-        if (imageType && imageType === 'amount') {
-          imgName = Wallet;
-        }
-        return (
-          <View>
-            <Image source={imgName} resizeMode="contain" style={imgStyle} />
-          </View>
-        );
-      }
-      if (type === 'account') {
-        return (
-          <View>
-            <Image
-              source={AccountNumber}
-              resizeMode="contain"
-              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
-            />
-          </View>
-        );
-      }
-      if (type === 'reference') {
-        return (
-          <View>
-            <Image
-              resizeMode="contain"
-              source={Reference}
-              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
-            />
-          </View>
-        );
-      }
-    }
-  }
-
   mobileField() {
     const { text } = this.state;
     const {
@@ -604,7 +493,6 @@ class FloatLabelTextField extends Component {
 
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -661,7 +549,6 @@ class FloatLabelTextField extends Component {
 
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -735,7 +622,6 @@ class FloatLabelTextField extends Component {
 
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
                 <TextInput
                   {...this.props}
                   ref="input"
@@ -799,7 +685,6 @@ class FloatLabelTextField extends Component {
 
             <TextFieldHolder withValue={text}>
               <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
                 <TextInput
                   {...this.props}
                   ref="input"

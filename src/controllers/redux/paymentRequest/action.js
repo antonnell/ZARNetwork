@@ -77,6 +77,7 @@ export const updateRequest = data => {
         url: `${actions.payRequestsUrl}/${requestUuid}`,
         method: 'PUT',
         isAuthorised: true,
+        data,
       },
     },
   });

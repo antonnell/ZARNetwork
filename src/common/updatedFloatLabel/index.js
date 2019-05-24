@@ -22,10 +22,10 @@ class FloatingLabel extends Component {
   constructor(props) {
     super(props);
     const { visible } = this.props;
-    let initialPadding = 9;
+    let initialPadding = 0;
     let initialOpacity = 0;
     if (visible) {
-      initialPadding = 5;
+      initialPadding = 0;
       initialOpacity = 1;
     }
 
@@ -60,7 +60,7 @@ class FloatingLabel extends Component {
             height: 80,
             paddingTop: paddingAnim,
             opacity: opacityAnim,
-            paddingLeft: 10,
+            paddingLeft: 5,
           },
         ]}
       >
@@ -114,7 +114,6 @@ class FloatLabelTextField extends Component {
     this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
     this.checkType = this.checkType.bind(this);
     this.errorDisplay = this.errorDisplay.bind(this);
-    this.iconDisplay = this.iconDisplay.bind(this);
     this.input = React.createRef()
   }
 
@@ -266,7 +265,6 @@ class FloatLabelTextField extends Component {
       placeholder,
       autoCorrect,
       inputBackgroundColor,
-      textFieldSize,
       defaultValue,
       value,
       type,
@@ -292,169 +290,49 @@ class FloatLabelTextField extends Component {
                 {this.placeholderValue(placeholder)}
               </Text>
             </FloatingLabel>
-            <TextFieldHolder withValue={text}>
-              <View style={{ flexDirection: 'row' }}>
-                <View style={styles.iconStyle}>{this.iconDisplay()}</View>
-
-                <TextInput
-                  {...this.props}
-                  ref={this.input}
-                  editable={editable}
-                  autoCorrect={autoCorrect}
-                  underlineColorAndroid="transparent"
-                  style={[
-                    styles.valueText,
-                    {
-                      backgroundColor: inputBackgroundColor,
-                      width: textFieldSize,
-                      backgroundColor: 'transparent',
-                    },
-                  ]}
-                  defaultValue={defaultValue}
-                  value={value}
-                  maxLength={maxLength}
-                  onFocus={() => this.setFocus()}
-                  onBlur={() => this.onBlurTextInput(text, type)}
-                  onChangeText={text => this.onChangeTextHandler(text, type)}
-                  placeholderTextColor="grey"
-                  keyboardType={inputFieldSettings.keyboardType}
-                  secureTextEntry={inputFieldSettings.secureTextEntry}
-                  onEndEditing={() => this.onEndEditing(text, type)}
-                />
-                {isShowRightText && (
-                  <TouchableOpacity style={rightTextStyle} onPress={onPressRightBtn}>
-                    <Text style={rightTextValueStyle}>{rightTextValue}</Text>
-                  </TouchableOpacity>
-                )}
-                {/* <TouchableOpacity style={styles.iconStyle} onPress={() => this.setShowPassword()}>
-                  <Image
-                    source={Password}
-                    resizeMode="contain"
-                    style={{
-                      height: deviceHeight * 0.03,
-                    }}
-                  />
-                </TouchableOpacity> */}
-              </View>
-            </TextFieldHolder>
+            <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}>
+              <TextInput
+                {...this.props}
+                ref={this.input}
+                editable={editable}
+                autoCorrect={autoCorrect}
+                underlineColorAndroid="transparent"
+                style={[
+                  styles.valueText,
+                  {
+                    backgroundColor: inputBackgroundColor,
+                    backgroundColor: 'transparent',
+                    flex: 1,
+                  },
+                ]}
+                defaultValue={defaultValue}
+                value={value}
+                maxLength={maxLength}
+                onFocus={() => this.setFocus()}
+                onBlur={() => this.onBlurTextInput(text, type)}
+                onChangeText={text => this.onChangeTextHandler(text, type)}
+                placeholderTextColor="grey"
+                keyboardType={inputFieldSettings.keyboardType}
+                secureTextEntry={inputFieldSettings.secureTextEntry}
+                onEndEditing={() => this.onEndEditing(text, type)}
+              />
+              { rightTextValue && <TouchableOpacity style={{ width: 100 }} onPress={() => onPressRightBtn()}>
+                  <Text style={{ color: '#046DC2', marginBottom: -4, }}>{rightTextValue}</Text>
+                </TouchableOpacity> }
+              { (onPressRightBtn && !rightTextValue) && <TouchableOpacity style={{ width: 30 }} onPress={() => onPressRightBtn()}>
+                  <MaterialCommunityIcons name={'chevron-right'} size={30} style={{ width: 30 }} />
+                </TouchableOpacity>
+              }
+            </View>
           </View>
         </View>
-        {/* <View style={styles.underlineStyling} /> */}
       </View>
     );
-  }
-
-  iconDisplay() {
-    const { type, imageType } = this.props;
-    if (type && type !== '' && type !== undefined) {
-      if (type === 'email') {
-        return (
-          <View>
-            <Image
-              source={Email}
-              style={{
-                height: deviceHeight * 0.02,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'username') {
-        return (
-          <View>
-            <MaterialCommunityIcons
-              name="person-outline"
-              size={20}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-            />
-          </View>
-        );
-      }
-      // if (type === 'name') {
-      //   return (
-      //     <View>
-      //       <Image
-      //         source={ProfileImg}
-      //         style={{
-      //           height: deviceHeight * 0.025,
-      //           width: deviceWidth * 0.1,
-      //         }}
-      //         resizeMode="contain"
-      //       />
-      //     </View>
-      //   );
-      // }
-      if (type === 'firstName' || type === 'lastName' || type === 'name') {
-        return (
-          <View>
-            <Image
-              source={UserImg}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'password' || type === 'confirmPassword' || type === 'oldPassword') {
-        return (
-          <View>
-            <Image
-              source={Password}
-              style={{
-                height: deviceHeight * 0.025,
-                width: deviceWidth * 0.1,
-              }}
-              resizeMode="contain"
-            />
-          </View>
-        );
-      }
-      if (type === 'number') {
-        let imgName = Mobile;
-        let imgStyle = {
-          height: deviceHeight * 0.03,
-          width: deviceWidth * 0.1,
-        };
-        if (imageType && imageType === 'amount') {
-          imgName = Wallet;
-        }
-        return (
-          <View>
-            <Image source={imgName} resizeMode="contain" style={imgStyle} />
-          </View>
-        );
-      }
-      if (type === 'accountNumber') {
-        return (
-          <View>
-            <Image
-              source={AccountNumber}
-              resizeMode="contain"
-              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
-            />
-          </View>
-        );
-      }
-      if (type === 'reference') {
-        return (
-          <View>
-            <Image
-              resizeMode="contain"
-              source={Reference}
-              style={{ height: deviceHeight * 0.03, width: deviceWidth * 0.1 }}
-            />
-          </View>
-        );
-      }
-    }
   }
 
   checkType() {

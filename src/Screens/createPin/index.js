@@ -4,10 +4,10 @@ import {
   Alert,
   View,
   Text,
-
   // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import TouchID from 'react-native-touch-id';
@@ -21,6 +21,8 @@ import { checkPinLength } from '../../utility/index';
 import Loader from '../../common/Loader';
 import { deviceHeight } from '../../common/constants';
 import StatusBar from '../../common/StatusBar';
+
+const deviceWidth = Dimensions.get('window').width;
 
 class CreatePin extends Component {
   constructor(props) {
@@ -206,10 +208,12 @@ class CreatePin extends Component {
     const { navigation } = this.props;
     let pinCodeObj = {};
     let colorData = {};
+    let step = 4;
+    let heading = 'CREATE PIN';
     if (!isClicked && confirmPinCode === '') {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
       pinCodeObj = {
-        title: 'Enter a 4 digit PIN to login with',
+        title: 'Create your 4 digit PIN to log in with',
         btnText: 'Next',
         type: 'pinCode',
         text: pinCode,
@@ -218,27 +222,30 @@ class CreatePin extends Component {
     } else {
       colorData = checkPinLength(isClicked, confirmPinCode, pinCode);
       pinCodeObj = {
-        title: 'Confirm your 4 digit PIN ',
+        title: 'Confirm your 4 digit PIN to log in with',
         btnText: 'Done',
         type: 'confirmPinCode',
         text: confirmPinCode,
         isBtnEnabled: confirmPinCode.length === 4,
       };
+      step = 5;
+      heading = 'CONFIRM PIN';
     }
 
     return (
       <View style={styles.Container}>
         <StatusBar />
-        <TitleHeader title="CREATE PIN" />
-
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title={heading}
+          isBackArrow
+          onBtnPress={() => navigation.goBack()}
+        />
         <ScrollView
           style={styles.dialerView}
           contentContainerStyle={{ alignItems: 'center' }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ marginTop: deviceHeight * 0.05 }}>
-            <EvilIcons name="lock" size={48} />
-          </View>
           <View style={{ flex: 1 }}>
             <GeneratePinCode
               navigation={navigation}
@@ -254,12 +261,26 @@ class CreatePin extends Component {
               callMethod={event => this.nextBtnClicked(event, pinCodeObj)}
             />
           </View>
-          <TouchableOpacity
-            style={{ marginTop: deviceHeight * 0.03 }}
-            onPress={() => navigation.navigate('TermsConditions')}
-          >
-            <Text style={styles.textStyle}>Terms & Conditions</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              borderBottomColor: 'lightgray',
+              borderBottomWidth: 1,
+            }}
+          />
+          <View style={{ marginTop: deviceHeight * 0.04, width: deviceWidth * 0.7 }}>
+            <DesignButton
+              btnTextColor={{
+                color: 'rgb(0, 0, 0)',
+                fontWeight: 'normal',
+              }}
+              name="Terms & Conditions"
+              isClickable
+              callMethod={() => navigation.navigate('TermsConditions')}
+              btnMainStyle={{
+                backgroundColor: 'white',
+              }}
+            />
+          </View>
           <View style={{ height: deviceHeight * 0.08 }} />
         </ScrollView>
 

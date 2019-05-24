@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DesignButton from '../../common/Button';
 import styles from './styles';
 import StatusBar from '../../common/StatusBar';
 import { deviceWidth, deviceHeight } from '../../common/constants';
+import TitleHeader from '../../common/TitleHeader';
+import StartScreenIcon from '../../images/ZARNetwork_Logo.png';
 
 this.flagValue = '';
 this.phoneNumber = '';
@@ -66,44 +68,33 @@ export default class GenerateOTP extends Component {
       return (
         <View style={styles.Container}>
           <StatusBar />
-          <View
-            style={{
-              width: deviceWidth,
-              alignItems: 'center',
-              marginTop: deviceHeight * 0.1,
-              flexDirection: 'row',
-            }}
-          >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <MaterialIcons
-                color="#000"
-                size={24}
-                style={{ marginLeft: 10 }}
-                name="keyboard-arrow-left"
-              />
-            </TouchableOpacity>
-            <Text style={styles.textStyle}>GENERATE OTP</Text>
-          </View>
-          <View style={{ marginTop: deviceHeight * 0.1 }}>
-            <Text style={styles.infoTextStyle}>
-              Enter your mobile number and tap next to enter the code we send you via SMS
+          <TitleHeader
+            iconName="keyboard-arrow-left"
+            title="REQUEST OTP"
+            isBackArrow
+            onBtnPress={() => navigation.goBack()}
+          />
+          <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
+          <View style={{ marginTop: deviceHeight * 0.05 }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                width: deviceWidth * 0.7,
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+              }}
+            >
+              <Text>Enter your</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> mobile number</Text>
+              <Text> below to receive an</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> OTP</Text>
+              <Text> via</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> SMS.</Text>
             </Text>
           </View>
-          {/* <View style={styles.mobileTextFieldStyle}>
-            <PhoneInput
-              ref={ref => {
-                this.phone = ref;
-              }}
-              style={styles.phoneInputStyle}
-              onSelectCountry={country => this.selectedCountry(country)}
-              onChangePhoneNumber={number => {
-                this.onChangePhoneNumber(number);
-              }}
-            />
-          </View> */}
           {this.renderPhoneInputField()}
-          <View style={{ marginTop: deviceHeight * 0.04 }}>
-            <DesignButton name="Next " callMethod={signIn} isClickable={phoneValid} />
+          <View style={{ marginTop: deviceHeight * 0.05, width: deviceWidth * 0.7 }}>
+            <DesignButton name="Next" callMethod={signIn} isClickable={phoneValid} />
           </View>
         </View>
       );

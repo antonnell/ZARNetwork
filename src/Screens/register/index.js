@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import TitleHeader from '../../common/TitleHeader';
 import DesignButton from '../../common/Button';
-import FantomPayLogo from '../../images/FantomPay.png';
+import StartScreenIcon from '../../images/ZARNetwork_Logo.png';
 import FloatLabelTextField from '../../common/updatedFloatLabel';
 import { isEmailValid, isPasswordValid } from '../../utility/index';
 import PasswordConstraints from '../../common/PasswordConstraints';
@@ -207,7 +207,6 @@ export default class Register extends Component {
           isBackArrow
           onBtnPress={this.handleGoBack}
         />
-
         <KeyboardAwareScrollView
           style={{
             height: deviceHeight,
@@ -216,14 +215,7 @@ export default class Register extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          {/* Fantom Pay icon */}
-          <View style={styles.FantomPayLogoContainer}>
-            <Image
-              source={FantomPayLogo}
-              style={styles.FantomPayLogoImageStyle}
-              resizeMode="contain"
-            />
-          </View>
+          <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
 
           {/* First Name field */}
           <View style={styles.textFieldStyle}>
@@ -238,11 +230,15 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              onSubmitEditing={() => this.lastNameInput.focus()}
             />
           </View>
           {/* Last Name field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
+              ref={input => {
+                this.lastNameInput = input;
+              }}
               type="lastName"
               inputType="text"
               valueType="name"
@@ -253,11 +249,15 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              onSubmitEditing={() => this.emailInput.focus()}
             />
           </View>
           {/* EMAIL field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
+              ref={input => {
+                this.emailInput = input;
+              }}
               type="email"
               inputType="email"
               valueType="email"
@@ -268,11 +268,15 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              onSubmitEditing={() => this.passwordInput.focus()}
             />
           </View>
           {/* Password field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
+              ref={input => {
+                this.passwordInput = input;
+              }}
               type="password"
               inputType="text"
               valueType="password"
@@ -283,11 +287,15 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              onSubmitEditing={() => this.confirmPasswordInput.focus()}
             />
           </View>
           {/* confirm Password field */}
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
+              ref={input => {
+                this.confirmPasswordInput = input;
+              }}
               type="confirmPassword"
               inputType="text"
               valueType="password"
@@ -299,32 +307,46 @@ export default class Register extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+              onSubmitEditing={() => this.nextBtnPressed()}
             />
           </View>
-          {/* Password Match */}
-          <PasswordConstraints
-            eightPlusCharacter={eightPlusCharacter}
-            moreThanOneCapital={moreThanOneCapital}
-            moreThanOneLower={moreThanOneLower}
-            moreThanOneNumber={moreThanOneNumber}
-          />
           {/* Next button */}
-          <View style={{ marginTop: deviceHeight * 0.08 }}>
-            <DesignButton
-              name="Next"
-              callMethod={() => this.nextBtnPressed()}
-              isClickable={isNextBtnClickable}
+          <View style={{ marginTop: deviceHeight * 0.04, width: deviceWidth * 0.7 }}>
+            <View>
+              <DesignButton
+                name="Next"
+                callMethod={() => this.nextBtnPressed()}
+                isClickable={isNextBtnClickable}
+              />
+            </View>
+            <View
+              style={{
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+                marginTop: deviceHeight * 0.02,
+              }}
             />
           </View>
-          {/* Login text */}
-          <View style={styles.loginButtonContainer}>
-            <Text style={[styles.textStyle, { color: 'rgb(3,3,3)' }]}>Already registered?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.textStyle}> Sign In</Text>
-            </TouchableOpacity>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                width: deviceWidth * 0.8,
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+                marginTop: deviceHeight * 0.02,
+                marginBottom: deviceHeight * 0.02,
+              }}
+            >
+              <Text>Ensure your new password is at least:</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> 8 characters</Text>
+              <Text> long, combining</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> numbers</Text>
+              <Text> with</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> lower and upper case</Text>
+              <Text> letters.</Text>
+            </Text>
           </View>
-
-          <View style={{ height: deviceHeight * 0.05 }} />
         </KeyboardAwareScrollView>
         {this.renderLoader()}
       </View>

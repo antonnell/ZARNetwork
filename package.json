@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "precommit": "lint-staged"
+    "test": "jest"
   },
   "dependencies": {
     "@haskkor/react-native-pincode": "^1.11.0",
@@ -26,10 +25,11 @@
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-bip39": "^2.3.0",
-    "react-native-camera": "^1.6.4",
+    "react-native-camera": "^1.13.1",
     "react-native-crypto": "^2.1.2",
     "react-native-firebase": "^5.1.1",
     "react-native-gesture-handler": "^1.0.10",
+    "react-native-image-picker": "^0.28.1",
     "react-native-keyboard-aware-scroll-view": "^0.7.0",
     "react-native-level-fs": "^3.0.1",
     "react-native-modal-datetime-picker": "^6.0.0",
@@ -88,7 +88,7 @@
   "jest": {
     "preset": "react-native"
   },
-  "lint-staged": {
+    "lint-staged": {
     "*.{js,jsx}": [
       "eslint --fix",
       "git add"
@@ -145,5 +145,10 @@
     "tty": "tty-browserify",
     "vm": "vm-browserify",
     "tls": false
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

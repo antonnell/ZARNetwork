@@ -17,10 +17,10 @@ class ToggleButton extends Component {
     fontSize: 16,
     activeTextColor: 'rgba(255, 255, 255, 1)',
     inactiveTextColor: 'rgba(255, 255, 255, 1)',
-    activeBackgroundColor: 'rgba(50, 163, 50, 1)',
-    inactiveBackgroundColor: 'rgba(137, 137, 137, 1)',
-    activeButtonBackgroundColor: 'rgba(255, 255, 255, 1)',
-    inactiveButtonBackgroundColor: 'rgba(255, 255, 255, 1)',
+    activeBackgroundColor: "rgba(33,44,65,0.6)",
+    inactiveBackgroundColor: "rgba(123,123,123,0.7)",
+    activeButtonBackgroundColor: "rgb(33,44,65)",
+    inactiveButtonBackgroundColor: "rgb(123,123,123)",
     switchWidth: 70,
     switchHeight: 30,
     switchBorderRadius: 15,
@@ -35,6 +35,9 @@ class ToggleButton extends Component {
     padding: true,
     disable: false,
   };
+
+
+
 
   constructor(props, context) {
     super(props, context);
@@ -243,10 +246,10 @@ export default class QMToggleButton extends Component {
         buttonBorderColor="transparent"
         buttonBorderWidth={0}
         animationTime={150}
-        switchBorderColor="transparent  "
+        switchBorderColor="transparent"
         inactiveBackgroundColor="rgba(123,123,123,0.7)"
-        activeBackgroundColor="rgba(0,177,255,0.6)"
-        activeButtonBackgroundColor="rgb(0,177,255)"
+        activeBackgroundColor="rgba(33,44,65,0.6)"
+        activeButtonBackgroundColor="rgb(33,44,65)"
         inactiveButtonBackgroundColor="rgb(123,123,123)"
         onChangeValue={this.props.onChangeValue}
         disable={this.props.disable}

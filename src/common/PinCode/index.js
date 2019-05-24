@@ -48,35 +48,59 @@ export default class GeneratePinCode extends Component {
     const { isLogin } = this.props;
     if (isLogin) {
       return (
-        <TouchableOpacity onPress={this.handleLogin}>
-          <Text style={{ width: 70, textAlign: 'center' }}>Forgot Passcode?</Text>
+        <TouchableOpacity key='forgotPin' onPress={this.handleLogin}>
+          <Text style={{ width: 90, textAlign: 'center' }}>Forgot Passcode?</Text>
         </TouchableOpacity>
       );
+    } else {
+      return (<Text key='forgotPin' style={{ width: 90, textAlign: 'center' }}></Text>)
     }
     return null;
   }
 
   renderButtons = () => {
     const { pinCodeObj } = this.props;
-    const totalNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const totalNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'forgotPin', 0, 'backspace'];
     if (totalNumber) {
-      return totalNumber.map(btn => (
-        <TouchableOpacity
+      return totalNumber.map((btn) => {
+
+        if(btn == 'forgotPin') {
+          return this.renderForgotPin()
+        }
+        if(btn == 'backspace') {
+          return (<TouchableOpacity
+            key={btn}
+            style={{
+              backgroundColor: '#212c41',
+              width: 56,
+              height: 56,
+              borderRadius: 28,
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: 15,
+            }}
+            onPress={(event) => this.removePin(event, pinCodeObj.type)}
+          >
+            <MaterialIcons name="backspace" size={18} color='#FFFFFF' />
+          </TouchableOpacity>)
+        }
+
+        return (<TouchableOpacity
           key={btn}
           style={{
-            backgroundColor: 'rgb(0, 177, 255)',
-            width: 50,
-            height: 50,
-            borderRadius: 25,
+            backgroundColor: '#212c41',
+            width: 66,
+            height: 66,
+            borderRadius: 33,
             alignItems: 'center',
             justifyContent: 'center',
             margin: 15,
           }}
           onPress={() => this.updateValue(btn, pinCodeObj.type)}
         >
-          <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 22 }}>{btn}</Text>
-        </TouchableOpacity>
-      ));
+          <Text style={{ color: '#FFFFFF', fontSize: 22 }}>{btn}</Text>
+        </TouchableOpacity>)
+      });
     }
     return null;
   };
@@ -89,35 +113,41 @@ export default class GeneratePinCode extends Component {
       justifiyContentStyle = 'space-between';
     }
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
         <Text
           style={{
             textAlign: 'center',
+            width: deviceWidth * 0.7,
+            fontSize: 16,
+            fontFamily: 'Montserrat-Regular',
             marginTop: 15,
-            marginBottom: 15,
-            fontFamily: 'Roboto-Light',
+            marginBottom: 15
           }}
         >
           {pinCodeObj.title}
         </Text>
         <View
           style={{
-            width: 100,
+            width: 150,
             flexDirection: 'row',
             height: 30,
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginLeft: deviceWidth * 0.25,
+            textAlign: 'center'
           }}
         >
-          <OcticonsIcons name="primitive-dot" size={40} color={colorData.firstDot} />
-          <OcticonsIcons name="primitive-dot" size={40} color={colorData.secondDot} />
-          <OcticonsIcons name="primitive-dot" size={40} color={colorData.thirdDot} />
-          <OcticonsIcons name="primitive-dot" size={40} color={colorData.fourthDot} />
+          <OcticonsIcons name="primitive-dot" size={30} color={colorData.firstDot} />
+          <OcticonsIcons name="primitive-dot" size={30} color={colorData.secondDot} />
+          <OcticonsIcons name="primitive-dot" size={30} color={colorData.thirdDot} />
+          <OcticonsIcons name="primitive-dot" size={30} color={colorData.fourthDot} />
         </View>
         <View
           style={{
-            width: deviceWidth * 0.8,
+            width: deviceWidth * 0.9,
             maxWidth: 300,
 
             flexDirection: 'row',
@@ -129,28 +159,6 @@ export default class GeneratePinCode extends Component {
           }}
         >
           {this.renderButtons()}
-          <View
-            pointerEvents="box-none"
-            style={{
-              position: 'absolute',
-              flexDirection: 'row',
-              width: deviceWidth * 0.6,
-              paddingLeft: 0,
-              justifyContent: justifiyContentStyle,
-              bottom: 20,
-              paddingRight: 0,
-              alignItems: 'flex-end',
-            }}
-          >
-            {this.renderForgotPin()}
-            <TouchableOpacity
-              style={{ alignItems: 'center' }}
-              onPress={event => this.removePin(event, pinCodeObj.type)}
-            >
-              <MaterialIcons name="backspace" size={18} />
-              <Text style={{ fontSize: 16 }}>Remove</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     );

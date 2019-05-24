@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Text } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -47,6 +47,7 @@ class UserProfile extends Component {
     this.handleGoBack = this.handleGoBack.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleUpdateUserProfile = this.handleUpdateUserProfile.bind(this);
+    this.navigateKYC = this.navigateKYC.bind(this);
   }
 
   updateForm(value, type) {
@@ -87,7 +88,9 @@ class UserProfile extends Component {
   handleGoBack() {
     const { navigation } = this.props;
     if (navigation) {
-      navigation.goBack();
+      // navigation.goBack();
+      const isBackArrow = true;
+      navigation.navigate('Home', { isBackArrow });
     }
   }
 
@@ -167,6 +170,19 @@ class UserProfile extends Component {
     });
   }
 
+  navigateKYC() {
+    const { navigation } = this.props;
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'KYCStatus',
+        }),
+      ],
+    });
+    navigation.dispatch(resetAction);
+  }
+
   renderButtonView() {
     const { isEditable, email, firstName, lastName } = this.state;
     let isClickable = true;
@@ -175,7 +191,7 @@ class UserProfile extends Component {
     }
 
     let buttonProps = {
-      name: 'LOGOUT',
+      name: 'SIGN OUT',
       callMethod: this.handleLogout,
       isClickable,
     };
@@ -187,7 +203,7 @@ class UserProfile extends Component {
       };
     }
     return (
-      <View style={{ marginTop: deviceHeight * 0.08 }}>
+      <View style={{ marginTop: deviceHeight * 0.08, width: deviceWidth * 0.7 }}>
         <DesignButton
           name={buttonProps.name}
           callMethod={buttonProps.callMethod}
@@ -246,7 +262,7 @@ class UserProfile extends Component {
         <StatusBar />
         <TitleHeader
           iconName="keyboard-arrow-left"
-          title="VIEW PROFILE"
+          title="MY PROFILE"
           isBackArrow={isBackArrowPresent}
           onBtnPress={this.handleGoBack}
           rightIconName={rightIcon}
@@ -261,10 +277,47 @@ class UserProfile extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          {this.renderProfileInfo()}
+          <View style={{ marginTop: deviceHeight * 0.04 }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                width: deviceWidth * 0.7,
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+                marginTop: deviceHeight * 0.025,
+                marginBottom: deviceHeight * 0.025,
+              }}
+            >
+              <Text>Your</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> account details.</Text>
+            </Text>
+          </View>
           <View
             style={{
-              marginTop: deviceHeight * 0.07,
+              width: deviceWidth * 0.9,
+              marginTop: deviceHeight * 0.06,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                color: '#046dc2',
+                fontFamily: 'Montserrat-Bold',
+              }}
+            >
+              Personal Details
+            </Text>
+            <View
+              style={{
+                marginTop: 6,
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+              }}
+            />
+          </View>
+          <View
+            style={{
+              marginTop: deviceHeight * 0.025,
               width: deviceWidth * 0.8,
               alignSelf: 'center',
             }}
@@ -308,6 +361,20 @@ class UserProfile extends Component {
               inputBackgroundColor="#fff"
               textFieldSize={deviceWidth * 0.73}
               validateFields={type => this.validateFields(type)}
+            />
+            <FloatLabelTextField
+              type="kycStatus"
+              editable={editable}
+              inputType="kycStatus"
+              valueType="kycStatus"
+              placeholder="KYC Status"
+              autoCorrect={false}
+              value="Level 1"
+              updateForm={this.updateForm}
+              inputBackgroundColor="#fff"
+              textFieldSize={deviceWidth * 0.73}
+              validateFields={type => this.validateFields(type)}
+              onPressRightBtn={this.navigateKYC}
             />
           </View>
           {this.renderButtonView()}

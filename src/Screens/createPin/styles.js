@@ -35,6 +35,7 @@ export default StyleSheet.create({
   },
   loginButtonView: {
     marginTop: deviceHeight * 0.04,
+    width: deviceWidth * 0.7,
     // alignItems: 'center',
   },
   dialerView: {

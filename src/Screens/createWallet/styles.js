@@ -23,12 +23,10 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   bottomViewStyle: {
-    marginTop: deviceHeight * 0.09,
-    // backgroundColor: 'orange',
+    marginTop: deviceHeight * 0.06,
     flex: 1,
-    width: deviceWidth,
-    alignSelf: 'flex-start',
-    padding: deviceWidth * 0.1,
+    alignSelf: 'center',
+    width: deviceWidth * 0.8,
     position: 'relative',
   },
   accountViewStyle: {
@@ -37,8 +35,9 @@ export default StyleSheet.create({
   },
   accountTextStyle: { fontSize: 16 },
   accountListViewStyle: {
-    backgroundColor: 'rgb(0, 169, 252)',
-    width: deviceWidth * 0.76,
+    borderBottomWidth: 1.5,
+    borderBottomColor: 'lightgray',
+    width: '100%',
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
@@ -53,7 +52,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   accSymbolTextStyle: { fontSize: 16, color: '#fff' },
-  dropdownIconStyle: { color: '#fff', fontSize: 35 },
+  dropdownIconStyle: { color: '#888888', fontSize: 35 },
   accDropdownViewStyle: {
     alignItems: 'center',
     height: 40,
@@ -63,7 +62,12 @@ export default StyleSheet.create({
   accNameTextStyle: { fontSize: 16 },
   accNameViewStyle: {
     marginTop: 10,
-    width: deviceWidth * 0.8,
+    width: '100%',
   },
-  buttonViewStyle: { marginTop: deviceHeight * 0.07 },
+  buttonViewStyle: {
+    marginTop: deviceHeight * 0.07,
+    width: deviceWidth * 0.7,
+    flex: 1,
+    alignSelf: 'center',
+  },
 });

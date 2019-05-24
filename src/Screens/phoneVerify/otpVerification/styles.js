@@ -19,15 +19,20 @@ export default StyleSheet.create({
     marginTop: deviceHeight * 0.1,
     color: '#000',
     fontSize: 16,
-    width: deviceWidth * 0.7,
+    width: deviceWidth * 0.9,
   },
   resendBtnMainView: {
     marginTop: 20,
+    backgroundColor: 'white',
   },
   resenOtpTextStyle: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16,
-    fontWeight: '400',
-    color: 'rgba(0, 0, 0, 0.5)',
+    color: '#212c41',
+    fontFamily: 'Montserrat-Light',
+  },
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
   },
 });

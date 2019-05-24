@@ -12,8 +12,11 @@ export default StyleSheet.create({
   fantomPayLogoContainer: {
     marginTop: deviceHeight * 0.1,
   },
-  fantomPayLogoImageStyle: {
-    height: 80,
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
   },
   mainTextViewStyle: {
     marginTop: 30,
@@ -50,5 +53,5 @@ export default StyleSheet.create({
     height: deviceHeight,
     width: deviceWidth,
   },
-  resetButtonViewStyle: { marginTop: deviceHeight * 0.08 },
+  resetButtonViewStyle: { marginTop: deviceHeight * 0.08, width: deviceWidth * 0.7 },
 });

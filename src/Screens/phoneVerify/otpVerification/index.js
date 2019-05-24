@@ -1,11 +1,15 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import OtpInputs from 'react-native-otp-inputs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import CustomisedButton from '../../../common/Button';
+import TitleHeader from '../../../common/TitleHeader';
+import StatusBar from '../../../common/StatusBar';
+import StartScreenIcon from '../../../images/ZARNetwork_Logo.png';
+import DesignButton from '../../../common/Button';
 
 import { deviceWidth, deviceHeight } from '../../../common/constants';
 import TimerCountdown from 'react-native-timer-countdown';
@@ -28,26 +32,24 @@ export default class OtpVerification extends Component {
     }
     return (
       <View style={styles.Container}>
-        <View
-          style={{
-            width: deviceWidth,
-            alignItems: 'center',
-            marginTop: deviceHeight * 0.1,
-            flexDirection: 'row',
-          }}
-        >
-          <TouchableOpacity onPress={goBack}>
-            <MaterialIcons
-              color="#000"
-              size={24}
-              style={{ marginLeft: 10 }}
-              name="keyboard-arrow-left"
-            />
-          </TouchableOpacity>
-          <Text style={styles.titleText}>ONE TIME PIN</Text>
-        </View>
-        <Text style={styles.descriptionText}>
-          Enter the 6 digit code that was sent to you via SMS
+        <StatusBar />
+        <TitleHeader
+          iconName="keyboard-arrow-left"
+          title="ONE TIME PIN"
+          isBackArrow
+          onBtnPress={goBack}
+        />
+        <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
+        <Text style={{
+            textAlign: 'center',
+            width: deviceWidth * 0.7,
+            fontSize: 16,
+            fontFamily: 'Montserrat-Regular'
+          }}>
+          <Text>Enter the</Text>
+          <Text style={{fontFamily: "Montserrat-Bold"}}> 6 digit code</Text>
+          <Text> that was sent to you via </Text>
+          <Text style={{fontFamily: "Montserrat-Bold"}}> SMS</Text>
         </Text>
         <View
           style={{
@@ -59,25 +61,35 @@ export default class OtpVerification extends Component {
             numberOfInputs={6}
             keyboardType="numeric"
             inputContainerStyles={{
-              fontFamily: 'Roboto-Regular',
+              fontFamily: 'Montserrat-Regular',
               backgroundColor: '#fff',
-              margin: 7,
+              margin: 4,
               height: 40,
+              borderRadius: 0
             }}
-            inputStyles={{ color: '#000', width: 30, fontSize: 14 }}
-            focusedBorderColor="rgb(0, 177, 255)"
-            unFocusedBorderColor="rgb(0, 177, 255)"
+            inputStyles={{ color: '#000', width: 40, fontSize: 14, borderRadius: 0 }}
+            focusedBorderColor="#212c41"
+            unFocusedBorderColor="#212c41"
           />
         </View>
-        <View style={{ marginTop: 20, alignItems: 'center' }}>
+        <View style={{ marginTop: 20, alignItems: 'center', width: deviceWidth * 0.7 }}>
           <CustomisedButton name="Next" callMethod={confirmCode} isClickable />
-          <TouchableOpacity
-            style={styles.resendBtnMainView}
-            disabled={isResendDisable}
-            onPress={resendOTP}
-          >
-            <Text style={resendOTPTextColor}>Resend OTP</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              borderBottomColor: 'lightgray',
+              borderBottomWidth: 1,
+              marginTop: deviceHeight * 0.02
+            }}
+          />
+          {!this.props.isResendDisable && <View>
+            <DesignButton
+              btnTextColor={resendOTPTextColor}
+              name="RESEND OTP"
+              isClickable
+              callMethod={resendOTP}
+              btnMainStyle={styles.resendBtnMainView}
+            />
+          </View>}
         </View>
         {this.props.isResendDisable && (
           <View
@@ -88,14 +100,25 @@ export default class OtpVerification extends Component {
               marginTop: 10,
             }}
           >
-            <Text>You can resend otp in next </Text>
-            <TimerCountdown
-              initialSecondsRemaining={1000 * 30}
-              onTick={secondsRemaining => console.log('tick', secondsRemaining)}
-              onTimeElapsed={() => console.log('complete')}
-              allowFontScaling
-              style={{ fontSize: 14 }}
-            />
+            <Text style={{
+                textAlign: 'center',
+                width: deviceWidth * 0.7,
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular'
+              }}
+            >
+              <Text>Did't receive an</Text>
+              <Text style={{fontFamily: "Montserrat-Bold"}}> OTP</Text>
+              <Text>? You can request a new</Text>
+              <Text style={{fontFamily: "Montserrat-Bold"}}> OTP</Text>
+              <Text> in </Text>
+              <TimerCountdown
+                initialSecondsRemaining={1000 * 30}
+                onTick={secondsRemaining => console.log('tick', secondsRemaining)}
+                allowFontScaling
+                style={styles.timerCountdownStyle}
+              />
+            </Text>
           </View>
         )}
       </View>

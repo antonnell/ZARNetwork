@@ -27,8 +27,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  FantomPayLogoImageStyle: {
-    height: 80,
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
   },
   textFieldStyle: {
     marginTop: deviceHeight * 0.01,
@@ -37,7 +40,7 @@ export default StyleSheet.create({
   textStyle: {
     fontFamily: 'Roboto-Regular',
     color: 'rgb(0, 169, 252)',
-    fontWeight: '600',
+    fontWeight: '400',
     fontSize: deviceWidth < 375 ? 14 : 16,
   },
   passwordConstraints: {

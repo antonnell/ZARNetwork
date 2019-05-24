@@ -3,65 +3,65 @@ import { BENEFICIARY_TYPE_LIST, WALLET_LIST, deviceHeight, deviceWidth } from '.
 
 export function checkPinLength(isClicked, confirmPinCode, pinCode) {
   const colorData = {
-    firstDot: 'black',
-    secondDot: 'black',
-    thirdDot: 'black',
-    fourthDot: 'black',
+    firstDot: '#9B9B9B',
+    secondDot: '#9B9B9B',
+    thirdDot: '#9B9B9B',
+    fourthDot: '#9B9B9B',
   };
   if (!isClicked && confirmPinCode === '') {
     if (pinCode.length === 1) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'black';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#9B9B9B';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     } else if (pinCode.length === 2) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     } else if (pinCode.length === 3) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'rgb(0,177,255)';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#212c41';
+      colorData.fourthDot = '#9B9B9B';
     } else if (pinCode.length === 4) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'rgb(0,177,255)';
-      colorData.fourthDot = 'rgb(0,177,255)';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#212c41';
+      colorData.fourthDot = '#212c41';
     } else {
-      colorData.firstDot = 'black';
-      colorData.secondDot = 'black';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#9B9B9B';
+      colorData.secondDot = '#9B9B9B';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     }
   } else {
     // eslint-disable-next-line no-lonely-if
     if (confirmPinCode.length === 1) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'black';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#9B9B9B';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     } else if (confirmPinCode.length === 2) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     } else if (confirmPinCode.length === 3) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'rgb(0,177,255)';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#212c41';
+      colorData.fourthDot = '#9B9B9B';
     } else if (confirmPinCode.length === 4) {
-      colorData.firstDot = 'rgb(0,177,255)';
-      colorData.secondDot = 'rgb(0,177,255)';
-      colorData.thirdDot = 'rgb(0,177,255)';
-      colorData.fourthDot = 'rgb(0,177,255)';
+      colorData.firstDot = '#212c41';
+      colorData.secondDot = '#212c41';
+      colorData.thirdDot = '#212c41';
+      colorData.fourthDot = '#212c41';
     } else {
-      colorData.firstDot = 'black';
-      colorData.secondDot = 'black';
-      colorData.thirdDot = 'black';
-      colorData.fourthDot = 'black';
+      colorData.firstDot = '#9B9B9B';
+      colorData.secondDot = '#9B9B9B';
+      colorData.thirdDot = '#9B9B9B';
+      colorData.fourthDot = '#9B9B9B';
     }
   }
   return colorData;

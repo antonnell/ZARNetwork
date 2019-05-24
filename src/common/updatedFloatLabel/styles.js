@@ -7,9 +7,8 @@ const isIOS = Platform.OS === 'ios';
 
 export default {
   container: {
-    height: 54,
+    height: 55,
     backgroundColor: 'transparent',
-    justifyContent: 'center',
   },
   viewContainer: {
     flex: 1,
@@ -20,18 +19,26 @@ export default {
   },
   floatingLabel: {
     position: 'absolute',
-    top: 0,
-    left: 0,
+    top: 5,
+    left: -5,
   },
   fieldLabel: {
-    fontFamily: 'Roboto-Regular',
-    height: 15,
+    fontFamily: 'Montserrat-Bold',
+    height: 25,
     fontSize: 12,
     color: 'rgb(58, 58, 58)',
+    bottom: 0,
+  },
+  focused: {
+    fontFamily: 'Montserrat-Medium',
+    height: 25,
+    fontSize: 12,
+    color: '#212c41',
+    bottom: 0,
   },
   fieldContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     position: 'relative',
     opacity: 0.8,
     borderBottomWidth: 1.5,
@@ -39,39 +46,32 @@ export default {
   },
   focusedContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     position: 'relative',
     opacity: 0.8,
     borderBottomWidth: 2,
-    borderBottomColor: '#00B1FF',
+    borderBottomColor: '#212c41',
   },
   withBorder: {
-    borderColor: '#C8C7CC',
+    borderColor: '#212c41',
+  },
+  valueContainer: {
+    flex: 1,
+    flexDirection: 'row',
   },
   valueText: {
-    height: isIOS ? 35 : 40,
-    fontFamily: 'Roboto-Regular',
-    fontSize: deviceWidth < 375 ? 12 : 14,
-    color: '#111111',
+    height: 30,
+    lineHeight: 30,
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginBottom: -4,
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 14,
+    color: '#212c41',
     backgroundColor: '#fff',
     // borderWidth: 0.5,
     // borderColor:'#111',
-    // borderColor:'red',
-    paddingLeft: 10,
-    borderRadius: 5,
-  },
-  focused: {
-    bottom: 5,
-    color: '#5F5D5D',
-    fontSize: 12,
-  },
-  iconStyle: {
-    backgroundColor: 'rgba(132, 132, 132)',
-    color: 'rgba(132, 132, 132)',
-    // position: "absolute",
-    // left: 0,
-    // top: 0,
-    alignSelf: 'center',
+    // borderColor:'red'
   },
   passwordError: {
     fontSize: 14,

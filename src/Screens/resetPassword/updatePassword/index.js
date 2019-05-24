@@ -6,7 +6,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import DesignButton from '../../../common/Button';
 import TitleHeader from '../../../common/TitleHeader';
-import FantomPayLogo from '../../../images/FantomPay.png';
 import FloatLabelTextField from '../../../common/updatedFloatLabel';
 import Loader from '../../../common/Loader';
 import {
@@ -21,6 +20,8 @@ import PasswordConstraints from '../../../common/PasswordConstraints';
 import { isPasswordValid } from '../../../utility';
 import { forgotPasswordApi } from '../../../controllers/api/forgotPassword';
 import StatusBar from '../../../common/StatusBar';
+
+import StartScreenIcon from '../../../images/ZARNetwork_Logo.png';
 
 class UpdatePassword extends Component {
   constructor(props) {
@@ -153,7 +154,7 @@ class UpdatePassword extends Component {
       <View style={styles.Container}>
         <StatusBar />
         <TitleHeader
-          // title="RESET PASSWORD"
+          title="CHANGE PASSWORD"
           isBackArrow
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
@@ -166,17 +167,7 @@ class UpdatePassword extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <View style={styles.fantomPayLogoContainer}>
-            <Image
-              source={FantomPayLogo}
-              style={styles.fantomPayLogoImageStyle}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={styles.mainTextViewStyle}>
-            <Text style={styles.mainTextStyle}>Change Password</Text>
-          </View>
-
+          <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
           <View style={styles.textFieldStyle} />
           <View style={styles.textFieldStyle}>
             <FloatLabelTextField
@@ -207,21 +198,38 @@ class UpdatePassword extends Component {
               validateFields={type => this.validateFields(type)}
             />
           </View>
-          <PasswordConstraints
-            eightPlusCharacter={eightPlusCharacter}
-            moreThanOneCapital={moreThanOneCapital}
-            moreThanOneLower={moreThanOneLower}
-            moreThanOneNumber={moreThanOneNumber}
-          />
-
-          <View style={{ marginTop: deviceHeight * 0.08 }}>
-            <DesignButton
-              name="SAVE"
-              callMethod={this.handleResetPassword}
-              isClickable={isClickable}
+          <View style={{ marginTop: deviceHeight * 0.08, bottom: 45, width: deviceWidth * 0.7 }}>
+            <View>
+              <DesignButton
+                name="SAVE"
+                callMethod={this.handleResetPassword}
+                isClickable={isClickable}
+              />
+            </View>
+            <View
+              style={{
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+                marginTop: deviceHeight * 0.02,
+              }}
             />
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+                marginTop: deviceHeight * 0.02,
+              }}
+            >
+              <Text>Ensure your new password is at least:</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> 8 characters</Text>
+              <Text> long, combining</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> numbers</Text>
+              <Text> with</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> lower and upper case</Text>
+              <Text> letters.</Text>
+            </Text>
           </View>
-
           {this.renderLoader()}
         </KeyboardAwareScrollView>
       </View>

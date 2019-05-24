@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfileInfo from '../../common/profileInfo';
 import DetailCard from '../../common/detailCard';
 import styles from './styles';
@@ -32,6 +33,7 @@ class HomePage extends Component {
     this.renderCreateAccount = this.renderCreateAccount.bind(this);
     this.renderPaySomeone = this.renderPaySomeone.bind(this);
     this.renderReceive = this.renderReceive.bind(this);
+    this.renderMyCoins = this.renderMyCoins.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
     this.handleOpenProfileScreen = this.handleOpenProfileScreen.bind(this);
   }
@@ -182,6 +184,13 @@ class HomePage extends Component {
     Alert.alert('Information', 'Request under development.');
   }
 
+  renderMyCoins() {
+    const { navigation } = this.props;
+    if (navigation && navigation.navigate) {
+      navigation.navigate('Coins', { isBackArrow: true });
+    }
+  }
+
   renderCards() {
     const { isLoading, accountToggle } = this.state;
     if (!isLoading) {
@@ -258,7 +267,7 @@ class HomePage extends Component {
         <StatusBar />
         {/* header */}
         <TitleHeader
-          title=""
+          title="DASHBOARD"
           rightIconName="user"
           onRightBtnPress={this.handleOpenProfileScreen}
           rightIconType={EvilIconsType}
@@ -280,19 +289,33 @@ class HomePage extends Component {
           />
 
           <View style={styles.quickMenuViewStyle}>
-            <Wallet text="Pay" icon={paySomeoneIcon} handleWallet={this.renderPaySomeone} />
-            <Wallet text="Request" icon={receiveIcon} handleWallet={this.renderReceive} />
+            <Wallet
+              text="Pay"
+              icon={<MaterialCommunityIcons color="#212c41" name="credit-card" size={30} />}
+              handleWallet={this.renderPaySomeone}
+            />
+            <Wallet
+              text="Request"
+              icon={<MaterialCommunityIcons color="#212c41" name="wallet" size={30} />}
+              handleWallet={this.renderReceive}
+            />
             <Wallet
               text="Add Account"
+              icon={<MaterialCommunityIcons color="#212c41" name="account-plus" size={30} />}
               handleWallet={this.renderCreateAccount}
-              icon={addAccountIcon}
             />
           </View>
-          <View style={styles.accountCardMainContainerStyle}>
+          <View style={{ width: deviceWidth * 0.9 }}>
             <View style={styles.accountTextViewStyle}>
-              <View style={styles.accountTextSubViewStyle}>
-                <Text style={styles.accountTextStyle}>Accounts</Text>
-              </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: '#046dc2',
+                  fontFamily: 'Montserrat-Bold',
+                }}
+              >
+                Accounts
+              </Text>
               <ToggleButton
                 defaultValue={accountToggle}
                 onChangeValue={() => {
@@ -300,9 +323,15 @@ class HomePage extends Component {
                 }}
               />
             </View>
-            <View style={setScrollViewStyle}>{this.renderCards()}</View>
+            <View
+              style={{
+                marginTop: 6,
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+              }}
+            />
           </View>
-          <View style={styles.emptyViewStyle} />
+          <View style={setScrollViewStyle}>{this.renderCards()}</View>
         </ScrollView>
       </View>
     );

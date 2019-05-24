@@ -14,7 +14,7 @@ export default StyleSheet.create({
     fontWeight: 'normal',
     fontSize: 15,
     textAlign: 'justify',
-    width: deviceWidth * 0.8,
+    width: deviceWidth * 0.9,
   },
   mobileTextFieldStyle: {
     marginTop: deviceHeight * 0.1,
@@ -33,5 +33,11 @@ export default StyleSheet.create({
     padding: 6,
     borderColor: '#77797a',
     height: 50,
+  },
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
   },
 });

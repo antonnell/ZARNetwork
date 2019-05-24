@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert } from 'react-native';
+import { View, Text, Image, Alert, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -10,13 +10,16 @@ import FantomPayLogo from '../../images/FantomPay.png';
 import Loader from '../../common/Loader';
 import { isEmailValid } from '../../utility/index';
 import { invalid, valid, invalidEmail } from '../../common/constants';
+import StartScreenIcon from '../../images/ZARNetwork_Logo.png';
 
 import PhoneVerify from '../phoneVerify';
 import VerifyOTP from './VerifyOTP';
 
 import { sendOtpApi, validateOtpApi } from '../../controllers/api/otp';
 import StatusBar from '../../common/StatusBar';
-// const i = 0;
+
+const deviceWidth = Dimensions.get('window').width;
+
 class ResetPassword extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +28,6 @@ class ResetPassword extends Component {
       isLoading: false,
       otpSent: false,
       isResendDisable: true,
-      // clickable: false,
     };
     this.updateForm = this.updateForm.bind(this);
     this.handleResetPassword = this.handleResetPassword.bind(this);
@@ -189,7 +191,7 @@ class ResetPassword extends Component {
       <View style={styles.Container}>
         <StatusBar />
         <TitleHeader
-          // title="RESET PASSWORD"
+          title="REQUEST RESET"
           isBackArrow
           iconName="keyboard-arrow-left"
           onBtnPress={this.handleGoBack}
@@ -199,20 +201,22 @@ class ResetPassword extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ alignItems: 'center' }}
         >
-          <View style={styles.fantomPayLogoContainer}>
-            <Image
-              source={FantomPayLogo}
-              style={styles.fantomPayLogoImageStyle}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={styles.mainTextViewStyle}>
-            <Text style={styles.mainTextStyle}>Forgot your password?</Text>
-            <View style={styles.subTextViewStyle}>
-              <Text style={styles.subTextStyle}>
-                Enter your mobile number below to receive an OTP for reseting password.
-              </Text>
-            </View>
+          <Image source={StartScreenIcon} style={styles.imageStyle} resizeMode="contain" />
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                width: deviceWidth * 0.7,
+                fontSize: 16,
+                fontFamily: 'Montserrat-Regular',
+              }}
+            >
+              <Text>Enter your</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> mobile number</Text>
+              <Text> below to receive an</Text>
+              <Text style={{ fontFamily: 'Montserrat-Bold' }}> OTP</Text>
+              <Text> for reseting password.</Text>
+            </Text>
           </View>
 
           <View style={styles.emailTextFieldStyle}>
@@ -230,7 +234,7 @@ class ResetPassword extends Component {
 
           <View style={styles.resetButtonViewStyle}>
             <DesignButton
-              name="RESET PASSWORD"
+              name="REQUEST"
               callMethod={() => this.sendVerificationOTP()}
               isClickable
             />

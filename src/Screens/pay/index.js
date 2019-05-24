@@ -13,6 +13,8 @@ import RecentCard from './recentCard';
 import { noWalletAccount } from '../../common/constants';
 import StatusBar from '../../common/StatusBar';
 import { getFirstCharOfString } from '../../utility/index';
+import { deviceWidth, deviceHeight } from '../../common/constants';
+import DesignButton from '../../common/Button';
 
 class Pay extends Component {
   constructor(props) {
@@ -29,6 +31,9 @@ class Pay extends Component {
     this.handleNewBeneficiary = this.handleNewBeneficiary.bind(this);
     this.handleShowAllBeneficiary = this.handleShowAllBeneficiary.bind(this);
     this.handleAccountPay = this.handleAccountPay.bind(this);
+
+    this.onPayNewBeneficiaryBtnClick = this.onPayNewBeneficiaryBtnClick.bind(this);
+    this.onViewAllBeneficiariesBtnClick = this.onViewAllBeneficiariesBtnClick.bind(this);
   }
 
   componentDidMount() {
@@ -91,48 +96,15 @@ class Pay extends Component {
     }
   }
 
-  renderNoBeneficiaryMessage() {
-    const { beneficiaries } = this.props;
-    const { isLoading } = this.state;
-    if (isLoading === true) {
-      return null;
+  onPayNewBeneficiaryBtnClick() {
+    const isBackArrow = true;
+    const { navigation } = this.props;
+    if (navigation && navigation.navigate) {
+      navigation.navigate('NewBeneficiary', { isBackArrow });
     }
-
-    const beneficiariesLength = beneficiaries.length;
-    if (beneficiariesLength === 0) {
-      return (
-        <View style={styles.emptyDetilViewStyle}>
-          <Text style={styles.emptyDetilTextStyle}>No beneficiaries found.</Text>
-        </View>
-      );
-    }
-
-    return null;
   }
 
-  renderBeneficiaryList() {
-    const { beneficiaries } = this.props;
-    const beneficiaryList = [];
-    const beneficiariesLength = beneficiaries.length;
-    if (beneficiariesLength > 0) {
-      for (let i = 0; i < beneficiariesLength; i += 1) {
-        const header = getFirstCharOfString(beneficiaries[i].name);
-        const bankDetail = beneficiaries[i].bank_uuid ? beneficiaries[i].bank_uuid : '--';
-        beneficiaryList.push(
-          <RecentCard
-            key={Math.random()}
-            header={header}
-            title={beneficiaries[i].name}
-            subtitle={bankDetail}
-            beneficiary={beneficiaries[i]}
-            onPress={this.handleAccountPay}
-          />
-        );
-      }
-      return beneficiaryList;
-    }
-    return null;
-  }
+  onViewAllBeneficiariesBtnClick() {}
 
   render() {
     // eslint-disable-next-line react/prop-types
@@ -145,31 +117,54 @@ class Pay extends Component {
           iconName="keyboard-arrow-left"
           onBtnPress={() => navigation.goBack()}
           title="Pay"
-          rightIconName="search"
           isBackArrow={isBackArrowPresent}
-          onRightBtnPress={() => {
-            // console.log('search');
-          }}
         />
-        <View style={styles.cardStyle}>
-          <Card
-            navigation={navigation}
-            text="Pay New Beneficiary"
-            icon={PayNewBeneficiary}
-            onPress={this.handleNewBeneficiary}
-          />
+
+        <View style={{ marginTop: deviceHeight * 0.1 }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              width: deviceWidth * 0.75,
+              fontSize: 13,
+              fontFamily: 'Montserrat-Regular',
+            }}
+          >
+            <Text>Who would you like to pay?</Text>
+          </Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              width: deviceWidth * 0.75,
+              fontSize: 13,
+              fontFamily: 'Montserrat-Regular',
+            }}
+          >
+            <Text>Easily create a</Text>
+            <Text style={{ fontFamily: 'Montserrat-Bold' }}> New Beneficiary</Text>
+            <Text> or view</Text>
+            <Text style={{ fontFamily: 'Montserrat-Bold' }}> All Beneficiaries.</Text>
+          </Text>
         </View>
-        <TitleText
-          titleText="All Transactions"
-          mainStyle={styles.mainStyle}
-          textStyle={styles.recentTextStyle}
-        />
-        <View style={styles.detailViewStyle}>
-          {this.renderNoBeneficiaryMessage()}
-          <ScrollView style={styles.scrollViewStyle} showsVerticalScrollIndicator={false}>
-            {this.renderBeneficiaryList()}
-            <View style={styles.bottomViewStyle} />
-          </ScrollView>
+
+        <View style={styles.cardStyle}>
+          <DesignButton
+            btnTextColor={styles.btnTextColor}
+            name="Pay New Beneficiary"
+            isClickable
+            callMethod={() => {
+              this.onPayNewBeneficiaryBtnClick();
+            }}
+            btnMainStyle={styles.btnStyle}
+          />
+          <DesignButton
+            btnTextColor={styles.btnTextColor}
+            name="View All Beneficiaries"
+            isClickable
+            callMethod={() => {
+              this.onViewAllBeneficiariesBtnClick();
+            }}
+            btnMainStyle={styles.btnStyle}
+          />
         </View>
       </View>
     );

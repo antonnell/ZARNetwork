@@ -18,7 +18,7 @@ export default class ProfileInfo extends Component {
       circularAvatarText,
     } = this.props;
     return (
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: 'center', marginTop: deviceHeight * 0.025 }}>
         <View style={profileInfoMainViewStyle}>
           <Text style={circularAvatarTextStyle}>{circularAvatarText}</Text>
         </View>

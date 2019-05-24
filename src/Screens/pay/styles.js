@@ -5,14 +5,14 @@ import { deviceWidth, deviceHeight } from '../../common/constants';
 export default StyleSheet.create({
   Container: {
     flex: 1,
-    // alignItems: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
   searchStyle: {
     padding: 5,
   },
   cardStyle: {
-    width: deviceWidth * 0.9,
+    width: deviceWidth * 0.8,
     marginTop: deviceHeight * 0.04,
     alignSelf: 'center',
     alignItems: 'center',
@@ -91,5 +91,15 @@ export default StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontSize: 14,
+  },
+  btnTextColor: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  btnStyle: {
+    backgroundColor: '#212c41',
+    marginTop: deviceHeight * 0.01,
+    height: deviceHeight * 0.06,
   },
 });

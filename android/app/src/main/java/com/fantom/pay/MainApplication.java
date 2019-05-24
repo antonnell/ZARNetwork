@@ -3,6 +3,7 @@ package com.fantom.pay;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.reactlibrary.RNReactNativeWeb3Package;
 import org.reactnative.camera.RNCameraPackage;
@@ -11,6 +12,8 @@ import com.peel.react.TcpSocketsModule;
 import com.peel.react.rnos.RNOSModule;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
@@ -35,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ImagePickerPackage(),
             new RandomBytesPackage(),
             new RNReactNativeWeb3Package(),
             new RNCameraPackage(),
@@ -43,7 +47,9 @@ public class MainApplication extends Application implements ReactApplication {
             new RNOSModule(),
             new RNFirebasePackage(),
             new VectorIconsPackage(),
-              new RNFirebaseAuthPackage(),
+            new RNFirebaseAuthPackage(),
+            new RNFirebaseMessagingPackage(),
+            new RNFirebaseNotificationsPackage(),
             new KeychainPackage(),
             new FingerprintAuthPackage(),
             new RNGestureHandlerPackage()

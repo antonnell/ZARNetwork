@@ -14,6 +14,7 @@ import rootReducer from '../controllers/redux/index';
 const axiosClient = axios.create({
   baseURL: config.apiUrl,
   responseType: 'json',
+  rejectUnauthorized: false,
 });
 
 // Store instance

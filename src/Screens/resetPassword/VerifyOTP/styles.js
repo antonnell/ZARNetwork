@@ -15,12 +15,19 @@ export default StyleSheet.create({
     marginLeft: deviceWidth * 0.25,
     fontFamily: 'Roboto-Medium',
   },
+  imageStyle: {
+    marginTop: deviceHeight * 0.05,
+    marginBottom: deviceHeight * 0.05,
+    width: deviceWidth * 0.5,
+    height: deviceHeight * 0.2,
+  },
   descriptionText: {
     fontFamily: 'Roboto-Regular',
     marginTop: deviceHeight * 0.1,
     color: '#000',
     fontSize: 16,
     width: deviceWidth * 0.7,
+    textAlign: 'center',
   },
   resendBtnMainView: {
     marginTop: 20,
@@ -37,17 +44,40 @@ export default StyleSheet.create({
   otpInputsViewStyle: {
     fontFamily: 'Roboto-Regular',
     backgroundColor: '#fff',
-    margin: 7,
+    margin: 4,
     height: 40,
+    borderRadius: 0,
   },
-  otpInputsStyle: { color: '#000', width: 30, fontSize: 14 },
-  resendViewStyle: { marginTop: 20, alignItems: 'center' },
+  otpInputsStyle: {
+    color: '#000',
+    width: 40,
+    fontSize: 14,
+    borderRadius: 0,
+  },
+  resendViewStyle: {
+    marginTop: 20,
+    alignItems: 'center',
+    marginBottom: deviceHeight * 0.03,
+    width: deviceWidth * 0.7,
+  },
   resendTimerViewStyle: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: deviceHeight * 0.02,
   },
-  resendTimerTextStyle: { fontFamily: 'Roboto-Regular' },
-  timerCountdownStyle: { fontSize: 14, fontFamily: 'Roboto-Regular' },
+  resendTimerTextStyle: {
+    fontFamily: 'Roboto-Regular',
+  },
+  timerCountdownStyle: {
+    fontSize: 20,
+    fontWeight: '400',
+  },
+  btnStyle: {
+    backgroundColor: 'white',
+  },
+  btnTextColor: {
+    color: 'rgb(0, 0, 0)',
+    fontWeight: 'normal',
+  },
 });

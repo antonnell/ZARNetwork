@@ -26,7 +26,7 @@ export default class Wallet extends Component {
     const { text, icon } = this.props;
     const iconAltText = getFirstCharOfString(text);
     if (icon) {
-      return <Image source={icon} style={Styles.walletIconImgStyle} resizeMode="contain" />;
+      return icon;
     }
     return <Text style={Styles.walletIconTextStyle}>{iconAltText}</Text>;
   }
@@ -50,5 +50,5 @@ Wallet.propTypes = {
   text: PropTypes.string,
   handleWallet: PropTypes.func,
   // eslint-disable-next-line react/require-default-props
-  icon: PropTypes.number,
+  icon: PropTypes.object,
 };

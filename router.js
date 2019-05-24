@@ -8,6 +8,7 @@ import Home from './src/Screens/homePage';
 import RegistrationSuccess from './src/Screens/registrationSuccess';
 import TabBarView from './src/Screens/tabBar';
 import BeneficiaryDetails from './src/Screens/pay/beneficiaryDetails';
+import NewBeneficiary from './src/Screens/pay/newBeneficiary';
 import PayBeneficiary from './src/Screens/pay/payBeneficiary/index';
 import CreateWallet from './src/Screens/createWallet';
 import PaymentNotification from './src/Screens/paymentNotification';
@@ -24,6 +25,9 @@ import ProfileScreen from './src/Screens/profileScreen';
 import ResetPassword from './src/Screens/resetPassword';
 import UpdatePassword from './src/Screens/resetPassword/updatePassword';
 import LoginWithPin from './src/Screens/login/pinLogin';
+import Request from './src/Screens/request';
+import Coins from './src/Screens/coins';
+import KYCStatus from './src/Screens/kyc';
 
 const Routing = createStackNavigator(
   {
@@ -56,6 +60,9 @@ const Routing = createStackNavigator(
     },
     BeneficiaryDetails: {
       screen: BeneficiaryDetails,
+    },
+    NewBeneficiary: {
+      screen: NewBeneficiary,
     },
     PaymentSuccess: {
       screen: PaymentSuccess,
@@ -110,6 +117,15 @@ const Routing = createStackNavigator(
       navigationOptions: {
         gesturesEnabled: false,
       },
+    },
+    Request: {
+      screen: Request,
+    },
+    Coins: {
+      screen: Coins,
+    },
+    KYCStatus: {
+      screen: KYCStatus,
     },
   },
   {

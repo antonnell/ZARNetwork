@@ -9,17 +9,16 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
   loginBtn: {
-    backgroundColor: 'rgb(0, 169, 252)',
-    width: deviceWidth * 0.9,
+    backgroundColor: '#212c41',
+    width: '100%',
     height: deviceHeight * 0.08,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
+    borderRadius: 0,
   },
   loginBtnText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-    fontFamily: 'Roboto-Medium',
+    fontSize: 20,
+    fontFamily: 'Montserrat-Medium',
   },
 });

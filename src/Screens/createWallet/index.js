@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
@@ -185,77 +185,105 @@ class CreateWallet extends Component {
 
         <TitleHeader
           iconName="keyboard-arrow-left"
-          title="CREATE WALLET"
+          title="CREATE ACCOUNT"
           onBtnPress={this.handleGoBack}
           isBackArrow={isBackArrowPresent}
         />
-        <KeyboardAwareScrollView
-          style={{
-            height: deviceHeight,
-            width: deviceWidth,
-          }}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ alignItems: 'center' }}
-        >
-          <View style={styles.createWalletImageViewStyle}>
-            <Image source={walletImg} style={styles.createWalletImageStyle} resizeMode="contain" />
-          </View>
-          <View style={styles.createWalletTextViewStyle}>
-            <Text style={styles.createWalletTextStyle}>Create Wallet</Text>
-          </View>
-          <View style={styles.bottomViewStyle}>
-            <TitleText
-              titleText="Account Type"
-              mainStyle={styles.accountViewStyle}
-              textStyle={styles.accountTextStyle}
-            />
-            <View style={styles.accountListViewStyle}>
-              <View style={styles.accSymbolViewStyle}>
-                <Text style={styles.accSymbolTextStyle}>{selectedType}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.accDropdownViewStyle}
-                onPress={this.toggleAccountTypeList}
+        <ScrollView>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ marginTop: deviceHeight * 0.04 }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  width: deviceWidth * 0.7,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat-Regular',
+                  marginTop: deviceHeight * 0.025,
+                  marginBottom: deviceHeight * 0.025,
+                }}
               >
-                <MaterialIcons
-                  name="arrow-drop-down"
-                  size={24}
-                  style={[styles.dropdownIconStyle, arrowIconStyle]}
-                />
-              </TouchableOpacity>
-              {openAccountList && (
-                <ListCard
-                  selectedType={typeUuid}
-                  data={accountTypeList}
-                  handleList={item => this.handleAccountTypeList(item)}
-                  type={ACCOUNT_TYPE_LIST}
-                />
-              )}
+                <Text>Create</Text>
+                <Text style={{ fontFamily: 'Montserrat-Bold' }}> new account.</Text>
+              </Text>
             </View>
-            <View style={styles.accNameViewStyle}>
-              <FloatLabelTextField
-                type="name"
-                inputType="text"
-                valueType="name"
-                placeholder="Account Name"
-                autoCorrect={false}
-                value={name}
-                maxLength={20}
-                updateForm={this.updateForm}
-                inputBackgroundColor="#fff"
-                textFieldSize={deviceWidth * 0.73}
+            <View
+              style={{
+                width: deviceWidth * 0.9,
+                marginTop: deviceHeight * 0.06,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: '#046dc2',
+                  fontFamily: 'Montserrat-Bold',
+                }}
+              >
+                Account Details
+              </Text>
+              <View
+                style={{
+                  marginTop: 6,
+                  borderBottomColor: 'lightgray',
+                  borderBottomWidth: 1,
+                }}
               />
             </View>
+            <View style={styles.bottomViewStyle}>
+              <TitleText
+                titleText="Account Type"
+                mainStyle={styles.accountViewStyle}
+                textStyle={styles.accountTextStyle}
+              />
+              <View style={styles.accountListViewStyle}>
+                <View style={styles.accSymbolViewStyle}>
+                  <Text style={styles.accSymbolTextStyle}>{selectedType}</Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.accDropdownViewStyle}
+                  onPress={this.toggleAccountTypeList}
+                >
+                  <MaterialIcons
+                    name="arrow-drop-down"
+                    size={24}
+                    style={[styles.dropdownIconStyle, arrowIconStyle]}
+                    color="#888888"
+                  />
+                </TouchableOpacity>
+                {openAccountList && (
+                  <ListCard
+                    selectedType={typeUuid}
+                    data={accountTypeList}
+                    handleList={item => this.handleAccountTypeList(item)}
+                    type={ACCOUNT_TYPE_LIST}
+                  />
+                )}
+              </View>
+              <View style={styles.accNameViewStyle}>
+                <FloatLabelTextField
+                  type="name"
+                  inputType="text"
+                  valueType="name"
+                  placeholder="Account Name"
+                  autoCorrect={false}
+                  value={name}
+                  maxLength={20}
+                  updateForm={this.updateForm}
+                  inputBackgroundColor="#fff"
+                  textFieldSize={deviceWidth * 0.73}
+                />
+              </View>
 
-            <View style={styles.buttonViewStyle}>
-              <DesignButton
-                name="CREATE"
-                callMethod={this.handleCreateAccount}
-                isClickable={isClickable}
-              />
+              <View style={styles.buttonViewStyle}>
+                <DesignButton
+                  name="CREATE"
+                  callMethod={this.handleCreateAccount}
+                  isClickable={isClickable}
+                />
+              </View>
             </View>
           </View>
-        </KeyboardAwareScrollView>
+        </ScrollView>
         {this.renderLoader()}
       </TouchableOpacity>
     );

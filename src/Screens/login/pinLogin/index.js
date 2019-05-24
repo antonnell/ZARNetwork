@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import {
+  Alert,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  AsyncStorage,
+} from 'react-native';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -22,10 +30,12 @@ class LoginWithPin extends Component {
       pinCode: '',
       isClicked: false,
     };
+
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.loginBtnClicked = this.loginBtnClicked.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     TouchID.isSupported()
       .then(biometryType => {
         if (biometryType === 'TouchID') {
@@ -41,6 +51,12 @@ class LoginWithPin extends Component {
         }
       })
       .catch(() => {});
+
+    const pushRequestString = await AsyncStorage.getItem('pushRequest');
+    if (pushRequestString && pushRequestString != '' && pushRequestString != null) {
+      const pushRequest = JSON.parse(pushRequestString);
+      this.setState({ pushRequest });
+    }
   }
 
   /**
@@ -73,7 +89,11 @@ class LoginWithPin extends Component {
               isLoading: false,
             });
             if (res && res.payload && res.payload.status === 200) {
-              navigation.navigate('Home');
+              if (this.state.pushRequest != null) {
+                navigation.navigate('Request');
+              } else {
+                navigation.navigate('Home');
+              }
             } else if (
               res &&
               res.error &&
@@ -168,7 +188,7 @@ class LoginWithPin extends Component {
       colorData = checkPinLength(isClicked, '', pinCode);
       pinCodeObj = {
         title: 'Enter your 4 digit PIN ',
-        btnText: 'Log In',
+        btnText: 'Sign In',
         type: 'pinCode',
         text: pinCode,
         isBtnEnabled: pinCode.length === 4,
@@ -182,7 +202,7 @@ class LoginWithPin extends Component {
     return (
       <View style={styles.Container}>
         <StatusBar />
-        <TitleHeader title="Sign In" />
+        <TitleHeader title="SIGN IN" />
 
         <ScrollView
           style={styles.dialerView}
