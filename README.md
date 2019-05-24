@@ -1,9 +1,9 @@
-# FantomPay App
+# ZARNetwork App
 
 ## File Structure
 
 ```
-Fantom-Pay/
+ZARNetwork/
   |--android/                                  //-- android os specfic files
   |--assets/                                   //-- Contains fonts
   |--ios/                                      //-- ios specfic files
@@ -87,10 +87,6 @@ $npm install -g react-native-cli
 
 If you get an error like Cannot find module ‘npmlog’, try installing npm directly: curl -0 -L http://npmjs.org/install.sh | sudo sh.
 
-## Code Quality
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0b806f5bc76f4c2cbe0c46c9072f49a6)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fantom-foundation-private/fantom-pay&amp;utm_campaign=Badge_Grade)
-
 ## iOS SETUP
 
 ## Xcode
@@ -98,11 +94,11 @@ If you get an error like Cannot find module ‘npmlog’, try installing npm dir
 The easiest way to install Xcode is via the [Mac App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Installing Xcode will also install the iOS Simulator and all the necessary tools to build your iOS app.
 
 - Testing your React Native Installation
-  Use the React Native command line interface to generate a new React Native project called “FantomPay”, then run react-native run-ios inside the newly created folder.
+  Use the React Native command line interface to generate a new React Native project called “ZARNetwork”, then run react-native run-ios inside the newly created folder.
 
 ```
-$react-native init FantomPay
-$cd FantomPay
+$react-native init ZARNetwork
+$cd ZARNetwork
 $react-native run-ios
 ```
 
@@ -117,12 +113,12 @@ ShortCut :- Command+R
 
 You should see your new app running in the iOS Simulator shortly.
 
-- FantomPay Setup
+- ZARNetwork Setup
 
 ```
 git clone {Repository_url}
-  eg:- https://github.com/fantom-foundation-private/fantom-pay.git
-cd FantomPay
+  eg:- https://github.com/antonnell/ZARNetwork.git
+cd ZARNetwork
 ```
 
 Run the following command
